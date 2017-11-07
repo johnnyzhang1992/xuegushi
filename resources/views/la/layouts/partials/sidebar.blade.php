@@ -8,7 +8,7 @@
         @if (! Auth::guest())
             <div class="user-panel">
                 <div class="pull-left image">
-                    <img src="{{ Gravatar::fallback(asset('la-assets/img/user2-160x160.jpg'))->get(Auth::user()->email) }}" class="img-circle" alt="User Image" />
+                    <img src="{{ asset('static/images/avatar.jpg') }}" class="img-circle" alt="User Image" />
                 </div>
                 <div class="pull-left info">
                     <p>{{ Auth::user()->name }}</p>
@@ -45,17 +45,21 @@
                     $temp_module_obj = Module::get($menu->name);
                     ?>
                     @la_access($temp_module_obj->id)
-						@if(isset($module->id) && $module->name == $menu->name)
+                        @if(isset($module->id) && $module->name == $menu->name)
                         	<?php echo LAHelper::print_menu($menu ,true); ?>
 						@else
 							<?php echo LAHelper::print_menu($menu); ?>
 						@endif
                     @endla_access
                 @else
-                    <?php echo LAHelper::print_menu($menu); ?>
+                    @if(isset($custom_menu) && $custom_menu['name'] = $menu->name)
+                        <?php echo LAHelper::print_menu($menu ,true); ?>
+                    @else
+                        <?php echo LAHelper::print_menu($menu); ?>
+                    @endif
                 @endif
             @endforeach
-            <!-- LAMenus -->
+            {{--<!-- LAMenus -->--}}
         </ul><!-- /.sidebar-menu -->
     </section>
     <!-- /.sidebar -->

@@ -18,3 +18,10 @@ Route::get('/', function () {
 /* ================== Homepage + Admin Routes ================== */
 
 require __DIR__.'/admin_routes.php';
+
+Route::group(array(
+    'prefix' => 'task',
+), function() {
+    Route::get  ('poem', 'Poem\PoemController@index');
+    Route::get  ('author', 'Poem\PoemController@author');
+});

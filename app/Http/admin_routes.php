@@ -32,7 +32,11 @@ Route::group(['as' => $as, 'middleware' => ['auth', 'permission:ADMIN_PANEL']], 
 	/* ================== Users ================== */
 	Route::resource(config('laraadmin.adminRoute') . '/users', 'LA\UsersController');
 	Route::get(config('laraadmin.adminRoute') . '/user_dt_ajax', 'LA\UsersController@dtajax');
-	
+
+    /* ================== Poems ================== */
+    Route::resource(config('laraadmin.adminRoute') . '/poems', 'LA\PoemsController');
+    Route::get(config('laraadmin.adminRoute') . '/poems/{id}', 'LA\PoemsController@show');
+    Route::get(config('laraadmin.adminRoute') . '/poem_dt_ajax', 'LA\PoemsController@dtajax');
 	/* ================== Uploads ================== */
 	Route::resource(config('laraadmin.adminRoute') . '/uploads', 'LA\UploadsController');
 	Route::post(config('laraadmin.adminRoute') . '/upload_files', 'LA\UploadsController@upload_files');

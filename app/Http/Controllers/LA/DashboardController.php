@@ -9,6 +9,9 @@ namespace App\Http\Controllers\LA;
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
 use Illuminate\Http\Request;
+use DB;
+use Validator;
+use Datatables;
 
 /**
  * Class DashboardController
@@ -19,7 +22,7 @@ class DashboardController extends Controller
     /**
      * Create a new controller instance.
      *
-     * @return void
+     * @return mixed
      */
     public function __construct()
     {
@@ -29,10 +32,16 @@ class DashboardController extends Controller
     /**
      * Show the application dashboard.
      *
-     * @return Response
+     * @return mixed
      */
     public function index()
     {
-        return view('la.dashboard');
+        $count = array();
+        $count['users'] = DB::table('users')->count();
+        $count['poems'] = DB::table('poem')->count();
+        $count['authors'] = DB::table('author')->count();
+
+        return view('la.dashboard')
+            ->with('count',$count);
     }
 }
