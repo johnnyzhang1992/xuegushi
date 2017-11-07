@@ -79,12 +79,60 @@ class PoemsController extends Controller
     }
 
     /**
+     * ajax
+     * @param $id
+     * @param $request
+     * @return mixed
+     */
+    public function ajax($id,Request $request){
+        $value = $request->input('val');
+        $item = null;
+        if(isset($value) && $id>0){
+            switch ($value){
+                case 'yi':
+                    $item = $this->getYi($id);
+                    break;
+                case 'zhu':
+                    $item = $this->getZhu($id);
+                    break;
+                case 'shangxi':
+                    $item = $this->getShangxi($id);
+                    break;
+                default:
+                    $item = $this->getContent($id);
+                    break;
+            }
+            return response()->json($item,200);
+        } else{
+            return response()->json($item,500);
+        }
+    }
+    /**
      * 正文
      * @param $id
      * @return mixed
      */
     public function getContent($id){
         $poem_detail = DB::table('poem_detail')->where('poem_id',$id)->first();
+        $item = array();
+        if($poem_detail){
+            if(isset($poem_detail->content) && $poem_detail->content) {
+                if(isset(json_decode($poem_detail->content)->xu) && json_decode($poem_detail->content)->xu){
+                    $item['xu'] = json_decode($poem_detail->content)->xu;
+                }
+                $item['content'] = json_decode($poem_detail->content)->content;
+            }
+        }else{
+            $poem = DB::table('poem')->where('id',$id)->first();
+            if(isset($poem->content) && $poem->content){
+                $poem_content = json_decode($poem->content);
+                if(isset($poem_content->xu) && $poem_detail->xu){
+                    $item['xu'] = $poem_content->xu;
+                }
+                $item['content'] = $poem_content->content;
+            }
+        }
+        return $item;
     }
     /**
      * 翻译
@@ -93,6 +141,14 @@ class PoemsController extends Controller
      */
     public function getYi($id){
         $poem_detail = DB::table('poem_detail')->where('poem_id',$id)->first();
+        $item = array();
+        if($poem_detail){
+            if(isset($poem_detail->yi) && $poem_detail->yi) {
+                $item['reference'] = json_decode($poem_detail->yi)->reference;
+                $item['content'] = json_decode($poem_detail->yi)->content;
+            }
+        }
+        return $item;
     }
     /**
      * 注释
@@ -102,6 +158,14 @@ class PoemsController extends Controller
 
     public function getZhu($id){
         $poem_detail = DB::table('poem_detail')->where('poem_id',$id)->first();
+        $item = array();
+        if($poem_detail){
+            if(isset($poem_detail->zhu) && $poem_detail->zhu) {
+                $item['reference'] = json_decode($poem_detail->zhu)->reference;
+                $item['content'] = json_decode($poem_detail->zhu)->content;
+            }
+        }
+        return $item;
     }
     /**
      * 赏析
@@ -110,6 +174,14 @@ class PoemsController extends Controller
      */
     public function getShangxi($id){
         $poem_detail = DB::table('poem_detail')->where('poem_id',$id)->first();
+        $item = array();
+        if($poem_detail){
+            if(isset($poem_detail->shangxi) && $poem_detail->shangxi){
+                $item['reference'] = json_decode($poem_detail->shangxi)->reference;
+                $item['content'] = json_decode($poem_detail->shangxi)->content;
+            }
+        }
+        return $item;
     }
     /**
      * Datatable Ajax fetch
