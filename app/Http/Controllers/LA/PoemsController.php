@@ -79,6 +79,37 @@ class PoemsController extends Controller
     }
 
     /**
+     * 编辑
+     * @param $id
+     * @return mixed
+     */
+    public function edit($id){
+        $custom_menu = array();
+        $custom_menu['name'] = 'poems';
+        $custom_menu['id'] = '9';
+        $poem = DB::table('poem')->where('id',$id)->first();
+        $poem_content = json_decode($poem->content);
+        $poem_detail = null;
+        $detail = DB::table('poem_detail')->where('poem_id',$id)->first();
+        if(isset($detail) && isset($detail->id)){
+            $poem_detail = $detail;
+        }
+        return View('la.poem.edit')
+            ->with('poem',$poem)
+            ->with('poem_content',$poem_content)
+            ->with('detail',$poem_detail)
+            ->with('custom_menu',$custom_menu);
+    }
+    /**
+     * 保存
+     * @param $id
+     * @param $request
+     *
+     */
+    public function store(Request $request,$id){
+
+    }
+    /**
      * ajax
      * @param $id
      * @param $request

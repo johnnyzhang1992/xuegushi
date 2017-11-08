@@ -1,0 +1,11 @@
+{
+  "name": "xuegushi",
+  "homepage": "https://github.com/johnnyzhang1992/xuegushi",
+  "authors": [
+    "'johnnyzhang' <'1113638674@qq.com'>"
+  ],
+  "description": "xuegushi lib",
+  "main": "",
+  "license": "MIT",
+  "private": true
+}
