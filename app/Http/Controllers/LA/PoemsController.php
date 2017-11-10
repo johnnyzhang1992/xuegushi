@@ -102,12 +102,62 @@ class PoemsController extends Controller
     }
     /**
      * 保存
-     * @param $id
      * @param $request
-     *
+     * @return mixed
      */
-    public function store(Request $request,$id){
-
+    public function store(Request $request){
+        $type = $request->input('type1');
+        info($type);
+        $_data = array();
+        if(isset($type) && $type == 'normal'){
+            $id = $request->input('id');
+            info('---id---:'.$id);
+            $_tags = $request->input('tags');
+            $poem = array();
+            $poem['title'] = $request->input('title');
+            $poem['dynasty'] = $request->input('dynasty');
+            $poem['author'] = $request->input('author');
+            $poem['tags'] = json_encode(explode(',',$_tags));
+            $poem['background'] = $request->input('background');
+            $poem['content'] = json_encode($request->input('con'));
+            $poem['updated_at'] =date('Y-m-d H:i:s',time());
+            $res = DB::table('poem')->where('id',$id)->update($poem);
+            if($res){
+                $_data['msg'] = 'success';
+                return response()->json($_data,200);
+            }else{
+                $_data = array();
+                $_data['msg'] = 'error';
+                return response()->json($_data,500);
+            }
+        }elseif(isset($type) && $type == 'detail'){
+            $id = $request->input('id');
+            info('---detail-id---:'.$id);
+            $detail_con = $request->input('detail_con');
+            $yi = $request->input('yi');
+            $zhu = $request->input('zhu');
+            $shang = $request->input('shang');
+            $res = DB::table('poem_detail')
+                ->where('id',$id)
+                ->update([
+                    'poem_title' => $request->input('title'),
+                    'type' => $request->input('type'),
+                    'updated_at' =>date('Y-m-d H:i:s',time()),
+                    'content' => json_encode($detail_con),
+                    'yi' => json_encode($yi),
+                    'zhu' => json_encode($zhu),
+                    'shangxi' => json_encode($shang),
+                    'more_infos' => json_encode($request->input('more_info'))
+                ]);
+            if($res){
+                $_data['msg'] = 'success';
+                return response()->json($_data,200);
+            }else{
+                $_data = array();
+                $_data['msg'] = 'error';
+                return response()->json($_data,500);
+            }
+        }
     }
     /**
      * ajax
@@ -232,6 +282,7 @@ class PoemsController extends Controller
             if($this->show_action) {
                 $output = '';
                 $output .= '<a href="'.url(config('laraadmin.adminRoute') . '/poems/'.$data->data[$i][0]).'" class="btn btn-warning btn-xs" style="display:inline;padding:2px 5px 3px 5px;"><i class="fa fa-eye"></i></a>';
+                $output .= ' <a href="'.url(config('laraadmin.adminRoute') . '/poems/'.$data->data[$i][0]).'/edit'.'" class="btn btn-info btn-xs" style="display:inline;padding:2px 5px 3px 5px;"><i class="fa fa-pencil"></i></a>';
                 $data->data[$i][] = (string)$output;
             }
         }

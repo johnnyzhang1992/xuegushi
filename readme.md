@@ -1,5 +1,5 @@
 # 一个关于古诗文查询与学习的网站
-# 技术
+## 技术
 * 使用了laravel 5.2
 * 后台管理使用了 [laraadmin](https://github.com/dwijitsolutions/laraadmin)
 ## License
