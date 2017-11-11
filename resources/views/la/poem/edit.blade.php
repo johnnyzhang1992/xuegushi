@@ -172,6 +172,7 @@
                 console.log(data.msg);
                 if(data.msg == 'success'){
                     alert('保存成功！');
+                    document.location.reload();
                 }
             },
             error:function (data) {
@@ -201,6 +202,7 @@
                 console.log('===success');
                 if(data.msg == 'success'){
                     alert('保存成功！');
+                    document.location.reload();
                 }
             },
             error:function (data) {

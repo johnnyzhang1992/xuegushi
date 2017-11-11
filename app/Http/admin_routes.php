@@ -2,7 +2,7 @@
 
 /* ================== Homepage ================== */
 Route::get('/', 'HomeController@index');
-Route::get('/home', 'HomeController@index');
+//Route::get('/home', 'HomeController@index');
 Route::auth();
 
 /* ================== Access Uploaded Files ================== */
@@ -40,6 +40,16 @@ Route::group(['as' => $as, 'middleware' => ['auth', 'permission:ADMIN_PANEL']], 
     Route::get(config('laraadmin.adminRoute') . '/poems/{id}/edit', 'LA\PoemsController@edit');
     Route::get(config('laraadmin.adminRoute') . '/poems/ajax/{id}', 'LA\PoemsController@ajax');
     Route::get(config('laraadmin.adminRoute') . '/poem_dt_ajax', 'LA\PoemsController@dtajax');
+
+    /* ================== authors ================== */
+    Route::resource(config('laraadmin.adminRoute') . '/authors', 'LA\PoemAuthorsController');
+    Route::post(config('laraadmin.adminRoute') . '/authors/save', 'LA\PoemAuthorsController@store');
+    Route::get(config('laraadmin.adminRoute') . '/authors/{id}', 'LA\PoemAuthorsController@show');
+    Route::get(config('laraadmin.adminRoute') . '/authors/{id}/dd', 'LA\PoemAuthorsController@dd');
+    Route::get(config('laraadmin.adminRoute') . '/authors/{id}/edit', 'LA\PoemAuthorsController@edit');
+    Route::get(config('laraadmin.adminRoute') . '/authors/ajax/{id}', 'LA\PoemAuthorsController@ajax');
+    Route::get(config('laraadmin.adminRoute') . '/author_dt_ajax', 'LA\PoemAuthorsController@dtajax');
+
 	/* ================== Uploads ================== */
 	Route::resource(config('laraadmin.adminRoute') . '/uploads', 'LA\UploadsController');
 	Route::post(config('laraadmin.adminRoute') . '/upload_files', 'LA\UploadsController@upload_files');

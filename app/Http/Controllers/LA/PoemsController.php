@@ -281,8 +281,8 @@ class PoemsController extends Controller
             $data->data[$i][6] = json_decode($data->data[$i][6] );
             if($this->show_action) {
                 $output = '';
-                $output .= '<a href="'.url(config('laraadmin.adminRoute') . '/poems/'.$data->data[$i][0]).'" class="btn btn-warning btn-xs" style="display:inline;padding:2px 5px 3px 5px;"><i class="fa fa-eye"></i></a>';
-                $output .= ' <a href="'.url(config('laraadmin.adminRoute') . '/poems/'.$data->data[$i][0]).'/edit'.'" class="btn btn-info btn-xs" style="display:inline;padding:2px 5px 3px 5px;"><i class="fa fa-pencil"></i></a>';
+                $output .= '<a href="'.url(config('laraadmin.adminRoute') . '/poems/'.$data->data[$i][0]).'" class="btn btn-warning btn-xs" style="display:inline;padding:2px 5px 3px 5px;" target="_blank"><i class="fa fa-eye"></i></a>';
+                $output .= ' <a href="'.url(config('laraadmin.adminRoute') . '/poems/'.$data->data[$i][0]).'/edit'.'" class="btn btn-info btn-xs" style="display:inline;padding:2px 5px 3px 5px;" target="_blank"><i class="fa fa-pencil"></i></a>';
                 $data->data[$i][] = (string)$output;
             }
         }

@@ -148,7 +148,11 @@
 @endsection
 
 @push('styles')
-
+<style>
+    p{
+        text-align: justify;
+    }
+</style>
 @endpush
 
 @push('scripts')

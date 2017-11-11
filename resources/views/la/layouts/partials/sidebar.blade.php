@@ -52,7 +52,7 @@
 						@endif
                     @endla_access
                 @else
-                    @if(isset($custom_menu) && $custom_menu['name'] = $menu->name)
+                    @if(isset($custom_menu) && $custom_menu['name'] == $menu->name)
                         <?php echo LAHelper::print_menu($menu ,true); ?>
                     @else
                         <?php echo LAHelper::print_menu($menu); ?>
