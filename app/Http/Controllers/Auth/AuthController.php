@@ -2,14 +2,19 @@
 
 namespace App\Http\Controllers\Auth;
 
+use DB;
+use Hash;
 use App\User;
 use App\Models\Employee;
 use App\Role;
 use Validator;
 use Eloquent;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
+//use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 class AuthController extends Controller
 {
@@ -98,7 +103,7 @@ class AuthController extends Controller
      * Create a new user instance after a valid registration.
      *
      * @param  array  $data
-     * @return User
+     * @return mixed
      */
     protected function create(array $data)
     {
@@ -133,5 +138,53 @@ class AuthController extends Controller
         $user->attachRole($role);
     
         return $user;
+    }
+    /**
+     * @param $request
+     * login
+     * @return mixed
+     */
+    public function login(Request $request)
+    {
+        $_email     = $request->input('email');
+        $_password = $request->input('password');
+        $_user = User::where('email', $_email)->first();
+        $_error_messages = [];
+        $this->validateLogin($request);
+        if($_user){
+            if(!Hash::check($_password,$_user->password)){
+                $_error_messages['password'] = '密码不匹配，请重现输入';
+                return back()->withInput()->withErrors($_error_messages);
+            }
+        }else{
+            $_error_messages['email'] = '邮箱'.$_email.'尚未注册';
+            return back()->withInput()->withErrors($_error_messages);
+        }
+        // If the class is using the ThrottlesLogins trait, we can automatically throttle
+        // the login attempts for this application. We'll key this by the username and
+        // the IP address of the client making these requests into this application.
+        $throttles = $this->isUsingThrottlesLoginsTrait();
+
+        if ($throttles && $lockedOut = $this->hasTooManyLoginAttempts($request)) {
+            $this->fireLockoutEvent($request);
+
+            return $this->sendLockoutResponse($request);
+        }
+
+        $credentials = $this->getCredentials($request);
+
+        if (Auth::guard($this->getGuard())->attempt($credentials, $request->has('remember'))) {
+            return $this->handleUserWasAuthenticated($request, $throttles);
+        }
+
+        // If the login attempt was unsuccessful we will increment the number of attempts
+        // to login and redirect the user back to the login form. Of course, when this
+        // user surpasses their maximum number of attempts they will get locked out.
+        if ($throttles && ! $lockedOut) {
+            info('ok---');
+            $this->incrementLoginAttempts($request);
+        }
+
+        return $this->sendFailedLoginResponse($request);
     }
 }

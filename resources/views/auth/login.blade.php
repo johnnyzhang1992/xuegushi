@@ -1,7 +1,7 @@
 @extends('la.layouts.auth')
 
 @section('htmlheader_title')
-    Log in
+    学古诗 后台登录
 @endsection
 
 @section('content')
@@ -13,7 +13,7 @@
 
     @if (count($errors) > 0)
         <div class="alert alert-danger">
-            <strong>Whoops!</strong> There were some problems with your input.<br><br>
+            {{--<strong>Whoops!</strong> There were some problems with your input.<br><br>--}}
             <ul>
                 @foreach ($errors->all() as $error)
                     <li>{{ $error }}</li>
@@ -50,7 +50,7 @@
 
     @include('auth.partials.social_login')
 
-    <a href="{{ url('/password/reset') }}">I forgot my password</a><br>
+    <a href="{{ url('/password/reset') }}">忘记密码</a><br>
     <!--<a href="{{ url('/register') }}" class="text-center">Register a new membership</a>-->
 
 </div><!-- /.login-box-body -->
