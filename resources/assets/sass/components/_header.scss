@@ -34,8 +34,22 @@
     margin-right: 10px;
   }
 }
+.nav .dropdown-menu{
+  width: 191px;
+  a{
+    color:#777;
+    font-weight: 600;
+    border-width: 0;
+    text-decoration: none;
+  }
+  a:hover,a:focus{
+    color: #337ab7;
+    border-width: 0;
+    background-color: #f3f3f3;
+  }
+}
 @media (min-width: 768px){
   .navbar-nav {
-    padding-left: 50px;
+    padding-left: 40px;
   }
 }

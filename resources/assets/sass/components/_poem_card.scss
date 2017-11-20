@@ -27,6 +27,7 @@
     a.author_dynasty:focus,a.author_name:focus,
     a.author_dynasty:active,a.author_name:active{
       color: #b93435;
+      text-decoration: none;
     }
   }
   .poem-content{
@@ -49,6 +50,7 @@
     }
   }
   .poem-tag{
+    color: #999;
     p{
       margin-bottom: 0;
     }
@@ -57,6 +59,7 @@
     }
     a:focus,a:hover{
       color: #006ac5;
+      text-decoration: none;
     }
   }
 }

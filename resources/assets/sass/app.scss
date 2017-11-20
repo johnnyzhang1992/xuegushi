@@ -12,3 +12,9 @@
   padding-top: 20px;
   padding-bottom: 20px;
 }
+@media(max-width:736px){
+  .main_left,.main_right{
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
