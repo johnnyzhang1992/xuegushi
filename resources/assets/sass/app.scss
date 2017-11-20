@@ -1,2 +1,14 @@
-// @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
-
+@import "components/header";
+@import "components/left_side";
+@import "components/poem_card";
+.no-padding{
+  padding-left: 0!important;
+  padding-right: 0!important;
+}
+.main_content{
+  background-color: #f3f3f3;
+}
+.main_left,.main_right{
+  padding-top: 20px;
+  padding-bottom: 20px;
+}

@@ -1,0 +1,62 @@
+.poem-card{
+  padding: 16px 20px 10px 20px;
+  margin-bottom: 15px;
+  background-color: #fff;
+  .poem-title{
+    font-size: 18px;
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+  .title-link{
+    font-weight:600;
+  }
+  .title-link:hover,.title-link:focus{
+    color: #006ac5;
+    text-decoration: none;
+  }
+  .poem-author{
+    padding-top: 6px;
+    padding-bottom: 6px;
+    p{
+      margin-bottom: 0;
+    }
+    a.author_dynasty,a.author_name{
+      color: #65645F;
+    }
+    a.author_dynasty:hover,a.author_name:hover,
+    a.author_dynasty:focus,a.author_name:focus,
+    a.author_dynasty:active,a.author_name:active{
+      color: #b93435;
+    }
+  }
+  .poem-content{
+    .poem-xu{
+      color: #999;
+    }
+    .p-content{
+      color: #333;
+    }
+  }
+  .poem-tool{
+    padding-bottom: 5px;
+    margin-bottom: 5px;
+    border-bottom: 1px solid #f3f3f3;
+    .collect,.copy,.like,.speaker{
+      float: left;
+      font-size: 18px;
+      margin-right: 10px;
+      cursor: pointer;
+    }
+  }
+  .poem-tag{
+    p{
+      margin-bottom: 0;
+    }
+    a{
+      color: #999;
+    }
+    a:focus,a:hover{
+      color: #006ac5;
+    }
+  }
+}

@@ -1,5 +1,5 @@
 var elixir = require('laravel-elixir');
-
+var gulp = require('gulp');
 /*
  |--------------------------------------------------------------------------
  | Elixir Asset Management
@@ -12,14 +12,17 @@ var elixir = require('laravel-elixir');
  */
 
 elixir(function(mix) {
-    mix.sass('app.scss');
+    mix.sass('app.scss')
+        .version([
+            'css/app.css'
+        ]);
 });
 // var elixir = require('laravel-elixir');
 
-elixir(function(mix) {
-    mix.less('admin-lte/AdminLTE.less', 'public/la-assets/css');
-    mix.less('bootstrap/bootstrap.less', 'public/la-assets/css');
-});
+// elixir(function(mix) {
+//     mix.less('admin-lte/AdminLTE.less', 'public/la-assets/css');
+//     mix.less('bootstrap/bootstrap.less', 'public/la-assets/css');
+// });
 
 /*
 var minify = require('gulp-minify');
@@ -36,3 +39,8 @@ gulp.task('compress', function() {
     .pipe(gulp.dest('dist'))
 });
 */
+//监视文件变化，路径下文件发生变化执行
+gulp.task('watch', function() {
+    // 看守所有.scss文档，发生变化时执行压缩程序
+    gulp.watch(['resources/assets/sass/**/*.scss'] ,['default']);
+});

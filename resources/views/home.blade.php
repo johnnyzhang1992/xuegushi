@@ -17,31 +17,20 @@
     {{--<meta name="twitter:card" content="summary_large_image" />--}}
     {{--<meta name="twitter:site" content="@laraadmin" />--}}
     {{--<meta name="twitter:creator" content="@laraadmin" />--}}
-    
     <title>{{ LAConfigs::getByKey('sitename') }}</title>
-    
     <!-- Bootstrap core CSS -->
     <link href="{{ asset('/la-assets/css/bootstrap.css') }}" rel="stylesheet">
-
 	<link href="{{ asset('la-assets/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css" />
-    
     <!-- Custom styles for this template -->
-    <link href="{{ asset('/la-assets/css/main.css') }}" rel="stylesheet">
-
-    <link href='https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic' rel='stylesheet' type='text/css'>
-    <link href='https://fonts.googleapis.com/css?family=Raleway:400,300,700' rel='stylesheet' type='text/css'>
-
+    {{--<link href="{{ asset('/la-assets/css/main.css') }}" rel="stylesheet">--}}
+    <link rel="stylesheet" href="{{ asset(elixir('css/app.css')) }}">
     <script src="{{ asset('/la-assets/plugins/jQuery/jQuery-2.1.4.min.js') }}"></script>
-    <script src="{{ asset('/la-assets/js/smoothscroll.js') }}"></script>
-
-
 </head>
 
 <body data-spy="scroll" data-offset="0" data-target="#navigation">
-
-<!-- Fixed navbar -->
-<div id="navigation" class="navbar navbar-default navbar-fixed-top">
-    <div class="container">
+{{--header--}}
+<header id="navigation" class="navbar navbar-default">
+    <div class="col-md-9 col-md-offset-2">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                 <span class="icon-bar"></span>
@@ -52,166 +41,169 @@
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="#home" class="smoothScroll">Home</a></li>
-                <li><a href="#about" class="smoothScroll">About</a></li>
-                <li><a href="#contact" class="smoothScroll">Contact</a></li>
+                <li class="active"><a href="#home" class="smoothScroll">推荐</a></li>
+                <li><a href="#about" class="smoothScroll">诗</a></li>
+                <li><a href="#contact" class="smoothScroll">词</a></li>
+                <li><a href="#contact" class="smoothScroll">曲</a></li>
+                <li><a href="#contact" class="smoothScroll">文言文</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 @if (Auth::guest())
-                    <li><a href="{{ url('/login') }}">Login</a></li>
+                    {{--<li><a href="{{ url('/login') }}">注册</a></li>--}}
                     <!--<li><a href="{{ url('/register') }}">Register</a></li>-->
                 @else
-                    <li><a href="{{ url(config('laraadmin.adminRoute')) }}">{{ Auth::user()->name }}</a></li>
+                    <li>
+                        <a href="{{ url(config('laraadmin.adminRoute')) }}" class="nav-user"><img src="{{ asset('static/images/avatar.jpg') }}" class="user-image" alt="User Image"/>{{ Auth::user()->name }}</a>
+                    </li>
                 @endif
             </ul>
         </div><!--/.nav-collapse -->
     </div>
-</div>
+</header>
+{{--main-content--}}
+<main class="main_content col-md-12 no-padding">
+    <div class="content col-md-9 col-md-offset-2">
+        {{--left--}}
+        <div class="main_left col-md-8">
+            <div class="poem-card">
+                <div class="card-title">
+                    <h2 class="poem-title">
+                        <a class="title-link" href="" target="_blank">水调歌头·明月几时有</a>
+                    </h2>
+                </div>
+                <div class="poem-author">
+                    <p><a class="author_dynasty" href="">宋代</a> : <a class="author_name" href="">苏轼</a></p>
+                </div>
+                <div class="poem-content">
+                    <p class="poem-xu">丙辰中秋，欢饮达旦，大醉，作此篇，兼怀子由。</p>
+                    <p class="p-content">
+                        明月几时有？把酒问青天。不知天上宫阙，今夕是何年。我欲乘风归去，又恐琼楼玉宇，高处不胜寒。起舞弄清影，何似在人间？(何似 一作：何时；又恐 一作：惟 / 唯恐)
+                    </p>
+                    <p class="p-content">
+                        转朱阁，低绮户，照无眠。不应有恨，何事长向别时圆？人有悲欢离合，月有阴晴圆缺，此事古难全。但愿人长久，千里共婵娟。(长向 一作：偏向)
+                    </p>
+                </div>
+                <div class="poem-tool clearfix">
+                    <div class="collect">
+                        <i class="fa fa-heart-o"></i>
+                    </div>
+                    <div class="copy">
+                        <i class="fa fa-clone"></i>
+                    </div>
+                    <div class="speaker">
+                        <i class="fa fa-microphone" aria-hidden="true"></i>
+                    </div>
+                    <div class="like pull-right">
+                        <i class="fa fa-thumbs-o-up"></i> 1000
+                    </div>
+                </div>
+                <div class="tool-qrcode">
 
+                </div>
+                <div class="poem-tag">
+                    <p>
+                        <a href="" class="tag">宋词三百首</a>，<a href="" class="tag">宋词精选</a>，<a href="" class="tag">初中古诗</a>，<a href="" class="tag">豪放</a>，<a href="" class="tag">中秋节</a>
+                    </p>
+                </div>
+            </div>
+            <div class="poem-card">
+                <div class="card-title">
+                    <h2 class="poem-title">
+                        <a class="title-link" href="" target="_blank">水调歌头·明月几时有</a>
+                    </h2>
+                </div>
+                <div class="poem-author">
+                    <p><a class="author_dynasty" href="">宋代</a> : <a class="author_name" href="">苏轼</a></p>
+                </div>
+                <div class="poem-content">
+                    <p class="poem-xu">丙辰中秋，欢饮达旦，大醉，作此篇，兼怀子由。</p>
+                    <p class="p-content">
+                        明月几时有？把酒问青天。不知天上宫阙，今夕是何年。我欲乘风归去，又恐琼楼玉宇，高处不胜寒。起舞弄清影，何似在人间？(何似 一作：何时；又恐 一作：惟 / 唯恐)
+                    </p>
+                    <p class="p-content">
+                        转朱阁，低绮户，照无眠。不应有恨，何事长向别时圆？人有悲欢离合，月有阴晴圆缺，此事古难全。但愿人长久，千里共婵娟。(长向 一作：偏向)
+                    </p>
+                </div>
+                <div class="poem-tool clearfix">
+                    <div class="collect">
+                        <i class="fa fa-heart-o"></i>
+                    </div>
+                    <div class="copy">
+                        <i class="fa fa-clone"></i>
+                    </div>
+                    <div class="speaker">
+                        <i class="fa fa-microphone" aria-hidden="true"></i>
+                    </div>
+                    <div class="like pull-right">
+                        <i class="fa fa-thumbs-o-up"></i> 1000
+                    </div>
+                </div>
+                <div class="tool-qrcode">
 
-<section id="home" name="home"></section>
-<div id="headerwrap">
-    <div class="container">
-        <div class="row centered">
-            <div class="col-lg-12">
-                <h1>{{ LAConfigs::getByKey('sitename_part1') }} <b><a>{{ LAConfigs::getByKey('sitename_part2') }}</a></b></h1>
-                <h3>{{ LAConfigs::getByKey('site_description') }}</h3>
-                <h3><a href="{{ url('/login') }}" class="btn btn-lg btn-success">Get Started!</a></h3><br>
+                </div>
+                <div class="poem-tag">
+                    <p>
+                        <a href="" class="tag">宋词三百首</a>，<a href="" class="tag">宋词精选</a>，<a href="" class="tag">初中古诗</a>，<a href="" class="tag">豪放</a>，<a href="" class="tag">中秋节</a>
+                    </p>
+                </div>
             </div>
-            <div class="col-lg-2">
-                <h5>Amazing Functionalities</h5>
-                <p>for Modern Admin Panels</p>
-                <img class="hidden-xs hidden-sm hidden-md" src="{{ asset('/la-assets/img/arrow1.png') }}">
+        </div>
+        {{--right--}}
+        <div class="main_right col-md-4">
+            <div class="side-card">
+                <div class="side-title">
+                    <h2>朝代</h2>
+                </div>
+                <div class="side-content">
+                    <a class="" href="">先秦</a>
+                    <a class="" href="">两汉</a>
+                    <a class="" href="">魏晋</a>
+                    <a class="" href="">南北朝</a>
+                    <a class="" href="">隋代</a>
+                    <a class="" href="">唐代</a>
+                    <a class="" href="">五代</a>
+                    <a class="" href="">宋代</a>
+                    <a class="" href="">金朝</a>
+                    <a class="" href="">元代</a>
+                    <a class="" href="">明代</a>
+                    <a class="" href="">清代</a>
+                </div>
             </div>
-            <div class="col-lg-8">
-                <img class="img-responsive" src="{{ asset('/la-assets/img/app-bg.png') }}" alt="">
+            <div class="side-card">
+                <div class="side-title">
+                    <h2>作者</h2>
+                </div>
+                <div class="side-content">
+                    <a class="" href="">先秦</a>
+                    <a class="" href="">两汉</a>
+                    <a class="" href="">魏晋</a>
+                    <a class="" href="">南北朝</a>
+                    <a class="" href="">隋代</a>
+                    <a class="" href="">唐代</a>
+                    <a class="" href="">五代</a>
+                    <a class="" href="">宋代</a>
+                    <a class="" href="">金朝</a>
+                    <a class="" href="">元代</a>
+                    <a class="" href="">明代</a>
+                    <a class="" href="">清代</a>
+                </div>
             </div>
-            <div class="col-lg-2">
+            <footer class="footer">
+                <a href="" class="footer-item">学古诗</a>
+                <span class="footer-dot">&sdot;</span>
+                <a href="" class="footer-item">关于</a>
+                <span class="footer-dot">&sdot;</span>
+                <a href="" class="footer-item">联系</a>
                 <br>
-                <img class="hidden-xs hidden-sm hidden-md" src="{{ asset('/la-assets/img/arrow2.png') }}">
-                <h5>Completely Packaged...</h5>
-                <p>for Future expantion of Modules</p>
-            </div>
-        </div>
-    </div> <!--/ .container -->
-</div><!--/ #headerwrap -->
-
-
-<section id="about" name="about"></section>
-<!-- INTRO WRAP -->
-<div id="intro">
-    <div class="container">
-        <div class="row centered">
-            <h1>An Architecture designed To Excel</h1>
-            <br>
-            <br>
-            <div class="col-lg-4">
-                <i class="fa fa-cubes" style="font-size:100px;height:110px;"></i>
-                <h3>Modular</h3>
-                <p>Making Data Management fast and enjoyable.</p>
-            </div>
-            <div class="col-lg-4">
-                <i class="fa fa-paper-plane" style="font-size:100px;height:110px;"></i>
-                <h3>Easy to Install</h3>
-                <p>With single installation command.</p>
-            </div>
-            <div class="col-lg-4">
-                <i class="fa fa-cubes" style="font-size:100px;height:110px;"></i>
-                <h3>Customizable</h3>
-                <p>Easy to Manipulation the flows.</p>
-            </div>
-        </div>
-        <br>
-        <hr>
-    </div> <!--/ .container -->
-</div><!--/ #introwrap -->
-
-<!-- FEATURES WRAP -->
-<div id="features">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-5 centered">
-                <img class="centered" src="{{ asset('/la-assets/img/mobile.png') }}" alt="">
-            </div>
-
-            <div class="col-lg-7">
-				<h3 class="feature-title">What is LaraAdmin ?</h3><br>
-				<ol class="features">
-					<li><strong>CMS</strong> (Content Management System) &#8211; Manages Modules &amp; their Data</li>
-					<li>Backend <strong>Admin Panel</strong> &#8211; Data can be used in front end applications with ease.</li>
-					<li>A probable <strong>CRM</strong> System &#8211; Can be evolved into a CRM system like <a target="_blank" href="https://www.sugarcrm.com">SugarCRM</a></li>
-				</ol><br>
-
-				<h3 class="feature-title">Why LaraAdmin ?</h3><br>
-                <ol class="features">
-					<li><strong>Philosophy:</strong> Inspired by SugarCRM &amp; based on Advanced <strong>Data Types</strong> like Image, HTML, File, Dropdown, TagInput which makes developers job easy. See more in <a target="_blank" href="http://laraadmin.com/features">features</a></li>
-					<li>Superior <strong>CRUD generation</strong> for Modules which generates Migration, Controller, Model and Views with single artisan command and integrates with Routes as as well.</li>
-					<li><strong>Form Maker</strong> helper is provided for generating entire form with single function call with module name as single parameter. It also gives you freedom to customise form for every field by providing method to generate single field with parameters for customisations.</li>
-					<li><b>Upload Manager </b>manages project files &amp; images which are integrated with your Module fields.</li>
-					<li><strong>Menu Manager</strong> creates menu with Modules &amp; Custom Links likes WordPress</li>
-					<li><strong>Online Code Editor</strong> allows developers to customise the generated Module Views &amp; Files.</li>
-				</ol>
-            </div>
-        </div>
-    </div><!--/ .container -->
-</div><!--/ #features -->
-
-<section id="contact" name="contact"></section>
-<div id="footerwrap">
-    <div class="container">
-        <div class="col-lg-5">
-            <h3>Contact Us</h3><br>
-            <p>
-				Dwij IT Solutions,<br/>
-				Web Development Company in Pune,<br/>
-                B4, Patang Plaza Phase 5,<br/>
-                Opp. PICT College,<br/>
-                Katraj, Pune, India - 411046
-            </p>
-			<div class="contact-link"><i class="fa fa-envelope-o"></i> <a href="mailto:hello@laraadmin.com">hello@laraadmin.com</a></div>
-			<div class="contact-link"><i class="fa fa-cube"></i> <a href="http://laraadmin.com">laraadmin.com</a></div>
-			<div class="contact-link"><i class="fa fa-building"></i> <a href="http://dwijitsolutions.com">dwijitsolutions.com</a></div>
-        </div>
-
-        <div class="col-lg-7">
-            <h3>Drop Us A Line</h3>
-            <br>
-            <form role="form" action="#" method="post" enctype="plain">
-                <div class="form-group">
-                    <label for="name1">Your Name</label>
-                    <input type="name" name="Name" class="form-control" id="name1" placeholder="Your Name">
-                </div>
-                <div class="form-group">
-                    <label for="email1">Email address</label>
-                    <input type="email" name="Mail" class="form-control" id="email1" placeholder="Enter email">
-                </div>
-                <div class="form-group">
-                    <label>Your Text</label>
-                    <textarea class="form-control" name="Message" rows="3"></textarea>
-                </div>
-                <br>
-                <button type="submit" class="btn btn-large btn-success">SUBMIT</button>
-            </form>
+                <span class="footer-item">&copy; 2017 学古诗网</span>
+            </footer>
         </div>
     </div>
-</div>
-<div id="c">
-    <div class="container">
-        <p>
-            <strong>Copyright &copy; 2016. Powered by <a href="https://dwijitsolutions.com"><b>Dwij IT Solutions</b></a></strong>
-        </p>
-    </div>
-</div>
+</main>
 
-
-<!-- Bootstrap core JavaScript
-================================================== -->
-<!-- Placed at the end of the document so the pages load faster -->
 <script src="{{ asset('/la-assets/js/bootstrap.min.js') }}" type="text/javascript"></script>
-<script>
-    $('.carousel').carousel({
-        interval: 3500
-    })
-</script>
+{{--<script>--}}
+
+{{--</script>--}}
 </body>
 </html>

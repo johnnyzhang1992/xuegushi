@@ -1,0 +1,40 @@
+.side-card{
+  padding: 10px 15px;
+  margin-bottom: 15px;
+  background-color: #fff;
+  .side-title{
+    border-bottom: 1px solid #f3f3f3;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    h2{
+      font-size: 20px;
+      padding-left: 10px;
+      margin-top: 0;
+      margin-bottom: 0;
+      border-left: 4px solid #337ab7;
+    }
+  }
+  .side-content {
+    a {
+      border: 2px solid #f3f3f3;
+      padding: 5px 8px;
+      margin-bottom: 5px;
+      display: inline-block;
+      border-radius: 6px;
+    }
+    a:hover, a:focus {
+      color: #175199;
+    }
+  }
+}
+.footer{
+  color: #8590a6;
+  a{
+    color: #8590a6;;
+    text-decoration: none;
+  }
+  a.footer-item:hover,a.footer-item:focus{
+    color: #175199;
+    text-decoration: none;
+  }
+}
