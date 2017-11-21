@@ -3,15 +3,25 @@
   margin-bottom: 15px;
   background-color: #fff;
   .side-title{
-    border-bottom: 1px solid #f3f3f3;
+    border-bottom: 2px solid #f3f3f3;
     margin-bottom: 10px;
     padding-bottom: 10px;
     h2{
+      color: #333;
+      position: relative;
       font-size: 20px;
-      padding-left: 10px;
       margin-top: 0;
       margin-bottom: 0;
-      border-left: 4px solid #337ab7;
+      span::after{
+        position: absolute;
+        bottom: -12px;
+        left: 0;
+        right: 0;
+        height: 2px;
+        width: 40px;
+        background: #777;
+        content: '';
+      }
     }
   }
   .side-content {

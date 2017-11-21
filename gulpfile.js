@@ -10,11 +10,17 @@ var gulp = require('gulp');
  | file for our application, as well as publishing vendor resources.
  |
  */
-
+var js = [
+    'jQuery-2.1.4.min.js',
+    'bootstrap.min.js',
+    'gushi/common.js'
+];
 elixir(function(mix) {
     mix.sass('app.scss')
+        .scripts(js, './public/js/app.js')
         .version([
-            'css/app.css'
+            'css/app.css',
+            'js/app.js'
         ]);
 });
 // var elixir = require('laravel-elixir');

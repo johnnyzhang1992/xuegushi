@@ -5,16 +5,102 @@
   padding-left: 0!important;
   padding-right: 0!important;
 }
+a:hover,a:focus{
+  text-decoration: none;
+}
 .main_content{
   background-color: #f3f3f3;
+}
+.topTypeHeader{
+  margin-bottom: 15px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: #fff;
+  .topTypeHeader-nav{
+    padding-left: 20px;
+  }
+  a.topTypeHeader-rightItem.pull-left {
+    color: #777;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 30px;
+    margin-right: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    border-right: 4px solid #777;
+  }
+  a.topTypeHeader-navItem{
+    display: inline-block;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 30px;
+    min-width: 40px;
+  }
 }
 .main_left,.main_right{
   padding-top: 20px;
   padding-bottom: 20px;
 }
+
+// go Top
+.CornerButtons {
+  position: fixed;
+  bottom: 0;
+  right: 12px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-transition: -webkit-transform .2s ease;
+  transition: -webkit-transform .2s ease;
+  transition: transform .2s ease;
+  transition: transform .2s ease,-webkit-transform .2s ease;
+  will-change: transfrom
+}
+
+.CornerAnimayedFlex {
+  width: 40px;
+  height: 52px;
+  -webkit-transition: height .2s ease;
+  transition: height .2s ease
+}
+
+.CornerAnimayedFlex--hidden {
+  height: 0
+}
+
+.CornerButton {
+  background: #fff;
+  border-radius: 4px;
+  border-width:0;
+  width: 40px;
+  height: 40px;
+  -webkit-box-shadow: 0 1px 3px rgba(0,0,0,.1);
+  box-shadow: 0 1px 3px rgba(0,0,0,.1)
+}
+
+.CornerButton:hover {
+  background: #d5dbe7
+}
+
+.CornerButton .Zi {
+  fill: #9aaabf
+}
+
+.CornerButton .Zi:hover {
+  fill: #8d9eb3
+}
 @media(max-width:736px){
   .main_left,.main_right{
     padding-left: 0;
     padding-right: 0;
+  }
+}
+@media (min-width: 992px){
+  header.navbar>div ,main.main_content>div.content{
+    margin-left: 12.5%;
   }
 }
