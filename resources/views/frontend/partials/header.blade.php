@@ -10,17 +10,29 @@
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="{{url('/')}}" class="nav-item">推荐</a></li>
-                <li><a href="{{url('/poems')}}" class="nav-item">诗文</a></li>
-                <li><a href="{{url('/sentence')}}" class="nav-item">名句</a></li>
-                <li><a href="{{url('/collect')}}" class="nav-item">收藏</a></li>
-                <li><a href="{{url('/feihualing')}}" class="nav-item">飞花令</a></li>
-                <li><a href="{{url('/authors')}}" class="nav-item">作者</a></li>
+                <li @if(!isset($query)) class="active" @endif>
+                    <a href="{{url('/')}}" class="nav-item">推荐</a>
+                </li>
+                <li @if(isset($query) && $query =='poems') class="active" @endif>
+                    <a href="{{url('/poems')}}" class="nav-item">诗文</a>
+                </li>
+                <li @if(isset($query) && $query =='sentence') class="active" @endif>
+                    <a href="{{url('/sentence')}}" class="nav-item">名句</a>
+                </li>
+                <li @if(isset($query) && $query =='collect') class="active" @endif>
+                    <a href="{{url('/collect')}}" class="nav-item">收藏</a>
+                </li>
+                <li @if(isset($query) && $query =='fhl') class="active" @endif>
+                    <a href="{{url('/fhl')}}" class="nav-item">飞花令</a>
+                </li>
+                <li @if(isset($query) && $query =='authors') class="active" @endif>
+                    <a href="{{url('/authors')}}" class="nav-item">作者</a>
+                </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-            @if (Auth::guest())
+                @if (Auth::guest())
                 {{--<li><a href="{{ url('/login') }}">注册</a></li>--}}
-                <!--<li><a href="{{ url('/register') }}">Register</a></li>-->
+                {{--<!--<li><a href="{{ url('/register') }}">Register</a></li>-->--}}
                 @else
                     <li class="dropdown">
                         <a role="button" class="nav-user dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><img src="{{ asset('static/images/avatar.jpg') }}" class="user-image" alt="User Image"/>{{ Auth::user()->name }}<span class="caret"></span></a>
@@ -34,6 +46,6 @@
                     </li>
                 @endif
             </ul>
-        </div><!--/.nav-collapse -->
+        </div>
     </div>
 </header>

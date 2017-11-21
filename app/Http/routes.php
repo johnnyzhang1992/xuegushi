@@ -11,10 +11,15 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+/* =============  Frontend ==============*/
+/* == Homepage ==*/
+Route::get('/', 'HomeController@index');
+/*
+ * poems
+ */
+Route::get('/poems', 'Frontend\PoemsController@index');
+//Route::get('/poems/update', 'Frontend\PoemsController@updatePoemLikeCount');
 
-/* ================== Homepage + Admin Routes ================== */
+/* ================== Admin Routes ================== */
 
 require __DIR__.'/admin_routes.php';

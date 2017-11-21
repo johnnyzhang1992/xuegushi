@@ -22,6 +22,9 @@
         background: #777;
         content: '';
       }
+      span.author::after{
+        width: 80px;
+      }
     }
   }
   .side-content {

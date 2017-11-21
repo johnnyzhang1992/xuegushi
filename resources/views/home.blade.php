@@ -23,15 +23,6 @@
         <div class="content col-md-9">
             {{--left--}}
             <div class="main_left col-md-8">
-                {{--<div class="topTypeHeader">--}}
-                {{--<a role="button" class="topTypeHeader-rightItem pull-left">类型</a>--}}
-                {{--<div class="topTypeHeader-nav">--}}
-                {{--<a href="{{url('/type/诗')}}" class="topTypeHeader-navItem" target="_blank">诗</a>--}}
-                {{--<a href="{{url('/type/词')}}" class="topTypeHeader-navItem" target="_blank">词</a>--}}
-                {{--<a href="{{url('/type/曲')}}" class="topTypeHeader-navItem" target="_blank">曲</a>--}}
-                {{--<a href="{{url('/type/文言文')}}" class="topTypeHeader-navItem" target="_blank">文言文</a>--}}
-                {{--</div>--}}
-                {{--</div>--}}
                 @if(isset($poems) && count($poems)>0)
                     @foreach($poems as $poem)
                         <div class="poem-card">

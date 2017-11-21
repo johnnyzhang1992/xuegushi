@@ -34,11 +34,10 @@ class HomeController extends Controller
     public function index()
     {
         $poems = DB::table('poem')
-            ->leftJoin('poem_detail','poem_detail.poem_id','=','poem.id')
-            ->where('poem_detail.like_count','>',100)
-            ->select('poem.*','poem_detail.like_count')
-            ->orderBy('poem_detail.like_count','desc')
+            ->where('like_count','>',100)
+            ->orderBy('like_count','desc')
             ->paginate(10);
-        return view('home')->with('poems',$poems);
+        return view('home')
+            ->with('poems',$poems);
     }
 }
