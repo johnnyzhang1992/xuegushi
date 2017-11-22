@@ -33,9 +33,7 @@
                             @endif
                             @if(isset(json_decode($poem->content)->content) && json_decode($poem->content)->content)
                                 @foreach(json_decode($poem->content)->content as $item)
-                                    <p class="p-content">
-                                        {{@$item}}
-                                    </p>
+                                    <p class="p-content">{!! @$item !!}</p>
                                 @endforeach
                             @endif
                         @endif
