@@ -290,5 +290,114 @@ class PoemsController extends Controller
         $out->setData($data);
         return $out;
     }
+    public function dynasty(){
+        $module = array();
+        $custom_menu = array();
+        $custom_menu['name'] = 'poems';
+        $custom_menu['id'] = '9';
 
+        return View('la.poem.dynasty', [
+            'show_actions' =>$this->show_action,
+            'listing_cols' => ['id','name','alia_name','count'],
+            'module' => $module,
+            'custom_menu'=>$custom_menu
+        ]);
+    }
+    /**
+     * 朝代
+     */
+    public function dy_ajax(){
+        $values = DB::table('poem_dynasty')
+            ->select('poem_dynasty.id','poem_dynasty.name','poem_dynasty.alia_name','poem_dynasty.count');
+        $out = Datatables::of($values)->make();
+        $data = $out->getData();
+
+        for($i=0; $i < count($data->data); $i++) {
+            if($this->show_action) {
+                $output = '';
+                $output .= ' <a data-id="'.$data->data[$i][0].'" data-name="'.$data->data[$i][1].'"  data-alia-name="'.$data->data[$i][2].'" class="btn btn-info btn-xs" style="display:inline;padding:2px 5px 3px 5px;" target="_blank" href="#edit-modal" data-toggle="modal" data-target="#edit-modal"><i class="fa fa-pencil"></i></a>';
+                $data->data[$i][] = (string)$output;
+            }
+        }
+
+        $out->setData($data);
+        return $out;
+    }
+    /**
+     * 类型
+     */
+    public function type(){
+        $module = array();
+        $custom_menu = array();
+        $custom_menu['name'] = 'poems';
+        $custom_menu['id'] = '9';
+
+        return View('la.poem.type', [
+            'show_actions' =>$this->show_action,
+            'listing_cols' => ['id','name','alia_name','count'],
+            'module' => $module,
+            'custom_menu'=>$custom_menu
+        ]);
+    }
+    public function type_ajax(){
+        $values = DB::table('poem_type')
+            ->select('id','name','alia_name','count');
+        $out = Datatables::of($values)->make();
+        $data = $out->getData();
+
+        for($i=0; $i < count($data->data); $i++) {
+            if($this->show_action) {
+                $output = '';
+                $output .= ' <a data-id="'.$data->data[$i][0].'" data-name="'.$data->data[$i][1].'"  data-alia-name="'.$data->data[$i][2].'" class="btn btn-info btn-xs" style="display:inline;padding:2px 5px 3px 5px;" target="_blank" href="#edit-modal" data-toggle="modal" data-target="#edit-modal"><i class="fa fa-pencil"></i></a>';
+                $data->data[$i][] = (string)$output;
+            }
+        }
+
+        $out->setData($data);
+        return $out;
+    }
+    /**
+     * 朝代创建/修改
+     * @param $request
+     * @return mixed
+     */
+    public function dynastyStore(Request $request){
+        $type = $request->input('type');
+        $data = $request->input('data');
+        $res = null;
+        if($type =='create'){
+            $res = DB::table('poem_dynasty')->insertGetId($data);
+        }elseif($type =='edit'){
+            $res = DB::table('poem_dynasty')->where('id',$data['id'])->update($data);
+        }
+        if($res){
+            $_redirect_url = '/admin/poem/dynasty';
+            return  redirect($_redirect_url);
+        }else{
+            return back()->with('error','创建失败！' );
+        }
+    }
+    /**
+     * 类型创建/修改
+     * * @param $request
+     * @return mixed
+     */
+    public function typeStore(Request $request){
+        $type = $request->input('type');
+        $data = $request->input('data');
+        $res = null;
+        if($type =='create'){
+            $data['count'] = DB::table('poem')->where('type',trim($data['alia_name']))->count();
+            $res = DB::table('poem_type')->insertGetId($data);
+        }elseif($type =='edit'){
+            $id = $request->input('type_id');
+            $res = DB::table('poem_type')->where('id',$id)->update($data);
+        }
+        if($res){
+            $_redirect_url = '/admin/poem/type';
+            return  redirect($_redirect_url);
+        }else{
+            return back()->with('error','创建失败！' );
+        }
+    }
 }

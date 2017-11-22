@@ -39,6 +39,16 @@ Route::group(['as' => $as, 'middleware' => ['auth', 'permission:ADMIN_PANEL']], 
     Route::get(config('laraadmin.adminRoute') . '/poems/ajax/{id}', 'LA\PoemsController@ajax');
     Route::get(config('laraadmin.adminRoute') . '/poem_dt_ajax', 'LA\PoemsController@dtajax');
 
+    Route::resource(config('laraadmin.adminRoute') . '/poem/dynasty', 'LA\PoemsController@dynasty');
+    Route::resource(config('laraadmin.adminRoute') . '/poem/type', 'LA\PoemsController@type');
+    Route::get(config('laraadmin.adminRoute') . '/poem_dy_ajax', 'LA\PoemsController@dy_ajax');
+    Route::get(config('laraadmin.adminRoute') . '/poem_type_ajax', 'LA\PoemsController@type_ajax');
+
+    Route::post(config('laraadmin.adminRoute') . '/poem/dynasty/save', 'LA\PoemsController@dyStore');
+    Route::post(config('laraadmin.adminRoute') . '/poem/type/save', 'LA\PoemsController@typeStore');
+
+
+
     /* ================== authors ================== */
     Route::resource(config('laraadmin.adminRoute') . '/authors', 'LA\PoemAuthorsController');
     Route::post(config('laraadmin.adminRoute') . '/authors/save', 'LA\PoemAuthorsController@store');
