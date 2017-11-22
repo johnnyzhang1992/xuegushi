@@ -17,14 +17,15 @@ use Illuminate\Http\Request;
  */
 class PoemsController extends Controller
 {
+    protected $query = null;
     /**
      * Create a new controller instance.
      *
-     * @return void
+     * @return mixed
      */
     public function __construct()
     {
-
+        $this->query = 'poems';
     }
 
     /**
@@ -40,7 +41,28 @@ class PoemsController extends Controller
             ->with('query','poems')
             ->with('poems',$poems);
     }
-
+    /**
+     * poem 详情页
+     * @param $id
+     * @return mixed
+     */
+    public function show($id){
+        $author = null;
+        $poem = DB::table('poem')->where('id',$id)->first();
+        if($poem){
+            $poem_detail = DB::table('poem_detail')->where('poem_id',$id)->first();
+            if($poem->author != '佚名'){
+                $author = DB::table('author')->where('author_name',$poem->author)->first();
+            }
+            return view('frontend.poem.show')
+                ->with('query','poems')
+                ->with('author',$author)
+                ->with('detail',$poem_detail)
+                ->with('poem',$poem);
+        }else{
+            return view('errors.404');
+        }
+    }
     /**
      * update poem database
      */

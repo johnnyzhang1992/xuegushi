@@ -272,7 +272,7 @@ class PoemsController extends Controller
     public function dtajax()
     {
         $values = DB::table('poem')
-            ->select('poem.id','poem.title','poem.dynasty','poem.author','poem_detail.type','poem_detail.like_count','poem.tags')
+            ->select('poem.id','poem.title','poem.dynasty','poem.author','poem_detail.type','poem.like_count','poem.tags')
             ->leftJoin('poem_detail','poem_detail.poem_id','=','poem.id');
         $out = Datatables::of($values)->make();
         $data = $out->getData();

@@ -53,14 +53,10 @@
 				@else
 					<div class="title">Page not found</div>
 				@endif
-				
-				@if(Auth::guest())
-					<a href="{{ url('/') }}">Homepage</a> | 
-					<a href="javascript:history.back()">Go Back</a>
-				@else
-					<a href="{{ url(config('laraadmin.adminRoute')) }}">Dashboard.</a> | 
-					<a href="javascript:history.back()">Go Back</a>
-				@endif
+
+                <a href="{{ url('/') }}">首页</a> |
+                <a href="javascript:history.back()">返回</a>
+
             </div>
         </div>
     </body>

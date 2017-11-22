@@ -52,16 +52,16 @@
                                 @endif
                             </div>
                             <div class="poem-tool clearfix">
-                                <div class="collect">
+                                <div class="collect" data-toggle="tooltip" data-placement="top" title="收藏">
                                     <i class="fa fa-heart-o"></i>
                                 </div>
-                                <div class="copy">
+                                <div class="copy" data-toggle="tooltip" data-placement="top" title="复制">
                                     <i class="fa fa-clone"></i>
                                 </div>
-                                <div class="speaker">
+                                <div class="speaker" data-toggle="tooltip" data-placement="top" title="朗读">
                                     <i class="fa fa-microphone" aria-hidden="true"></i>
                                 </div>
-                                <div class="like pull-right">
+                                <div class="like pull-right" data-toggle="tooltip" data-placement="top" title="喜欢">
                                     <i class="fa fa-thumbs-o-up"></i> {{@$poem->like_count}}
                                 </div>
                             </div>

@@ -62,4 +62,28 @@
       text-decoration: none;
     }
   }
+  // poem show
+  .card-title{
+    h2.title{
+      font-size: 18px;
+      font-weight:600;
+      margin-top: 0;
+      //border-bottom: 2px solid #DAD9D1;
+      //padding-bottom: 20px;
+    }
+  }
+  .reference{
+    color: #999;
+    border-top: 1px solid #DAD9D1;
+    h3.ref-title{
+      padding-top: 10px;
+      padding-bottom: 10px;
+      font-size: 16px;
+      margin-top:0;
+      margin-bottom:0;
+    }
+  }
+  ol{
+    padding-left: 15px;
+  }
 }

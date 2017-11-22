@@ -14,10 +14,16 @@
 /* =============  Frontend ==============*/
 /* == Homepage ==*/
 Route::get('/', 'HomeController@index');
+
 /*
  * poems
  */
-Route::get('/poems', 'Frontend\PoemsController@index');
+Route::group([
+    'prefix' => 'poem'
+],function (){
+    Route::get('/', 'Frontend\PoemsController@index');
+    Route::get('/{id}','Frontend\PoemsController@show');
+});
 //Route::get('/poems/update', 'Frontend\PoemsController@updatePoemLikeCount');
 
 /* ================== Admin Routes ================== */
