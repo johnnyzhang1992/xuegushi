@@ -39,6 +39,7 @@ class PoemsController extends Controller
             ->paginate(10);
         return view('frontend.poem.index')
             ->with('query','poems')
+            ->with('site_title','诗文')
             ->with('poems',$poems);
     }
     /**
@@ -58,6 +59,7 @@ class PoemsController extends Controller
                 ->with('query','poems')
                 ->with('author',$author)
                 ->with('detail',$poem_detail)
+                ->with('site_title',$poem->title)
                 ->with('poem',$poem);
         }else{
             return view('errors.404');

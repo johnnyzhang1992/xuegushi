@@ -26,6 +26,17 @@ Route::group([
 });
 //Route::get('/poems/update', 'Frontend\PoemsController@updatePoemLikeCount');
 
+/*
+ * authors
+ */
+Route::group([
+    'prefix' => 'author'
+],function (){
+    Route::get('/', 'Frontend\AuthorController@index');
+    Route::get('/{id}','Frontend\AuthorController@show');
+});
+//Route::get('/authors/update', 'Frontend\AuthorController@updateAuthorsLikeCount');
+
 /* ================== Admin Routes ================== */
 
 require __DIR__.'/admin_routes.php';
