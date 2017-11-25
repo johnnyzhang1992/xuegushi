@@ -38,6 +38,7 @@ class HomeController extends Controller
             ->orderBy('like_count','desc')
             ->paginate(10);
         return view('home')
+            ->with('query','home')
             ->with('poems',$poems);
     }
 }

@@ -10,7 +10,7 @@
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li @if(!isset($query)) class="active" @endif>
+                <li @if(isset($query) && $query =='home') class="active" @endif>
                     <a href="{{url('/')}}" class="nav-item">推荐</a>
                 </li>
                 <li @if(isset($query) && $query =='poems') class="active" @endif>

@@ -35,8 +35,13 @@ Route::group([
     Route::get('/', 'Frontend\AuthorController@index');
     Route::get('/{id}','Frontend\AuthorController@show');
 });
+/* =============== 静态页面 ====================== */
+
+Route::get('/contact','Frontend\PageController@contact');
+Route::get('/join','Frontend\PageController@join');
+Route::get('/about','Frontend\PageController@about');
 //Route::get('/authors/update', 'Frontend\AuthorController@updateAuthorsLikeCount');
 
-/* ================== Admin Routes ================== */
+/* =============== Admin Routes ================== */
 
 require __DIR__.'/admin_routes.php';

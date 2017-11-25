@@ -93,6 +93,28 @@ a:hover,a:focus{
 .CornerButton .Zi:hover {
   fill: #8d9eb3
 }
+.zh-footer, .zh-footer a {
+  color: #999;
+}
+.zh-footer {
+  clear: both;
+  text-align: right;
+}
+.zh-footer .content {
+  padding: 20px 15px;
+  border-top: 1px solid #ccc;
+}
+.zg-wrap {
+  width: 960px;
+  margin: 0 auto;
+  clear: both;
+}
+.zh-footer ul, .zh-footer li {
+  display: inline;
+}
+.zh-footer .copy {
+  float: left;
+}
 @media(max-width:736px){
   .main_left,.main_right{
     padding-left: 0;

@@ -69,9 +69,17 @@ class PoemsController extends Controller
      * update poem database
      */
     public function updatePoemLikeCount(){
-        $poems = DB::table('poem_detail')->get();
+        $poems = DB::table('poem_like')->get();
         foreach ($poems as $key=>$poem){
-            $res = DB::table('poem')->where('id',$poem->poem_id)->update(['type'=>$poem->type]);
+            $res = DB::table('poem')
+                ->where('title',$poem->title)
+                ->where('author',$poem->author)
+                ->where('dynasty',$poem->dynasty)
+                ->update([
+                    'type'=>$poem->type,
+                    'like_count' =>$poem->like_count
+                ]);
+            print($key.'-----'.$poem->title.'<br>');
             if(!$res){
                 break;
             }
