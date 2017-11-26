@@ -18,10 +18,10 @@
                 <div class="topTypeHeader">
                     <a role="button" class="topTypeHeader-rightItem pull-left">类型</a>
                     <div class="topTypeHeader-nav">
-                        <a href="{{url('/type/诗')}}" class="topTypeHeader-navItem" target="_blank">诗</a>
-                        <a href="{{url('/type/词')}}" class="topTypeHeader-navItem" target="_blank">词</a>
-                        <a href="{{url('/type/曲')}}" class="topTypeHeader-navItem" target="_blank">曲</a>
-                        <a href="{{url('/type/文言文')}}" class="topTypeHeader-navItem" target="_blank">文言文</a>
+                        <a href="{{url('poem?type=诗')}}" class="topTypeHeader-navItem @if(isset($type) && $type =='诗') active @endif">诗</a>
+                        <a href="{{url('poem?type=词')}}" class="topTypeHeader-navItem @if(isset($type) && $type =='词') active @endif">词</a>
+                        <a href="{{url('poem?type=曲')}}" class="topTypeHeader-navItem @if(isset($type) && $type =='曲') active @endif">曲</a>
+                        <a href="{{url('poem?type=文言文')}}" class="topTypeHeader-navItem @if(isset($type) && $type =='文言文') active @endif">文言文</a>
                     </div>
                 </div>
                 @if(isset($poems) && count($poems)>0)
@@ -69,8 +69,8 @@
                             <div class="poem-tag">
                                 <p>
                                     @if(isset($poem->tags) && $poem->tags)
-                                        @foreach(json_decode($poem->tags) as $key=>$tag)
-                                            @if($key+1 < count(json_decode($poem->tags)))<a href="" class="tag">{{@$tag}} ,</a>@else<a href="" class="tag">{{@$tag}}</a>@endif
+                                        @foreach(explode(',',$poem->tags) as $key=>$tag)
+                                            @if($key+1 < count(explode(',',$poem->tags)))<a href="{{ url('poem?tag='.$tag) }}" class="tag">{{@$tag}} ,</a>@else<a href="" class="tag">{{@$tag}}</a>@endif
                                         @endforeach
                                     @endif
                                 </p>

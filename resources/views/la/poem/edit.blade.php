@@ -33,13 +33,30 @@
             <!-- Tab panes -->
             <div class="tab-content">
                 <div role="tabpanel" class="tab-pane active" id="poem-tab">
+
                     <h3>标题：<input type="text" id="title" name="poem[title]" value="{{@$poem->title}}"></h3>
+                    <div class="col-md-12" style="margin-bottom: 10px">
+                        <a href="#">Like   <span class="badge">{{@$detail->like_count ? @$detail->like_count : 0}}</span></a>
+                    </div>
                     <p>朝代：<input type="text" id="dynasty" name="poem[dynasty]" value="{{@$poem->dynasty}}"> :作者：<input type="text" id="author" name="poem[author]" value="{{@$poem->author}}"></p>
                     <section>
                         <div class="col-md-12 no-padding">
                             <div class="col-md-1 no-padding" style="max-width: 45px;line-height: 34px">标签：</div>
                             <div class="col-md-10 no-padding">
-                                <input class="form-control" id="tags" type="text" name="poem[tags]" value="{{implode(',',@json_decode($poem->tags))}}">
+                                <input class="form-control" id="tags" type="text" name="poem[tags]" value="{{@$poem->tags}}">
+                            </div>
+                        </div>
+                    </section>
+                    <section>
+                        <div class="col-md-12 no-padding clearfix">
+                            <div class="col-md-1 no-padding"><label for="type">类型：</label></div>
+                            <div class="col-md-3">
+                                <select class="form-control" id="type" name="poem[type]">
+                                    <option  value="诗" @if(isset($poem->type) && $poem->type == '诗') selected = "selected" @endif>诗</option>
+                                    <option  value="词" @if(isset($poem->type) && $poem->type == '词') selected = "selected" @endif>词</option>
+                                    <option  value="曲" @if(isset($poem->type) && $poem->type == '曲') selected = "selected" @endif>曲</option>
+                                    <option  value="文言文" @if(isset($poem->type) && $poem->type == '文言文')selected = "selected" @endif>文言文</option>
+                                </select>
                             </div>
                         </div>
                     </section>
@@ -50,19 +67,11 @@
                         <p><strong><label for="background"></label>创作背景</strong></p>
                         <textarea name="poem[background]" id="background" cols="100" rows="10">{{@$poem->background}}</textarea>
                     </section>
-                    <section>
-                        <p><strong>正文</strong></p>
-                        <div id="detail-content-jsoneditor"></div>
-                    </section>
                     <div class="row col-md-12">
                         <button id="save-poem" class="btn btn-success">提交</button>
                     </div>
                 </div>
                 <div role="tabpanel" class="tab-pane" id="detail-tab">
-                    <section>
-                        <p><a href="#">Like  <span class="badge">{{@$detail->like_count ? @$detail->like_count : 0}}</span></a></p>
-                        <p>类型：<input type="text" id="type" name="poem[type]" value="{{ @$detail->type ? @$detail->type : '未知' }}"></p>
-                    </section>
                     <section>
                         <p><strong>翻译</strong></p>
                         <div id="yi-jsoneditor"></div>
@@ -93,6 +102,8 @@
 <link href="{{ asset('lib/jsoneditor/dist/jsoneditor.min.css') }}" rel="stylesheet" type="text/css">
 <style>
     section{
+        overflow: hidden;
+        clear: both;
         min-height: 40px;
         margin-bottom: 15px;
     }
@@ -116,13 +127,6 @@
     // get json
     var json_con = content_editor.get();
 
-    var detail_con_editor = new JSONEditor(document.getElementById('detail-content-jsoneditor'),{});
-    @if(isset($detail->content) && $detail->content)
-         detail_con_editor.set({!! \json_encode(\json_decode($detail->content), JSON_PRETTY_PRINT)  !!});
-    @else
-         detail_con_editor.set({'content':[]});
-    @endif
-
     var yi_editor = new JSONEditor(document.getElementById('yi-jsoneditor'),{});
     @if(isset($detail->yi) && $detail->yi)
          yi_editor.set({!! \json_encode(\json_decode($detail->yi), JSON_PRETTY_PRINT) !!});
@@ -138,14 +142,14 @@
     @endif
 
     var shang_editor = new JSONEditor(document.getElementById('shangxi-editor'),{});
-    @if(isset($detail->content) && $detail->content)
+    @if(isset($detail->shangxi) && $detail->shangxi)
         shang_editor.set({!! \json_encode(\json_decode($detail->shangxi), JSON_PRETTY_PRINT) !!});
     @else
         shang_editor.set({'content':[],'reference':{'title':'参考资料','content':[]}});
     @endif
 
     var more_editor = new JSONEditor(document.getElementById('more_info_editor'),{});
-    @if(isset($detail->content) && $detail->content)
+    @if(isset($detail->more_infos) && $detail->more_infos)
         more_editor.set({!! \json_encode(\json_decode($detail->more_infos), JSON_PRETTY_PRINT) !!});
     @else
         more_editor.set({'content':[]});
@@ -156,10 +160,10 @@
             'title' : $('#title').val(),
             'dynasty' : $('#dynasty').val(),
             'author' : $('#author').val(),
+            'type' : $('#type').val(),
             'tags' : $('#tags').val(),
             'background' : $('#background').val(),
             'con': content_editor.get(),
-            'detail_con': detail_con_editor.get(),
             "_token":"{{csrf_token()}}"
         };
         console.log(_data);
@@ -185,9 +189,6 @@
     $('#save-poem-detail').on('click',function () {
         var _data = {
             'id':'{{@$detail->id}}',
-            'title' : $('#title').val(),
-            'type' : $('#type').val(),
-            'detail_con': detail_con_editor.get(),
             'yi': yi_editor.get(),
             'zhu': zhu_editor.get(),
             'shang': shang_editor.get(),

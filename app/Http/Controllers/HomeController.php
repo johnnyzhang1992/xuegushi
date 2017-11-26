@@ -28,12 +28,10 @@ class HomeController extends Controller
 
     /**
      * Show the application dashboard.
-     *
      * @return Response
      */
-    public function index()
-    {
-        $poems = DB::table('poem')
+    public function index(){
+        $poems = DB::table('dev_poem')
             ->where('like_count','>',100)
             ->orderBy('like_count','desc')
             ->paginate(10);

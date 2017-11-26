@@ -58,27 +58,47 @@
                     <div class="poem-tag">
                         <p>
                             @if(isset($poem->tags) && $poem->tags)
-                                @foreach(json_decode($poem->tags) as $key=>$tag)
-                                    @if($key+1 < count(json_decode($poem->tags)))<a href="{{ url('poem?tag='.$tag) }}" class="tag" target="_blank">{{@$tag}} ,</a>@else<a href="{{ url('poem?tag='.$tag) }}" class="tag" target="_blank">{{@$tag}}</a>@endif
+                                @foreach(explode(',',$poem->tags) as $key=>$tag)
+                                    @if($key+1 < count(explode(',',$poem->tags)))<a href="{{ url('poem?tag='.$tag) }}" class="tag" target="_blank">{{@$tag}} ,</a>@else<a href="{{ url('poem?tag='.$tag) }}" class="tag" target="_blank">{{@$tag}}</a>@endif
                                 @endforeach
                             @endif
                         </p>
                     </div>
                 </div>
+                @if(isset($author) && $author)
+                    <div class="poem-card">
+                        @if(file_exists('static/author/'.@$author->author_name.'.jpg'))
+                            <div class="author-avatar pull-left" style="margin-bottom: 15px;margin-right: 15px;width: 105px;height: 150px;">
+                                <a href="{{ url('author/'.@$author->id) }}" style="display: block;">
+                                    <img src="{{ asset('/static/author/'.@$author->author_name.'.jpg') }}" alt="">
+                                </a>
+                            </div>
+                        @endif
+                        <div class="author-name">
+                            <p>
+                                <a href="{{ url('author/'.@$author->id) }}" style="font-size: 18px">{{ @$author->author_name }}</a>
+                            </p>
+                        </div>
+                        <div class="poem-content">
+                            {!! @$author->profile !!}
+                        </div>
+                        <div class="poem-tool clearfix">
+                            <div class="collect" data-toggle="tooltip" data-placement="top" title="收藏">
+                                <i class="fa fa-heart-o"></i>
+                            </div>
+                            <div class="copy" data-toggle="tooltip" data-placement="top" title="复制">
+                                <i class="fa fa-clone"></i>
+                            </div>
+                            <div class="like pull-right" data-toggle="tooltip" data-placement="top" title="喜欢">
+                                <i class="fa fa-thumbs-o-up"></i> {{@$author->like_count}}
+                            </div>
+                        </div>
+                        <div class="tool-qrcode">
+
+                        </div>
+                    </div>
+                @endif
                 @if(isset($detail))
-                    {{--<section>--}}
-                    {{--<p><strong>正文</strong></p>--}}
-                    {{--@if(isset($detail->content) && count(json_decode($detail->content))>0)--}}
-                    {{--@if(isset(json_decode($detail->content)->xu) && json_decode($detail->content)->xu)--}}
-                    {{--<p style="color:#999">{{ @json_decode($detail->content)->xu}}</p>--}}
-                    {{--@endif--}}
-                    {{--@if(isset(json_decode($detail->content)->content) && json_decode($detail->content)->content)--}}
-                    {{--@foreach(json_decode($detail->content)->content as $item)--}}
-                    {{--<p>{{ @$item }}</p>--}}
-                    {{--@endforeach--}}
-                    {{--@endif--}}
-                    {{--@endif--}}
-                    {{--</section>--}}
                     @if(isset(json_decode($detail->yi)->content) && json_decode($detail->yi)->content)
                         <div class="poem-card">
                             <div class="card-title">
@@ -89,6 +109,7 @@
                                     <p>{{@$item}}</p>
                                 @endforeach
                             </div>
+                            @if(isset(json_decode($detail->yi)->reference->content) && json_decode($detail->yi)->reference->content)
                             <div class="reference">
                                 @if(isset(json_decode($detail->yi)->reference) && json_decode($detail->yi)->reference)
                                     <h3 class="ref-title">{{@json_decode($detail->yi)->reference->title}}</h3>
@@ -103,6 +124,7 @@
                                     @endif
                                 @endif
                             </div>
+                            @endif
                         </div>
                     @endif
                     @if(isset(json_decode($detail->zhu)->content) && json_decode($detail->zhu)->content)
@@ -117,20 +139,22 @@
                                     @endforeach
                                 </ol>
                             </div>
-                            <div class="reference">
-                                @if(isset(json_decode($detail->zhu)->reference) && json_decode($detail->zhu)->reference)
-                                    <h3 class="ref-title">{{@json_decode($detail->zhu)->reference->title}}</h3>
-                                    @if(is_array(json_decode($detail->zhu)->reference->content))
-                                        <ol>
-                                            @foreach(json_decode($detail->zhu)->reference->content as $item)
-                                                <li>{{@$item}}</li>
-                                            @endforeach
-                                        </ol>
-                                    @else
-                                        <p> {{ @json_decode($detail->zhu)->reference->content }}</p>
+                            @if(isset(json_decode($detail->zhu)->reference->content) && json_decode($detail->zhu)->reference->content)
+                                <div class="reference">
+                                    @if(isset(json_decode($detail->zhu)->reference) && json_decode($detail->zhu)->reference)
+                                        <h3 class="ref-title">{{@json_decode($detail->zhu)->reference->title}}</h3>
+                                        @if(is_array(json_decode($detail->zhu)->reference->content))
+                                            <ol>
+                                                @foreach(json_decode($detail->zhu)->reference->content as $item)
+                                                    <li>{{@$item}}</li>
+                                                @endforeach
+                                            </ol>
+                                        @else
+                                            <p> {{ @json_decode($detail->zhu)->reference->content }}</p>
+                                        @endif
                                     @endif
-                                @endif
-                            </div>
+                                </div>
+                            @endif
                         </div>
                     @endif
                     @if(isset(json_decode($detail->shangxi)->content) && json_decode($detail->shangxi)->content)
@@ -143,6 +167,7 @@
                                     <p style="text-indent: 30px">{!! @$item !!}</p>
                                 @endforeach
                             </div>
+                            @if(isset(json_decode($detail->shangxi)->reference->content) && json_decode($detail->shangxi)->reference->content)
                             <div class="reference">
                                 @if(isset(json_decode($detail->shangxi)->reference) && json_decode($detail->shangxi)->reference)
                                     <h3 class="ref-title">{{@json_decode($detail->shangxi)->reference->title}}</h3>
@@ -157,6 +182,7 @@
                                     @endif
                                 @endif
                             </div>
+                            @endif
                         </div>
                     @endif
                     @if(isset($detail->more_infos) && isset(json_decode($detail->more_infos)->content))
@@ -176,7 +202,24 @@
                 @endif
             </div>
             {{--right--}}
+
             <div class="main_right col-md-4">
+                @if(isset($hot_poems) && $hot_poems)
+                    <div class="side-card">
+                        <div class="side-title">
+                            <h2><span class="author">代表作品 <small>(作品总数：{{ @$poems_count }})</small></span></h2>
+                        </div>
+                        <div class="side-content">
+                            <ul style="list-style: none;padding-left: 0">
+                                @foreach($hot_poems as $h_poem)
+                                    <li>
+                                        <a class="" href="{{ url('poem/'.$h_poem->id) }}" target="_blank" style="border: none">{{@$h_poem->title}}</a> <i class="fa fa-thumbs-o-up"></i> {{@$h_poem->like_count}}
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    </div>
+                @endif
                 @include('frontend.partials.side')
                 @include('frontend.partials.footer')
             </div>

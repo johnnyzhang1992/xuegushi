@@ -38,7 +38,7 @@ class DashboardController extends Controller
     {
         $count = array();
         $count['users'] = DB::table('users')->count();
-        $count['poems'] = DB::table('poem')->count();
+        $count['poems'] = DB::table('dev_poem')->count();
         $count['authors'] = DB::table('author')->count();
         $count['dynasty'] = DB::table('poem_dynasty')->count();
         $count['type'] = DB::table('poem_type')->count();

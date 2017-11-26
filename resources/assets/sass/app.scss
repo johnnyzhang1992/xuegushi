@@ -35,6 +35,10 @@ a:hover,a:focus{
     font-size: 18px;
     line-height: 30px;
     min-width: 40px;
+    color: #777;
+  }
+  a.topTypeHeader-navItem.active{
+    color: #337ab7;
   }
 }
 .main_left,.main_right{

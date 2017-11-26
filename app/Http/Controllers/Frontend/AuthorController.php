@@ -50,14 +50,9 @@ class AuthorController extends Controller
         $author = null;
         $author = DB::table('author')->where('id',$id)->first();
         if($author){
-            $author_detail = DB::table('author_detail')->where('author_id',$id)->first();
-            if($author->author != '佚名'){
-                $author = DB::table('author')->where('author_name',$author->author)->first();
-            }
             return view('frontend.author.show')
                 ->with('query','authors')
                 ->with('author',$author)
-                ->with('detail',$author_detail)
                 ->with('author',$author);
         }else{
             return view('errors.404');

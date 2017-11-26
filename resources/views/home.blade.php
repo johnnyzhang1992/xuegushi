@@ -68,8 +68,8 @@
                             <div class="poem-tag">
                                 <p>
                                     @if(isset($poem->tags) && $poem->tags)
-                                        @foreach(json_decode($poem->tags) as $key=>$tag)
-                                            @if($key+1 < count(json_decode($poem->tags)))<a href="" class="tag">{{@$tag}} ,</a>@else<a href="" class="tag">{{@$tag}}</a>@endif
+                                        @foreach(explode(',',$poem->tags) as $key=>$tag)
+                                            @if($key+1 < count(explode(',',$poem->tags)))<a href="{{ url('poem?tag='.$tag) }}" class="tag">{{@$tag}} ,</a>@else<a href="" class="tag">{{@$tag}}</a>@endif
                                         @endforeach
                                     @endif
                                 </p>

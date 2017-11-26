@@ -36,9 +36,9 @@
                     <p><a href="#">Like  <span class="badge">{{@$detail->like_count ? @$detail->like_count : 0}}</span></a></p>
                     <p>类型：{{ @$detail->type ? @$detail->type : '未知' }}</p>
                     <p>{{@$poem->dynasty}} : {{@$poem->author}} </p>
-                    @if(isset($poem->tags) && json_decode($poem->tags))
+                    @if(isset($poem->tags) && $poem->tags)
                         <p>标签:
-                            @foreach(json_decode($poem->tags) as $tag)
+                            @foreach(explode(',',$poem->tags) as $tag)
                                 <span class="label label-success">{{ $tag }}</span>
                             @endforeach
                         </p>
