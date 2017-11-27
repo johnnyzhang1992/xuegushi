@@ -49,7 +49,7 @@
                             <i class="fa fa-microphone" aria-hidden="true"></i>
                         </div>
                         <div class="like pull-right" data-toggle="tooltip" data-placement="top" title="喜欢">
-                            <i class="fa fa-thumbs-o-up"></i> {{@$poem->like_count}}
+                            <i class="fa fa-thumbs-o-up"></i> <span class="like_count">{{@$poem->like_count}}</span>
                         </div>
                     </div>
                     <div class="tool-qrcode">
@@ -79,7 +79,7 @@
                                 <a href="{{ url('author/'.@$author->id) }}" style="font-size: 18px">{{ @$author->author_name }}</a>
                             </p>
                         </div>
-                        <div class="poem-content">
+                        <div class="poem-content" style="min-height: 130px;">
                             {!! @$author->profile !!}
                         </div>
                         <div class="poem-tool clearfix">

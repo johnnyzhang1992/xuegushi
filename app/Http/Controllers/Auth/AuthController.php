@@ -52,12 +52,7 @@ class AuthController extends Controller
     {
         $roleCount = Role::count();
 		if($roleCount != 0) {
-			$userCount = User::count();
-			if($userCount == 0) {
-				return view('auth.register');
-			} else {
-				return redirect('login');
-			}
+            return view('auth.register');
 		} else {
 			return view('errors.error', [
 				'title' => 'Migration not completed',

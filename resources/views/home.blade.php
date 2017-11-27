@@ -23,6 +23,8 @@
         <div class="content col-md-9">
             {{--left--}}
             <div class="main_left col-md-8">
+                <input type="hidden" name="_token" value="{{ csrf_token() }}" />
+                <input type="hidden" name="_user_id" value="{{ @Auth::user()->id }}">
                 @if(isset($poems) && count($poems)>0)
                     @foreach($poems as $poem)
                         <div class="poem-card">
@@ -49,17 +51,17 @@
                                 @endif
                             </div>
                             <div class="poem-tool clearfix">
-                                <div class="collect" data-toggle="tooltip" data-placement="top" title="收藏">
+                                <div class="collect" data-toggle="tooltip" data-placement="top" title="收藏" data-type="poem" data-id="{{$poem->id}}">
                                     <i class="fa fa-heart-o"></i>
                                 </div>
-                                <div class="copy" data-toggle="tooltip" data-placement="top" title="复制">
+                                <div class="copy" data-toggle="tooltip" data-placement="top" title="复制" data-type="poem" data-id="{{$poem->id}}">
                                     <i class="fa fa-clone"></i>
                                 </div>
-                                <div class="speaker" data-toggle="tooltip" data-placement="top" title="朗读">
+                                <div class="speaker" data-toggle="tooltip" data-placement="top" title="朗读" data-type="poem" data-id="{{$poem->id}}">
                                     <i class="fa fa-microphone" aria-hidden="true"></i>
                                 </div>
-                                <div class="like pull-right" data-toggle="tooltip" data-placement="top" title="喜欢">
-                                    <i class="fa fa-thumbs-o-up"></i> {{@$poem->like_count}}
+                                <div class="like pull-right" data-toggle="tooltip" data-placement="top" title="喜欢" data-type="poem" data-id="{{$poem->id}}">
+                                    <i class="fa fa-thumbs-o-up"></i> <span class="like_count">{{@$poem->like_count}}</span>
                                 </div>
                             </div>
                             <div class="tool-qrcode">

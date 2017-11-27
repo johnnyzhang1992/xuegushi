@@ -35,6 +35,14 @@ Route::group([
     Route::get('/', 'Frontend\AuthorController@index');
     Route::get('/{id}','Frontend\AuthorController@show');
 });
+
+/* =============== ajax ========================== */
+Route::group([
+    'prefix' => 'ajax'
+],function (){
+    Route::post('/update/like_count','Frontend\PoemsController@updateLikeCount');
+    Route::post('/judge/like','Frontend\PoemsController@judgeLike');
+});
 /* =============== 静态页面 ====================== */
 
 Route::get('/contact','Frontend\PageController@contact');

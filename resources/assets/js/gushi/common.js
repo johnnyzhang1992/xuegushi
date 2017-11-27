@@ -28,3 +28,67 @@ jQuery(document).ready(function(){
 $(function () {
     $('[data-toggle="tooltip"]').tooltip()
 });
+
+$('.poem-tool').on('click','.like',function () {
+    var type = $(this).attr('data-type');
+    var id = $(this).attr('data-id');
+    var like = $(this).find('.like_count');
+    $.post(
+        '/ajax/update/like_count',
+        {
+            'id': id,
+            'type': type,
+            '_token': $('input[name="_token"]').val()
+        },
+        function (res) {
+            if(res && res.status == 'success'){
+               $(like).html(res.num);
+               if($(like).parent().hasClass('active')){
+                   $(like).parent().removeClass('active')
+               }else{
+                   $(like).parent().addClass('active')
+               }
+                $('body').toast({
+                    position:'fixed',
+                    content:res.msg,
+                    duration:1000,
+                    isCenter:true,
+                    background:'rgba(0,0,0,0.5)',
+                    animateIn:'bounceIn-hastrans',
+                    animateOut:'bounceOut-hastrans'
+                });
+            }else{
+                $('body').toast({
+                    position:'fixed',
+                    content:res.msg,
+                    duration:1000,
+                    isCenter:true,
+                    background:'rgba(0,0,0,0.5)',
+                    animateIn:'bounceIn-hastrans',
+                    animateOut:'bounceOut-hastrans'
+                });
+            }
+        }
+    )
+});
+
+$(document).ready(function () {
+    // 判断诗词是否已经点击了like
+    if($('input[name="_user_id"]')){
+        $('.poem-card .like').each(function (index,el) {
+            $.post(
+                '/ajax/judge/like',
+                {
+                    'id': $(el).attr('data-id'),
+                    'type': $(el).attr('data-type') ,
+                    '_token': $('input[name="_token"]').val()
+                },
+                function (res) {
+                    if(res && res.status){
+                        $(el).addClass('active')
+                    }
+                }
+            )
+        });
+    }
+});

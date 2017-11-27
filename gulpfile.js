@@ -13,7 +13,8 @@ var gulp = require('gulp');
 var js = [
     'jQuery-2.1.4.min.js',
     'bootstrap.min.js',
-    'gushi/common.js'
+    'gushi/common.js',
+    'toast.js'
 ];
 elixir(function(mix) {
     mix.sass('app.scss')

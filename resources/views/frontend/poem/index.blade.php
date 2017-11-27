@@ -15,13 +15,34 @@
         <div class="content col-md-9">
             {{--left--}}
             <div class="main_left col-md-8">
+                <input type="hidden" name="_token" value="{{ csrf_token() }}" />
+                <input type="hidden" name="_user_id" value="{{ @Auth::user()->id }}">
                 <div class="topTypeHeader">
-                    <a role="button" class="topTypeHeader-rightItem pull-left">类型</a>
-                    <div class="topTypeHeader-nav">
-                        <a href="{{url('poem?type=诗')}}" class="topTypeHeader-navItem @if(isset($type) && $type =='诗') active @endif">诗</a>
-                        <a href="{{url('poem?type=词')}}" class="topTypeHeader-navItem @if(isset($type) && $type =='词') active @endif">词</a>
-                        <a href="{{url('poem?type=曲')}}" class="topTypeHeader-navItem @if(isset($type) && $type =='曲') active @endif">曲</a>
-                        <a href="{{url('poem?type=文言文')}}" class="topTypeHeader-navItem @if(isset($type) && $type =='文言文') active @endif">文言文</a>
+                    <div class="typeHeaderItem" style="margin-bottom: 10px">
+                        <a role="button" class="topTypeHeader-rightItem pull-left">类型</a>
+                        <div class="topTypeHeader-nav">
+                            <a href="{{url('poem?type=all&dynasty='.$dynasty)}}" class="topTypeHeader-navItem @if(isset($type) && $type == 'all') active @endif">不限</a>
+                            @foreach($poem_types as $p_type)
+                                @if(isset($dynasty) && $dynasty)
+                                    <a href="{{url('poem?type='.$p_type->alia_name.'&dynasty='.$dynasty)}}" class="topTypeHeader-navItem @if(isset($type) && $type ==$p_type->alia_name) active @endif">{{ $p_type->alia_name }}</a>
+                                @else
+                                    <a href="{{url('poem?type='.$p_type->alia_name)}}" class="topTypeHeader-navItem @if(isset($type) && $type ==$p_type->alia_name) active @endif">{{ $p_type->alia_name }}</a>
+                                @endif
+                            @endforeach
+                        </div>
+                    </div>
+                    <div class="typeHeaderItem">
+                        <a role="button" class="topTypeHeader-rightItem pull-left">朝代</a>
+                        <div class="topTypeHeader-nav">
+                            <a href="{{url('poem?type='.$type.'&dynasty=all')}}" class="topTypeHeader-navItem @if(isset($dynasty) && $dynasty == 'all') active @endif">不限</a>
+                            @foreach($poem_dynasty as $p_dy)
+                                @if(isset($type) && $type)
+                                    <a href="{{url('poem?dynasty='.$p_dy->alia_name.'&type='.$type)}}" class="topTypeHeader-navItem @if(isset($dynasty) && $dynasty ==$p_dy->alia_name) active @endif">{{ $p_dy->alia_name }}</a>
+                                @else
+                                    <a href="{{url('poem?dynasty='.$p_dy->alia_name)}}" class="topTypeHeader-navItem @if(isset($dynasty) && $dynasty ==$p_dy->alia_name) active @endif">{{ $p_dy->alia_name }}</a>
+                                @endif
+                            @endforeach
+                        </div>
                     </div>
                 </div>
                 @if(isset($poems) && count($poems)>0)
@@ -50,17 +71,17 @@
                                 @endif
                             </div>
                             <div class="poem-tool clearfix">
-                                <div class="collect" data-toggle="tooltip" data-placement="top" title="收藏">
+                                <div class="collect" data-toggle="tooltip" data-placement="top" title="收藏" data-type="poem" data-id="{{$poem->id}}">
                                     <i class="fa fa-heart-o"></i>
                                 </div>
-                                <div class="copy" data-toggle="tooltip" data-placement="top" title="复制">
+                                <div class="copy" data-toggle="tooltip" data-placement="top" title="复制" data-type="poem" data-id="{{$poem->id}}">
                                     <i class="fa fa-clone"></i>
                                 </div>
-                                <div class="speaker" data-toggle="tooltip" data-placement="top" title="朗读">
+                                <div class="speaker" data-toggle="tooltip" data-placement="top" title="朗读" data-type="poem" data-id="{{$poem->id}}">
                                     <i class="fa fa-microphone" aria-hidden="true"></i>
                                 </div>
-                                <div class="like pull-right" data-toggle="tooltip" data-placement="top" title="喜欢">
-                                    <i class="fa fa-thumbs-o-up"></i> {{@$poem->like_count}}
+                                <div class="like pull-right" data-toggle="tooltip" data-placement="top" title="喜欢" data-type="poem" data-id="{{$poem->id}}">
+                                    <i class="fa fa-thumbs-o-up"></i> <span class="like_count">{{@$poem->like_count}}</span>
                                 </div>
                             </div>
                             <div class="tool-qrcode">

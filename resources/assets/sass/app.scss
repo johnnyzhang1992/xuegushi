@@ -23,7 +23,7 @@ a:hover,a:focus{
     color: #777;
     font-size: 18px;
     font-weight: 600;
-    line-height: 30px;
+    line-height: 22px;
     margin-right: 20px;
     padding-left: 20px;
     padding-right: 20px;
@@ -33,7 +33,7 @@ a:hover,a:focus{
     display: inline-block;
     font-weight: 600;
     font-size: 18px;
-    line-height: 30px;
+    line-height: 25px;
     min-width: 40px;
     color: #777;
   }
@@ -130,3 +130,5 @@ a:hover,a:focus{
     margin-left: 12.5%;
   }
 }
+@import "vendor/toast";
+@import "vendor/animate";
