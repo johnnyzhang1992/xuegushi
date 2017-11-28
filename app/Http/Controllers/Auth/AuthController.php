@@ -126,10 +126,10 @@ class AuthController extends Controller
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
-            'context_id' => $employee->id,
+            'context_id' => '0',
             'type' => "Employee",
         ]);
-        $role = Role::where('name', 'SUPER_ADMIN')->first();
+        $role = Role::where('name', 'NORMAL')->first();
         $user->attachRole($role);
     
         return $user;

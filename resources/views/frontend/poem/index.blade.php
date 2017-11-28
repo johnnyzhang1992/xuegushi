@@ -16,7 +16,6 @@
             {{--left--}}
             <div class="main_left col-md-8">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}" />
-                <input type="hidden" name="_user_id" value="{{ @Auth::user()->id }}">
                 <div class="topTypeHeader">
                     <div class="typeHeaderItem" style="margin-bottom: 10px">
                         <a role="button" class="topTypeHeader-rightItem pull-left">类型</a>

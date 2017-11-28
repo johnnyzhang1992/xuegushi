@@ -24,7 +24,6 @@
             {{--left--}}
             <div class="main_left col-md-8">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}" />
-                <input type="hidden" name="_user_id" value="{{ @Auth::user()->id }}">
                 @if(isset($poems) && count($poems)>0)
                     @foreach($poems as $poem)
                         <div class="poem-card">
