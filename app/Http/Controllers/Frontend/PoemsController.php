@@ -56,6 +56,16 @@ class PoemsController extends Controller
 
         $_poems->orderBy('like_count','desc');
         $_poems = $_poems->paginate(10)->setPath($_url);
+        if(!Auth::guest()){
+            foreach ($_poems as $poem){
+                $res = DB::table('dev_like')->where('like_id',$poem->id)->where('type','poem')->first();
+                if(isset($res) && $res->status == 'active'){
+                    $poem->status = 'active';
+                }else{
+                    $poem->status = 'delete';
+                }
+            }
+        }
         return view('frontend.poem.index')
             ->with('query','poems')
             ->with('site_title','诗文')
@@ -157,7 +167,7 @@ class PoemsController extends Controller
                     $_data = DB::table("dev_poem")->where('id',$id)->first();
                     if($_res->status == 'active'){
                         DB::table('dev_like')->where('id',$_res->id)->update(['status' => 'delete']);
-                        $msg = '喜欢-1';
+                        $msg = '取消喜欢成功';
                     }else{
                         DB::table('dev_like')->where('id',$_res->id)->update(['status' => 'active']);
                         $msg = '喜欢+1';

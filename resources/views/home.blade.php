@@ -60,7 +60,7 @@
                                 <div class="speaker" data-toggle="tooltip" data-placement="top" title="朗读" data-type="poem" data-id="{{$poem->id}}">
                                     <i class="fa fa-microphone" aria-hidden="true"></i>
                                 </div>
-                                <div class="like pull-right" data-toggle="tooltip" data-placement="top" title="喜欢" data-type="poem" data-id="{{$poem->id}}">
+                                <div class="like pull-right @if(isset($poem->status) && $poem->status == 'active') active @endif" data-toggle="tooltip" data-placement="top" title="喜欢" data-type="poem" data-id="{{$poem->id}}">
                                     <i class="fa fa-thumbs-o-up"></i> <span class="like_count">{{@$poem->like_count}}</span>
                                 </div>
                             </div>

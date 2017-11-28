@@ -53,7 +53,7 @@ $('.poem-tool').on('click','.like',function () {
                     content:res.msg,
                     duration:1000,
                     isCenter:true,
-                    background:'rgba(0,0,0,0.5)',
+                    background:'rgba(51,122,183,0.8)',
                     animateIn:'bounceIn-hastrans',
                     animateOut:'bounceOut-hastrans'
                 });
@@ -74,21 +74,21 @@ $('.poem-tool').on('click','.like',function () {
 
 $(document).ready(function () {
     // 判断诗词是否已经点击了like
-    if($('input[name="_user_id"]')){
-        $('.poem-card .like').each(function (index,el) {
-            $.post(
-                '/ajax/judge/like',
-                {
-                    'id': $(el).attr('data-id'),
-                    'type': $(el).attr('data-type') ,
-                    '_token': $('input[name="_token"]').val()
-                },
-                function (res) {
-                    if(res && res.status){
-                        $(el).addClass('active')
-                    }
-                }
-            )
-        });
-    }
+    // if($('input[name="_user_id"]')){
+    //     $('.poem-card .like').each(function (index,el) {
+    //         $.post(
+    //             '/ajax/judge/like',
+    //             {
+    //                 'id': $(el).attr('data-id'),
+    //                 'type': $(el).attr('data-type') ,
+    //                 '_token': $('input[name="_token"]').val()
+    //             },
+    //             function (res) {
+    //                 if(res && res.status){
+    //                     $(el).addClass('active')
+    //                 }
+    //             }
+    //         )
+    //     });
+    // }
 });

@@ -20,7 +20,7 @@ return array(
     |
     |
     */
-    'default_keywords' => env('SEO_DEFAULT_KEYWORDS', '古诗文,古诗,词,曲,文言文,飞花令,唐诗,宋词,学古诗'),
+    'default_keywords' => env('SEO_DEFAULT_KEYWORDS', '古诗文,古诗,词,曲,文言文,飞花令,唐诗,宋词,学古诗,古诗文小助手'),
     'default_description' => env('SEO_DEFAULT_DESCRIPTION', '学古诗网。收集古代诗词曲文言文，专注于古诗文服务，致力于让古诗文爱好者更便捷地学习及获取古诗文相关资料。'),
 
     /* not tracking ip */

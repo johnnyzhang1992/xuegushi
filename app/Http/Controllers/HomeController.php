@@ -7,6 +7,7 @@
 namespace App\Http\Controllers;
 
 use DB;
+use Auth;
 use App\Http\Requests;
 use Illuminate\Http\Request;
 
@@ -35,6 +36,16 @@ class HomeController extends Controller
             ->where('like_count','>',100)
             ->orderBy('like_count','desc')
             ->paginate(10);
+        if(!Auth::guest()){
+            foreach ($poems as $poem){
+                $res = DB::table('dev_like')->where('like_id',$poem->id)->where('type','poem')->first();
+                if(isset($res) && $res->status == 'active'){
+                    $poem->status = 'active';
+                }else{
+                    $poem->status = 'delete';
+                }
+            }
+        }
         return view('home')
             ->with('query','home')
             ->with('poems',$poems);
