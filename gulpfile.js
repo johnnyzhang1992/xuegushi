@@ -14,7 +14,8 @@ var js = [
     'jQuery-2.1.4.min.js',
     'bootstrap.min.js',
     'gushi/common.js',
-    'toast.js'
+    'toast.js',
+    'clipboard.min.js'
 ];
 elixir(function(mix) {
     mix.sass('app.scss')

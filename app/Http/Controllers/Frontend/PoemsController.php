@@ -88,7 +88,7 @@ class PoemsController extends Controller
             $hot_poems = null;
             $poems_count = 0;
             if($poem->author != '佚名'){
-                $author = DB::table('author')->where('author_name',$poem->author)->where('dynasty',$poem->dynasty)->first();
+                $author = DB::table('dev_author')->where('author_name',$poem->author)->where('dynasty',$poem->dynasty)->first();
                 $poems_count = DB::table('dev_poem')
                     ->where('author',$poem->author)
                     ->where('dynasty',$poem->dynasty)

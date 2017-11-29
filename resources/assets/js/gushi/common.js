@@ -91,4 +91,17 @@ $(document).ready(function () {
     //         )
     //     });
     // }
+    var clipboard = new Clipboard('.copy');
+
+    clipboard.on('success', function(e) {
+        $('body').toast({
+            position:'fixed',
+            content:'复制成功',
+            duration:1000,
+            isCenter:true,
+            background:'rgba(51,122,183,0.8)',
+            animateIn:'bounceIn-hastrans',
+            animateOut:'bounceOut-hastrans'
+        });
+    });
 });

@@ -54,10 +54,10 @@
                             </div>
                             <div class="poem-author">
                                 <p>
-                                    <a class="author_dynasty" href="{{ url('/poem/'.@$poem->dynasty) }}" target="_blank">{{@$poem->dynasty}}</a> : <a class="author_name" href="{{ url('/author/'.@$poem->author) }}" target="_blank">{{@$poem->author}}</a>
+                                    <a class="author_dynasty" href="{{ url('/poem?dynasty='.@$poem->dynasty) }}" target="_blank">{{@$poem->dynasty}}</a> : <a class="author_name" href="{{ url('/author/'.@$poem->author) }}" target="_blank">{{@$poem->author}}</a>
                                 </p>
                             </div>
-                            <div class="poem-content">
+                            <div class="poem-content" id="poem-c-{{@$poem->id}}">
                                 @if(isset($poem->content) && json_decode($poem->content))
                                     @if(isset(json_decode($poem->content)->xu) && json_decode($poem->content)->xu)
                                         <p class="poem-xu">{{ @json_decode($poem->content)->xu }}</p>
@@ -73,7 +73,7 @@
                                 <div class="collect" data-toggle="tooltip" data-placement="top" title="收藏" data-type="poem" data-id="{{$poem->id}}">
                                     <i class="fa fa-heart-o"></i>
                                 </div>
-                                <div class="copy" data-toggle="tooltip" data-placement="top" title="复制" data-type="poem" data-id="{{$poem->id}}">
+                                <div class="copy" data-toggle="tooltip" data-placement="top" title="复制"  data-clipboard-action="copy" data-clipboard-target="#poem-c-{{@$poem->id}}">
                                     <i class="fa fa-clone"></i>
                                 </div>
                                 <div class="speaker" data-toggle="tooltip" data-placement="top" title="朗读" data-type="poem" data-id="{{$poem->id}}">

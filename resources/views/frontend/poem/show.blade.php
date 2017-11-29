@@ -26,7 +26,7 @@
                             <a class="author_dynasty" href="{{ url('/poem/'.@$poem->dynasty) }}" target="_blank">{{@$poem->dynasty}}</a> : <a class="author_name" href="{{ url('/author/'.@$poem->author) }}" target="_blank">{{@$poem->author}}</a>
                         </p>
                     </div>
-                    <div class="poem-content">
+                    <div class="poem-content" id="poem-c-{{@$poem->id}}">
                         @if(isset($poem->content) && json_decode($poem->content))
                             @if(isset(json_decode($poem->content)->xu) && json_decode($poem->content)->xu)
                                 <p class="poem-xu">{{ @json_decode($poem->content)->xu }}</p>
@@ -42,7 +42,7 @@
                         <div class="collect" data-toggle="tooltip" data-placement="top" title="收藏">
                             <i class="fa fa-heart-o"></i>
                         </div>
-                        <div class="copy" data-toggle="tooltip" data-placement="top" title="复制">
+                        <div class="copy" data-toggle="tooltip" data-placement="top" title="复制"  data-clipboard-action="copy" data-clipboard-target="#poem-c-{{@$poem->id}}">
                             <i class="fa fa-clone"></i>
                         </div>
                         <div class="speaker" data-toggle="tooltip" data-placement="top" title="朗读">
@@ -85,9 +85,6 @@
                         <div class="poem-tool clearfix">
                             <div class="collect" data-toggle="tooltip" data-placement="top" title="收藏">
                                 <i class="fa fa-heart-o"></i>
-                            </div>
-                            <div class="copy" data-toggle="tooltip" data-placement="top" title="复制">
-                                <i class="fa fa-clone"></i>
                             </div>
                             <div class="like pull-right" data-toggle="tooltip" data-placement="top" title="喜欢">
                                 <i class="fa fa-thumbs-o-up"></i> {{@$author->like_count}}
