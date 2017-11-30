@@ -23,6 +23,7 @@
 </head>
 
 <body>
+<input type="hidden" name="_token" value="{{ csrf_token() }}" />
 @yield('header')
 @yield('content')
 @yield('goTop')

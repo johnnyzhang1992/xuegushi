@@ -38,7 +38,10 @@ class HomeController extends Controller
             ->paginate(10);
         if(!Auth::guest()){
             foreach ($poems as $poem){
-                $res = DB::table('dev_like')->where('like_id',$poem->id)->where('type','poem')->first();
+                $res = DB::table('dev_like')
+                    ->where('user_id',Auth::user()->id)
+                    ->where('like_id',$poem->id)
+                    ->where('type','poem')->first();
                 if(isset($res) && $res->status == 'active'){
                     $poem->status = 'active';
                 }else{

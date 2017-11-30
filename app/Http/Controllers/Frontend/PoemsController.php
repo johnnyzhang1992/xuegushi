@@ -1,7 +1,6 @@
 <?php
 /**
- * Controller genrated using LaraAdmin
- * Help: http://laraadmin.com
+ * Controller Poems
  */
 
 namespace App\Http\Controllers\Frontend;
@@ -58,7 +57,10 @@ class PoemsController extends Controller
         $_poems = $_poems->paginate(10)->setPath($_url);
         if(!Auth::guest()){
             foreach ($_poems as $poem){
-                $res = DB::table('dev_like')->where('like_id',$poem->id)->where('type','poem')->first();
+                $res = DB::table('dev_like')
+                    ->where('user_id',Auth::user()->id)
+                    ->where('like_id',$poem->id)
+                    ->where('type','poem')->first();
                 if(isset($res) && $res->status == 'active'){
                     $poem->status = 'active';
                 }else{
@@ -85,6 +87,15 @@ class PoemsController extends Controller
         $poem = DB::table('dev_poem')->where('id',$id)->first();
         if($poem){
             $poem_detail = DB::table('dev_poem_detail')->where('poem_id',$id)->first();
+            $_res = DB::table('dev_like')
+                ->where('user_id',Auth::user()->id)
+                ->where('like_id',$poem->id)
+                ->where('type','poem')->first();
+            if(isset($_res) && $_res->status == 'active'){
+                $poem->status = 'active';
+            }else{
+                $poem->status = 'delete';
+            }
             $hot_poems = null;
             $poems_count = 0;
             if($poem->author != '佚名'){
@@ -98,6 +109,15 @@ class PoemsController extends Controller
                     ->where('dynasty',$poem->dynasty)
                     ->orderBy('like_count','desc')
                     ->paginate(5);
+                $res = DB::table('dev_like')
+                    ->where('user_id',Auth::user()->id)
+                    ->where('like_id',$poem->id)
+                    ->where('type','author')->first();
+                if(isset($res) && $res->status == 'active'){
+                    $author->status = 'active';
+                }else{
+                    $author->status = 'delete';
+                }
             }
             return view('frontend.poem.show')
                 ->with('author',$author)
@@ -144,38 +164,58 @@ class PoemsController extends Controller
         $msg = null;
         $res = false;
         $_data = null;
+        $table_name = '';
         if($id && $type && !Auth::guest()){
             if($type == 'poem'){
-                $_res = DB::table('dev_like')->where('like_id',$id)->where('type','poem')->first();
-                if(!$_res){
-                    // 已经like
-                    $res = DB::table("dev_poem")->where('id',$id)->increment("like_count");
-                    $_data = DB::table("dev_poem")->where('id',$id)->first();
-                    DB::table('dev_like')->insertGetId(
-                        [
-                            'like_id' => $id,
-                            'type' => 'poem',
-                            'created_at' => date('Y-m-d H:i:s',time()),
-                            'updated_at' => date('Y-m-d H:i:s',time()),
-                            'user_id'=> Auth::user()->id,
-                            'status' => 'active'
-                        ]
-                    );
-                    $msg = '喜欢+1';
-                }else{
-                    $res = DB::table("dev_poem")->where('id',$id)->decrement("like_count");
-                    $_data = DB::table("dev_poem")->where('id',$id)->first();
-                    if($_res->status == 'active'){
-                        DB::table('dev_like')->where('id',$_res->id)->update(['status' => 'delete']);
-                        $msg = '取消喜欢成功';
-                    }else{
-                        DB::table('dev_like')->where('id',$_res->id)->update(['status' => 'active']);
-                        $msg = '喜欢+1';
-                    }
-                }
+                $table_name = 'dev_poem';
             }elseif ($type == 'author'){
-                $res = DB::table("author")->where('id',$id)->increment("like_count");
-                $_data = DB::table("author")->where('id',$id)->firdt();
+                $table_name = 'dev_author';
+            }
+            $_res = DB::table('dev_like')
+                ->where('user_id',Auth::user()->id)
+                ->where('like_id',$id)
+                ->where('type',trim($type))
+                ->first();
+            if(!$_res){
+                // 新的like
+                $res = DB::table($table_name)->where('id',$id)->increment("like_count");
+                $_data = DB::table($table_name)->where('id',$id)->first();
+                DB::table('dev_like')->insertGetId(
+                    [
+                        'like_id' => $id,
+                        'type' => trim($type),
+                        'created_at' => date('Y-m-d H:i:s',time()),
+                        'updated_at' => date('Y-m-d H:i:s',time()),
+                        'user_id'=> Auth::user()->id,
+                        'status' => 'active'
+                    ]
+                );
+                $msg = '喜欢+1';
+            }else{
+                // 更新like状态
+                if($_res->status == 'active'){
+                    $res = DB::table($table_name)->where('id',$id)->decrement("like_count");
+                    $_data = DB::table($table_name)->where('id',$id)->first();
+                    DB::table('dev_like')
+                        ->where('user_id',Auth::user()->id)
+                        ->where('id',$_res->id)
+                        ->update([
+                            'status' => 'delete',
+                            'updated_at' => date('Y-m-d H:i:s',time())
+                        ]);
+                    $msg = '取消喜欢成功';
+                }else{
+                    $res = DB::table($table_name)->where('id',$id)->increment("like_count");
+                    $_data = DB::table($table_name)->where('id',$id)->first();
+                    DB::table('dev_like')
+                        ->where('user_id',Auth::user()->id)
+                        ->where('id',$_res->id)
+                        ->update([
+                            'status' => 'active',
+                            'updated_at' => date('Y-m-d H:i:s',time()),
+                        ]);
+                    $msg = '喜欢+1';
+                }
             }
         }else{
             $msg = '登录数据才能保存下来哦！';
@@ -215,5 +255,84 @@ class PoemsController extends Controller
             $data['status'] = false ;
         }
         return response()->json($data);
+    }
+    /**
+     * 收藏功能
+     * @param $request
+     * @return mixed
+     */
+    public function collect(Request $request){
+        $id = $request->input('id');
+        $type = $request->input('type');
+        $data = array();
+        $msg = null;
+        $res = false;
+        $_data = null;
+        $table_name = '';
+        if($id && $type && !Auth::guest()){
+            if($type == 'poem'){
+                $table_name = 'dev_poem';
+            }elseif ($type == 'author'){
+                $table_name = 'dev_author';
+            }
+            $_res = DB::table('dev_like')
+                ->where('user_id',Auth::user()->id)
+                ->where('like_id',$id)
+                ->where('type',trim($type))
+                ->first();
+            if(!$_res){
+                // 新的like
+                $res = DB::table($table_name)->where('id',$id)->increment("like_count");
+                $_data = DB::table($table_name)->where('id',$id)->first();
+                DB::table('dev_like')->insertGetId(
+                    [
+                        'like_id' => $id,
+                        'type' => trim($type),
+                        'created_at' => date('Y-m-d H:i:s',time()),
+                        'updated_at' => date('Y-m-d H:i:s',time()),
+                        'user_id'=> Auth::user()->id,
+                        'status' => 'active'
+                    ]
+                );
+                $msg = '喜欢+1';
+            }else{
+                // 更新like状态
+                $res = DB::table($table_name)
+                    ->where('id',$id)
+                    ->decrement("like_count");
+                $_data = DB::table($table_name)->where('id',$id)->first();
+                if($_res->status == 'active'){
+                    DB::table('dev_like')
+                        ->where('user_id',Auth::user()->id)
+                        ->where('id',$_res->id)
+                        ->update([
+                            'status' => 'delete',
+                            'updated_at' => date('Y-m-d H:i:s',time())
+                        ]);
+                    $msg = '取消喜欢成功';
+                }else{
+                    DB::table('dev_like')
+                        ->where('user_id',Auth::user()->id)
+                        ->where('id',$_res->id)
+                        ->update([
+                            'status' => 'active',
+                            'updated_at' => date('Y-m-d H:i:s',time()),
+                        ]);
+                    $msg = '喜欢+1';
+                }
+            }
+        }else{
+            $msg = '登录数据才能保存下来哦！';
+        }
+        if($res){
+            $data['status'] = 'success';
+            $data['msg'] = $msg;
+            $data['num'] = $_data->like_count;
+            return response()->json($data);
+        }else{
+            $data['msg'] = $msg;
+            $data['status'] = 'fail';
+            return response()->json($data);
+        }
     }
 }
