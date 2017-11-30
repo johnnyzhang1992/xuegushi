@@ -61,6 +61,12 @@ class PoemsController extends Controller
                     ->where('user_id',Auth::user()->id)
                     ->where('like_id',$poem->id)
                     ->where('type','poem')->first();
+                if($poem->author_source_id != -1){
+                    $author = DB::table('dev_author')->where('source_id',$poem->author_source_id)->first();
+                    $poem->author_id = $author->id;
+                }else{
+                    $poem->author_id = -1;
+                }
                 if(isset($res) && $res->status == 'active'){
                     $poem->status = 'active';
                 }else{
@@ -87,37 +93,48 @@ class PoemsController extends Controller
         $poem = DB::table('dev_poem')->where('id',$id)->first();
         if($poem){
             $poem_detail = DB::table('dev_poem_detail')->where('poem_id',$id)->first();
-            $_res = DB::table('dev_like')
-                ->where('user_id',Auth::user()->id)
-                ->where('like_id',$poem->id)
-                ->where('type','poem')->first();
-            if(isset($_res) && $_res->status == 'active'){
-                $poem->status = 'active';
-            }else{
-                $poem->status = 'delete';
-            }
             $hot_poems = null;
             $poems_count = 0;
             if($poem->author != '佚名'){
-                $author = DB::table('dev_author')->where('author_name',$poem->author)->where('dynasty',$poem->dynasty)->first();
+                $author = DB::table('dev_author')->where('source_id',$poem->author_source_id)->first();
                 $poems_count = DB::table('dev_poem')
                     ->where('author',$poem->author)
                     ->where('dynasty',$poem->dynasty)
                     ->count();
                 $hot_poems = DB::table('dev_poem')
-                    ->where('author',$poem->author)
-                    ->where('dynasty',$poem->dynasty)
+                    ->where('author_source_id',$author->source_id)
                     ->orderBy('like_count','desc')
                     ->paginate(5);
-                $res = DB::table('dev_like')
-                    ->where('user_id',Auth::user()->id)
-                    ->where('like_id',$poem->id)
-                    ->where('type','author')->first();
-                if(isset($res) && $res->status == 'active'){
-                    $author->status = 'active';
+                if(!Auth::guest()){
+                    $_res = DB::table('dev_like')
+                        ->where('user_id',Auth::user()->id)
+                        ->where('like_id',$poem->id)
+                        ->where('type','poem')->first();
+                    if(isset($_res) && $_res->status == 'active'){
+                        $poem->status = 'active';
+                    }else{
+                        $poem->status = 'delete';
+                    }
+                    $res = DB::table('dev_like')
+                        ->where('user_id',Auth::user()->id)
+                        ->where('like_id',$author->id)
+                        ->where('type','author')->first();
+                    if(isset($res) && $res->status == 'active'){
+                        $author->status = 'active';
+                    }else{
+                        $author->status = 'delete';
+                    }
                 }else{
                     $author->status = 'delete';
                 }
+                if($poem->author_source_id != -1){
+                    $poem->author_id = $author->id;
+                }else{
+                    $poem->author_id = -1;
+                }
+            }else{
+                $poem->status = 'delete';
+                $poem->author_id = -1;
             }
             return view('frontend.poem.show')
                 ->with('author',$author)
@@ -134,19 +151,44 @@ class PoemsController extends Controller
 //     * update poem database
 //     */
 //    public function updatePoemLikeCount(){
-//        $poems = DB::table('dev_poem_detail')->get();
+//        $start = 70000;
+//        $end = 73001;
+//        $poems = DB::table('poem_author')
+//            ->where('id','>',$start)
+//            ->where('id','<',$end)
+//            ->get();
+//
 //        foreach ($poems as $key=>$poem){
-//            $res = DB::table('dev_poem')
-//                ->where('id',$poem->poem_id)
-//                ->update([
-//                    'type'=>$poem->poem_type,
-//                    'like_count' =>$poem->like_count
-//                ]);
-////            print($key.'-----'.$poem->title.'<br>');
-//            if(!$res){
-//                break;
+//            if($poem->author_source_id != -1){
+////                $author = DB::table('dev_author')->where('source_id',$poem->author_source_id)->first();
+//                $res = DB::table('dev_poem')
+//                    ->where('source_id',$poem->source_id)
+//                    ->update([
+//                        'author_id'=>-1,
+//                        'author_source_id' =>$poem->author_source_id,
+//                        'created_at' => date('Y-m-d H:i:s',time()),
+//                        'updated_at' => date('Y-m-d H:i:s',time())
+//                    ]);
+//                //            print($key.'-----'.$poem->title.'<br>');
+//                if(!$res){
+//                    break;
+//                }
+//            }else{
+//                $res = DB::table('dev_poem')
+//                    ->where('source_id',$poem->source_id)
+//                    ->update([
+//                        'author_id'=>-1,
+//                        'author_source_id' => -1,
+//                        'created_at' => date('Y-m-d H:i:s',time()),
+//                        'updated_at' => date('Y-m-d H:i:s',time())
+//                    ]);
+//                //            print($key.'-----'.$poem->title.'<br>');
+//                if(!$res){
+//                    break;
+//                }
 //            }
 //            if($key+1 == count($poems)){
+//                print $end;
 //                print('ok!');
 //            }
 //        }
@@ -191,6 +233,7 @@ class PoemsController extends Controller
                     ]
                 );
                 $msg = '喜欢+1';
+                $data['status'] = 'active';
             }else{
                 // 更新like状态
                 if($_res->status == 'active'){
@@ -204,6 +247,7 @@ class PoemsController extends Controller
                             'updated_at' => date('Y-m-d H:i:s',time())
                         ]);
                     $msg = '取消喜欢成功';
+                    $data['status'] = 'delete';
                 }else{
                     $res = DB::table($table_name)->where('id',$id)->increment("like_count");
                     $_data = DB::table($table_name)->where('id',$id)->first();
@@ -215,13 +259,13 @@ class PoemsController extends Controller
                             'updated_at' => date('Y-m-d H:i:s',time()),
                         ]);
                     $msg = '喜欢+1';
+                    $data['status'] = 'active';
                 }
             }
         }else{
             $msg = '登录数据才能保存下来哦！';
         }
         if($res){
-            $data['status'] = 'success';
             $data['msg'] = $msg;
             $data['num'] = $_data->like_count;
             return response()->json($data);

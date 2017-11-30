@@ -55,7 +55,6 @@ Route::group(['as' => $as, 'middleware' => ['auth', 'permission:ADMIN_PANEL']], 
     Route::get(config('laraadmin.adminRoute') . '/authors/{id}', 'LA\PoemAuthorsController@show');
     Route::get(config('laraadmin.adminRoute') . '/authors/{id}/dd', 'LA\PoemAuthorsController@dd');
     Route::get(config('laraadmin.adminRoute') . '/authors/{id}/edit', 'LA\PoemAuthorsController@edit');
-    Route::get(config('laraadmin.adminRoute') . '/authors/ajax/{id}', 'LA\PoemAuthorsController@ajax');
     Route::get(config('laraadmin.adminRoute') . '/author_dt_ajax', 'LA\PoemAuthorsController@dtajax');
 
 	/* ================== Uploads ================== */

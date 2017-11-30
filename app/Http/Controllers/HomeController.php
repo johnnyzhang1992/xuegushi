@@ -42,6 +42,12 @@ class HomeController extends Controller
                     ->where('user_id',Auth::user()->id)
                     ->where('like_id',$poem->id)
                     ->where('type','poem')->first();
+                if($poem->author_source_id != -1){
+                    $author = DB::table('dev_author')->where('source_id',$poem->author_source_id)->first();
+                    $poem->author_id = $author->id;
+                }else{
+                    $poem->author_id = -1;
+                }
                 if(isset($res) && $res->status == 'active'){
                     $poem->status = 'active';
                 }else{

@@ -41,13 +41,27 @@ $('.poem-tool').on('click','.like',function () {
             '_token': $('input[name="_token"]').val()
         },
         function (res) {
-            if(res && res.status == 'success'){
+            if(res && res.status == 'active'){
                $(like).html(res.num);
                if($(like).parent().hasClass('active')){
-                   $(like).parent().removeClass('active')
+
                }else{
                    $(like).parent().addClass('active')
                }
+                $('body').toast({
+                    position:'fixed',
+                    content:res.msg,
+                    duration:1000,
+                    isCenter:true,
+                    background:'rgba(51,122,183,0.8)',
+                    animateIn:'bounceIn-hastrans',
+                    animateOut:'bounceOut-hastrans'
+                });
+            }else if(res && res.status == 'delete'){
+                $(like).html(res.num);
+                if($(like).parent().hasClass('active')){
+                    $(like).parent().removeClass('active')
+                }
                 $('body').toast({
                     position:'fixed',
                     content:res.msg,

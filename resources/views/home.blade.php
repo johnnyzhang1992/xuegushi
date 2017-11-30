@@ -27,29 +27,27 @@
                 @if(isset($poems) && count($poems)>0)
                     @foreach($poems as $poem)
                         <div class="poem-card">
-                            <div id="poem-c-{{@$poem->id}}">
-                                <div class="card-title">
-                                    <h2 class="poem-title">
-                                        <a class="title-link" href="{{ url('poem/'.$poem->id) }}" target="_blank">{{@$poem->title}}</a>
-                                    </h2>
-                                </div>
-                                <div class="poem-author">
-                                    <p>
-                                        <a class="author_dynasty" href="{{ url('/poem?dynasty='.@$poem->dynasty) }}" target="_blank">{{@$poem->dynasty}}</a> : <a class="author_name" href="{{ url('/author/'.@$poem->author) }}" target="_blank">{{@$poem->author}}</a>
-                                    </p>
-                                </div>
-                                <div class="poem-content">
-                                    @if(isset($poem->content) && json_decode($poem->content))
-                                        @if(isset(json_decode($poem->content)->xu) && json_decode($poem->content)->xu)
-                                            <p class="poem-xu">{{ @json_decode($poem->content)->xu }}</p>
-                                        @endif
-                                        @if(isset(json_decode($poem->content)->content) && json_decode($poem->content)->content)
-                                            @foreach(json_decode($poem->content)->content as $item)
-                                                <p class="p-content">{!! @$item !!}</p>
-                                            @endforeach
-                                        @endif
+                            <div class="card-title">
+                                <h2 class="poem-title">
+                                    <a class="title-link" href="{{ url('poem/'.$poem->id) }}" target="_blank">{{@$poem->title}}</a>
+                                </h2>
+                            </div>
+                            <div class="poem-author">
+                                <p>
+                                    <a class="author_dynasty" href="{{ url('/poem?dynasty='.@$poem->dynasty) }}" target="_blank">{{@$poem->dynasty}}</a> : <a class="author_name" @if(isset($poem->author_id) && $poem->author_id != -1)href="{{ url('/author/'.@$poem->author_id) }}" @endif target="_blank">{{@$poem->author}}</a>
+                                </p>
+                            </div>
+                            <div class="poem-content" id="poem-c-{{@$poem->id}}">
+                                @if(isset($poem->content) && json_decode($poem->content))
+                                    @if(isset(json_decode($poem->content)->xu) && json_decode($poem->content)->xu)
+                                        <p class="poem-xu">{{ @json_decode($poem->content)->xu }}</p>
                                     @endif
-                                </div>
+                                    @if(isset(json_decode($poem->content)->content) && json_decode($poem->content)->content)
+                                        @foreach(json_decode($poem->content)->content as $item)
+                                            <p class="p-content">{!! @$item !!}</p>
+                                        @endforeach
+                                    @endif
+                                @endif
                             </div>
                             <div class="poem-tool clearfix">
                                 <div class="collect" data-toggle="tooltip" data-placement="top" title="收藏" data-type="poem" data-id="{{$poem->id}}">

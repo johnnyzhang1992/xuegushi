@@ -21,7 +21,7 @@ class PoemAuthorsController extends Controller
 {
     public $show_action = true;
     public $view_col = 'name';
-    public $listing_cols = ['id','author_name','dynasty','profile','created_at','updated_at'];
+    public $listing_cols = ['id','source_id','like_count','author_name','dynasty','profile','updated_at'];
 
     public function __construct() {
         // Field Access of Listing Columns
@@ -61,7 +61,7 @@ class PoemAuthorsController extends Controller
         $custom_menu = array();
         $custom_menu['name'] = 'authors';
         $custom_menu['id'] = '10';
-        $author = DB::table('author')->where('id',$id)->first();
+        $author = DB::table('dev_author')->where('id',$id)->first();
         $more_infos= json_decode($author->more_infos);
         return View('la.authors.show')
             ->with('author',$author)
@@ -78,7 +78,7 @@ class PoemAuthorsController extends Controller
         $custom_menu = array();
         $custom_menu['name'] = 'authors';
         $custom_menu['id'] = '10';
-        $author = DB::table('author')->where('id',$id)->first();
+        $author = DB::table('dev_author')->where('id',$id)->first();
         return View('la.authors.edit')
             ->with('author',$author)
             ->with('custom_menu',$custom_menu);
@@ -87,7 +87,7 @@ class PoemAuthorsController extends Controller
         $custom_menu = array();
         $custom_menu['name'] = 'authors';
         $custom_menu['id'] = '10';
-        $author = DB::table('author')->where('id',$id)->first();
+        $author = DB::table('dev_author')->where('id',$id)->first();
         print_r($author);
     }
     /**
@@ -107,7 +107,7 @@ class PoemAuthorsController extends Controller
             $author['author_name'] = $request->input('author_name');
             $author['profile'] = $request->input('profile');
             $author['updated_at'] =date('Y-m-d H:i:s',time());
-            $res = DB::table('author')->where('id',$id)->update($author);
+            $res = DB::table('dev_author')->where('id',$id)->update($author);
             if($res){
                 $_data['msg'] = 'success';
                 return response()->json($_data,200);
@@ -119,7 +119,7 @@ class PoemAuthorsController extends Controller
         }elseif(isset($type) && $type == 'detail'){
             $id = $request->input('id');
             info('---detail-id---:'.$id);
-            $res = DB::table('author')
+            $res = DB::table('dev_author')
                 ->where('id',$id)
                 ->update([
                     'updated_at' =>date('Y-m-d H:i:s',time()),
@@ -136,43 +136,14 @@ class PoemAuthorsController extends Controller
         }
     }
     /**
-     * ajax
-     * @param $id
-     * @param $request
-     * @return mixed
-     */
-    public function ajax($id,Request $request){
-        $value = $request->input('val');
-        $item = null;
-        if(isset($value) && $id>0){
-            switch ($value){
-                case 'yi':
-                    $item = $this->getYi($id);
-                    break;
-                case 'zhu':
-                    $item = $this->getZhu($id);
-                    break;
-                case 'shangxi':
-                    $item = $this->getShangxi($id);
-                    break;
-                default:
-                    $item = $this->getContent($id);
-                    break;
-            }
-            return response()->json($item,200);
-        } else{
-            return response()->json($item,500);
-        }
-    }
-    /**
      * Datatable Ajax fetch
      *
      * @return mixed
      */
     public function dtajax()
     {
-        $values = DB::table('author')
-            ->select('id','author_name','dynasty','profile','created_at','updated_at');
+        $values = DB::table('dev_author')
+            ->select('id','source_id','like_count','author_name','dynasty','profile','updated_at');
         $out = Datatables::of($values)->make();
         $data = $out->getData();
 

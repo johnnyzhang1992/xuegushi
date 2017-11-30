@@ -15,6 +15,12 @@
         <div class="content col-md-9">
             {{--left--}}
             <div class="main_left col-md-8">
+                <div class="nav-breadcrumb" style="margin-bottom: 15px">
+                    <ol class="breadcrumb" style="margin-bottom: 0;background-color: #fff">
+                        <li><a href="{{ url('/poem') }}">诗文</a></li>
+                        <li class="active">{{@$poem->title}}</li>
+                    </ol>
+                </div>
                 <div class="poem-card">
                     <div id="poem-c-{{@$poem->id}}">
                         <div class="card-title">
@@ -24,7 +30,7 @@
                         </div>
                         <div class="poem-author">
                             <p>
-                                <a class="author_dynasty" href="{{ url('/poem?dynasty='.@$poem->dynasty) }}" target="_blank">{{@$poem->dynasty}}</a> : <a class="author_name" href="{{ url('/author/'.@$poem->author) }}" target="_blank">{{@$poem->author}}</a>
+                                <a class="author_dynasty" href="{{ url('/poem?dynasty='.@$poem->dynasty) }}" target="_blank">{{@$poem->dynasty}}</a> : <a class="author_name" @if(isset($poem->author_id) && $poem->author_id != -1)href="{{ url('/author/'.@$poem->author_id) }}" @endif target="_blank">{{@$poem->author}}</a>
                             </p>
                         </div>
                         <div class="poem-content">
