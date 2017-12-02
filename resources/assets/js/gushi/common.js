@@ -147,6 +147,15 @@ $('.poem-tool').on('click','.speaker',function () {
     var id = $(this).attr('data-id');
     var th = $(this);
     var target_voice = $('#speaker-'+ id);
+    target_voice.append('         <div class="col-md-9 no-padding">\n' +
+        '                                    <audio style="cursor:pointer;width:100%;" src="/static/audios/welcome.mp3" controls="controls">\n' +
+        '                                        <source src="/static/audios/welcome.mp3" type="audio/mpeg">\n' +
+        '                                    </audio>\n' +
+        '                                    <div style="color: #999;font-size: 12px;padding-left: 15px">以上音频由百度语音合成技术合成</div>\n' +
+        '                                </div>\n' +
+        '                                <div class="col-md-3">\n' +
+        '                                    <a type="button" class="speaker-close" style="line-height: 32px;cursor: pointer">点击收起 <i class="fa fa-eject"></i></a>\n' +
+        '                                </div>');
     if($(this).attr('data-status') != 'active'){
         $('body').toast({
             position:'fixed',
@@ -221,5 +230,5 @@ $(document).ready(function () {
     });
     $('.speaker-close').on('click',function () {
         $(this).parent().parent().hide();
-    })
+    });
 });

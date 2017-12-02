@@ -61,15 +61,6 @@
                         </div>
                     </div>
                     <div id="speaker-{{$poem->id}}" class="poem-speaker" style="clear:both; height:auto; margin-top:10px; margin-bottom:10px; overflow:hidden;display: none">
-                        <div class="col-md-9 no-padding">
-                            <audio style="cursor:pointer;width:100%;" src="{{ url('/static/audios/welcome.mp3') }}" controls="controls">
-                                <source src="{{ url('/static/audios/welcome.mp3') }}" type="audio/mpeg">
-                            </audio>
-                            <div style="color: #999;font-size: 12px;padding-left: 15px">以上音频由百度语音合成服务合成</div>
-                        </div>
-                        <div class="col-md-3">
-                            <a type="button" class="speaker-close" style="line-height: 32px;cursor: pointer">点击收起 <i class="fa fa-eject"></i></a>
-                        </div>
                     </div>
                     <div class="tool-qrcode">
 
