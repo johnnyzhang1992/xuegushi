@@ -158,7 +158,9 @@ return [
         /*
          * new add
          */
-        Dwij\Laraadmin\LAProvider::class
+        Dwij\Laraadmin\LAProvider::class,
+        // 百度语音
+        Jormin\BaiduSpeech\BaiduSpeechServiceProvider::class
 
     ],
 
@@ -205,6 +207,7 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
+        'BaiduSpeech' => Jormin\BaiduSpeech\BaiduSpeech::class
 
     ],
 

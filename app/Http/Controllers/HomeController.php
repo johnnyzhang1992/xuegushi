@@ -38,7 +38,11 @@ class HomeController extends Controller
             ->paginate(10);
         if(!Auth::guest()){
             foreach ($poems as $poem){
-                $res = DB::table('dev_like')
+                $like = DB::table('dev_like')
+                    ->where('user_id',Auth::user()->id)
+                    ->where('like_id',$poem->id)
+                    ->where('type','poem')->first();
+                $collect = DB::table('dev_collect')
                     ->where('user_id',Auth::user()->id)
                     ->where('like_id',$poem->id)
                     ->where('type','poem')->first();
@@ -48,10 +52,15 @@ class HomeController extends Controller
                 }else{
                     $poem->author_id = -1;
                 }
-                if(isset($res) && $res->status == 'active'){
+                if(isset($like) && $like->status == 'active'){
                     $poem->status = 'active';
                 }else{
                     $poem->status = 'delete';
+                }
+                if(isset($collect) && $collect->status == 'active'){
+                    $poem->collect_status = 'active';
+                }else{
+                    $poem->collect_status = 'delete';
                 }
             }
         }

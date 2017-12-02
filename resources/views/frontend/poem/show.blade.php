@@ -47,17 +47,28 @@
                         </div>
                     </div>
                     <div class="poem-tool clearfix">
-                        <div class="collect" data-toggle="tooltip" data-placement="top" title="收藏">
-                            <i class="fa fa-heart-o"></i>
+                        <div class="collect @if(isset($poem->collect_status) && $poem->collect_status == 'active') active @endif" data-toggle="tooltip" data-placement="top" title="收藏" data-type="poem" data-id="{{$poem->id}}">
+                            <i class="fa  @if(isset($poem->collect_status) && $poem->collect_status == 'active') fa-heart @else fa-heart-o @endif"></i>
                         </div>
                         <div class="copy" data-toggle="tooltip" data-placement="top" title="复制"  data-clipboard-action="copy" data-clipboard-target="#poem-c-{{@$poem->id}}">
                             <i class="fa fa-clone"></i>
                         </div>
-                        <div class="speaker" data-toggle="tooltip" data-placement="top" title="朗读">
+                        <div class="speaker" data-toggle="tooltip" data-placement="top" title="朗读" data-status="" data-type="poem" data-id="{{$poem->id}}">
                             <i class="fa fa-microphone" aria-hidden="true"></i>
                         </div>
                         <div class="like pull-right @if(isset($poem->status) && $poem->status == 'active') active @endif" data-toggle="tooltip" data-placement="top" title="喜欢" data-type="poem" data-id="{{$poem->id}}">
                             <i class="fa fa-thumbs-o-up"></i> <span class="like_count">{{@$poem->like_count}}</span>
+                        </div>
+                    </div>
+                    <div id="speaker-{{$poem->id}}" class="poem-speaker" style="clear:both; height:auto; margin-top:10px; margin-bottom:10px; overflow:hidden;display: none">
+                        <div class="col-md-9 no-padding">
+                            <audio style="cursor:pointer;width:100%;" src="{{ url('/static/audios/welcome.mp3') }}" controls="controls">
+                                <source src="{{ url('/static/audios/welcome.mp3') }}" type="audio/mpeg">
+                            </audio>
+                            <div style="color: #999;font-size: 12px;padding-left: 15px">以上音频由百度语音合成服务合成</div>
+                        </div>
+                        <div class="col-md-3">
+                            <a type="button" class="speaker-close" style="line-height: 32px;cursor: pointer">点击收起 <i class="fa fa-eject"></i></a>
                         </div>
                     </div>
                     <div class="tool-qrcode">

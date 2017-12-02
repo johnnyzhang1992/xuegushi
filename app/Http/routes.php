@@ -40,8 +40,10 @@ Route::group([
 Route::group([
     'prefix' => 'ajax'
 ],function (){
-    Route::post('/update/like_count','Frontend\PoemsController@updateLikeCount');
+    Route::post('/update/like','Frontend\PoemsController@updateLike');
+    Route::post('/update/collect','Frontend\PoemsController@updateCollect');
     Route::post('/judge/like','Frontend\PoemsController@judgeLike');
+    Route::get('/voiceCombine','Frontend\PoemsController@voiceCombine');
 });
 /* =============== 静态页面 ====================== */
 

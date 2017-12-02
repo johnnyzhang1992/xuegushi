@@ -28,13 +28,13 @@ jQuery(document).ready(function(){
 $(function () {
     $('[data-toggle="tooltip"]').tooltip()
 });
-
+// 喜欢
 $('.poem-tool').on('click','.like',function () {
     var type = $(this).attr('data-type');
     var id = $(this).attr('data-id');
     var like = $(this).find('.like_count');
     $.post(
-        '/ajax/update/like_count',
+        '/ajax/update/like',
         {
             'id': id,
             'type': type,
@@ -85,7 +85,108 @@ $('.poem-tool').on('click','.like',function () {
         }
     )
 });
-
+// 收藏
+$('.poem-tool').on('click','.collect',function () {
+    var type = $(this).attr('data-type');
+    var id = $(this).attr('data-id');
+    var th = $(this);
+    $.post(
+        '/ajax/update/collect',
+        {
+            'id': id,
+            'type': type,
+            '_token': $('input[name="_token"]').val()
+        },
+        function (res) {
+            if(res && res.status == 'active'){
+                if($(th).hasClass('active')){
+                }else{
+                    $(th).addClass('active');
+                    $(th).find('i').removeClass('fa-heart-o');
+                    $(th).find('i').addClass('fa-heart');
+                }
+                $('body').toast({
+                    position:'fixed',
+                    content:res.msg,
+                    duration:1000,
+                    isCenter:true,
+                    background:'rgba(51,122,183,0.8)',
+                    animateIn:'bounceIn-hastrans',
+                    animateOut:'bounceOut-hastrans'
+                });
+            }else if(res && res.status == 'delete'){
+                $(th).removeClass('active');
+                $(th).find('i').removeClass('fa-heart');
+                $(th).find('i').addClass('fa-heart-o');
+                $('body').toast({
+                    position:'fixed',
+                    content:res.msg,
+                    duration:1000,
+                    isCenter:true,
+                    background:'rgba(51,122,183,0.8)',
+                    animateIn:'bounceIn-hastrans',
+                    animateOut:'bounceOut-hastrans'
+                });
+            }else{
+                $('body').toast({
+                    position:'fixed',
+                    content:res.msg,
+                    duration:1000,
+                    isCenter:true,
+                    background:'rgba(0,0,0,0.5)',
+                    animateIn:'bounceIn-hastrans',
+                    animateOut:'bounceOut-hastrans'
+                });
+            }
+        }
+    )
+});
+// 朗读
+$('.poem-tool').on('click','.speaker',function () {
+    var type = $(this).attr('data-type');
+    var id = $(this).attr('data-id');
+    var th = $(this);
+    var target_voice = $('#speaker-'+ id);
+    if($(this).attr('data-status') != 'active'){
+        $('body').toast({
+            position:'fixed',
+            content:'音频加载中，请稍等...',
+            duration:2000,
+            isCenter:true,
+            background:'rgba(51,122,183,0.8)',
+            animateIn:'bounceIn-hastrans',
+            animateOut:'bounceOut-hastrans'
+        });
+        $.get(
+            '/ajax/voiceCombine',
+            {
+                'id': id,
+                'type': type,
+                '_token': $('input[name="_token"]').val()
+            },
+            function (res) {
+                if(res && res.status == 'success'){
+                    $(target_voice).find('audio').attr('src',res.src);
+                    $(target_voice).find('source').attr('src',res.src);
+                    $(target_voice).show();
+                    $(th).attr('data-status','active');
+                }else{
+                    $('body').toast({
+                        position:'fixed',
+                        content:res.msg,
+                        duration:1000,
+                        isCenter:true,
+                        background:'rgba(0,0,0,0.5)',
+                        animateIn:'bounceIn-hastrans',
+                        animateOut:'bounceOut-hastrans'
+                    });
+                }
+            }
+        )
+    }else{
+        $(target_voice).show();
+    }
+});
 $(document).ready(function () {
     // 判断诗词是否已经点击了like
     // if($('input[name="_user_id"]')){
@@ -118,4 +219,7 @@ $(document).ready(function () {
             animateOut:'bounceOut-hastrans'
         });
     });
+    $('.speaker-close').on('click',function () {
+        $(this).parent().parent().hide();
+    })
 });
