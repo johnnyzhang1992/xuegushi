@@ -430,7 +430,7 @@ class PoemsController extends Controller
                             }
                             if(isset(json_decode($poem->content)->content) && json_decode($poem->content)->content){
                                 foreach(json_decode($poem->content)->content as $item){
-                                    $poem_text = $poem_text.$item.' ';
+                                    $poem_text = $poem_text.$item.'   ';
                                 }
                             }
                         }
