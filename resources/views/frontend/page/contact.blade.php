@@ -56,7 +56,7 @@
                     请通过以下方式联系我们：）
                 </div>
                 <div class="ContactPage-para">
-                    EMail：<a href="mailto:me@johnnyzhang.cn">me@johnnyzhang.cn</a>
+                    EMail：<a href="mailto:info@xuegushi.cn">info@xuegushi.cn</a>
                 </div>
             </div>
             @include('frontend.partials.page_footer')

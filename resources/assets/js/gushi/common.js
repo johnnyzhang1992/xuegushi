@@ -25,9 +25,6 @@ jQuery(document).ready(function(){
         });
     });
 });
-$(function () {
-    $('[data-toggle="tooltip"]').tooltip()
-});
 // 喜欢
 $('.poem-tool').on('click','.like',function () {
     var type = $(this).attr('data-type');
@@ -231,4 +228,9 @@ $(document).ready(function () {
     $('.poem-card').on('click','.speaker-close',function () {
         $(this).parent().parent().hide();
     });
+    if($(window).width()>768){
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        });
+    }
 });

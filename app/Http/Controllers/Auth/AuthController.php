@@ -9,6 +9,7 @@ use App\Models\Employee;
 use App\Role;
 use Validator;
 use Eloquent;
+use App\Helpers\MailUtil;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
@@ -131,7 +132,7 @@ class AuthController extends Controller
         ]);
         $role = Role::where('name', 'NORMAL')->first();
         $user->attachRole($role);
-    
+        MailUtil::UserCreate($data['name'],$data['email']);
         return $user;
     }
     /**

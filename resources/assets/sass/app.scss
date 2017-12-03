@@ -82,6 +82,7 @@ a:hover,a:focus{
   border-width:0;
   width: 40px;
   height: 40px;
+  margin: 0 auto;
   -webkit-box-shadow: 0 1px 3px rgba(0,0,0,.1);
   box-shadow: 0 1px 3px rgba(0,0,0,.1)
 }
@@ -91,12 +92,15 @@ a:hover,a:focus{
 }
 
 .CornerButton .Zi {
-  fill: #9aaabf
+  fill: #9aaabf;
+  width: 24px;
+  height: 24px;
 }
 
 .CornerButton .Zi:hover {
   fill: #8d9eb3
 }
+// footer
 .zh-footer, .zh-footer a {
   color: #999;
 }
