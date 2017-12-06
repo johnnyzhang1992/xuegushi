@@ -1,4 +1,4 @@
-@extends('frontend.layout.poem')
+@extends('frontend.layout.author')
 
 @section('content-css')
 

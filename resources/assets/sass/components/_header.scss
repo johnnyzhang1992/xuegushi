@@ -35,12 +35,14 @@
   }
 }
 .nav .dropdown-menu{
-  width: 191px;
+  width: 120px;
+  min-width: 120px;
   a{
     color:#777;
     font-weight: 600;
     border-width: 0;
     text-decoration: none;
+    text-align: left;
   }
   a:hover,a:focus{
     color: #337ab7;

@@ -12,6 +12,7 @@
     <meta property="og:description" content="{{ isset($site_description) ? $site_description: config('seo.default_description') }}" />
     <meta property="og:url" content="https://xuegushi.cn" />
     <meta property="og:sitename" content="学古诗" />
+    <meta name="sogou_site_verification" content="qZUdNCxRqM"/>
     {{--<meta property="og:image" content="http://demo.adminlte.acacha.org/img/LaraAdmin-600x600.jpg" />--}}
     <title>{{ isset($site_title)?$site_title:config('seo.default_site_name') }}{{ isset($site_title_addon) ? ' - '.$site_title_addon: '-'.config('seo.default_sub_title') }}</title>
     @yield('base-css')

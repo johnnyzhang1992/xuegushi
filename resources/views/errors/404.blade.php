@@ -3,7 +3,7 @@
     <head>
         <title>Page / Record not found.</title>
 
-        <link href="https://fonts.googleapis.com/css?family=Roboto:200,400" rel="stylesheet" type="text/css">
+        {{--<link href="https://fonts.googleapis.com/css?family=Roboto:200,400" rel="stylesheet" type="text/css">--}}
 		<link href="{{ asset('la-assets/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css" />
 
         <style>

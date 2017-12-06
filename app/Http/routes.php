@@ -45,6 +45,13 @@ Route::group([
     Route::post('/judge/like','Frontend\PoemsController@judgeLike');
     Route::get('/voiceCombine','Frontend\PoemsController@voiceCombine');
 });
+/* ============== 个人页面 ====================== */
+Route::group([
+    'prefix' => 'people',
+    'middleware' => ['auth']
+],function (){
+    Route::get('/{id}','People\ShowController@index');
+});
 /* =============== 静态页面 ====================== */
 
 Route::get('/contact','Frontend\PageController@contact');

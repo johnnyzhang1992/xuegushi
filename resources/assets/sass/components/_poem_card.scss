@@ -63,6 +63,9 @@
     a{
       color: #999;
     }
+    .tag.active{
+      color: #006ac5;
+    }
     a:focus,a:hover{
       color: #006ac5;
       text-decoration: none;

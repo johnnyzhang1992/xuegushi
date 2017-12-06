@@ -17,14 +17,49 @@
             <div class="main_left col-md-8">
                 <div class="topTypeHeader">
                     <div class="typeHeaderItem" style="margin-bottom: 10px">
+                        <div class="topTypeHeader-nav top">
+                            @if(isset($dynasty) || isset($type) || isset($tag))
+                                @if(isset($dynasty) && $dynasty)
+                                    @if($dynasty != 'all')
+                                        <span>{{ @$dynasty }}</span>
+                                    @endif
+                                @endif
+                                @if(isset($type) && $type)
+                                    @if($type != 'all')
+                                        <span>{{ @$type }}</span>
+                                    @endif
+                                @endif
+                                @if(isset($tag) && $tag)
+                                    <span>{{@$tag}}</span>
+                                @endif
+                            @else
+                                <span>不限</span>
+                            @endif
+                        </div>
+                    </div>
+                    <div class="typeHeaderItem" style="margin-bottom: 10px">
+
                         <a role="button" class="topTypeHeader-rightItem pull-left">类型</a>
                         <div class="topTypeHeader-nav">
-                            <a href="{{url('poem?type=all&dynasty='.$dynasty)}}" class="topTypeHeader-navItem @if(isset($type) && $type == 'all') active @endif">不限</a>
+                            @if(isset($tag) && $tag)
+                                <a href="{{url('poem?type=all&dynasty='.$dynasty.'&tag='.$tag)}}" class="topTypeHeader-navItem @if(isset($type) && $type == 'all') active @endif">不限</a>
+                            @else
+                                <a href="{{url('poem?type=all&dynasty='.$dynasty)}}" class="topTypeHeader-navItem @if(isset($type) && $type == 'all') active @endif">不限</a>
+                            @endif
+
                             @foreach($poem_types as $p_type)
-                                @if(isset($dynasty) && $dynasty)
-                                    <a href="{{url('poem?type='.$p_type->alia_name.'&dynasty='.$dynasty)}}" class="topTypeHeader-navItem @if(isset($type) && $type ==$p_type->alia_name) active @endif">{{ $p_type->alia_name }}</a>
+                                @if(isset($tag) && $tag)
+                                    @if(isset($dynasty) && $dynasty)
+                                        <a href="{{url('poem?type='.$p_type->alia_name.'&dynasty='.$dynasty.'&tag='.$tag)}}" class="topTypeHeader-navItem @if(isset($type) && $type ==$p_type->alia_name) active @endif">{{ $p_type->alia_name }}</a>
+                                    @else
+                                        <a href="{{url('poem?type='.$p_type->alia_name.'&tag='.$tag)}}" class="topTypeHeader-navItem @if(isset($type) && $type ==$p_type->alia_name) active @endif">{{ $p_type->alia_name }}</a>
+                                    @endif
                                 @else
-                                    <a href="{{url('poem?type='.$p_type->alia_name)}}" class="topTypeHeader-navItem @if(isset($type) && $type ==$p_type->alia_name) active @endif">{{ $p_type->alia_name }}</a>
+                                    @if(isset($dynasty) && $dynasty)
+                                        <a href="{{url('poem?type='.$p_type->alia_name.'&dynasty='.$dynasty)}}" class="topTypeHeader-navItem @if(isset($type) && $type ==$p_type->alia_name) active @endif">{{ $p_type->alia_name }}</a>
+                                    @else
+                                        <a href="{{url('poem?type='.$p_type->alia_name)}}" class="topTypeHeader-navItem @if(isset($type) && $type ==$p_type->alia_name) active @endif">{{ $p_type->alia_name }}</a>
+                                    @endif
                                 @endif
                             @endforeach
                         </div>
@@ -32,17 +67,38 @@
                     <div class="typeHeaderItem">
                         <a role="button" class="topTypeHeader-rightItem pull-left">朝代</a>
                         <div class="topTypeHeader-nav">
-                            <a href="{{url('poem?type='.$type.'&dynasty=all')}}" class="topTypeHeader-navItem @if(isset($dynasty) && $dynasty == 'all') active @endif">不限</a>
+                            @if(isset($type) && $type)
+                                <a href="{{url('poem?type='.$type.'&dynasty=all'.'&tag='.$tag)}}" class="topTypeHeader-navItem @if(isset($dynasty) && $dynasty == 'all') active @endif">不限</a>
+                            @else
+                                <a href="{{url('poem?type='.$type.'&dynasty=all')}}" class="topTypeHeader-navItem @if(isset($dynasty) && $dynasty == 'all') active @endif">不限</a>
+                            @endif
                             @foreach($poem_dynasty as $p_dy)
-                                @if(isset($type) && $type)
-                                    <a href="{{url('poem?dynasty='.$p_dy->alia_name.'&type='.$type)}}" class="topTypeHeader-navItem @if(isset($dynasty) && $dynasty ==$p_dy->alia_name) active @endif">{{ $p_dy->alia_name }}</a>
+                                @if(isset($tag) && $tag)
+                                    @if(isset($type) && $type)
+                                        <a href="{{url('poem?dynasty='.$p_dy->alia_name.'&type='.$type.'&tag='.$tag)}}" class="topTypeHeader-navItem @if(isset($dynasty) && $dynasty ==$p_dy->alia_name) active @endif">{{ $p_dy->alia_name }}</a>
+                                    @else
+                                        <a href="{{url('poem?dynasty='.$p_dy->alia_name.'&tag='.$tag)}}" class="topTypeHeader-navItem @if(isset($dynasty) && $dynasty ==$p_dy->alia_name) active @endif">{{ $p_dy->alia_name }}</a>
+                                    @endif
                                 @else
-                                    <a href="{{url('poem?dynasty='.$p_dy->alia_name)}}" class="topTypeHeader-navItem @if(isset($dynasty) && $dynasty ==$p_dy->alia_name) active @endif">{{ $p_dy->alia_name }}</a>
+                                    @if(isset($type) && $type)
+                                        <a href="{{url('poem?dynasty='.$p_dy->alia_name.'&type='.$type)}}" class="topTypeHeader-navItem @if(isset($dynasty) && $dynasty ==$p_dy->alia_name) active @endif">{{ $p_dy->alia_name }}</a>
+                                    @else
+                                        <a href="{{url('poem?dynasty='.$p_dy->alia_name)}}" class="topTypeHeader-navItem @if(isset($dynasty) && $dynasty ==$p_dy->alia_name) active @endif">{{ $p_dy->alia_name }}</a>
+                                    @endif
                                 @endif
                             @endforeach
                         </div>
                     </div>
                 </div>
+                @if($poems->total() &&$poems->total()>0 )
+                    <div class="nav-breadcrumb" style="margin-bottom: 15px">
+                        <ol class="breadcrumb" style="margin-bottom: 0;background-color: #fff">
+                            <li class="active">当前页：{{@$poems->currentPage()}}</li>
+                            <li class="active">总页数：{{@$poems->lastPage()}}</li>
+                            <li>共 {{ @$poems->total() }} 条结果</li>
+                        </ol>
+                    </div>
+                @endif
                 @if(isset($poems) && count($poems)>0)
                     @foreach($poems as $poem)
                         <div class="poem-card">
@@ -93,8 +149,8 @@
                             <div class="poem-tag">
                                 <p>
                                     @if(isset($poem->tags) && $poem->tags)
-                                        @foreach(explode(',',$poem->tags) as $key=>$tag)
-                                            @if($key+1 < count(explode(',',$poem->tags)))<a href="{{ url('poem?tag='.$tag) }}" class="tag">{{@$tag}} ,</a>@else<a href="" class="tag">{{@$tag}}</a>@endif
+                                        @foreach(explode(',',$poem->tags) as $key=>$tag1)
+                                            @if($key+1 < count(explode(',',$poem->tags)))<a href="{{ url('poem?tag='.$tag1) }}" class="tag @if(isset($tag) && $tag && $tag == $tag1 ) active @endif">{{@$tag1}} ,</a>@else<a href="" class="tag">{{@$tag1}}</a>@endif
                                         @endforeach
                                     @endif
                                 </p>

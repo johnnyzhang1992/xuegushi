@@ -8,6 +8,6 @@
             <li> <a href="#" class="footer-item">小程序</a> <span class="footer-dot">&sdot;</span></li>
             <li> <a href="{{ url('contact') }}" class="footer-item" target="_blank">联系我们</a></li>
         </ul>
-        <span class="copy">© 2017 学古诗 | 古诗文小助手</span>
+        <p class="p-copy"> <span class="copy">© 2017 学古诗 | 古诗文小助手</span></p>
     </div>
 </div>

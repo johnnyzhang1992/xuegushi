@@ -1,6 +1,9 @@
 /vendor
 /node_modules
 /public/storage
+/public/la-assets
+/public/lib
+/public/vendor
 Homestead.yaml
 Homestead.json
 .env

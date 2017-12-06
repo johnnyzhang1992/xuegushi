@@ -37,10 +37,11 @@ class PoemsController extends Controller
     public function index(Request $request){
         $type = $request->input('type');
         $dynasty = $request->input('dynasty');
+        $tag = $request->input('tag');
         $poem_types = DB::table('poem_type')->get();
         $poem_dynasty = DB::table('poem_dynasty')->get();
         $_url = 'poem?';
-        $_poems = $poems = DB::table('dev_poem');
+        $_poems = DB::table('dev_poem');
         if($type){
             if($type != 'all'){
                 $_poems->where('type',$type);
@@ -53,7 +54,10 @@ class PoemsController extends Controller
             }
             $_url = $_url.'&dynasty='.$dynasty;
         }
-
+        if($tag){
+           $_poems->where('tags','like','%'.$tag.'%');
+            $_url = $_url.'tag='.$tag;
+        }
         $_poems->orderBy('like_count','desc');
         $_poems = $_poems->paginate(10)->setPath($_url);
         if(!Auth::guest()){
@@ -85,8 +89,10 @@ class PoemsController extends Controller
             ->with('site_title','诗文')
             ->with('type',$type)
             ->with('dynasty',$dynasty)
+            ->with('tag',$tag)
             ->with('poem_types',$poem_types)
             ->with('poem_dynasty',$poem_dynasty)
+            ->with('h_authors',$this->getHotAuthors())
             ->with('poems',$_poems);
     }
     /**
@@ -118,8 +124,6 @@ class PoemsController extends Controller
                         ->where('type','poem')->first();
                     if(isset($_res) && $_res->status == 'active'){
                         $poem->status = 'active';
-                    }else{
-                        $poem->status = 'delete';
                     }
                     $res = DB::table('dev_like')
                         ->where('user_id',Auth::user()->id)
@@ -127,8 +131,6 @@ class PoemsController extends Controller
                         ->where('type','author')->first();
                     if(isset($res) && $res->status == 'active'){
                         $author->status = 'active';
-                    }else{
-                        $author->status = 'delete';
                     }
                     $collect = DB::table('dev_collect')
                         ->where('user_id',Auth::user()->id)
@@ -136,8 +138,13 @@ class PoemsController extends Controller
                         ->where('type','poem')->first();
                     if(isset($collect) && $collect->status == 'active'){
                         $poem->collect_status = 'active';
-                    }else{
-                        $poem->collect_status = 'delete';
+                    }
+                    $a_collect =  DB::table('dev_collect')
+                        ->where('user_id',Auth::user()->id)
+                        ->where('like_id',$author->id)
+                        ->where('type','author')->first();
+                    if(isset($a_collect) && $a_collect->status == 'active'){
+                        $poem->collect_a_status = 'active';
                     }
                 }
                 if($poem->author_source_id != -1){
@@ -155,6 +162,7 @@ class PoemsController extends Controller
                 ->with('hot_poems',$hot_poems)
                 ->with('poems_count',$poems_count)
                 ->with('site_title',$poem->title)
+                ->with('h_authors',$this->getHotAuthors())
                 ->with('poem',$poem);
         }else{
             return view('errors.404');

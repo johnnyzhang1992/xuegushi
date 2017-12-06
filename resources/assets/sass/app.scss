@@ -40,6 +40,17 @@ a:hover,a:focus{
   a.topTypeHeader-navItem.active{
     color: #337ab7;
   }
+  .topTypeHeader-nav.top {
+    border-bottom: 2px solid #eee;
+    margin: 0 20px;
+    padding-left: 0;
+    padding-bottom: 5px;
+    span {
+      color: #777;
+      font-size: 18px;
+      font-weight: 600;
+    }
+  }
 }
 .main_left,.main_right{
   padding-top: 20px;
@@ -50,7 +61,7 @@ a:hover,a:focus{
 .CornerButtons {
   position: fixed;
   bottom: 0;
-  right: 12px;
+  right: 15px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -113,9 +124,12 @@ a:hover,a:focus{
   border-top: 1px solid #ccc;
 }
 .zg-wrap {
-  width: 960px;
+  width: auto;
   margin: 0 auto;
   clear: both;
+  p.p-copy{
+    float: left;
+  }
 }
 .zh-footer ul, .zh-footer li {
   display: inline;
@@ -123,10 +137,22 @@ a:hover,a:focus{
 .zh-footer .copy {
   float: left;
 }
+.ContactPage{
+  ul,ol{
+    list-style: inherit;
+  }
+}
 @media(max-width:736px){
   .main_left,.main_right{
     padding-left: 0;
     padding-right: 0;
+  }
+  .zg-wrap ul{
+    padding-left: 0;
+  }
+  .zh-footer ul,.zh-footer li{
+    display: block;
+    float: left;
   }
 }
 @media (min-width: 992px){

@@ -31,15 +31,47 @@ class AuthorController extends Controller
 
     /**
      * authors index page
+     * @param $request
      * @return mixed
      */
-    public function index()
+    public function index(Request $request)
     {
-        $authors = DB::table('author')
-            ->orderBy('like_count','desc')
-            ->paginate(10);
+        $dynasty = $request->input('dynasty');
+        $dynastys = DB::table('poem_dynasty')->get();
+        $_url = 'author?';
+        $authors = DB::table('dev_author');
+        if($dynasty){
+            if($dynasty != 'all'){
+                $authors->where('dynasty',$dynasty);
+            }
+            $_url = $_url.'dynasty='.$dynasty;
+        }
+        $authors->orderBy('like_count','desc');
+        $authors = $authors->paginate(10)->setPath($_url);
+        if(!Auth::guest()){
+            foreach ($authors as $author){
+                $res = DB::table('dev_like')
+                    ->where('user_id',Auth::user()->id)
+                    ->where('like_id',$author->id)
+                    ->where('type','author')->first();
+
+                if(isset($res) && $res->status == 'active'){
+                    $author->status = 'active';
+                }
+                $collect = DB::table('dev_collect')
+                    ->where('user_id',Auth::user()->id)
+                    ->where('like_id',$author->id)
+                    ->where('type','author')->first();
+                if(isset($collect) && $collect->status == 'active'){
+                    $author->collect_status = 'active';
+                }
+            }
+        }
         return view('frontend.author.index')
             ->with('query','authors')
+            ->with('dynastys',$dynastys)
+            ->with('dynasty',$dynasty)
+            ->with('h_authors',$this->getHotAuthors())
             ->with('authors',$authors);
     }
     /**
