@@ -175,13 +175,13 @@ use App\Helpers\DateUtil;
                 <div class="side-card count-card">
                     <ul class="side-list">
                         <li class="list-item">
-                            <a class="Button SideBar-navLink Button--plain" href="{{ url('collections') }}" target="_blank" type="button">
+                            <a class="Button SideBar-navLink Button--plain" href="{{ url('collections') }}" type="button">
                                 <span class="SideBar-navText">收藏的诗文</span>
                                 <span class="SideBar-navNumber">{{@$p_count}}</span>
                             </a>
                         </li>
                         <li class="list-item">
-                            <a class="Button SideBar-navLink Button--plain" href="{{ url('likes') }}" target="_blank" type="button" >
+                            <a class="Button SideBar-navLink Button--plain" href="{{ url('collections?type=authors') }}" type="button" >
                                 <span class="SideBar-navText">收藏的作者</span>
                                 <span class="SideBar-navNumber">{{@$a_count}}</span>
                             </a>
