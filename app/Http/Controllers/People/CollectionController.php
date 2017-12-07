@@ -20,7 +20,8 @@ class CollectionController extends Controller{
     {
         $this->middleware('auth');
     }
-    public function index(){
+    public function index(Request $request){
+        $type = $request->input('type');
         if(!Auth::guest()){
             $c_poems = DB::table('dev_collect')
                 ->where('dev_collect.type','poem')
@@ -48,12 +49,13 @@ class CollectionController extends Controller{
                 ->where('status','active')
                 ->where('user_id',Auth::user()->id)
                 ->count();
-
+            $c_authors->setPath('collections?type=authors');
             return view('frontend.collect.index')
                 ->with('poems',$c_poems)
                 ->with('query','collect')
                 ->with('authors',$c_authors)
                 ->with('a_count',$a_count)
+                ->with('type',$type)
                 ->with('site_title','我的收藏')
                 ->with('p_count',$p_count);
         }else{

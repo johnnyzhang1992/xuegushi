@@ -77,23 +77,23 @@ use App\Helpers\DateUtil;
                 <div>
                     <!-- Nav tabs -->
                     <ul class="nav nav-tabs" role="tablist">
-                        <li role="presentation" class="active">
-                            <a href="#poem" aria-controls="poem" role="tab" data-toggle="tab">收藏的古诗文(共 {{@$poems->total()}} 条)</a>
+                        <li role="presentation" @if(!isset($type)) class="active" @endif>
+                            <a href="#poem" aria-controls="poem" role="tab" data-toggle="tab">收藏的古诗文(共 <span class="collect_count">{{@$poems->total()}}</span> 条)</a>
                         </li>
-                        <li role="presentation">
-                            <a href="#author" aria-controls="author" role="tab" data-toggle="tab">收藏的作者(共 {{$authors->total()}} 条)</a>
+                        <li role="presentation" @if(isset($type)) class="active" @endif>
+                            <a href="#author" aria-controls="author" role="tab" data-toggle="tab">收藏的作者(共 <span class="author_count">{{$authors->total()}}</span> 条)</a>
                         </li>
                     </ul>
                     <!-- Tab panes -->
                     <div class="tab-content">
-                        <div role="tabpanel" class="tab-pane active" id="poem">
+                        <div role="tabpanel" class="tab-pane @if(!isset($type)) active @endif" id="poem">
                            <div class="pane-content">
                                @if(isset($poems) && count($poems)>0)
                                    @foreach($poems as $poem)
                                        <div class="collect-list">
                                            <div class="collect-item" id="p-{{@$poem->like_id}}">
                                                <h2 class="collect-item-title">
-                                                   <a class="title-link" href="{{ url('poem/'.$poem->id) }}" target="_blank">{{@$poem->title}}</a>
+                                                   <a class="title-link" href="{{ url('poem/'.$poem->like_id) }}" target="_blank">{{@$poem->title}}</a>
                                                </h2>
                                                <div class="poem-author">
                                                    <p>
@@ -135,9 +135,34 @@ use App\Helpers\DateUtil;
                                {{@$poems->links()}}
                            </div>
                         </div>
-                        <div role="tabpanel" class="tab-pane" id="author">
+                        <div role="tabpanel" class="tab-pane @if(isset($type)) active @endif" id="author">
                             <div class="pane-content">
-                                我收藏的作者
+                                @if(isset($authors) && count($authors)>0)
+                                    @foreach($authors as $author)
+                                        <div class="collect-list">
+                                            <div class="collect-item" id="a-{{@$author->like_id}}">
+                                                <h2 class="collect-item-title">
+                                                    <a class="title-link" href="{{ url('author/'.$author->like_id) }}" target="_blank">{{@$author->author_name}}</a>
+                                                </h2>
+                                                <div class="author-author">
+                                                    <p>
+                                                        <a class="author_dynasty" href="{{ url('/author?dynasty='.@$author->dynasty) }}" target="_blank">朝代：{{@$author->dynasty}}</a>
+                                                    </p>
+                                                </div>
+                                                <div class="collect-item-meta">
+                                                    <span>收藏 <span class="badge">{{@$author->collect_count}}</span></span>
+                                                    <span class="zg-bull zu-autohide">•</span>
+                                                    <span>喜欢 <span class="badge">{{@$author->like_count}}</span></span>
+                                                    <span class="zg-bull zu-autohide">•</span>
+                                                    <span>创建时间 {{@ DateUtil::formatDate(strtotime($author->created_at))}}</span>
+                                                    <span class="zg-bull zu-autohide">•</span>
+                                                    <a href="javascript:;" class="uncollect" data-id="{{@$author->like_id}}" data-type="author" name="unfavo">取消收藏</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endforeach()
+                                @endif
+                                {{@$authors->links()}}
                             </div>
                         </div>
                     </div>
@@ -187,7 +212,15 @@ use App\Helpers\DateUtil;
                 },
                 function (res) {
                     if(res && res.status == 'delete'){
-                        $('#p-'+id).remove();
+                        if(type == 'poem'){
+                            $('#p-'+id).slideUp("slow", function() {
+                                $(this).remove();
+                            });
+                        }else{
+                            $('#a-'+id).slideUp("slow", function() {
+                                $(this).remove();
+                            });
+                        }
                         $('body').toast({
                             position:'fixed',
                             content:res.msg,
