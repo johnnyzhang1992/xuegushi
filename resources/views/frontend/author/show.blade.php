@@ -38,6 +38,7 @@
                         <div class="poem-content" style="min-height: 130px;">
                             {!! @$author->profile !!}
                         </div>
+
                         <div class="poem-tool clearfix">
                             @if(isset($author->collect_status) && $author->collect_status == 'active')
                                 <div class="collect active" data-toggle="tooltip" data-placement="top" title="收藏" data-type="author" data-id="{{$author->id}}">
@@ -63,6 +64,22 @@
                         </div>
                     </div>
                 @endif
+                <div class="side-card hidden-lg hidden-md hidden-sm">
+                    <div class="side-title">
+                        <h2>
+                            <span class="author">代表作品 <small>(总数:{{ @$poems_count }})</small></span> <a href="{{url('author/'.@$author->id.'/poems')}}" class="pull-right" style="font-size: 15px;line-height: 22px;">查看全部</a>
+                        </h2>
+                    </div>
+                    <div class="side-content">
+                        <ul style="list-style: none;padding-left: 0">
+                            @foreach($hot_poems as $h_poem)
+                                <li>
+                                    <a class="" href="{{ url('poem/'.$h_poem->id) }}" target="_blank" style="border: none">{{@$h_poem->title}}</a> <i class="fa fa-thumbs-o-up"></i> {{@$h_poem->like_count}}
+                                </li>
+                            @endforeach
+                        </ul>
+                    </div>
+                </div>
                 @if(isset($author->more_infos) && count(json_decode($author->more_infos))>0)
                     @foreach(json_decode($author->more_infos) as $item)
                         <div class="poem-card">
@@ -100,7 +117,9 @@
                 @if(isset($hot_poems) && $hot_poems)
                     <div class="side-card">
                         <div class="side-title">
-                            <h2><span class="author">代表作品 <small>(作品总数：{{ @$poems_count }})</small></span></h2>
+                            <h2>
+                                <span class="author">代表作品 <small>(总数:{{ @$poems_count }})</small></span> <a href="{{url('author/'.@$author->id.'/poems')}}" class="pull-right" style="font-size: 15px;line-height: 22px;">查看全部</a>
+                            </h2>
                         </div>
                         <div class="side-content">
                             <ul style="list-style: none;padding-left: 0">

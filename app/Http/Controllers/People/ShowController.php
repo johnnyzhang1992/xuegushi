@@ -21,7 +21,12 @@ class ShowController extends Controller{
     {
         $this->middleware('auth');
     }
-    public function index(){
-        return view('people.show');
+    public function index(Request $request){
+//        $request->setTrustedProxies(array('10.32.0.1/16'));
+        $ip = request()->ip();
+        return view('people.show')
+            ->with('ip',$ip)
+            ->with($this->getClAndLkCount())
+            ->with('h_authors',$this->getHotAuthors());
     }
 }

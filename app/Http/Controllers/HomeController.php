@@ -67,6 +67,7 @@ class HomeController extends Controller
         return view('home')
             ->with('query','home')
             ->with($this->getClAndLkCount())
+            ->with('h_authors',$this->getHotAuthors())
             ->with('poems',$poems);
     }
 }

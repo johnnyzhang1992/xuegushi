@@ -56,6 +56,7 @@ class CollectionController extends Controller{
                 ->with('authors',$c_authors)
                 ->with('a_count',$a_count)
                 ->with('type',$type)
+                ->with($this->getClAndLkCount())
                 ->with('site_title','我的收藏')
                 ->with('p_count',$p_count);
         }else{

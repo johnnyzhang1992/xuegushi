@@ -44,7 +44,7 @@
             </a>
         </li>
         <li class="list-item">
-            <a class="Button SideBar-navLink Button--plain" href="{{ url('likes') }}" target="_blank" type="button" >
+            <a class="Button SideBar-navLink Button--plain" href="#" target="_blank" type="button" >
                 <i class="fa fa-thumbs-o-up"></i>
                 <span class="SideBar-navText">我的喜欢</span>
                 <span class="SideBar-navNumber">{{@$like_count}}</span>

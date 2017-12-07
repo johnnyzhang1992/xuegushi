@@ -124,6 +124,7 @@ class AuthorController extends Controller
                 ->with('site_description',$site_des)
                 ->with('hot_poems',$hot_poems)
                 ->with($this->getClAndLkCount())
+                ->with('h_authors',$this->getHotAuthors())
                 ->with('poems_count',$poems_count)
                 ->with('author',$author);
         }else{
@@ -146,4 +147,85 @@ class AuthorController extends Controller
         }
     }
 
+    /**
+     * 返回当前诗人所有的作品
+     * @param $id
+     * @return mixed
+     */
+
+    public function showAllPoems($id){
+        $author = null;
+        $hot_poems = null;
+        $poems_count = 0;
+        $author = DB::table('dev_author')->where('id',$id)->first();
+        if($author){
+            $_poems = DB::table('dev_poem')
+                ->where('author_source_id',$author->source_id)
+                ->orderBy('like_count','desc')
+                ->paginate(10);
+            if(!Auth::guest()){
+                $res1 = DB::table('dev_like')
+                    ->where('user_id',Auth::user()->id)
+                    ->where('like_id',$author->id)
+                    ->where('type','author')->first();
+                if(isset($res1) && $res1->status == 'active'){
+                    $author->status = 'active';
+                }
+                $collect = DB::table('dev_collect')
+                    ->where('user_id',Auth::user()->id)
+                    ->where('like_id',$author->id)
+                    ->where('type','author')->first();
+                if(isset($collect) && $collect->status == 'active'){
+                    $author->collect_status = 'active';
+                }
+                foreach ($_poems as $poem) {
+                    $res = DB::table('dev_like')
+                        ->where('user_id', Auth::user()->id)
+                        ->where('like_id', $poem->id)
+                        ->where('type', 'poem')->first();
+                    if ($poem->author_source_id != -1) {
+                        $poem->author_id = $author->id;
+                    } else {
+                        $poem->author_id = -1;
+                    }
+                    if (isset($res) && $res->status == 'active') {
+                        $poem->status = 'active';
+                    }
+                    $collect1 = DB::table('dev_collect')
+                        ->where('user_id', Auth::user()->id)
+                        ->where('like_id', $poem->id)
+                        ->where('type', 'poem')->first();
+                    if (isset($collect1) && $collect1->status == 'active') {
+                        $poem->collect_status = 'active';
+                    }
+                }
+            }
+            if($author->author_name != '佚名'){
+                $poems_count = DB::table('dev_poem')
+                    ->where('author_source_id',$author->source_id)
+                    ->count();
+                $hot_poems = DB::table('dev_poem')
+                    ->where('author_source_id',$author->source_id)
+                    ->orderBy('like_count','desc')
+                    ->paginate(5);
+            }
+            if(isset($author->profile) && $author->profile){
+                $site_des = $author->profile;
+            }else{
+                $site_des = config('seo.default_description');
+            }
+            return view('frontend.author.allPoems')
+//                ->with('query','authors')
+                ->with('site_title',$author->author_name)
+                ->with('site_description',$site_des)
+                ->with('hot_poems',$hot_poems)
+                ->with($this->getClAndLkCount())
+                ->with('poems',$_poems)
+                ->with('h_authors',$this->getHotAuthors())
+                ->with('poems_count',$poems_count)
+                ->with('author',$author);
+        }else{
+            return view('errors.404');
+        }
+    }
 }

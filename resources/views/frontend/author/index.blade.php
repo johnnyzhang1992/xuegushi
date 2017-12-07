@@ -61,7 +61,7 @@
                         <ol class="breadcrumb" style="margin-bottom: 0;background-color: #fff">
                             <li class="active">当前页：{{@$authors->currentPage()}}</li>
                             <li class="active">总页数：{{@$authors->lastPage()}}</li>
-                            <li>共 {{ @$authors->total() }} 条结果</li>
+                            <li>共 {{ @$authors->total() }} 条</li>
                         </ol>
                     </div>
                 @endif

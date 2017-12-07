@@ -51,8 +51,11 @@ use App\Helpers\DateUtil;
         a.toggle-expand{
             cursor: pointer;
         }
-        .side-card .side-list .SideBar-navText{
-            margin-left: 0;
+
+        @media (max-width: 375px) {
+            .main_left .nav > li > a{
+                padding: 5px 10px;
+            }
         }
     </style>
 @endsection
@@ -78,10 +81,10 @@ use App\Helpers\DateUtil;
                     <!-- Nav tabs -->
                     <ul class="nav nav-tabs" role="tablist">
                         <li role="presentation" @if(!isset($type)) class="active" @endif>
-                            <a href="#poem" aria-controls="poem" role="tab" data-toggle="tab">收藏的古诗文(共 <span class="collect_count">{{@$poems->total()}}</span> 条)</a>
+                            <a href="#poem" aria-controls="poem" role="tab" data-toggle="tab">收藏的古诗文(<span class="collect_count">{{@$poems->total()}}</span>条)</a>
                         </li>
                         <li role="presentation" @if(isset($type)) class="active" @endif>
-                            <a href="#author" aria-controls="author" role="tab" data-toggle="tab">收藏的作者(共 <span class="author_count">{{$authors->total()}}</span> 条)</a>
+                            <a href="#author" aria-controls="author" role="tab" data-toggle="tab">收藏的作者(<span class="author_count">{{$authors->total()}}</span>条)</a>
                         </li>
                     </ul>
                     <!-- Tab panes -->
@@ -175,15 +178,15 @@ use App\Helpers\DateUtil;
                 <div class="side-card count-card">
                     <ul class="side-list">
                         <li class="list-item">
-                            <a class="Button SideBar-navLink Button--plain" href="{{ url('collections') }}" type="button">
-                                <span class="SideBar-navText">收藏的诗文</span>
-                                <span class="SideBar-navNumber">{{@$p_count}}</span>
+                            <a class="Button SideBar-navLink Button--plain" href="{{ url('collections') }}" target="_blank" type="button">
+                                <i class="fa fa-star-o"></i> <span class="SideBar-navText">我的收藏</span>
+                                <span class="SideBar-navNumber">{{@$collect_count}}</span>
                             </a>
                         </li>
                         <li class="list-item">
-                            <a class="Button SideBar-navLink Button--plain" href="{{ url('collections?type=authors') }}" type="button" >
-                                <span class="SideBar-navText">收藏的作者</span>
-                                <span class="SideBar-navNumber">{{@$a_count}}</span>
+                            <a class="Button SideBar-navLink Button--plain" href="#" target="_blank" type="button" >
+                                <i class="fa fa-thumbs-o-up"></i> <span class="SideBar-navText">我的喜欢</span>
+                                <span class="SideBar-navNumber">{{@$like_count}}</span>
                             </a>
                         </li>
                     </ul>
