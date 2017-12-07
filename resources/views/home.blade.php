@@ -53,7 +53,7 @@
                             </div>
                             <div class="poem-tool clearfix">
                                 <div class="collect @if(isset($poem->collect_status) && $poem->collect_status == 'active') active @endif" data-toggle="tooltip" data-placement="top" title="收藏" data-type="poem" data-id="{{$poem->id}}">
-                                    <i class="fa  @if(isset($poem->collect_status) && $poem->collect_status == 'active') fa-heart @else fa-heart-o @endif"></i>
+                                    <i class="fa  @if(isset($poem->collect_status) && $poem->collect_status == 'active') fa-star @else fa-star-o @endif"></i>
                                 </div>
                                 <div class="copy" data-toggle="tooltip" data-placement="top" title="复制"  data-clipboard-action="copy" data-clipboard-target="#poem-c-{{@$poem->id}}">
                                     <i class="fa fa-clone"></i>

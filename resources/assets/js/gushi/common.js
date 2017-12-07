@@ -96,11 +96,11 @@ $('.poem-tool').on('click','.collect',function () {
         },
         function (res) {
             if(res && res.status == 'active'){
-                if($(th).hasClass('active')){
-                }else{
-                    $(th).addClass('active');
-                    $(th).find('i').removeClass('fa-heart-o');
-                    $(th).find('i').addClass('fa-heart');
+                $(th).addClass('active');
+                $(th).find('i').removeClass('fa-star-o');
+                $(th).find('i').addClass('fa-star');
+                if($(th).find('.tool-name')){
+                    $(th).find('.tool-name').html('已收藏');
                 }
                 $('body').toast({
                     position:'fixed',
@@ -113,8 +113,11 @@ $('.poem-tool').on('click','.collect',function () {
                 });
             }else if(res && res.status == 'delete'){
                 $(th).removeClass('active');
-                $(th).find('i').removeClass('fa-heart');
-                $(th).find('i').addClass('fa-heart-o');
+                $(th).find('i').removeClass('fa-star');
+                $(th).find('i').addClass('fa-star-o');
+                if($(th).find('.tool-name')){
+                    $(th).find('.tool-name').html('收藏');
+                }
                 $('body').toast({
                     position:'fixed',
                     content:res.msg,

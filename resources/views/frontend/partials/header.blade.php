@@ -20,7 +20,7 @@
                     {{--<a href="{{url('/sentence')}}" class="nav-item">名句</a>--}}
                 {{--</li>--}}
                 <li @if(isset($query) && $query =='collect') class="active" @endif>
-                    <a href="{{url('/collect')}}" class="nav-item">收藏</a>
+                    <a href="{{url('/collections')}}" class="nav-item">收藏</a>
                 </li>
                 {{--<li @if(isset($query) && $query =='fhl') class="active" @endif>--}}
                     {{--<a href="{{url('/fhl')}}" class="nav-item">飞花令</a>--}}

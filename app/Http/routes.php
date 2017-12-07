@@ -26,9 +26,7 @@ Route::group([
 });
 //Route::get('/poems/update', 'Frontend\PoemsController@updatePoemLikeCount');
 
-/*
- * authors
- */
+/* =============== authors =======================*/
 Route::group([
     'prefix' => 'author'
 ],function (){
@@ -51,6 +49,14 @@ Route::group([
     'middleware' => ['auth']
 ],function (){
     Route::get('/{id}','People\ShowController@index');
+});
+/* =============== 收藏=========================== */
+Route::group([
+    'prefix' => 'collections',
+    'middleware' => ['auth']
+],function (){
+    Route::get('/','People\CollectionController@index');
+    Route::get('/mine','People\CollectionController@myCollection');
 });
 /* =============== 静态页面 ====================== */
 

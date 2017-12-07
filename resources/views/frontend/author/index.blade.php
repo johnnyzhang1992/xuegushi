@@ -84,12 +84,24 @@
                                 {!! @$author->profile !!}
                             </div>
                             <div class="poem-tool clearfix">
-                                <div class="collect @if(isset($author->collect_status) && $author->collect_status == 'active') active @endif" data-toggle="tooltip" data-placement="top" title="收藏" data-type="author" data-id="{{$author->id}}">
-                                    <i class="fa  @if(isset($author->collect_status) && $author->collect_status == 'active') fa-heart @else fa-heart-o @endif"></i>
-                                </div>
-                                <div class="like pull-right @if(isset($author->status) && $author->status == 'active') active @endif" data-toggle="tooltip" data-placement="top" title="喜欢" data-type="author" data-id="{{@$author->id}}">
-                                    <i class="fa fa-thumbs-o-up"></i> <span class="like_count">{{@$author->like_count}}</span>
-                                </div>
+                                @if(isset($author->collect_status) && $author->collect_status == 'active')
+                                    <div class="collect active" data-toggle="tooltip" data-placement="top" title="收藏" data-type="author" data-id="{{$author->id}}">
+                                        <i class="fa fa-star"></i> <span class="tool-name">已收藏</span>
+                                    </div>
+                                @else
+                                    <div class="collect" data-toggle="tooltip" data-placement="top" title="收藏" data-type="author" data-id="{{$author->id}}">
+                                        <i class="fa  fa-star-o"></i> <span class="tool-name">收藏</span>
+                                    </div>
+                                @endif
+                                @if(isset($author->status) && $author->status == 'active')
+                                    <div class="like pull-right active" data-toggle="tooltip" data-placement="top" title="喜欢" data-type="author" data-id="{{@$author->id}}">
+                                        <i class="fa fa-thumbs-o-up"></i> <span class="like_count">{{@$author->like_count}}</span>
+                                    </div>
+                                @else
+                                    <div class="like pull-right" data-toggle="tooltip" data-placement="top" title="喜欢" data-type="author" data-id="{{@$author->id}}">
+                                        <i class="fa fa-thumbs-o-up"></i> <span class="like_count">{{@$author->like_count}}</span>
+                                    </div>
+                                @endif
                             </div>
                             <div class="tool-qrcode">
 

@@ -92,6 +92,7 @@ class PoemsController extends Controller
             ->with('tag',$tag)
             ->with('poem_types',$poem_types)
             ->with('poem_dynasty',$poem_dynasty)
+            ->with($this->getClAndLkCount())
             ->with('h_authors',$this->getHotAuthors())
             ->with('poems',$_poems);
     }
@@ -162,6 +163,7 @@ class PoemsController extends Controller
                 ->with('hot_poems',$hot_poems)
                 ->with('poems_count',$poems_count)
                 ->with('site_title',$poem->title)
+                ->with($this->getClAndLkCount())
                 ->with('h_authors',$this->getHotAuthors())
                 ->with('poem',$poem);
         }else{

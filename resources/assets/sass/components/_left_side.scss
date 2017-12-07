@@ -39,6 +39,50 @@
       color: #175199;
     }
   }
+  .side-list{
+    padding-left: 0;
+    margin-bottom: 0;
+    font-size: 16px;
+    .SideBar-navLink{
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-box-align: center;
+      -ms-flex-align: center;
+      align-items: center;
+      padding: 0 15px;
+      height: 40px;
+      overflow: hidden;
+    }
+    .SideBar-navList {
+      width: 100%;
+      padding: 8px 0;
+    }
+    .SideBar-navText {
+      -webkit-box-flex: 1;
+      -ms-flex: 1;
+      flex: 1;
+      margin: 0 10px;
+      text-align: left;
+    }
+    .SideBar-navNumber {
+      padding: 6px 10px;
+      border-radius: 2px;
+      background: #f7f8fa;
+      color: #8590a6;
+      font-size: 10px;
+    }
+    .SideBar-navLink:hover {
+      background: #f4f8fb;
+    }
+    .Button--plain:hover {
+     color: #7a8599;
+   }
+  }
+}
+.side-card.count-card{
+  padding-left: 0;
+  padding-right: 0;
 }
 .footer{
   color: #8590a6;

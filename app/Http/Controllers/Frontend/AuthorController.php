@@ -71,6 +71,7 @@ class AuthorController extends Controller
             ->with('query','authors')
             ->with('dynastys',$dynastys)
             ->with('dynasty',$dynasty)
+            ->with($this->getClAndLkCount())
             ->with('h_authors',$this->getHotAuthors())
             ->with('authors',$authors);
     }
@@ -95,8 +96,13 @@ class AuthorController extends Controller
                 }else{
                     $author->status = 'delete';
                 }
-            }else{
-                $author->status = 'delete';
+                $collect = DB::table('dev_collect')
+                    ->where('user_id',Auth::user()->id)
+                    ->where('like_id',$author->id)
+                    ->where('type','author')->first();
+                if(isset($collect) && $collect->status == 'active'){
+                    $author->collect_status = 'active';
+                }
             }
             if($author->author_name != '佚名'){
                 $poems_count = DB::table('dev_poem')
@@ -117,6 +123,7 @@ class AuthorController extends Controller
                 ->with('site_title',$author->author_name)
                 ->with('site_description',$site_des)
                 ->with('hot_poems',$hot_poems)
+                ->with($this->getClAndLkCount())
                 ->with('poems_count',$poems_count)
                 ->with('author',$author);
         }else{

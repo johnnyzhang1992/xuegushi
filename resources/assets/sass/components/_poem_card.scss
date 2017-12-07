@@ -51,8 +51,15 @@
     .like.active{
       color: #337ab7;
     }
+    .tool-name{
+      font-size: 14px;
+      color: #999;
+    }
     .collect.active{
       color: #337ab7;
+      .tool-name{
+        color: #337ab7;
+      }
     }
   }
   .poem-tag{

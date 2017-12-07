@@ -127,18 +127,30 @@
                                 </div>
                             </div>
                             <div class="poem-tool clearfix">
-                                <div class="collect @if(isset($poem->collect_status) && $poem->collect_status == 'active') active @endif" data-toggle="tooltip" data-placement="top" title="收藏" data-type="poem" data-id="{{$poem->id}}">
-                                    <i class="fa  @if(isset($poem->collect_status) && $poem->collect_status == 'active') fa-heart @else fa-heart-o @endif"></i>
-                                </div>
+                                @if(isset($poem->collect_status) && $poem->collect_status == 'active')
+                                    <div class="collect active" data-toggle="tooltip" data-placement="top" title="收藏" data-type="poem" data-id="{{$poem->id}}">
+                                        <i class="fa fa-star"></i>
+                                    </div>
+                                @else
+                                    <div class="collect" data-toggle="tooltip" data-placement="top" title="收藏" data-type="poem" data-id="{{$poem->id}}">
+                                        <i class="fa  fa-star-o"></i>
+                                    </div>
+                                @endif
                                 <div class="copy" data-toggle="tooltip" data-placement="top" title="复制"  data-clipboard-action="copy" data-clipboard-target="#poem-c-{{@$poem->id}}">
                                     <i class="fa fa-clone"></i>
                                 </div>
                                 <div class="speaker" data-toggle="tooltip" data-placement="top" title="朗读" data-status="" data-type="poem" data-id="{{$poem->id}}">
                                     <i class="fa fa-microphone" aria-hidden="true"></i>
                                 </div>
-                                <div class="like pull-right @if(isset($poem->status) && $poem->status == 'active') active @endif" data-toggle="tooltip" data-placement="top" title="喜欢" data-type="poem" data-id="{{$poem->id}}">
-                                    <i class="fa fa-thumbs-o-up"></i> <span class="like_count">{{@$poem->like_count}}</span>
-                                </div>
+                                    @if(isset($poem->status) && $poem->status == 'active')
+                                        <div class="like pull-right active" data-toggle="tooltip" data-placement="top" title="喜欢" data-type="poem" data-id="{{@$poem->id}}">
+                                            <i class="fa fa-thumbs-o-up"></i> <span class="like_count">{{@$poem->like_count}}</span>
+                                        </div>
+                                    @else
+                                        <div class="like pull-right" data-toggle="tooltip" data-placement="top" title="喜欢" data-type="poem" data-id="{{@$poem->id}}">
+                                            <i class="fa fa-thumbs-o-up"></i> <span class="like_count">{{@$poem->like_count}}</span>
+                                        </div>
+                                    @endif
                             </div>
                             <div id="speaker-{{$poem->id}}" class="poem-speaker" style="clear:both; height:auto; margin-top:10px; margin-bottom:10px; overflow:hidden;display: none">
 
