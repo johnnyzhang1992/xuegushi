@@ -244,6 +244,7 @@ class PoemsController extends Controller
             if(!$_res){
                 // 新的like
                 $res = DB::table($table_name)->where('id',$id)->increment("like_count");
+                $res1 = DB::table('users')->where('id',Auth::user()->id)->increment("like_count");
                 $_data = DB::table($table_name)->where('id',$id)->first();
                 DB::table('dev_like')->insertGetId(
                     [
@@ -261,6 +262,7 @@ class PoemsController extends Controller
                 // 更新like状态
                 if($_res->status == 'active'){
                     $res = DB::table($table_name)->where('id',$id)->decrement("like_count");
+                    $res1 = DB::table('users')->where('id',Auth::user()->id)->decrement("like_count");
                     $_data = DB::table($table_name)->where('id',$id)->first();
                     DB::table('dev_like')
                         ->where('user_id',Auth::user()->id)
@@ -273,6 +275,7 @@ class PoemsController extends Controller
                     $data['status'] = 'delete';
                 }else{
                     $res = DB::table($table_name)->where('id',$id)->increment("like_count");
+                    $res1 = DB::table('users')->where('id',Auth::user()->id)->increment("like_count");
                     $_data = DB::table($table_name)->where('id',$id)->first();
                     DB::table('dev_like')
                         ->where('user_id',Auth::user()->id)
@@ -350,7 +353,8 @@ class PoemsController extends Controller
             if(!$_res){
                 // 新的like
                 $res = DB::table($table_name)->where('id',$id)->increment("collect_count");
-                $_data = DB::table($table_name)->where('id',$id)->first();
+                $res1 = DB::table('users')->where('id',Auth::user()->id)->increment("collect_count");
+//                $_data = DB::table($table_name)->where('id',$id)->first();
                 DB::table('dev_collect')->insertGetId(
                     [
                         'like_id' => $id,
@@ -367,7 +371,8 @@ class PoemsController extends Controller
                 // 更新like状态
                 if($_res->status == 'active'){
                     $res = DB::table($table_name)->where('id',$id)->decrement("collect_count");
-                    $_data = DB::table($table_name)->where('id',$id)->first();
+                    $res1 = DB::table('users')->where('id',Auth::user()->id)->decrement("collect_count");
+//                    $_data = DB::table($table_name)->where('id',$id)->first();
                     DB::table('dev_collect')
                         ->where('user_id',Auth::user()->id)
                         ->where('id',$_res->id)
@@ -379,6 +384,7 @@ class PoemsController extends Controller
                     $data['status'] = 'delete';
                 }else{
                     $res = DB::table($table_name)->where('id',$id)->increment("collect_count");
+                    $res1 = DB::table('users')->where('id',Auth::user()->id)->increment("collect_count");
                     DB::table('dev_collect')
                         ->where('user_id',Auth::user()->id)
                         ->where('id',$_res->id)

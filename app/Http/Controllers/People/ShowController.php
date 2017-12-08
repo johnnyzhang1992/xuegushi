@@ -19,7 +19,7 @@ use Illuminate\Http\Request;
 class ShowController extends Controller{
     public function __construct()
     {
-        $this->middleware('auth');
+//        $this->middleware('auth');
     }
     public function index(Request $request){
 //        $request->setTrustedProxies(array('10.32.0.1/16'));
@@ -28,5 +28,21 @@ class ShowController extends Controller{
             ->with('ip',$ip)
             ->with($this->getClAndLkCount())
             ->with('h_authors',$this->getHotAuthors());
+    }
+    /**
+     * 更新所有用户的like collect数量
+     */
+    public function updateLikeCollect(){
+        $users = DB::table('users')->whereNotNull('deleted_at')->get();
+        foreach ($users as $user){
+            $like_count = DB::table('dev_like')->where('user_id',$user->id)->where('status','active')->count();
+            $collect_count = DB::table('dev_collect')->where('user_id',$user->id)->where('status','active')->count();
+            DB::table('users')
+                ->where('id',$user->id)
+                ->update([
+                    'like_count' => $like_count,
+                    'collect_count' =>$collect_count
+                ]);
+        }
     }
 }

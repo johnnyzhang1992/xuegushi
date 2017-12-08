@@ -18,11 +18,11 @@
             color: #337ab7;
         }
         .padding-60{
-            padding: 0 60px;
+            padding: 0 5%;
         }
         @media(max-width:450px){
             .padding-60{
-                padding: 0 20px;
+                padding: 0 15px;
             }
         }
     </style>
@@ -50,23 +50,23 @@
                     <table style="font-family:Microsoft YaHei,Simsun;width:100%;max-width:650px;_width:650px;*width:650px;table-layout:fixed;text-align:center;margin:10px 0" bgcolor="#ffffff" cellpadding="0" cellspacing="0">
                         <tbody>
                         <tr>
-                            <td width="25%">
+                            <td width="25%" style="text-align: center">
                                 <a class="item" target="_blank" href="{{ url('/poem?type=诗') }}" draggable="false">
                                     {{--<img style="width:72%;max-width:77px;border:0;display:inline-block" src="https://yanxuan.nosdn.127.net/15052130840920519.png" draggable="false">--}}
                                     <span>诗</span>
                                 </a>
                             </td>
-                            <td width="25%">
+                            <td width="25%" style="text-align: center">
                                 <a  class="item" target="_blank" href="{{ url('/poem?type=词') }}" draggable="false">
                                     <span>词</span>
                                 </a>
                             </td>
-                            <td width="25%">
+                            <td width="25%" style="text-align: center">
                                 <a  class="item" target="_blank" href="{{ url('/poem?type=曲') }}" draggable="false">
                                     <span>曲</span>
                                 </a>
                             </td>
-                            <td width="25%">
+                            <td width="25%" style="text-align: center">
                                 <a  class="item" target="_blank" href="{{ url('/poem?type=文言文') }}" draggable="false">
                                     <span>文言文</span>
                                 </a>

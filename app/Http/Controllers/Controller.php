@@ -29,8 +29,9 @@ class Controller extends BaseController{
      */
     public function getClAndLkCount(){
         if(!Auth::guest()){
-            $collect_count = DB::table('dev_collect')->where('user_id',Auth::user()->id)->where('status','active')->count();
-            $like_count = DB::table('dev_like')->where('user_id',Auth::user()->id)->where('status','active')->count();
+            $user = DB::table('users')->where('id',Auth::user()->id)->first();
+            $collect_count = $user->collect_count;
+            $like_count = $user->like_count;
         }else{
            $collect_count = 0;
            $like_count = 0;

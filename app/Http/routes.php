@@ -47,7 +47,7 @@ Route::group(['middleware' => ['web']], function () {
     /* ============== 个人页面 ====================== */
     Route::group([
         'prefix' => 'people',
-        'middleware' => ['auth']
+//        'middleware' => ['auth']
     ],function (){
         Route::get('/{id}','People\ShowController@index');
     });
@@ -60,7 +60,6 @@ Route::group(['middleware' => ['web']], function () {
         Route::get('/mine','People\CollectionController@myCollection');
     });
     /* =============== 静态页面 ====================== */
-
     Route::get('/contact','Frontend\PageController@contact');
     Route::get('/join','Frontend\PageController@join');
     Route::get('/about','Frontend\PageController@about');

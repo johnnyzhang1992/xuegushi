@@ -160,7 +160,7 @@ class AuthController extends Controller
         // the login attempts for this application. We'll key this by the username and
         // the IP address of the client making these requests into this application.
         $throttles = $this->isUsingThrottlesLoginsTrait();
-
+        User::where('email',$_email)->update(['last_login_ip'=>@request()->ip()]);
         if ($throttles && $lockedOut = $this->hasTooManyLoginAttempts($request)) {
             $this->fireLockoutEvent($request);
 
