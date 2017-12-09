@@ -33,7 +33,7 @@ class ShowController extends Controller{
      * 更新所有用户的like collect数量
      */
     public function updateLikeCollect(){
-        $users = DB::table('users')->whereNotNull('deleted_at')->get();
+        $users = DB::table('users')->whereNull('deleted_at')->get();
         foreach ($users as $user){
             $like_count = DB::table('dev_like')->where('user_id',$user->id)->where('status','active')->count();
             $collect_count = DB::table('dev_collect')->where('user_id',$user->id)->where('status','active')->count();

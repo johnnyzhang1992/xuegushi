@@ -236,4 +236,93 @@ $(document).ready(function () {
             $('[data-toggle="tooltip"]').tooltip()
         });
     }
+    $('#search-now').on('click',function () {
+        if($('#search-input').val() !=''){
+            getSearchResult();
+        }else{
+            $('body').toast({
+                position:'fixed',
+                content: '请确保输入了内容(:-',
+                duration:1000,
+                isCenter:true,
+                background:'rgba(0,0,0,0.5)',
+                animateIn:'bounceIn-hastrans',
+                animateOut:'bounceOut-hastrans'
+            });
+        }
+    });
+    $('#search-input').keydown(function (event) {
+        if (event.keyCode == 13) {
+            //执行操作
+            if($('#search-input').val() !=''){
+                getSearchResult();
+            }else{
+                $('body').toast({
+                    position:'fixed',
+                    content: '请确保输入了内容(:-',
+                    duration:1000,
+                    isCenter:true,
+                    background:'rgba(0,0,0,0.5)',
+                    animateIn:'bounceIn-hastrans',
+                    animateOut:'bounceOut-hastrans'
+                });
+            }
+        }
+    });
+    $('#search-input').change(function (event) {
+        if (event.keyCode == 13) {
+            //执行操作
+            if($('#search-input').val() !=''){
+                getSearchResult();
+            }else{
+                $('body').toast({
+                    position:'fixed',
+                    content: '请确保输入了内容(:-',
+                    duration:1000,
+                    isCenter:true,
+                    background:'rgba(0,0,0,0.5)',
+                    animateIn:'bounceIn-hastrans',
+                    animateOut:'bounceOut-hastrans'
+                });
+            }
+        }
+    });
+    function getSearchResult() {
+        $.get(
+            '/search',
+            {
+                'value': $('#search-input').val(),
+                '_token': $('input[name="_token"]').val()
+            },
+            function (res) {
+                $('#box').html(res);
+                var content = $('.neibox').html();
+                if(content == null || content.length == 0 || content == '  '){
+                    $('.neibox').html("<div class=\"no-result\" style=\"padding: 10px 15px\">\n" +
+                        "                            <p>没有找打相关内容哦！</p>\n" +
+                        "                            <p>换个关键词试试(:-</p>\n" +
+                        "                        </div>")
+                }
+                $('.search-box').show();
+            }
+        )
+    }
+    $('#search-input').bind('input propertychange', function() {
+        if($('#search-input').val() !=''){
+            getSearchResult();
+        }else{
+            $('body').toast({
+                position:'fixed',
+                content: '请确保输入了内容(:-',
+                duration:1000,
+                isCenter:true,
+                background:'rgba(0,0,0,0.5)',
+                animateIn:'bounceIn-hastrans',
+                animateOut:'bounceOut-hastrans'
+            });
+        }
+    });
+    $(document).click(function(){
+      $('#box').hide()
+    })
 });

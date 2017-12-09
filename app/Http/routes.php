@@ -59,6 +59,8 @@ Route::group(['middleware' => ['web']], function () {
         Route::get('/','People\CollectionController@index');
         Route::get('/mine','People\CollectionController@myCollection');
     });
+    /* =============== 搜索功能 ====================== */
+    Route::get('search','Frontend\SearchController@index');
     /* =============== 静态页面 ====================== */
     Route::get('/contact','Frontend\PageController@contact');
     Route::get('/join','Frontend\PageController@join');
