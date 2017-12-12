@@ -26,12 +26,12 @@ class SearchController extends Controller{
             ->where('author_name','like','%'.$_key.'%')
             ->select('id','dynasty','author_name','like_count')
             ->orderBy('like_count','desc')
-            ->limit(3)
+            ->limit(5)
             ->get();
         $tags = DB::table('dev_poem')
             ->where('tags','like','%'.$_key.'%')
             ->select('tags')
-            ->limit(3)
+            ->limit(5)
             ->get();
         $_tags = array();
         foreach ($tags as $tag){
@@ -46,7 +46,7 @@ class SearchController extends Controller{
             ->where('title','like','%'.$_key.'%')
             ->select('id','title','author','dynasty','like_count')
             ->orderBy('like_count','desc')
-            ->limit(3)
+            ->limit(5)
             ->get();
         return view('frontend.partials.searchBox')
             ->with('keyword',$_key)

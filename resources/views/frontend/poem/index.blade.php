@@ -162,7 +162,7 @@
                                 <p>
                                     @if(isset($poem->tags) && $poem->tags)
                                         @foreach(explode(',',$poem->tags) as $key=>$tag1)
-                                            @if($key+1 < count(explode(',',$poem->tags)))<a href="{{ url('poem?tag='.$tag1) }}" class="tag @if(isset($tag) && $tag && $tag == $tag1 ) active @endif">{{@$tag1}} ,</a>@else<a href="" class="tag">{{@$tag1}}</a>@endif
+                                            @if($key+1 < count(explode(',',$poem->tags)))<a href="{{ url('poem?tag='.$tag1) }}" class="tag @if(isset($tag) && $tag && $tag == $tag1 ) active @endif">{{@$tag1}} ,</a>@else<a href="" class="tag @if(isset($tag) && $tag && $tag == $tag1 ) active @endif">{{@$tag1}}</a>@endif
                                         @endforeach
                                     @endif
                                 </p>

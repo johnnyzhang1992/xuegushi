@@ -120,7 +120,7 @@ class AuthorController extends Controller
             }
             return view('frontend.author.show')
 //                ->with('query','authors')
-                ->with('site_title',$author->author_name)
+                ->with('site_title',$author->author_name.'-介绍、生平、轶事以及代表作品')
                 ->with('site_description',$site_des)
                 ->with('hot_poems',$hot_poems)
                 ->with($this->getClAndLkCount())
