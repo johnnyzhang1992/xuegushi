@@ -15,6 +15,7 @@
     <meta property="og:sitename" content="学古诗" />
     <meta name="sogou_site_verification" content="qZUdNCxRqM"/>
     <meta name="360-site-verification" content="692a791faf2667be55acfff23615caaf" />
+    <link rel="shortcut icon" type="image/x-icon" href="{{asset('favicon.ico')}}">
     {{--<meta property="og:image" content="http://demo.adminlte.acacha.org/img/LaraAdmin-600x600.jpg" />--}}
     <title>{{ isset($site_title)?$site_title:config('seo.default_site_name') }}{{ isset($site_title_addon) ? ' - '.$site_title_addon: '-'.config('seo.default_sub_title') }}</title>
     @yield('base-css')
@@ -33,12 +34,6 @@
 @yield('base-js')
 @yield('content-js')
 <script>
-    {{--360 自动推动--}}
-    (function(){
-        var src = (document.location.protocol == "http:") ? "https://js.passport.qihucdn.com/11.0.1.js?0ebc1d49bcf7137a3307e026661f57fe":"https://jspassport.ssl.qhimg.com/11.0.1.js?0ebc1d49bcf7137a3307e026661f57fe";
-        document.write('<script src="' + src + '" id="sozz"><\/script>');
-    })();
-    {{--百度 自动推送--}}
     (function(){
         var bp = document.createElement('script');
         var curProtocol = window.location.protocol.split(':')[0];
@@ -46,7 +41,7 @@
             bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
         }
         else {
-            bp.src = 'https://push.zhanzhang.baidu.com/push.js';
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
         }
         var s = document.getElementsByTagName("script")[0];
         s.parentNode.insertBefore(bp, s);
