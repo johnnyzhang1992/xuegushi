@@ -83,7 +83,7 @@
                         </div>
                     @endforeach
                 @endif
-                {{@$poems->links()}}
+                {{--{{@$poems->links()}}--}}
             </div>
             {{--right--}}
             <div class="main_right col-md-4">

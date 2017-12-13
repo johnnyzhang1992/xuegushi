@@ -32,10 +32,13 @@ class HomeController extends Controller
      * @return Response
      */
     public function index(){
+        // 获取随机数组
+
         $poems = DB::table('dev_poem')
-            ->where('like_count','>',100)
+//            ->where('like_count','>',100)
+                ->whereIn('id',$this->numberRand(1,72439,10))
             ->orderBy('like_count','desc')
-            ->paginate(10);
+            ->get();
         if(!Auth::guest()){
             foreach ($poems as $poem){
                 $like = DB::table('dev_like')
@@ -69,5 +72,10 @@ class HomeController extends Controller
             ->with($this->getClAndLkCount())
             ->with('h_authors',$this->getHotAuthors())
             ->with('poems',$poems);
+    }
+    public function numberRand($begin = 1, $end = 72439, $limit = 10){
+        $rand_array = range($begin, $end);
+        shuffle($rand_array); //调用现成的数组随机排列函数
+        return array_slice($rand_array, 0, $limit); //截取前$limit个
     }
 }
