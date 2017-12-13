@@ -19,6 +19,9 @@
                     <ol class="breadcrumb" style="margin-bottom: 0;background-color: #fff">
                         <li><a href="{{ url('/poem') }}">诗文</a></li>
                         <li class="active">{{@$poem->title}}</li>
+                        @if (!Auth::guest() && Auth::user()->id == 1)
+                        <li class="pull-right"><a href="{{ url('admin/poems/'.@$poem->id.'/edit') }}">编辑</a></li>
+                        @endif
                     </ol>
                 </div>
                 <div class="poem-card">

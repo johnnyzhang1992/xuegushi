@@ -49,15 +49,9 @@ Route::group(['middleware' => ['web']], function () {
         'prefix' => 'people',
 //        'middleware' => ['auth']
     ],function (){
+        Route::get('/collections','People\CollectionController@index');
+        Route::get('/likes','People\LikeController@index');
         Route::get('/{id}','People\ShowController@index');
-    });
-    /* =============== 收藏=========================== */
-    Route::group([
-        'prefix' => 'collections',
-        'middleware' => ['auth']
-    ],function (){
-        Route::get('/','People\CollectionController@index');
-        Route::get('/mine','People\CollectionController@myCollection');
     });
     /* =============== 搜索功能 ====================== */
     Route::get('search','Frontend\SearchController@index');

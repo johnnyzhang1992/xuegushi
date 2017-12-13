@@ -19,6 +19,9 @@
                     <ol class="breadcrumb" style="margin-bottom: 0;background-color: #fff">
                         <li><a href="{{ url('/author') }}">作者</a></li>
                         <li class="active">{{@$author->author_name}}</li>
+                        @if (!Auth::guest() && Auth::user()->id == 1)
+                            <li class="pull-right"><a href="{{ url('admin/authors/'.@$author->id.'/edit') }}">编辑</a></li>
+                        @endif
                     </ol>
                 </div>
                 @if(isset($author) && $author)

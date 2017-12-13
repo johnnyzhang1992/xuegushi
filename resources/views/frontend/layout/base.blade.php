@@ -28,6 +28,10 @@
 
 <body>
 <input type="hidden" name="_token" value="{{ csrf_token() }}" />
+<div class="alert alert-warning alert-dismissible fade in" role="alert" style="text-align: center;margin-bottom: 0;padding-top: 5px;padding-bottom: 5px">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+    <strong>提示！</strong> 本站仍在建设中，如果您有更好的建议可以 <a href="{{ url('contact') }}">联系我们</a>
+</div>
 @yield('header')
 @yield('content')
 @yield('goTop')

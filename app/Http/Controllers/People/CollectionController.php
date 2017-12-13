@@ -50,7 +50,7 @@ class CollectionController extends Controller{
                 ->where('user_id',Auth::user()->id)
                 ->count();
             $c_authors->setPath('collections?type=authors');
-            return view('frontend.collect.index')
+            return view('people.collect')
                 ->with('poems',$c_poems)
                 ->with('query','collect')
                 ->with('authors',$c_authors)

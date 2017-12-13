@@ -104,6 +104,7 @@ class PoemsController extends Controller
     public function show($id){
         $author = null;
         $poem = DB::table('dev_poem')->where('id',$id)->first();
+        DB::table('dev_poem')->where('id',$id)->increment("pv_count");
         if($poem){
             $poem_detail = DB::table('dev_poem_detail')->where('poem_id',$id)->first();
             $hot_poems = null;

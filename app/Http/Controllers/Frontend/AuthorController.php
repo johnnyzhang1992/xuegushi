@@ -85,6 +85,7 @@ class AuthorController extends Controller
         $hot_poems = null;
         $poems_count = 0;
         $author = DB::table('dev_author')->where('id',$id)->first();
+        DB::table('dev_author')->where('id',$id)->increment("pv_count");
         if($author){
             if(!Auth::guest()){
                 $res = DB::table('dev_like')
