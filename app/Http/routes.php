@@ -50,8 +50,22 @@ Route::group(['middleware' => ['web']], function () {
 //        'middleware' => ['auth']
     ],function (){
         Route::get('/collections','People\CollectionController@index');
-        Route::get('/likes','People\LikeController@index');
+        Route::get('/likes', 'People\LikeController@index');
         Route::get('/{id}','People\ShowController@index');
+    });
+    /* =============== 收藏=========================== */
+    Route::group([
+        'prefix' => '/collections',
+        'middleware' => ['auth']
+    ],function () {
+        Route::get('/', 'People\CollectionController@index');
+    });
+    /* =============== 喜欢 ====================== */
+    Route::group([
+        'prefix' => '/likes',
+        'middleware' => ['auth']
+    ],function () {
+        Route::get('/', 'People\LikeController@index');
     });
     /* =============== 搜索功能 ====================== */
     Route::get('search','Frontend\SearchController@index');

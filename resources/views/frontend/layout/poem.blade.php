@@ -5,6 +5,10 @@
 @endsection
 
 @section('googletongji')
+    @include('frontend.partials.googletongji')
+@endsection
+
+@section('googletongji')
 
 @endsection
 

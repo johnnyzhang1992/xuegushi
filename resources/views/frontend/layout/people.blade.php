@@ -3,7 +3,9 @@
 @section('baidutongji')
     @include('frontend.partials.baidutongji')
 @endsection
-
+@section('googletongji')
+    @include('frontend.partials.googletongji')
+@endsection
 @section('googletongji')
 
 @endsection

@@ -115,40 +115,43 @@ class PoemsController extends Controller
                     ->where('author',$poem->author)
                     ->where('dynasty',$poem->dynasty)
                     ->count();
-                $hot_poems = DB::table('dev_poem')
-                    ->where('author_source_id',$author->source_id)
-                    ->orderBy('like_count','desc')
-                    ->paginate(5);
-                if(!Auth::guest()){
-                    $_res = DB::table('dev_like')
-                        ->where('user_id',Auth::user()->id)
-                        ->where('like_id',$poem->id)
-                        ->where('type','poem')->first();
-                    if(isset($_res) && $_res->status == 'active'){
-                        $poem->status = 'active';
-                    }
-                    $res = DB::table('dev_like')
-                        ->where('user_id',Auth::user()->id)
-                        ->where('like_id',$author->id)
-                        ->where('type','author')->first();
-                    if(isset($res) && $res->status == 'active'){
-                        $author->status = 'active';
-                    }
-                    $collect = DB::table('dev_collect')
-                        ->where('user_id',Auth::user()->id)
-                        ->where('like_id',$poem->id)
-                        ->where('type','poem')->first();
-                    if(isset($collect) && $collect->status == 'active'){
-                        $poem->collect_status = 'active';
-                    }
-                    $a_collect =  DB::table('dev_collect')
-                        ->where('user_id',Auth::user()->id)
-                        ->where('like_id',$author->id)
-                        ->where('type','author')->first();
-                    if(isset($a_collect) && $a_collect->status == 'active'){
-                        $poem->collect_a_status = 'active';
+                if(isset($author) && $author){
+                    $hot_poems = DB::table('dev_poem')
+                        ->where('author_source_id',$author->source_id)
+                        ->orderBy('like_count','desc')
+                        ->paginate(5);
+                    if(!Auth::guest()){
+                        $_res = DB::table('dev_like')
+                            ->where('user_id',Auth::user()->id)
+                            ->where('like_id',$poem->id)
+                            ->where('type','poem')->first();
+                        if(isset($_res) && $_res->status == 'active'){
+                            $poem->status = 'active';
+                        }
+                        $res = DB::table('dev_like')
+                            ->where('user_id',Auth::user()->id)
+                            ->where('like_id',$author->id)
+                            ->where('type','author')->first();
+                        if(isset($res) && $res->status == 'active'){
+                            $author->status = 'active';
+                        }
+                        $collect = DB::table('dev_collect')
+                            ->where('user_id',Auth::user()->id)
+                            ->where('like_id',$poem->id)
+                            ->where('type','poem')->first();
+                        if(isset($collect) && $collect->status == 'active'){
+                            $poem->collect_status = 'active';
+                        }
+                        $a_collect =  DB::table('dev_collect')
+                            ->where('user_id',Auth::user()->id)
+                            ->where('like_id',$author->id)
+                            ->where('type','author')->first();
+                        if(isset($a_collect) && $a_collect->status == 'active'){
+                            $poem->collect_a_status = 'active';
+                        }
                     }
                 }
+
                 if($poem->author_source_id != -1){
                     $poem->author_id = $author->id;
                 }else{
