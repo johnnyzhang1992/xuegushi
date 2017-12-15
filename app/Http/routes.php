@@ -49,10 +49,6 @@ Route::group(['middleware' => ['web']], function () {
         'prefix' => 'people',
 //        'middleware' => ['auth']
     ],function (){
-        Route::get('/collections','People\CollectionController@index');
-        Route::get('/collections/{type}', 'People\CollectionController@index');
-        Route::get('/likes', 'People\LikeController@index');
-        Route::get('/likes/{type}', 'People\LikeController@index');
         Route::get('/{id}','People\ShowController@index');
     });
     /* =============== 收藏=========================== */

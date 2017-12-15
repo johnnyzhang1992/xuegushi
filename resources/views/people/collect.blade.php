@@ -215,14 +215,14 @@ use App\Helpers\DateUtil;
                 <div class="side-card count-card">
                     <ul class="side-list">
                         <li class="list-item">
-                            <a class="Button SideBar-navLink Button--plain active" href="{{ url('people/collections') }}"  type="button">
+                            <a class="Button SideBar-navLink Button--plain active" href="{{ url('collections') }}"  type="button">
                                 <i class="fa fa-star-o"></i>
                                 <span class="SideBar-navText">我的收藏</span>
                                 <span class="SideBar-navNumber">{{@$collect_count}}</span>
                             </a>
                         </li>
                         <li class="list-item">
-                            <a class="Button SideBar-navLink Button--plain" href="{{ url('people/likes') }}"  type="button" >
+                            <a class="Button SideBar-navLink Button--plain" href="{{ url('likes') }}"  type="button" >
                                 <i class="fa fa-thumbs-o-up"></i>
                                 <span class="SideBar-navText">我的喜欢</span>
                                 <span class="SideBar-navNumber">{{@$like_count}}</span>
