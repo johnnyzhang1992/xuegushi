@@ -42,16 +42,19 @@ class SentenceController extends Controller
         $_url = 'sentence?';
         $_sentences = DB::table('dev_sentence');
         $types = array();
+        $site_title = '';
         if($theme){
             if($theme != 'all'){
                 $_sentences->where('dev_sentence.theme','like','%'.$theme.'%');
                 $types = $this->getThemeTypes($theme);
+                $site_title = '主题为'.$theme;
             }
             $_url = $_url.'theme='.$theme;
         }
         if($type){
             if($type != 'all'){
                 $_sentences->where('dev_sentence.type','like','%'.$type.'%');
+                $site_title = $site_title.'_类型为'.$type.'的';
             }
             $_url = $_url.'&type='.$type;
         }
@@ -79,7 +82,7 @@ class SentenceController extends Controller
         }
         return view('frontend.sentence.index')
             ->with('query','sentence')
-            ->with('site_title','名句')
+            ->with('site_title',$site_title.'名句')
             ->with('type',$type)
             ->with('types',$types)
             ->with('theme',$theme)
