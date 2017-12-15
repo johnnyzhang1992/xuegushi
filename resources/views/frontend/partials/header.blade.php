@@ -6,7 +6,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="{{url('/')}}"><b>{{ LAConfigs::getByKey('sitename') }}</b></a>
+            <a class="navbar-brand" href="{{url('/')}}"><b>{{ LAConfigs::getByKey('sitename') }}</b><small> beta</small></a>
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
@@ -29,7 +29,7 @@
                     <a href="{{url('/author')}}" class="nav-item">作者</a>
                 </li>
                 <li style="position: relative">
-                    <div class="input-group" style="width:300px;max-width: 300px;line-height:34px;padding: 13px 10px ">
+                    <div class="input-group" style="width:250px;max-width: 300px;line-height:34px;padding: 13px 10px ">
                         <input type="text" id="search-input" class="form-control" placeholder="关键字搜索 诗文、诗人">
                         <span class="input-group-btn" id="search-now">
                             <button class="btn btn-default" type="button" style="padding: 3px 6px 0 6px;max-height: 34px;">
@@ -45,8 +45,8 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 @if (Auth::guest())
-                {{--<li><a href="{{ url('/login') }}">登录</a></li>--}}
-                {{--<li><a href="{{ url('/register') }}">注册</a></li>--}}
+                <li><a href="{{ url('/login') }}">登录</a></li>
+                <li><a href="{{ url('/register') }}">注册</a></li>
                 @else
                     <li class="dropdown">
                         <a role="button" class="nav-user dropdown-toggle" data-toggle="dropdown" aria-expanded="false">

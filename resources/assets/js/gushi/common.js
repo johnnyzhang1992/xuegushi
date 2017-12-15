@@ -3,6 +3,7 @@
  * Site johnnyzhang.cn
  * CreateTime 2017/11/21.
  */
+// 返回顶部
 jQuery(document).ready(function(){
     // hide #back-top first
     jQuery("#goTop").hide();
@@ -197,26 +198,8 @@ $('.poem-tool').on('click','.speaker',function () {
     }
 });
 $(document).ready(function () {
-    // 判断诗词是否已经点击了like
-    // if($('input[name="_user_id"]')){
-    //     $('.poem-card .like').each(function (index,el) {
-    //         $.post(
-    //             '/ajax/judge/like',
-    //             {
-    //                 'id': $(el).attr('data-id'),
-    //                 'type': $(el).attr('data-type') ,
-    //                 '_token': $('input[name="_token"]').val()
-    //             },
-    //             function (res) {
-    //                 if(res && res.status){
-    //                     $(el).addClass('active')
-    //                 }
-    //             }
-    //         )
-    //     });
-    // }
+    // 复制
     var clipboard = new Clipboard('.copy');
-
     clipboard.on('success', function(e) {
         $('body').toast({
             position:'fixed',
@@ -236,6 +219,13 @@ $(document).ready(function () {
             $('[data-toggle="tooltip"]').tooltip()
         });
     }
+    $('.wechat-qrcode').popover({
+        'animation':true,
+        'html':true,
+        'placement':'bottom',
+        'trigger': 'hover | focus | click',
+        'content':'<img src="/static/common/wechat.jpg" style="width:100%" alt="">'
+    });
     function getSearchResult() {
         $.get(
             '/search',

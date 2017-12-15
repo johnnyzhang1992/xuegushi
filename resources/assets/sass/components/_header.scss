@@ -51,7 +51,7 @@
   }
 }
 #box {
-  width:300px;
+  width:250px;
   margin-top:1px;
   background:#ffff;
   z-index:1;
@@ -69,12 +69,12 @@ a:focus {
 }
 
 .neibox {
-  width:298px;
+  width:248px;
   clear:both;
   background-color:#fff;
   .main{
     clear:both;
-    width:298px;
+    width:248px;
     margin-left:auto;
     margin-right:auto;
     overflow:hidden;
@@ -92,14 +92,14 @@ a:focus {
       }
     }
     .mright{
-      width:258px;
+      width:208px;
       float:left;
       clear:right;
       background-color:#fff;
       border-left:1px #C5C5C5 solid;
       .adiv{
         height:30px;
-        width:258px;
+        width:208px;
         clear:both;
         overflow:hidden;
       }
@@ -113,6 +113,6 @@ a:focus {
 
 @media (min-width: 768px){
   .navbar-nav {
-    padding-left: 40px;
+    padding-left: 20px;
   }
 }
