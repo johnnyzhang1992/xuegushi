@@ -50,7 +50,9 @@ Route::group(['middleware' => ['web']], function () {
 //        'middleware' => ['auth']
     ],function (){
         Route::get('/collections','People\CollectionController@index');
+        Route::get('/collections/{type}', 'People\CollectionController@index');
         Route::get('/likes', 'People\LikeController@index');
+        Route::get('/likes/{type}', 'People\LikeController@index');
         Route::get('/{id}','People\ShowController@index');
     });
     /* =============== 收藏=========================== */
@@ -59,6 +61,7 @@ Route::group(['middleware' => ['web']], function () {
         'middleware' => ['auth']
     ],function () {
         Route::get('/', 'People\CollectionController@index');
+        Route::get('/{type}', 'People\CollectionController@index');
     });
     /* =============== 喜欢 ====================== */
     Route::group([
@@ -66,6 +69,7 @@ Route::group(['middleware' => ['web']], function () {
         'middleware' => ['auth']
     ],function () {
         Route::get('/', 'People\LikeController@index');
+        Route::get('/{type}', 'People\LikeController@index');
     });
     /* =============== 搜索功能 ====================== */
     Route::get('search','Frontend\SearchController@index');

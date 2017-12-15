@@ -74,17 +74,27 @@ use App\Helpers\DateUtil;
                 <div class="nav-breadcrumb" style="margin-bottom: 15px">
                     <ol class="breadcrumb" style="margin-bottom: 0;background-color: #fff">
                         <li><a href="{{ url('/') }}">首页</a></li>
-                        <li class="active">我的喜欢</li>
+                        <li>我的喜欢</li>
+                        @if(isset($type) && $type == 'author')
+                            <li class="active">作者</li>
+                        @elseif(isset($type) && $type == 'sentence')
+                            <li class="active">名句</li>
+                        @else
+                            <li class="active">古诗文</li>
+                        @endif
                     </ol>
                 </div>
                 <div>
                     <!-- Nav tabs -->
                     <ul class="nav nav-tabs" role="tablist">
                         <li role="presentation" @if(!isset($type)) class="active" @endif>
-                            <a href="#poem" aria-controls="poem" role="tab" data-toggle="tab">喜欢的古诗文(<span class="collect_count">{{@$poems->total()}}</span>条)</a>
+                            <a href="{{url('likes')}}">古诗文(<span class="collect_count">{{@$p_count}}</span>条)</a>
                         </li>
-                        <li role="presentation" @if(isset($type)) class="active" @endif>
-                            <a href="#author" aria-controls="author" role="tab" data-toggle="tab">喜欢的作者(<span class="author_count">{{$authors->total()}}</span>条)</a>
+                        <li role="presentation" @if(isset($type) && $type == 'author') class="active" @endif>
+                            <a href="{{url('likes/author')}}">作者(<span class="author_count">{{$a_count}}</span>条)</a>
+                        </li>
+                        <li role="presentation" @if(isset($type) && $type == 'sentence') class="active" @endif>
+                            <a href="{{url('likes/sentence')}}">名句(<span class="author_count">{{$m_count}}</span>条)</a>
                         </li>
                     </ul>
                     <!-- Tab panes -->
@@ -133,9 +143,9 @@ use App\Helpers\DateUtil;
                                                 </div>
                                             </div>
                                         </div>
-                                    @endforeach()
+                                    @endforeach
+                                        {{@$poems->links()}}
                                 @endif
-                                {{@$poems->links()}}
                             </div>
                         </div>
                         <div role="tabpanel" class="tab-pane @if(isset($type)) active @endif" id="author">
@@ -163,9 +173,38 @@ use App\Helpers\DateUtil;
                                                 </div>
                                             </div>
                                         </div>
-                                    @endforeach()
+                                    @endforeach
+                                        {{@$authors->links()}}
                                 @endif
-                                {{@$authors->links()}}
+                            </div>
+                        </div>
+                        <div role="tabpanel" class="tab-pane @if(isset($type) && $type == 'sentence') active @endif" id="sentence">
+                            <div class="pane-content">
+                                @if(isset($sentences) && count($sentences)>0)
+                                    @foreach($sentences as $sentence)
+                                        <div class="collect-list">
+                                            <div class="collect-item" id="m-{{@$sentence->like_id}}">
+                                                <h2 class="collect-item-title">
+                                                    <a class="title-link" href="{{ url('poem/'.$sentence->poem_id) }}" target="_blank">{{@$sentence->title}}</a>
+                                                    <a class="author_dynasty pull-right" href="{{ url('poem/'.$sentence->poem_id) }}" target="_blank">{{@$sentence->author.'《'.@$sentence->poem_title.'》'}}</a>
+                                                </h2>
+                                                {{--<div class="author-author">--}}
+                                                {{--<p>{!! @$sentence->content !!}</p>--}}
+                                                {{--</div>--}}
+                                                <div class="collect-item-meta">
+                                                    <span>收藏 <span class="badge">{{@$sentence->collect_count}}</span></span>
+                                                    <span class="zg-bull zu-autohide">•</span>
+                                                    <span>喜欢 <span class="badge">{{@$sentence->like_count}}</span></span>
+                                                    <span class="zg-bull zu-autohide">•</span>
+                                                    <span>创建时间 {{@ DateUtil::formatDate(strtotime($sentence->created_at))}}</span>
+                                                    <span class="zg-bull zu-autohide">•</span>
+                                                    <a href="javascript:;" class="unlike" data-id="{{@$sentence->like_id}}" data-type="sentence" name="unfavo">取消喜欢</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endforeach()
+                                    {{@$sentences->links()}}
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -221,8 +260,12 @@ use App\Helpers\DateUtil;
                             $('#p-'+id).slideUp("slow", function() {
                                 $(this).remove();
                             });
-                        }else{
+                        }else if(type =='author'){
                             $('#a-'+id).slideUp("slow", function() {
+                                $(this).remove();
+                            });
+                        }else if(type == 'sentence'){
+                            $('#m-'+id).slideUp("slow", function() {
                                 $(this).remove();
                             });
                         }

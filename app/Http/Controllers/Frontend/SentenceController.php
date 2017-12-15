@@ -47,7 +47,7 @@ class SentenceController extends Controller
                 $_sentences->where('dev_sentence.theme','like','%'.$theme.'%');
                 $types = $this->getThemeTypes($theme);
             }
-            $_url = $_url.'?theme='.$theme;
+            $_url = $_url.'theme='.$theme;
         }
         if($type){
             if($type != 'all'){

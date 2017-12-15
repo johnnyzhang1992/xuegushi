@@ -1,6 +1,6 @@
 .side-card{
-  padding: 10px 15px;
-  margin-bottom: 15px;
+  padding: 10px 10px;
+  margin-bottom: 10px;
   background-color: #fff;
   .side-title{
     border-bottom: 2px solid #f3f3f3;
@@ -97,11 +97,5 @@
   a.footer-item:hover,a.footer-item:focus{
     color: #175199;
     text-decoration: none;
-  }
-}
-@media all and (max-width: 736px) {
-  .side-card{
-    padding-left: 0;
-    padding-right: 0;
   }
 }

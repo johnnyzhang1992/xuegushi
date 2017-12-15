@@ -1,3 +1,8 @@
 body{
   font-family: PingFang SC,Tahoma,Helvetica,Arial,Hiragino Sans GB,Microsoft YaHei,Heiti SC,WenQuanYi Micro Hei,sans-serif;
 }
+@media all and (max-width: 736px){
+  .nav>li{
+    float: left;
+  }
+}
