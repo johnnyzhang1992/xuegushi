@@ -16,9 +16,9 @@
                 <li @if(isset($query) && $query =='poems') class="active" @endif>
                     <a href="{{url('/poem')}}" class="nav-item">诗文</a>
                 </li>
-                {{--<li @if(isset($query) && $query =='sentence') class="active" @endif>--}}
-                    {{--<a href="{{url('/sentence')}}" class="nav-item">名句</a>--}}
-                {{--</li>--}}
+                <li @if(isset($query) && $query =='sentence') class="active" @endif>
+                    <a href="{{url('/sentence')}}" class="nav-item">名句</a>
+                </li>
                 <li @if(isset($query) && $query =='collect') class="active" @endif>
                     <a href="{{url('/collections')}}" class="nav-item">收藏</a>
                 </li>

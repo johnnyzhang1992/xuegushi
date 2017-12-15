@@ -42,9 +42,11 @@ class PoemsController extends Controller
         $poem_dynasty = DB::table('poem_dynasty')->get();
         $_url = 'poem?';
         $_poems = DB::table('dev_poem');
+        $site_title = '';
         if($type){
             if($type != 'all'){
                 $_poems->where('type',$type);
+                $site_title = $site_title.$type;
             }
             $_url = $_url.'type='.$type;
         }
@@ -57,6 +59,7 @@ class PoemsController extends Controller
         if($tag){
            $_poems->where('tags','like','%'.$tag.'%');
             $_url = $_url.'tag='.$tag;
+            $site_title = '关于'.$tag.'的';
         }
         $_poems->orderBy('like_count','desc');
         $_poems = $_poems->paginate(10)->setPath($_url);
@@ -86,7 +89,7 @@ class PoemsController extends Controller
         }
         return view('frontend.poem.index')
             ->with('query','poems')
-            ->with('site_title','诗文')
+            ->with('site_title',$site_title.'诗文')
             ->with('type',$type)
             ->with('dynasty',$dynasty)
             ->with('tag',$tag)
@@ -105,6 +108,18 @@ class PoemsController extends Controller
         $author = null;
         $poem = DB::table('dev_poem')->where('id',$id)->first();
         DB::table('dev_poem')->where('id',$id)->increment("pv_count");
+        $content = '';
+        if(isset($poem->content) && json_decode($poem->content)){
+            if(isset(json_decode($poem->content)->xu) && json_decode($poem->content)->xu){
+                $content = $content.@json_decode($poem->content)->xu;
+            }
+            if(isset(json_decode($poem->content)->content) && json_decode($poem->content)->content){
+                foreach(json_decode($poem->content)->content as $item){
+                    $content = $content.@$item;
+                }
+            }
+        }
+        $content= mb_substr($content,0,100,'utf-8');
         if($poem){
             $poem_detail = DB::table('dev_poem_detail')->where('poem_id',$id)->first();
             $hot_poems = null;
@@ -166,6 +181,7 @@ class PoemsController extends Controller
                 ->with('detail',$poem_detail)
                 ->with('hot_poems',$hot_poems)
                 ->with('poems_count',$poems_count)
+                ->with('site_description',$content)
                 ->with('site_title',$poem->title.'_翻译、注释及赏析-'.$poem->dynasty.'-'.$poem->author)
                 ->with($this->getClAndLkCount())
                 ->with('h_authors',$this->getHotAuthors())
@@ -233,13 +249,8 @@ class PoemsController extends Controller
         $msg = null;
         $res = false;
         $_data = null;
-        $table_name = '';
         if($id && $type && !Auth::guest()){
-            if($type == 'poem'){
-                $table_name = 'dev_poem';
-            }elseif ($type == 'author'){
-                $table_name = 'dev_author';
-            }
+            $table_name = 'dev_'.$type;
             $_res = DB::table('dev_like')
                 ->where('user_id',Auth::user()->id)
                 ->where('like_id',$id)
@@ -342,13 +353,8 @@ class PoemsController extends Controller
         $msg = null;
         $res = false;
         $_data = null;
-        $table_name = '';
         if($id && $type && !Auth::guest()){
-            if($type == 'poem'){
-                $table_name = 'dev_poem';
-            }elseif ($type == 'author'){
-                $table_name = 'dev_author';
-            }
+            $table_name = 'dev_'.$type;
             $_res = DB::table('dev_collect')
                 ->where('user_id',Auth::user()->id)
                 ->where('like_id',$id)

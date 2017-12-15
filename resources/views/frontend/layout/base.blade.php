@@ -28,28 +28,28 @@
 
 <body>
 <input type="hidden" name="_token" value="{{ csrf_token() }}" />
-<div class="alert alert-warning alert-dismissible fade in" role="alert" style="text-align: center;margin-bottom: 0;padding-top: 5px;padding-bottom: 5px">
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
-    <strong>提示！</strong> 本站仍在建设中，如果您有更好的建议可以 <a href="{{ url('contact') }}">联系我们</a>
-</div>
+{{--<div class="alert alert-warning alert-dismissible fade in" role="alert" style="text-align: center;margin-bottom: 0;padding-top: 5px;padding-bottom: 5px">--}}
+    {{--<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>--}}
+    {{--<strong>提示！</strong> 本站仍在建设中，如果您有更好的建议可以 <a href="{{ url('contact') }}">联系我们</a>--}}
+{{--</div>--}}
 @yield('header')
 @yield('content')
 @yield('goTop')
 @yield('base-js')
 @yield('content-js')
-<script>
-    (function(){
-        var bp = document.createElement('script');
-        var curProtocol = window.location.protocol.split(':')[0];
-        if (curProtocol === 'https') {
-            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
-        }
-        else {
-            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
-        }
-        var s = document.getElementsByTagName("script")[0];
-        s.parentNode.insertBefore(bp, s);
-    })();
-</script>
+{{--<script>--}}
+    {{--(function(){--}}
+        {{--var bp = document.createElement('script');--}}
+        {{--var curProtocol = window.location.protocol.split(':')[0];--}}
+        {{--if (curProtocol === 'https') {--}}
+            {{--bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';--}}
+        {{--}--}}
+        {{--else {--}}
+            {{--bp.src = 'http://push.zhanzhang.baidu.com/push.js';--}}
+        {{--}--}}
+        {{--var s = document.getElementsByTagName("script")[0];--}}
+        {{--s.parentNode.insertBefore(bp, s);--}}
+    {{--})();--}}
+{{--</script>--}}
 </body>
 </html>

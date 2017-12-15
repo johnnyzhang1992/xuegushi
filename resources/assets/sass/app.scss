@@ -1,6 +1,7 @@
 @import "components/header";
 @import "components/left_side";
 @import "components/poem_card";
+@import "components/reset";
 .no-padding{
   padding-left: 0!important;
   padding-right: 0!important;
@@ -56,7 +57,6 @@ a:hover,a:focus{
   padding-top: 20px;
   padding-bottom: 20px;
 }
-
 // go Top
 .CornerButtons {
   position: fixed;

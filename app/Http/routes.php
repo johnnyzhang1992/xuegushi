@@ -69,6 +69,14 @@ Route::group(['middleware' => ['web']], function () {
     });
     /* =============== 搜索功能 ====================== */
     Route::get('search','Frontend\SearchController@index');
+    /* =============== 名句 ========================= */
+    Route::group([
+        'prefix' => 'sentence',
+    ],function (){
+        Route::get('/', 'Frontend\SentenceController@index');
+        Route::get('/{id}','Frontend\SentenceController@show');
+        Route::get('/theme/{theme}','Frontend\SentenceController@getTheme');
+    });
     /* =============== 静态页面 ====================== */
     Route::get('/contact','Frontend\PageController@contact');
     Route::get('/join','Frontend\PageController@join');

@@ -99,3 +99,9 @@
     text-decoration: none;
   }
 }
+@media all and (max-width: 736px) {
+  .side-card{
+    padding-left: 0;
+    padding-right: 0;
+  }
+}

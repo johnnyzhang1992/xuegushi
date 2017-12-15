@@ -38,7 +38,6 @@
                         </div>
                     </div>
                     <div class="typeHeaderItem" style="margin-bottom: 10px">
-
                         <a role="button" class="topTypeHeader-rightItem pull-left">类型</a>
                         <div class="topTypeHeader-nav">
                             @if(isset($tag) && $tag)

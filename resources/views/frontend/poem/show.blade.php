@@ -1,7 +1,14 @@
 @extends('frontend.layout.poem')
 
 @section('content-css')
-
+    @if(isset($poem)&& $poem->type == '文言文')
+        <style>
+            .poem-card .poem-content .p-content {
+                color: #333;
+                text-indent: 28px;
+            }
+        </style>
+    @endif
 @endsection
 
 @section('header')
@@ -128,7 +135,7 @@
                             </div>
                             <div class="card-content">
                                 @foreach(json_decode($detail->yi)->content as $item)
-                                    <p>{{@$item}}</p>
+                                    <p style="text-indent: 28px;">{{@$item}}</p>
                                 @endforeach
                             </div>
                             @if(isset(json_decode($detail->yi)->reference->content) && json_decode($detail->yi)->reference->content)
@@ -229,7 +236,7 @@
                 @if(isset($hot_poems) && $hot_poems)
                     <div class="side-card">
                         <div class="side-title">
-                            <h2><span class="author">代表作品 <small>(作品总数：{{ @$poems_count }})</small></span></h2>
+                            <h2><span class="author">代表作品 <small>(作品总数：{{ @$poems_count }})</small></span><a href="{{url('author/'.@$author->id.'/poems')}}" class="pull-right" style="font-size: 15px;line-height: 22px;">查看全部</a></h2>
                         </div>
                         <div class="side-content">
                             <ul style="list-style: none;padding-left: 0">

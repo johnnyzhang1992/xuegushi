@@ -197,6 +197,23 @@ $('.poem-tool').on('click','.speaker',function () {
         $(target_voice).show();
     }
 });
+// sentence
+$('.SentenceItemList').on('click','.s-content',function () {
+    var th = $(this);
+    $('.sentenceItem').not('#sentence-'+$(this).attr('data-id')).removeClass('selected');
+    $('.sentenceItem').not('#sentence-'+$(this).attr('data-id')).find('.sentenceTool').fadeOut();
+    $('.sentenceItem').not('#sentence-'+$(this).attr('data-id')).find('.sentenceMeta').fadeOut();
+    if($(this).parent().parent().hasClass('selected')){
+        $(th).parent().parent().removeClass('selected');
+        $(this).parent().find('.sentenceTool').fadeOut();
+        $(this).parent().find('.sentenceMeta').fadeOut();
+    }else{
+        $(th).parent().parent().addClass('selected');
+        $(this).parent().find('.sentenceTool').fadeIn();
+        $(this).parent().find('.sentenceMeta').fadeIn();
+    }
+
+});
 $(document).ready(function () {
     // 复制
     var clipboard = new Clipboard('.copy');
