@@ -6,6 +6,7 @@
 
 @section('content')
 <body class="hold-transition login-page">
+<input type="hidden" name="_token" value="{{ csrf_token() }}" />
     <div class="login-box">
         <div class="login-logo">
             <a href="{{ url('/home') }}"><b>{{ LAConfigs::getByKey('sitename_part1') }} </b>{{ LAConfigs::getByKey('sitename_part2') }}</a>

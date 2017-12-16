@@ -160,7 +160,9 @@ return [
          */
         Dwij\Laraadmin\LAProvider::class,
         // 百度语音
-        Jormin\BaiduSpeech\BaiduSpeechServiceProvider::class
+        Jormin\BaiduSpeech\BaiduSpeechServiceProvider::class,
+        // agent
+        Jenssegers\Agent\AgentServiceProvider::class,
 
     ],
 
@@ -207,8 +209,8 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-        'BaiduSpeech' => Jormin\BaiduSpeech\BaiduSpeech::class
-
+        'BaiduSpeech' => Jormin\BaiduSpeech\BaiduSpeech::class,
+        'Agent' => Jenssegers\Agent\Facades\Agent::class
     ],
 
 ];

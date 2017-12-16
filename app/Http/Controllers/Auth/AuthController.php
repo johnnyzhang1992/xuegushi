@@ -9,10 +9,12 @@ use App\Models\Employee;
 use App\Role;
 use Validator;
 use Eloquent;
+use Redirect;
 use App\Helpers\MailUtil;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 //use Illuminate\Foundation\Auth\AuthenticatesUsers;
@@ -38,7 +40,6 @@ class AuthController extends Controller
      * @var string
      */
     protected $redirectTo = '/';
-
     /**
      * Create a new authentication controller instance.
      *
@@ -47,8 +48,12 @@ class AuthController extends Controller
     public function __construct()
     {
         $this->middleware($this->guestMiddleware(), ['except' => 'logout']);
+        $this->redirectTo = URL::previous();
     }
-    
+    public function redirectPath(){
+        info(URL::previous());
+        return URL::previous();
+    }
     public function showRegistrationForm()
     {
         $roleCount = Role::count();
@@ -170,17 +175,46 @@ class AuthController extends Controller
         $credentials = $this->getCredentials($request);
 
         if (Auth::guard($this->getGuard())->attempt($credentials, $request->has('remember'))) {
-            return $this->handleUserWasAuthenticated($request, $throttles);
+            info('ok---');
+//            return $this->handleUserWasAuthenticated($request, $throttles);
+            if ($throttles) {
+                $this->clearLoginAttempts($request);
+            }
+
+            if (method_exists($this, 'authenticated')) {
+                return $this->authenticated($request, Auth::guard($this->getGuard())->user());
+            }
+
+            if(request()->session()->has('login_back_fallback')) {
+                $_tmp_url = request()->session()->get('login_back_fallback');
+                request()->session()->forget('login_back_fallback');
+
+                return redirect()->to($_tmp_url);
+            }else{
+                return redirect()->intended($this->redirectPath());
+            }
         }
 
         // If the login attempt was unsuccessful we will increment the number of attempts
         // to login and redirect the user back to the login form. Of course, when this
         // user surpasses their maximum number of attempts they will get locked out.
         if ($throttles && ! $lockedOut) {
-            info('ok---');
+            info('ok1---');
             $this->incrementLoginAttempts($request);
         }
 
         return $this->sendFailedLoginResponse($request);
+    }
+    /**
+     * Log the user out of the application.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function logout()
+    {
+        $this->redirectAfterLogout = url()->previous();
+        Auth::guard($this->getGuard())->logout();
+
+        return redirect(property_exists($this, 'redirectAfterLogout') ? $this->redirectAfterLogout : '/');
     }
 }

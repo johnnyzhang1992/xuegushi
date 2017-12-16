@@ -7,6 +7,7 @@
 @section('content')
 
     <body class="hold-transition register-page">
+    <input type="hidden" name="_token" value="{{ csrf_token() }}" />
     <div class="register-box">
         <div class="register-logo">
             <a href="{{ url('/home') }}"><b>{{ LAConfigs::getByKey('sitename_part1') }} </b>{{ LAConfigs::getByKey('sitename_part2') }}</a>
