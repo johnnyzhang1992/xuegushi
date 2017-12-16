@@ -41,7 +41,7 @@
         }
         @media (max-width: 325px) {
             .sentenceTool .tags{
-                max-width: 60%;
+                max-width: 58%;
             }
         }
         .sentenceItem .origin{
