@@ -114,6 +114,7 @@
             transform: scale(1.05);
             padding: 0 15px;
             border-radius: 8px;
+            box-shadow: 0 4px 18px -4px rgba(0,0,0,.1);
         }
         .topTypeHeader-rightItem{
             font-size: 18px;

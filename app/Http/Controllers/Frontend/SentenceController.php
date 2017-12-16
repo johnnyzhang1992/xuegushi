@@ -74,7 +74,7 @@ class SentenceController extends Controller
                 $collect = DB::table('dev_collect')
                     ->where('user_id',Auth::user()->id)
                     ->where('like_id',$sentence->id)
-                    ->where('type','poem')->first();
+                    ->where('type','sentence')->first();
                 if(isset($collect) && $collect->status == 'active'){
                     $sentence->collect_status = 'active';
                 }
