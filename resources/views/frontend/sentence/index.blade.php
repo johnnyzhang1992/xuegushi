@@ -183,16 +183,35 @@
                                 <div class="sentenceContent">
                                     <div class="s-content" data-id="{{@$sentence->id}}">{!! @$sentence->content !!}</div>
                                     <div class="sentenceTool poem-tool clearfix" style="display: none">
-                                        @if(isset($sentence->collect_status) && $sentence->collect_status == 'active')
-                                            <div class="collect pull-left active"  title="收藏" data-type="sentence" data-id="{{@$sentence->id}}">
-                                                <i class="fa fa-star"></i> 收藏
+                                        <div class="clearfix">
+                                            @if(isset($sentence->collect_status) && $sentence->collect_status == 'active')
+                                                <div class="collect pull-left active"  title="收藏" data-type="sentence" data-id="{{@$sentence->id}}">
+                                                    <i class="fa fa-star"></i> 收藏
+                                                </div>
+                                            @else
+                                                <div class="collect pull-left" title="收藏" data-type="sentence" data-id="{{@$sentence->id}}">
+                                                    <i class="fa  fa-star-o"></i> 收藏
+                                                </div>
+                                            @endif
+                                            <div class="tags pull-left hidden-xs">
+                                                <i class="fa fa-tag"></i>
+                                                @if(isset($sentence->tags) && $sentence->tags)
+                                                    @foreach(explode(',',$sentence->tags) as $key=>$tag1)
+                                                        @if($key+1 < count(explode(',',$sentence->tags)))<a href="{{ url('poem?tag='.$tag1) }}" class="tag @if(isset($tag) && $tag && $tag == $tag1 ) active @endif">{{@$tag1}} ,</a>@else<a href="{{ url('poem?tag='.$tag1) }}" class="tag @if(isset($tag) && $tag && $tag == $tag1 ) active @endif">{{@$tag1}}</a>@endif
+                                                    @endforeach
+                                                @endif
                                             </div>
-                                        @else
-                                            <div class="collect pull-left" title="收藏" data-type="sentence" data-id="{{@$sentence->id}}">
-                                                <i class="fa  fa-star-o"></i> 收藏
-                                            </div>
-                                        @endif
-                                        <div class="tags pull-left">
+                                            @if(isset($sentence->status) && $sentence->status == 'active')
+                                                <div class="like pull-right active" title="喜欢" data-type="sentence" data-id="{{@$sentence->id}}">
+                                                    <i class="fa fa-thumbs-o-up"></i> <span class="like_count">{{@$sentence->like_count}}</span>
+                                                </div>
+                                            @else
+                                                <div class="like pull-right" title="喜欢" data-type="sentence" data-id="{{@$sentence->id}}">
+                                                    <i class="fa fa-thumbs-o-up"></i> <span class="like_count">{{@$sentence->like_count}}</span>
+                                                </div>
+                                            @endif
+                                        </div>
+                                        <div class="tags-xs hidden-lg hidden-md hidden-sm">
                                             <i class="fa fa-tag"></i>
                                             @if(isset($sentence->tags) && $sentence->tags)
                                                 @foreach(explode(',',$sentence->tags) as $key=>$tag1)
@@ -200,15 +219,6 @@
                                                 @endforeach
                                             @endif
                                         </div>
-                                        @if(isset($sentence->status) && $sentence->status == 'active')
-                                            <div class="like pull-right active" title="喜欢" data-type="sentence" data-id="{{@$sentence->id}}">
-                                                <i class="fa fa-thumbs-o-up"></i> <span class="like_count">{{@$sentence->like_count}}</span>
-                                            </div>
-                                        @else
-                                            <div class="like pull-right" title="喜欢" data-type="sentence" data-id="{{@$sentence->id}}">
-                                                <i class="fa fa-thumbs-o-up"></i> <span class="like_count">{{@$sentence->like_count}}</span>
-                                            </div>
-                                        @endif
                                     </div>
                                     <div class="sentenceMeta clearfix" style="display: none">
                                         <a href="{{url('poem/'.@$sentence->poem_id)}}" target="_blank">查看详情<span></span></a>
@@ -222,23 +232,16 @@
             </div>
             {{--right--}}
             <div class="main_right col-md-4">
-                @if(isset($hot_poems) && $hot_poems)
-                    <div class="side-card">
-                        <div class="side-title">
-                            <h2><span class="author">代表作品 <small>(作品总数：{{ @$sentences_count }})</small></span></h2>
-                        </div>
-                        <div class="side-content">
-                            <ul style="list-style: none;padding-left: 0">
-                                @foreach($hot_poems as $h_poem)
-                                    <li>
-                                        <a class="" href="{{ url('poem/'.$h_poem->id) }}" target="_blank" style="border: none">{{@$h_poem->title}}</a> <i class="fa fa-thumbs-o-up"></i> {{@$h_poem->like_count}}
-                                    </li>
-                                @endforeach
-                            </ul>
-                        </div>
+                <div class="side-card">
+                    <div class="side-title">
+                        <h2><span class="dynasty">主题</span></h2>
                     </div>
-                @endif
-                @include('frontend.partials.side')
+                    <div class="side-content">
+                        @foreach($themes as $_theme)
+                            <a href="{{url('sentence?theme='.$_theme)}}" target="_blank">{{ $_theme }}</a>
+                        @endforeach
+                    </div>
+                </div>
                 @include('frontend.partials.footer')
             </div>
         </div>

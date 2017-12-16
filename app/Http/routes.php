@@ -74,7 +74,6 @@ Route::group(['middleware' => ['web']], function () {
         'prefix' => 'sentence',
     ],function (){
         Route::get('/', 'Frontend\SentenceController@index');
-        Route::get('/{id}','Frontend\SentenceController@show');
         Route::get('/theme/{theme}','Frontend\SentenceController@getTheme');
     });
     /* =============== 静态页面 ====================== */

@@ -108,4 +108,12 @@ class SentenceController extends Controller
         }
         return $_types;
     }
+    public function updateSentenceType(){
+        $type_ids = [];
+        foreach ($type_ids as $item){
+            $res = DB::table('dev_sentence')->where('source_id',$item)->first();
+            $res1 = DB::table('dev_sentence')->where('source_id',$item)->update(['type'=>$res->type.',青春']);
+            print $item;
+        }
+}
 }
