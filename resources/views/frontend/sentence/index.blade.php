@@ -24,6 +24,26 @@
             cursor: pointer;
             position: relative;
         }
+        @media (max-width: 736px) {
+            .sentenceItem .sentenceTitle .origin,.sentenceItem .sentenceTitle .title-link{
+                display: block;
+                width: 100%;
+            }
+            .sentenceTool .tags{
+                max-width: 70%;
+            }
+        }
+        @media (max-width: 375px) {
+            .sentenceTool .tags{
+                max-width: 65%;
+            }
+
+        }
+        @media (max-width: 325px) {
+            .sentenceTool .tags{
+                max-width: 60%;
+            }
+        }
         .sentenceItem .origin{
             font-size: 14px;
             float: right;
@@ -156,8 +176,8 @@
                         @foreach($sentences as $sentence)
                             <div class="sentenceItem" id="sentence-{{@$sentence->id}}">
                                 <h2 class="sentenceTitle">
-                                    <a class="title-link" target="_blank">{{@$sentence->title}}</a>
-                                    <a href="{{url('poem/'.@$sentence->poem_id)}}" class="origin" target="_blank" data-toggle="tooltip" data-placement="bottom" title="{{@$sentence->dynasty.':'.@$sentence->author}}">{{$sentence->author.'《'.@$sentence->poem_title.'》'}}</a>
+                                    <a  href="{{url('poem/'.@$sentence->poem_id)}}" class="title-link" target="_blank">{{@$sentence->title}}</a>
+                                    <a class="origin" target="_blank" data-toggle="tooltip" data-placement="bottom" title="{{@$sentence->dynasty.':'.@$sentence->author}}">{{$sentence->author.'《'.@$sentence->poem_title.'》'}}</a>
                                 </h2>
                                 <div class="sentenceContent">
                                     <div class="s-content" data-id="{{@$sentence->id}}">{!! @$sentence->content !!}</div>

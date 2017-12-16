@@ -51,7 +51,13 @@ use App\Helpers\DateUtil;
         a.toggle-expand{
             cursor: pointer;
         }
-
+        @media (max-width: 736px) {
+            .collect-item.sentence .author_dynasty,.collect-item.sentence .title-link{
+                display: block;
+                width: 100%;
+                line-height: 25px;
+            }
+        }
         @media (max-width: 375px) {
             .main_left .nav > li > a{
                 padding: 5px 10px;
@@ -183,7 +189,7 @@ use App\Helpers\DateUtil;
                                 @if(isset($sentences) && count($sentences)>0)
                                     @foreach($sentences as $sentence)
                                         <div class="collect-list">
-                                            <div class="collect-item" id="m-{{@$sentence->like_id}}">
+                                            <div class="collect-item sentence" id="m-{{@$sentence->like_id}}">
                                                 <h2 class="collect-item-title">
                                                     <a class="title-link" href="{{ url('poem/'.$sentence->poem_id) }}" target="_blank">{{@$sentence->title}}</a>
                                                     <a class="author_dynasty pull-right" href="{{ url('poem/'.$sentence->poem_id) }}" target="_blank">{{@$sentence->author.'《'.@$sentence->poem_title.'》'}}</a>
