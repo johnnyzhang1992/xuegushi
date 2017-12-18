@@ -27,7 +27,7 @@
                         <li><a href="{{ url('/poem') }}">诗文</a></li>
                         <li class="active">{{@$poem->title}}</li>
                         @if (!Auth::guest() && Auth::user()->id == 1)
-                        <li class="pull-right"><a href="{{ url('admin/poems/'.@$poem->id.'/edit') }}">编辑</a></li>
+                        <li class="pull-right"><a href="{{ url('admin/poems/'.@$poem->id.'/edit') }}" target="_blank">编辑</a></li>
                         @endif
                     </ol>
                 </div>
@@ -134,9 +134,17 @@
                                 <h2 class="title">翻译</h2>
                             </div>
                             <div class="card-content">
-                                @foreach(json_decode($detail->yi)->content as $item)
-                                    <p style="text-indent: 28px;">{{@$item}}</p>
+                                @foreach(json_decode($detail->yi)->content as $key=>$item)
+                                    @if($key == 4)
+                                        <a type="button" class="toggle-expand" title="点此查看原文详情" >查看详情</a>
+                                        <p class="p-content hide" style="text-indent: 28px;">{!! @$item !!}</p>
+                                    @elseif($key >4)
+                                        <p class="p-content hide" style="text-indent: 28px;">{!! @$item !!}</p>
+                                    @else
+                                        <p class="p-content" style="text-indent: 28px;">{!! @$item !!}</p>
+                                    @endif
                                 @endforeach
+                                    <a type="button" class="toggle-up" title="点此查看原文详情" style="display: none">点击收起</a>
                             </div>
                             @if(isset(json_decode($detail->yi)->reference->content) && json_decode($detail->yi)->reference->content)
                             <div class="reference">
@@ -163,9 +171,17 @@
                             </div>
                             <div class="card-content">
                                 <ol>
-                                    @foreach(json_decode($detail->zhu)->content as $item)
-                                        <li>{{@$item}}</li>
+                                    @foreach(json_decode($detail->zhu)->content as $key=>$item)
+                                        @if($key == 8)
+                                            <a type="button" class="toggle-expand" title="点此查看原文详情" >查看详情</a>
+                                            <li class="p-content hide">{!! @$item !!}</li>
+                                        @elseif($key >8)
+                                            <li class="p-content hide">{!! @$item !!}</li>
+                                        @else
+                                            <li class="p-content">{!! @$item !!}</li>
+                                        @endif
                                     @endforeach
+                                        <a type="button" class="toggle-up" title="点此查看原文详情" style="display: none">点击收起</a>
                                 </ol>
                             </div>
                             @if(isset(json_decode($detail->zhu)->reference->content) && json_decode($detail->zhu)->reference->content)
@@ -192,9 +208,17 @@
                                 <h2 class="title">赏析</h2>
                             </div>
                             <div class="card-content">
-                                @foreach(json_decode($detail->shangxi)->content as $item)
-                                    <p style="text-indent: 30px">{!! @$item !!}</p>
+                                @foreach(json_decode($detail->shangxi)->content as $key=>$item)
+                                    @if($key == 2)
+                                        <a type="button" class="toggle-expand" title="点此查看原文详情" >查看详情</a>
+                                        <p class="p-content hide" style="text-indent: 28px;">{!! @$item !!}</p>
+                                    @elseif($key >2)
+                                        <p class="p-content hide" style="text-indent: 28px;">{!! @$item !!}</p>
+                                    @else
+                                        <p class="p-content" style="text-indent: 28px;">{!! @$item !!}</p>
+                                    @endif
                                 @endforeach
+                                    <a type="button" class="toggle-up" title="点此查看原文详情" style="display: none">点击收起</a>
                             </div>
                             @if(isset(json_decode($detail->shangxi)->reference->content) && json_decode($detail->shangxi)->reference->content)
                             <div class="reference">
@@ -224,6 +248,17 @@
                                     @foreach(json_decode($detail->more_infos)->content as $item)
                                         <p>{{@$item}}</p>
                                     @endforeach
+                                        @foreach(json_decode($detail->more_infos)->content as $key=>$item)
+                                            @if($key == 2)
+                                                <a type="button" class="toggle-expand" title="点此查看原文详情" >查看详情</a>
+                                                <p class="p-content hide" style="text-indent: 28px;">{!! @$item !!}</p>
+                                            @elseif($key >2)
+                                                <p class="p-content hide" style="text-indent: 28px;">{!! @$item !!}</p>
+                                            @else
+                                                <p class="p-content" style="text-indent: 28px;">{!! @$item !!}</p>
+                                            @endif
+                                        @endforeach
+                                        <a type="button" class="toggle-up" title="点此查看原文详情" style="display: none">点击收起</a>
                                 @endif
                             </div>
                         </div>
@@ -257,5 +292,16 @@
 @endsection
 
 @section('content-js')
-
+    <script>
+        $('.toggle-expand').on('click',function(){
+            $(this).parent().find('.hide').removeClass('hide').addClass('show1');
+            $(this).hide();
+            $(this).parent().find('.toggle-up').show();
+        });
+        $('.toggle-up').on('click',function(){
+            $(this).parent().find('.show1').removeClass('show1').addClass('hide');
+            $(this).hide();
+            $(this).parent().find('.toggle-expand').show();
+        });
+    </script>
 @endsection

@@ -91,9 +91,17 @@
                             </div>
                             <div class="card-content">
                                 @if(isset($item->content) && $item->content)
-                                    @foreach($item->content as $item1)
-                                        <p>{!! @str_replace('</strong>','</strong><br>',$item1) !!}</p>
+                                    @foreach($item->content as $key=>$item1)
+                                        @if($key == 2)
+                                            <a type="button" class="toggle-expand" title="点此查看原文详情" >查看详情</a>
+                                            <p class="hide">{!! @str_replace('</strong>','</strong><br>',$item1) !!}</p>
+                                        @elseif($key >2)
+                                            <p class="hide">{!! @str_replace('</strong>','</strong><br>',$item1) !!}</p>
+                                        @else
+                                            <p>{!! @str_replace('</strong>','</strong><br>',$item1) !!}</p>
+                                        @endif
                                     @endforeach
+                                    <a type="button" class="toggle-up" title="点此查看原文详情" style="display: none">点击收起</a>
                                 @endif
                             </div>
                             @if(isset($item->reference) && $item->reference)
@@ -143,5 +151,16 @@
 @endsection
 
 @section('content-js')
-
+    <script>
+        $('.toggle-expand').on('click',function(){
+            $(this).parent().find('.hide').removeClass('hide').addClass('show1');
+            $(this).hide();
+            $(this).parent().find('.toggle-up').show();
+        });
+        $('.toggle-up').on('click',function(){
+            $(this).parent().find('.show1').removeClass('show1').addClass('hide');
+            $(this).hide();
+            $(this).parent().find('.toggle-expand').show();
+        });
+    </script>
 @endsection

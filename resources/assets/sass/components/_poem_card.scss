@@ -2,6 +2,18 @@
   padding: 16px 20px 10px 20px;
   margin-bottom: 15px;
   background-color: #fff;
+  a.toggle-expand,a.toggle-up {
+    display: block;
+    width: 100%;
+    text-align: center;
+    font-size: 16px;
+    line-height: 30px;
+    border: 1px solid #337ab7;
+    background: #337ab7;
+    cursor: pointer;
+    margin-left: -15px;
+    color: #fff;
+  }
   .poem-title{
     font-size: 18px;
     margin-top: 0;
