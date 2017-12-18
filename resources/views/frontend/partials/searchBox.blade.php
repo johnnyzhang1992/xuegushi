@@ -1,4 +1,5 @@
-<div class="neibox">@if(isset($poems) && $poems && count($poems)>0)
+<div class="neibox">
+    @if(isset($poems) && $poems && count($poems)>0)
         <div class="main">
             <div class="mleft"><span>诗文</span></div>
             <div class="mright">
@@ -9,7 +10,8 @@
                 @endforeach
             </div>
         </div>
-    @endif @if(isset($tags) && $tags && count($tags)>0)
+    @endif
+    @if(isset($tags) && $tags && count($tags)>0)
             <div class="main">
                 <div class="mleft"><span>类型</span></div>
                 <div class="mright">
@@ -20,7 +22,8 @@
                     @endforeach
                 </div>
             </div>
-        @endif @if(isset($authors) &&  $authors && count($authors)>0)
+        @endif
+    @if(isset($authors) &&  $authors && count($authors)>0)
         <div class="main">
             <div class="mleft"><span>作者</span></div>
             <div class="mright">
@@ -31,4 +34,17 @@
                 @endforeach
             </div>
         </div>
-    @endif</div>
+    @endif
+        @if(isset($sentences) && $sentences && count($sentences)>0)
+            <div class="main">
+                <div class="mleft"><span>名句</span></div>
+                <div class="mright">
+                    @foreach($sentences as $sentence)
+                        <div class="adiv" id="adiv0">
+                            <a  id="ma0" href="{{url('/poem/'.@$sentence->id)}}">{{@$sentence->title}}</a>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        @endif
+</div>

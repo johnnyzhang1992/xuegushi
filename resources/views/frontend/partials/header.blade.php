@@ -29,7 +29,7 @@
                     <a href="{{url('/author')}}" class="nav-item">作者</a>
                 </li>
                 <li style="position: relative">
-                    <div class="input-group" style="width:250px;max-width: 300px;line-height:34px;padding: 13px 10px ">
+                    <div class="input-group" style="width:270px;max-width: 300px;line-height:34px;padding: 13px 10px ">
                         <input type="text" id="search-input" class="form-control" placeholder="关键字搜索 诗文、诗人">
                         <span class="input-group-btn" id="search-now">
                             <button class="btn btn-default" type="button" style="padding: 3px 6px 0 6px;max-height: 34px;">

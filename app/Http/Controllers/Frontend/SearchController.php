@@ -26,12 +26,12 @@ class SearchController extends Controller{
             ->where('author_name','like','%'.$_key.'%')
             ->select('id','dynasty','author_name','like_count')
             ->orderBy('like_count','desc')
-            ->limit(5)
+            ->limit(3)
             ->get();
         $tags = DB::table('dev_poem')
             ->where('tags','like','%'.$_key.'%')
             ->select('tags')
-            ->limit(5)
+            ->limit(3)
             ->get();
         $_tags = array();
         foreach ($tags as $tag){
@@ -42,16 +42,23 @@ class SearchController extends Controller{
             }
         }
         $_tags = array_unique($_tags);
+        $sentences = DB::table('dev_sentence')
+            ->where('dev_sentence.title','like','%'.$_key.'%')
+            ->leftJoin('dev_poem','dev_poem.source_id','=','dev_sentence.target_source_id')
+            ->select('dev_sentence.title','dev_sentence.target_source_id','dev_poem.id')
+            ->limit(3)
+            ->get();
         $poems = DB::table('dev_poem')
             ->where('title','like','%'.$_key.'%')
             ->select('id','title','author','dynasty','like_count')
             ->orderBy('like_count','desc')
-            ->limit(5)
+            ->limit(3)
             ->get();
         return view('frontend.partials.searchBox')
             ->with('keyword',$_key)
             ->with('authors',$authors)
             ->with('tags',$_tags)
+            ->with('sentences',$sentences)
             ->with('poems',$poems);
     }
 }
