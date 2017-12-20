@@ -42,6 +42,7 @@ class DashboardController extends Controller
         $count['authors'] = DB::table('dev_author')->count();
         $count['dynasty'] = DB::table('poem_dynasty')->count();
         $count['type'] = DB::table('poem_type')->count();
+        $count['pages'] = DB::table('dev_pages')->count();
         return view('la.dashboard')
             ->with('count',$count);
     }

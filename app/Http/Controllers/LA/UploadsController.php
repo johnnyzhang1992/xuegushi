@@ -450,4 +450,50 @@ class UploadsController extends Controller
 			]);
 		}
     }
+    /**
+     * 上传图片
+     * @param $request
+     * @param $type
+     * @return \Illuminate\Http\Response
+     */
+    public function uploadImage(Request $request,$type){
+        $input = Input::all();
+        $_type = Input::get('_type');
+        $page_id = Input::get('page_id');
+        if(Input::hasFile('file')) {
+            $file = Input::file('file');
+
+            // print_r($file);
+            $folder = public_path('static/'.$type);
+            if($_type == 'create'){
+                $folder = $folder.'/tmps';
+            }
+            if($_type =='edit' && isset($page_id)){
+                $folder = $folder.'/'/$page_id;
+            }
+            $filename = $file->getClientOriginalName();
+
+            $date_append = date("Y-m-d-His-");
+            $upload_success = Input::file('file')->move($folder, $date_append.$filename);
+            $data = array();
+            if($upload_success){
+                // 上传成功，信息入库
+                $_ret = [
+                    'name' => $date_append.$filename,
+                    "extension" => pathinfo($filename, PATHINFO_EXTENSION),
+                    "uid" => Auth::user()->id,
+                    'type'=>$type,
+                    'source_url'=> '/static/'.$type.'/'.$date_append.$filename,
+                    'created_at' => date('Y-m-d H:i:s',time()),
+                    'updated_at' => date('Y-m-d H:i:s',time()),
+                ];
+                DB::table('dev_photo')->insert($_ret);
+                $data['url'] = '/static/'.$type.'/tmps/'.$date_append.$filename;
+                return response()->json($data,200);
+            }
+        }else{
+            return response()->json('error: upload file not found.', 400);
+        }
+
+    }
 }

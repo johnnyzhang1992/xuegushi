@@ -46,9 +46,6 @@ Route::group(['as' => $as, 'middleware' => ['auth', 'permission:ADMIN_PANEL']], 
 
     Route::post(config('laraadmin.adminRoute') . '/poem/dynasty/save', 'LA\PoemsController@dyStore');
     Route::post(config('laraadmin.adminRoute') . '/poem/type/save', 'LA\PoemsController@typeStore');
-
-
-
     /* ================== authors ================== */
     Route::resource(config('laraadmin.adminRoute') . '/authors', 'LA\PoemAuthorsController');
     Route::post(config('laraadmin.adminRoute') . '/authors/save', 'LA\PoemAuthorsController@store');
@@ -56,7 +53,10 @@ Route::group(['as' => $as, 'middleware' => ['auth', 'permission:ADMIN_PANEL']], 
     Route::get(config('laraadmin.adminRoute') . '/authors/{id}/dd', 'LA\PoemAuthorsController@dd');
     Route::get(config('laraadmin.adminRoute') . '/authors/{id}/edit', 'LA\PoemAuthorsController@edit');
     Route::get(config('laraadmin.adminRoute') . '/author_dt_ajax', 'LA\PoemAuthorsController@dtajax');
-
+    /* ================== pages ==================== */
+    Route::resource(config('laraadmin.adminRoute') . '/pages', 'LA\PagesController');
+    Route::post(config('laraadmin.adminRoute') . '/pages/save', 'LA\PagesController@store');
+    Route::get(config('laraadmin.adminRoute') . '/pages_dt_ajax', 'LA\PagesController@dtajax');
 	/* ================== Uploads ================== */
 	Route::resource(config('laraadmin.adminRoute') . '/uploads', 'LA\UploadsController');
 	Route::post(config('laraadmin.adminRoute') . '/upload_files', 'LA\UploadsController@upload_files');
@@ -65,7 +65,8 @@ Route::group(['as' => $as, 'middleware' => ['auth', 'permission:ADMIN_PANEL']], 
 	Route::post(config('laraadmin.adminRoute') . '/uploads_update_filename', 'LA\UploadsController@update_filename');
 	Route::post(config('laraadmin.adminRoute') . '/uploads_update_public', 'LA\UploadsController@update_public');
 	Route::post(config('laraadmin.adminRoute') . '/uploads_delete_file', 'LA\UploadsController@delete_file');
-	
+	/* -------------------new upload-------------------------*/
+    Route::post(config('laraadmin.adminRoute') . '/uploads_image/{type}', 'LA\UploadsController@uploadImage');
 	/* ================== Roles ================== */
 	Route::resource(config('laraadmin.adminRoute') . '/roles', 'LA\RolesController');
 	Route::get(config('laraadmin.adminRoute') . '/role_dt_ajax', 'LA\RolesController@dtajax');
