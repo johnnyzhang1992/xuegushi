@@ -76,6 +76,12 @@ Route::group(['middleware' => ['web']], function () {
         Route::get('/', 'Frontend\SentenceController@index');
         Route::get('/theme/{theme}','Frontend\SentenceController@getTheme');
     });
+    /* =============== 专题页面 ===================== */
+    Route::group([
+        'prefix' =>'page'
+    ],function (){
+        Route::get('/{id}', 'Frontend\PageController@show');
+    });
     /* =============== 静态页面 ====================== */
     Route::get('/contact','Frontend\PageController@contact');
     Route::get('/join','Frontend\PageController@join');

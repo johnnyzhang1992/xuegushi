@@ -6,7 +6,7 @@ use Exception;
 use Illuminate\Http\Request;
 
 class DateUtil{
-    public function formatDate($time = NULL) {
+    static function formatDate($time = NULL) {
         // $time 为时间戳
         $text = '';
         $time = $time === NULL || $time > time() ? time() : intval($time);
