@@ -1,5 +1,26 @@
 <div class="side-card">
     <div class="side-title">
+        <h2><span class="dynasty">类型</span></h2>
+    </div>
+    <div class="side-content">
+        <a class="" href="{{ url('gushi/tangshi') }}" >唐诗三百首</a>
+        <a class="" href="{{ url('gushi/songcisanbai') }}">宋词三百首</a>
+        <a class="" href="{{ url('gushi/sanbai') }}">古诗三百首</a>
+        <a class="" href="{{ url('gushi/shijing') }}">诗经</a>
+        <a class="" href="{{ url('gushi/chuci') }}">楚辞</a>
+        <a class="" href="{{ url('gushi/yuefu') }}">乐府</a>
+        <a class="" href="{{ url('gushi/xiaoxue') }}">小学古诗</a>
+        <a class="" href="{{ url('gushi/chuzhong') }}">初中古诗</a>
+        <a class="" href="{{ url('gushi/gaozhong') }}">高中古诗</a>
+        <a class="" href="{{ url('gushi/xiaoxuewyw') }}">小学文言文</a>
+        <a class="" href="{{ url('gushi/chuzhongwyw') }}">初中文言文</a>
+        <a class="" href="{{ url('gushi/gaozhongwyw') }}">高中文言文</a>
+        <a class="" href="{{ url('gushi/songci') }}">宋词精选</a>
+        <a class="" href="{{ url('gushi/shijiu') }}">古诗十九</a>
+    </div>
+</div>
+<div class="side-card">
+    <div class="side-title">
         <h2><span class="dynasty">朝代</span></h2>
     </div>
     <div class="side-content">
@@ -18,36 +39,32 @@
         <a class="" href="{{ url('poem?dynasty=近代') }}" target="_blank">近代</a>
     </div>
 </div>
-<div class="side-card">
-    <div class="side-title">
-        <h2><span class="author">热门作者</span></h2>
-    </div>
-    <div class="side-content">
-        @if(isset($h_authors) && $h_authors)
+@if(isset($h_authors) && $h_authors)
+    <div class="side-card">
+        <div class="side-title">
+            <h2><span class="author">热门作者</span></h2>
+        </div>
+        <div class="side-content">
             @foreach($h_authors as $h_au)
                 <a class="" href="{{ url('author/'.$h_au->id) }}" target="_blank">{{ @$h_au->author_name }}</a>
             @endforeach
-        @else
-            <a class="" href="{{ url('author/185') }}" target="_blank">李白</a>
-            <a class="" href="{{ url('author/187') }}" target="_blank">杜甫</a>
-            <a class="" href="{{ url('author/1814') }}" target="_blank">苏轼</a>
-        @endif
+        </div>
     </div>
-</div>
+@endif
 <div class="side-card count-card">
     <ul class="side-list">
         <li class="list-item">
             <a class="Button SideBar-navLink Button--plain" href="{{ url('collections') }}" type="button">
                 <i class="fa fa-star-o"></i>
                 <span class="SideBar-navText">我的收藏</span>
-                <span class="SideBar-navNumber">{{@$collect_count}}</span>
+                <span class="SideBar-navNumber">{{isset($collect_count) ? $collect_count : 0}}</span>
             </a>
         </li>
         <li class="list-item">
             <a class="Button SideBar-navLink Button--plain" href="{{ url('likes') }}" type="button" >
                 <i class="fa fa-thumbs-o-up"></i>
                 <span class="SideBar-navText">我的喜欢</span>
-                <span class="SideBar-navNumber">{{@$like_count}}</span>
+                <span class="SideBar-navNumber">{{isset($like_count) ? $like_count : 0}}</span>
             </a>
         </li>
     </ul>

@@ -15,9 +15,7 @@ Route::group(['middleware' => ['web']], function () {
     /* == Homepage ==*/
     Route::get('/', 'HomeController@index');
 
-    /*
-     * poems
-     */
+    /* ================ 诗文======================== */
     Route::group([
         'prefix' => 'poem',
     ],function (){
@@ -26,7 +24,7 @@ Route::group(['middleware' => ['web']], function () {
     });
 //Route::get('/poems/update', 'Frontend\PoemsController@updatePoemLikeCount');
 
-    /* =============== authors =======================*/
+    /* =================== 诗人 =======================*/
     Route::group([
         'prefix' => 'author'
     ],function (){
@@ -34,7 +32,8 @@ Route::group(['middleware' => ['web']], function () {
         Route::get('/{id}','Frontend\AuthorController@show');
         Route::get('/{id}/poems','Frontend\AuthorController@showAllPoems');
     });
-
+    /* =============== 古诗 整理 ==================== */
+    Route::get('gushi/{name}','Frontend\GuShiController@index');
     /* =============== ajax ========================== */
     Route::group([
         'prefix' => 'ajax'
