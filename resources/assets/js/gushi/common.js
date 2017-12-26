@@ -379,7 +379,7 @@ $(document).ready(function () {
         $('#tool-author-dynasty').val($(this).attr('data-dynasty'));
         $('#tool-author-author').val($(this).attr('data-author'));
         $('.author-lists').hide();
-    })
+    });
     $(document).click(function(){
       $('#box').hide()
     })
