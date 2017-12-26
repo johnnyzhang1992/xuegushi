@@ -319,6 +319,67 @@ $(document).ready(function () {
             getSearchResult();
         }
     });
+    function getSearchPoem() {
+        $.get(
+            '/search/poem',
+            {
+                'value': $('#search-poem').val(),
+                '_token': $('input[name="_token"]').val()
+            },
+            function (res) {
+                var html = '';
+                if(res.length>0){
+                    for(var i =0;i<res.length;i++){
+                        html = html + '<li class="item"><a class="item-link" data-href="https://xuegushi.cn/poem/'+res[i].id+'" data-title="'+res[i].title+'" data-dynasty="'+res[i].dynasty+'" data-author="'+res[i].author+'">《'+ res[i].title+'》 -'+res[i].dynasty+':'+res[i].author+'</a></li>'
+                    }
+                    $('.poem-lists').html(html).show();
+                }
+                // console.log(res);
+            }
+        )
+    }
+    function getSearchAuthor() {
+        $.get(
+            '/search/author',
+            {
+                'value': $('#search-author').val(),
+                '_token': $('input[name="_token"]').val()
+            },
+            function (res) {
+                var html = '';
+                if(res.length>0){
+                    for(var i =0;i<res.length;i++){
+                        html = html + '<li class="item"><a class="item-link" data-href="https://xuegushi.cn/author/'+res[i].id+'" data-dynasty="'+res[i].dynasty+'" data-author="'+res[i].author_name+'">'+res[i].dynasty+':'+res[i].author_name+'</a></li>'
+                    }
+                    $('.author-lists').html(html).show();
+                }
+                // console.log(res);
+            }
+        )
+    }
+    $('#search-poem').bind('input propertychange', function() {
+        if($('#search-poem').val() !=''){
+            getSearchPoem();
+        }
+    });
+    $('#search-author').bind('input propertychange', function() {
+        if($('#search-author').val() !=''){
+            getSearchAuthor();
+        }
+    });
+    $('.poem-lists').on('click','a',function(){
+        $('#tool-poem-url').val($(this).attr('data-href'));
+        $('#tool-poem-title').val($(this).attr('data-title'));
+        $('#tool-poem-dynasty').val($(this).attr('data-dynasty'));
+        $('#tool-poem-author').val($(this).attr('data-author'));
+        $('.poem-lists').hide();
+    });
+    $('.author-lists').on('click','a',function(){
+        $('#tool-author-url').val($(this).attr('data-href'));
+        $('#tool-author-dynasty').val($(this).attr('data-dynasty'));
+        $('#tool-author-author').val($(this).attr('data-author'));
+        $('.author-lists').hide();
+    })
     $(document).click(function(){
       $('#box').hide()
     })

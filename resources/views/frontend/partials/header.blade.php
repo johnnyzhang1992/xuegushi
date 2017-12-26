@@ -50,7 +50,7 @@
                 @else
                     <li class="dropdown">
                         <a role="button" class="nav-user dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                            <img src="{{ asset('static/images/avatar.jpg') }}" class="user-image" alt="User Image"/>{{--{{ Auth::user()->name }}--}}<span class="caret"></span>
+                            <img src="{{ asset('static/images/avatar.png') }}" class="user-image" alt="User Image"/>{{--{{ Auth::user()->name }}--}}<span class="caret"></span>
                         </a>
                         <ul id="dropdown" class="dropdown-menu">
                             <li><a href="{{ url('people/'.Auth::user()->id) }}" class="btn btn-default btn-flat"><i class="fa fa-user"></i> 个人页面</a></li>

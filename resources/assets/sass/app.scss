@@ -142,6 +142,36 @@ a:hover,a:focus{
     list-style: inherit;
   }
 }
+/* tool */
+.tool-content{
+  position: relative;
+}
+.tool-content ul.list-items{
+  position: absolute;
+  top: 34px;
+  right: 0;
+  width: 100%;
+  padding-left: 0;
+  padding-right: 0;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  list-style: none;
+  z-index: 999;
+  opacity: 0.9;
+  background-color: #e6e6e6;
+}
+.tool-content .list-items .item a{
+  display: block;
+  width: 100%;
+  color: #333;
+  line-height: 25px;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+.tool-content .list-items .item a:hover{
+  background-color: #0d6aad;
+  color: #fff;
+}
 @media(max-width:736px){
   .main_left,.main_right{
     padding-left: 0;

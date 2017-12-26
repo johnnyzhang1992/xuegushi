@@ -78,6 +78,35 @@
         .input-group{
             margin-bottom: 10px;
         }
+        .tool-content{
+            position: relative;
+        }
+        .tool-content ul.list-items{
+            position: absolute;
+            top: 34px;
+            right: 0;
+            width: 100%;
+            padding-left: 0;
+            padding-right: 0;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            list-style: none;
+            z-index: 999;
+            opacity: 0.9;
+            background-color: #e6e6e6;
+        }
+        .tool-content .list-items .item a{
+            display: block;
+            width: 100%;
+            color: #333;
+            line-height: 25px;
+            padding-left: 15px;
+            padding-right: 15px;
+        }
+        .tool-content .list-items .item a:hover{
+            background-color: #0d6aad;
+            color: #fff;
+        }
     </style>
 @endpush
 
@@ -118,6 +147,67 @@
                     }
                 }
             });
+            function getSearchPoem() {
+                $.get(
+                    '/search/poem',
+                    {
+                        'value': $('#search-poem').val(),
+                        '_token': $('input[name="_token"]').val()
+                    },
+                    function (res) {
+                        var html = '';
+                        if(res.length>0){
+                            for(var i =0;i<res.length;i++){
+                                html = html + '<li class="item"><a class="item-link" data-href="https://xuegushi.cn/poem/'+res[i].id+'" data-title="'+res[i].title+'" data-dynasty="'+res[i].dynasty+'" data-author="'+res[i].author+'">《'+ res[i].title+'》 -'+res[i].dynasty+':'+res[i].author+'</a></li>'
+                            }
+                            $('.poem-lists').html(html).show();
+                        }
+                        // console.log(res);
+                    }
+                )
+            }
+            function getSearchAuthor() {
+                $.get(
+                    '/search/author',
+                    {
+                        'value': $('#search-author').val(),
+                        '_token': $('input[name="_token"]').val()
+                    },
+                    function (res) {
+                        var html = '';
+                        if(res.length>0){
+                            for(var i =0;i<res.length;i++){
+                                html = html + '<li class="item"><a class="item-link" data-href="https://xuegushi.cn/author/'+res[i].id+'" data-dynasty="'+res[i].dynasty+'" data-author="'+res[i].author_name+'">'+res[i].dynasty+':'+res[i].author_name+'</a></li>'
+                            }
+                            $('.author-lists').html(html).show();
+                        }
+                        // console.log(res);
+                    }
+                )
+            }
+            $('#search-poem').bind('input propertychange', function() {
+                if($('#search-poem').val() !=''){
+                    getSearchPoem();
+                }
+            });
+            $('#search-author').bind('input propertychange', function() {
+                if($('#search-author').val() !=''){
+                    getSearchAuthor();
+                }
+            });
+            $('.poem-lists').on('click','a',function(){
+                $('#tool-poem-url').val($(this).attr('data-href'));
+                $('#tool-poem-title').val($(this).attr('data-title'));
+                $('#tool-poem-dynasty').val($(this).attr('data-dynasty'));
+                $('#tool-poem-author').val($(this).attr('data-author'));
+                $('.poem-lists').hide();
+            });
+            $('.author-lists').on('click','a',function(){
+                $('#tool-author-url').val($(this).attr('data-href'));
+                $('#tool-author-dynasty').val($(this).attr('data-dynasty'));
+                $('#tool-author-author').val($(this).attr('data-author'));
+                $('.author-lists').hide();
+            })
         });
     </script>
 @endpush

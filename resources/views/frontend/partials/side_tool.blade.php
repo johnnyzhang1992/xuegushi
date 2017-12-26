@@ -6,8 +6,8 @@
                 <span class="input-group-addon">诗文：</span>
                 <input type="text" id="search-poem" class="form-control" placeholder="输入诗文标题">
             </div>
-            <ul class="list-items">
-                <li class="item"><a class="item-link" data-title="" data-dynasty="" data-author=""></a></li>
+            <ul class="list-items poem-lists" style="display: none">
+
             </ul>
             <div class="t-content">
                 <h4>搜索结果</h4>
@@ -35,10 +35,9 @@
         <div class="tool-content">
             <div class="input-group col-md-12">
                 <span class="input-group-addon">诗人：</span>
-                <input type="text" id="search-poem" class="form-control"  placeholder="输入诗人名字">
+                <input type="text" id="search-author" class="form-control"  placeholder="输入诗人名字">
             </div>
-            <ul class="list-items">
-                <li class="item"><a class="item-link" href="" data-dynasty="" data-author=""></a></li>
+            <ul class="list-items author-lists" style="display: none">
             </ul>
             <div class="t-content">
                 <h4>搜索结果</h4>
