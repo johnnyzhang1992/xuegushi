@@ -57,8 +57,8 @@
                 </div>
                 <div class="right col-md-4">
                     <h4>工具栏</h4>
+                    @include('frontend.partials.side_tool')
                 </div>
-
             </div>
         </div>
     </div>

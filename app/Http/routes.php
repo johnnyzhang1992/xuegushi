@@ -67,7 +67,13 @@ Route::group(['middleware' => ['web']], function () {
         Route::get('/{type}', 'People\LikeController@index');
     });
     /* =============== 搜索功能 ====================== */
-    Route::get('search','Frontend\SearchController@index');
+    Route::group([
+        'prefix' => 'search',
+    ],function () {
+        Route::get('/','Frontend\SearchController@index');
+        Route::get('/poem','Frontend\SearchController@poem');
+        Route::get('/author','Frontend\SearchController@author');
+    });
     /* =============== 名句 ========================= */
     Route::group([
         'prefix' => 'sentence',

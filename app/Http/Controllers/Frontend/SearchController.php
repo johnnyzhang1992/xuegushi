@@ -61,4 +61,34 @@ class SearchController extends Controller{
             ->with('sentences',$sentences)
             ->with('poems',$poems);
     }
+
+    /**
+     * @param Request $request
+     * @return mixed
+     */
+    public function poem(Request $request){
+        $_key = $request->input('value');
+        $poems = DB::table('dev_poem')
+            ->where('title','like','%'.$_key.'%')
+            ->select('id','title','author','dynasty','like_count')
+            ->orderBy('like_count','desc')
+            ->limit(5)
+            ->get();
+        print_r($poems);
+        return view('frontend.partials.side_tool')
+            ->with('keyword',$_key)
+            ->with('poems',$poems);
+    }
+    public function author(Request $request){
+        $_key = $request->input('value');
+        $authors = DB::table('dev_author')
+            ->where('author_name','like','%'.$_key.'%')
+            ->select('id','dynasty','author_name','like_count')
+            ->orderBy('like_count','desc')
+            ->limit(5)
+            ->get();
+        return view('frontend.partials.side_tool')
+            ->with('keyword',$_key)
+            ->with('authors',$authors);
+    }
 }
