@@ -10,7 +10,10 @@
 | and give it the controller to call when that URI is requested.
 |
 */
-Route::group(['middleware' => ['web']], function () {
+Route::group([
+    'middleware' => ['web'],
+    'domain' => 'xuegushi.cn'
+], function () {
     /* =============  Frontend ==============*/
     /* == Homepage ==*/
     Route::get('/', 'HomeController@index');
@@ -92,7 +95,9 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/join','Frontend\PageController@join');
     Route::get('/about','Frontend\PageController@about');
 });
-
+Route::group(['domain' => 'zhuanlan.xuegushi.cn'], function() {
+    Route::get('/', 'ZhuanLan\ZhuanLanController@index');
+});
 //Route::get('/authors/update', 'Frontend\AuthorController@updateAuthorsLikeCount');
 
 /* =============== Admin Routes ================== */

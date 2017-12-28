@@ -1,8 +1,4 @@
 <?php
-/**
- * Controller genrated using LaraAdmin
- * Help: http://laraadmin.com
- */
 
 namespace App\Http\Controllers\Frontend;
 
@@ -16,7 +12,7 @@ use App\Helpers\DateUtil;
  * Class HomeController
  * @package App\Http\Controllers
  */
-class PageController extends Controller
+class PostsController extends Controller
 {
     protected $query = null;
     /**
@@ -29,27 +25,6 @@ class PageController extends Controller
 //        $this->query = 'poems';
     }
 
-    /**
-     * 联系我们
-     */
-    public function contact(){
-        return view('frontend.page.contact')
-            ->with('site_title','联系我们');
-    }
-    /**
-     * 加入我们
-     */
-    public function join(){
-        return view('frontend.page.join_us')
-            ->with('site_title','加入我们');
-    }
-    /**
-     * 免责声明
-     */
-    public function about(){
-        return view('frontend.page.about')
-            ->with('site_title','免责声明');
-    }
     /**
      * 专题页面展示
      * @param $id
