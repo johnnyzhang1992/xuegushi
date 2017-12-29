@@ -19,9 +19,11 @@ var js = [
 ];
 elixir(function(mix) {
     mix.sass('app.scss')
+        .sass('zhuanlan.scss')
         .scripts(js, './public/js/app.js')
         .version([
             'css/app.css',
+            'css/zhuanlan.css',
             'js/app.js'
         ]);
 });

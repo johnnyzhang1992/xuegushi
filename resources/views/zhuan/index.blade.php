@@ -9,11 +9,10 @@
 {{--@endsection--}}
 
 @section('base-css')
-    @include('frontend.partials.base_css')
+    @include('zhuan.partials.base_css')
 @endsection
 
 @section('header')
-    {{--header--}}
     @include('zhuan.partials.header')
 @endsection
 
@@ -29,61 +28,7 @@
 @endsection
 
 @section('content-css')
-    <style>
-        .main_content{
-            background-color: #fff;
-        }
-        .navbar-nav li.write a{
-            font-weight: 500;
-        }
-        .nav-right{
-            position: relative;
-            height: 60px;
-        }
-        .nav-right a{
-            padding: 15px 15px;
-            font-size: 18px;
-            line-height: 30px;
-            display: block;
-            color: #777;
-        }
-        .nav-right a>svg{
-            position: absolute;
-            top: 18px;
-            left: 0;
-        }
-        .nav-right a>span{
-            margin-left: 12px;
-        }
-        .nav-right a:hover,.nav-right a:focus{
-            color: #5e5e5e;
-            background-color: transparent;
-        }
-        @media(min-width:768px){
-            .navbar-collapse.collapse{
-                display: none!important;
-            }
-        }
-        @media(max-width:768px){
-            .navbar-nav>li>a {
-                padding-top: 5px;
-                padding-bottom: 5px;
-            }
-            .nav-right{
-                display: none;
-            }
-            .nav > li {
-                float: initial;
-                text-align: center;
-            }
-        }
-        .navbar-default .navbar-toggle {
-            border: none;
-        }
-        .navbar-default .navbar-toggle:focus, .navbar-default .navbar-toggle:hover {
-            background-color: #fff;
-        }
-    </style>
+
 @endsection
 
 @section('goTop')
