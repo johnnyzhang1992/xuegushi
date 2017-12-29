@@ -23,6 +23,6 @@ class ZhuanLanController extends Controller
 //        $this->middleware('auth');
     }
     public function index(){
-        print 'hello world';
+        return view('zhuan.index');
     }
 }
