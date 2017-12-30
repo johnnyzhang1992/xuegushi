@@ -469,7 +469,7 @@ class UploadsController extends Controller
                 $folder = $folder.'/tmps';
             }
             if($_type =='edit' && isset($page_id)){
-                $folder = $folder.'/'/$page_id;
+                $folder = $folder.'/'.$page_id;
             }
             $filename = $file->getClientOriginalName();
 
@@ -495,5 +495,41 @@ class UploadsController extends Controller
             return response()->json('error: upload file not found.', 400);
         }
 
+    }
+    /**
+     * 上传专栏头像
+     * @param $type
+     * @return mixed
+     */
+    public function uploadZhuanlanAvatar($type){
+        $input = Input::all();
+        if(Input::hasFile('file')) {
+            $file = Input::file('file');
+
+            // print_r($file);
+            $folder = public_path('static/zhuanlan/avatar');
+            $filename = $file->getClientOriginalName();
+
+            $date_append = date("Y-m-d-His-");
+            $upload_success = Input::file('file')->move($folder, $date_append.$filename);
+            $data = array();
+            if($upload_success){
+                // 上传成功，信息入库
+                $_ret = [
+                    'name' => $date_append.$filename,
+                    "extension" => pathinfo($filename, PATHINFO_EXTENSION),
+                    "uid" => Auth::user()->id,
+                    'type'=>$type,
+                    'source_url'=> 'static/zhuanlan/avatar/'.$date_append.$filename,
+                    'created_at' => date('Y-m-d H:i:s',time()),
+                    'updated_at' => date('Y-m-d H:i:s',time()),
+                ];
+                DB::table('dev_photo')->insert($_ret);
+                $data['url'] = '/static/zhuanlan/avatar/'.$date_append.$filename;
+                return response()->json($data,200);
+            }
+        }else{
+            return response()->json('error: upload file not found.', 400);
+        }
     }
 }

@@ -156,58 +156,62 @@
                     <div class="item">
                         <label>专栏主题</label>
                         <div class="item-value">
-                            <input type="text" name="name" class="zhuanlan-theme" data-required-error="必须填写专栏主题" value="" placeholder="例如：古诗鉴赏">
-                            <span class="tip">至少填写一个主题<span class="zhuanlan-theme-count"></span><span class="error hidden">错误提示</span></span>
+                            <input type="text" name="name" class="zhuanlan-theme" data-required-error="必须填写专栏主题" value="">
+                            <span class="tip">至少填写一个主题；例如：古诗鉴赏,名人轶事<span class="zhuanlan-theme-count"></span><span class="error hidden">错误提示</span></span>
                         </div>
                     </div>
                     <div class="item zhuanlan-logo-item">
                         <label>专栏头像</label>
                         <div class="item-value">
-                            <div class="zhuanlan-logo-dropzone dz-clickable"><div class="zhuanlan-logo">
-                                    <img class="zhuanlan-logo-img" src="">
-                                    <div class="edit-avatar-mask hidden"></div>
-                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="30px" height="27px" viewBox="0 0 30 27" version="1.1" class="edit-image-div has-logo">
-                                        <!-- Generator: Sketch 44.1 (41455) - http://www.bohemiancoding.com/sketch -->
-                                        <title>icon_photo_1</title>
-                                        <desc>Created with Sketch.</desc>
-                                        <defs></defs>
-                                        <g id="切图" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                            <g transform="translate(-396.000000, -110.000000)" id="icon_photo_1">
-                                                <g transform="translate(393.000000, 107.000000)">
-                                                    <polygon id="Shape" points="0 0 36 0 36 36 0 36"></polygon>
-                                                    <circle id="Oval" fill="#FFFFFF" cx="18" cy="18" r="4.8"></circle>
-                                                    <path d="M13.5,3 L10.755,6 L6,6 C4.35,6 3,7.35 3,9 L3,27 C3,28.65 4.35,30 6,30 L30,30 C31.65,30 33,28.65 33,27 L33,9 C33,7.35 31.65,6 30,6 L25.245,6 L22.5,3 L13.5,3 L13.5,3 Z M18,25.5 C13.86,25.5 10.5,22.14 10.5,18 C10.5,13.86 13.86,10.5 18,10.5 C22.14,10.5 25.5,13.86 25.5,18 C25.5,22.14 22.14,25.5 18,25.5 L18,25.5 Z" id="Shape" fill="#FFFFFF"></path>
-                                                </g>
-                                            </g>
-                                        </g>
-                                    </svg>
-
-                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="80px" height="80px" viewBox="0 0 80 80" version="1.1" class="edit-image-div no-logo">
-                                        <!-- Generator: Sketch 44.1 (41455) - http://www.bohemiancoding.com/sketch -->
-                                        <title></title>
-                                        <desc>Created with Sketch.</desc>
-                                        <defs>
-                                            <rect id="path-1" x="0" y="0" width="80" height="80" rx="10"></rect>
-                                            <mask id="mask-2" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="80" height="80" fill="white">
-                                                <use xlink:href="#path-1"></use>
-                                            </mask>
-                                        </defs>
-                                        <g id="切图" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                            <g transform="translate(-101.000000, -551.000000)" id="icon_photo_2">
-                                                <g transform="translate(101.000000, 551.000000)">
-                                                    <use id="Mask" stroke="#EDEDED" mask="url(#mask-2)" stroke-width="4" fill="#FFFFFF" stroke-dasharray="6,3" xlink:href="#path-1"></use>
-                                                    <g id="Group-Copy-2" opacity="0.800000012" transform="translate(22.000000, 22.000000)">
-                                                        <polygon id="Shape" points="0 0 36 0 36 36 0 36"></polygon>
-                                                        <circle id="Oval" fill="#EDEDED" cx="18" cy="18" r="4.8"></circle>
-                                                        <path d="M13.5,3 L10.755,6 L6,6 C4.35,6 3,7.35 3,9 L3,27 C3,28.65 4.35,30 6,30 L30,30 C31.65,30 33,28.65 33,27 L33,9 C33,7.35 31.65,6 30,6 L25.245,6 L22.5,3 L13.5,3 L13.5,3 Z M18,25.5 C13.86,25.5 10.5,22.14 10.5,18 C10.5,13.86 13.86,10.5 18,10.5 C22.14,10.5 25.5,13.86 25.5,18 C25.5,22.14 22.14,25.5 18,25.5 L18,25.5 Z" id="Shape" fill="#EDEDED"></path>
+                            <form action="{{ url('uploads_image/zhuanlan_avatar') }}" id="fm_dropzone_main" enctype="multipart/form-data" method="POST">
+                                {{ csrf_field() }}
+                                <div class="dz-message">
+                                    <div class="zhuanlan-logo-dropzone dz-clickable"><div class="zhuanlan-logo">
+                                            <img class="zhuanlan-logo-img" src="">
+                                            <div class="edit-avatar-mask hidden"></div>
+                                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="30px" height="27px" viewBox="0 0 30 27" version="1.1" class="edit-image-div has-logo">
+                                                <!-- Generator: Sketch 44.1 (41455) - http://www.bohemiancoding.com/sketch -->
+                                                <title>icon_photo_1</title>
+                                                <desc>Created with Sketch.</desc>
+                                                <defs></defs>
+                                                <g id="切图" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                    <g transform="translate(-396.000000, -110.000000)" id="icon_photo_1">
+                                                        <g transform="translate(393.000000, 107.000000)">
+                                                            <polygon id="Shape" points="0 0 36 0 36 36 0 36"></polygon>
+                                                            <circle id="Oval" fill="#FFFFFF" cx="18" cy="18" r="4.8"></circle>
+                                                            <path d="M13.5,3 L10.755,6 L6,6 C4.35,6 3,7.35 3,9 L3,27 C3,28.65 4.35,30 6,30 L30,30 C31.65,30 33,28.65 33,27 L33,9 C33,7.35 31.65,6 30,6 L25.245,6 L22.5,3 L13.5,3 L13.5,3 Z M18,25.5 C13.86,25.5 10.5,22.14 10.5,18 C10.5,13.86 13.86,10.5 18,10.5 C22.14,10.5 25.5,13.86 25.5,18 C25.5,22.14 22.14,25.5 18,25.5 L18,25.5 Z" id="Shape" fill="#FFFFFF"></path>
+                                                        </g>
                                                     </g>
                                                 </g>
-                                            </g>
-                                        </g>
-                                    </svg>
-
+                                            </svg>
+                                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="80px" height="80px" viewBox="0 0 80 80" version="1.1" class="edit-image-div no-logo">
+                                                <!-- Generator: Sketch 44.1 (41455) - http://www.bohemiancoding.com/sketch -->
+                                                <title></title>
+                                                <desc>Created with Sketch.</desc>
+                                                <defs>
+                                                    <rect id="path-1" x="0" y="0" width="80" height="80" rx="10"></rect>
+                                                    <mask id="mask-2" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="80" height="80" fill="white">
+                                                        <use xlink:href="#path-1"></use>
+                                                    </mask>
+                                                </defs>
+                                                <g id="切图" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                    <g transform="translate(-101.000000, -551.000000)" id="icon_photo_2">
+                                                        <g transform="translate(101.000000, 551.000000)">
+                                                            <use id="Mask" stroke="#EDEDED" mask="url(#mask-2)" stroke-width="4" fill="#FFFFFF" stroke-dasharray="6,3" xlink:href="#path-1"></use>
+                                                            <g id="Group-Copy-2" opacity="0.800000012" transform="translate(22.000000, 22.000000)">
+                                                                <polygon id="Shape" points="0 0 36 0 36 36 0 36"></polygon>
+                                                                <circle id="Oval" fill="#EDEDED" cx="18" cy="18" r="4.8"></circle>
+                                                                <path d="M13.5,3 L10.755,6 L6,6 C4.35,6 3,7.35 3,9 L3,27 C3,28.65 4.35,30 6,30 L30,30 C31.65,30 33,28.65 33,27 L33,9 C33,7.35 31.65,6 30,6 L25.245,6 L22.5,3 L13.5,3 L13.5,3 Z M18,25.5 C13.86,25.5 10.5,22.14 10.5,18 C10.5,13.86 13.86,10.5 18,10.5 C22.14,10.5 25.5,13.86 25.5,18 C25.5,22.14 22.14,25.5 18,25.5 L18,25.5 Z" id="Shape" fill="#EDEDED"></path>
+                                                            </g>
+                                                        </g>
+                                                    </g>
+                                                </g>
+                                            </svg>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
+                            </form>
+                            <span class="tip">图片尺寸最好为200*200或小于1M的正方形图片（jpg,png）</span>
                         </div>
                     </div>
                     <div class="item">
@@ -222,7 +226,7 @@
                         <label>专栏介绍</label>
                         <div class="item-value">
                             <textarea type="text" name="bio" class="zhuanlan-bio" id="zhuanlan-bio" rows="1" data-required="true" data-required-error="必须填写专栏介绍" data-autosize-on="true" style="overflow: hidden; word-wrap: break-word; height: 100px; min-height: 100px;"></textarea>
-                            <span class="tip">关于专栏介绍会显示在您的专栏主页上，至关重要<span class="zhuanlan-bio-count"></span><span class="error hidden">错误提示</span></span>
+                            <span class="tip">关于专栏介绍会显示在您的专栏主页上，至关重要。务必简洁，少于140个汉字。<span class="zhuanlan-bio-count"></span><span class="error hidden">错误提示</span></span>
                         </div>
                     </div>
 
@@ -245,7 +249,7 @@
                         <div class="item-value">
                             <div class="with-prefix">
                                 <span class="prefix">zhuanlan.xuegushi.cn/</span>
-                                <input type="text" name="domain" class="zhuanlan-domain " data-required="true" data-max-length="50" data-min-length="4" data-required-error="必须填写专栏域名" value="">
+                                <input type="text" name="domain" class="zhuanlan-domain " onkeyup="judgeDomain(this)" data-required="true" data-max-length="50" data-min-length="4" data-required-error="必须填写专栏域名" value="">
                             </div>
                             <span class="tip">域名确定后不可修改<span class="error  zhuanlan-domain-error hidden">错误提示</span></span>
                         </div>
@@ -263,6 +267,7 @@
 @endsection
 
 @section('content-js')
+    <script src="{{ asset('la-assets/plugins/dropzone/dropzone.js') }}"></script>
     <script type="text/javascript">
         $(".zhuanlan-new .item-value button.price").click(function(){
             $(".zhuanlan-new button.price").removeClass("selected");
@@ -298,21 +303,50 @@
             }
 
             var data = {
-                name: $(".zhuanlan-name").val(),
-                theme: $('zhuanlan-theme').val(),
-                bio: $(".zhuanlan-bio").val(),
-                specialty: $(".zhuanlan-specialty").val(),
-                domain_name: $(".zhuanlan-domain").val(),
-                category: $(".zhuanlan-category.selected").data("value"),
-                discount: $(".discount.selected").data("price"),
-                logo_url: $(".zhuanlan-logo-img").attr("src"),
-                wechat: $(".zhuanlan-wechat").val()
+                alia_name: $(".zhuanlan-name").val(),//alia_name
+                theme: $('.zhuanlan-theme').val(),//topic
+                bio: $(".zhuanlan-bio").val(),//about
+                specialty: $(".zhuanlan-specialty").val(),//specialty
+                name: $(".zhuanlan-domain").val(),//name
+                logo_url: $(".zhuanlan-logo-img").attr("src"),//avatar
+                wechat: $(".zhuanlan-wechat").val(),//wechat
+                _token: $('input[name="_token"]').val()
             };
 
             if($(".share_button").length > 0){
                 data["show_share_button"] = $(".share_button .checkbox-item.checked").data("value")
             }
             // ajax 提交
+            $.ajax({
+                dataType: 'json',
+                data:data,
+                type:'POST',
+                url: "/zhuanlan/create",
+                success: function ( json ) {
+                    // console.log(json);
+                    if(js.message == 'success'){
+                        $('body').toast({
+                            position:'fixed',
+                            content:'提交成功，请耐心等待审核',
+                            duration:1000,
+                            isCenter:true,
+                            background:'rgba(0,0,0,0.5)',
+                            animateIn:'bounceIn-hastrans',
+                            animateOut:'bounceOut-hastrans'
+                        });
+                    }else{
+                        $('body').toast({
+                            position:'fixed',
+                            content:'提交失败，请再次提交或者刷新重试',
+                            duration:1000,
+                            isCenter:true,
+                            background:'rgba(0,0,0,0.5)',
+                            animateIn:'bounceIn-hastrans',
+                            animateOut:'bounceOut-hastrans'
+                        });
+                    }
+                }
+            });
         });
         $(".zhuanlan-specialty, .zhuanlan-bio").css({"min-height": "100px"});
         $(".zhuanlan-new input, .zhuanlan-new textarea").blur(function(){
@@ -412,11 +446,6 @@
             setTimeout(silentValidateAll, 1)
         });
 
-        $('.zhuanlan-bio').keydown(function(e) {
-            // if (e.keyCode == 32) {
-            //   return false;
-            // }
-        });
         function widthCheck(e, t, n, i) {
             for (var r = 0, o = 0; o < e.value.length; o++) {
                 var a = e.value.charCodeAt(o);
@@ -436,11 +465,53 @@
             $(".edit-avatar-mask").addClass("hidden")
         }
         silentValidateAll();
-
+        function judgeDomain(e) {
+            var domain = e.value;
+            // console.log(domain);
+            if(domain.length>3){
+                $.ajax({
+                    dataType: 'json',
+                    data:{
+                        'domain':domain,
+                        _token: $('input[name="_token"]').val()
+                    },
+                    type:'POST',
+                    url: "/zhuanlan/judgeDomain",
+                    success: function (json) {
+                        // console.log(json);
+                        if(!json.status == 'success'){
+                            $('.zhuanlan-domain-error').html('域名已被占用');
+                        }
+                    }
+                });
+            }
+        }
         $(".checkbox-item").click(function(){
             var reward_able = false;
             $(".checkbox-item").removeClass("checked");
             $(this).addClass("checked")
-        })
+        });
+        // upload
+        var bsurl = '{{ url('') }}';
+        var fm_dropzone_main = null;
+        var cntFiles = null;
+        $(function () {
+            fm_dropzone_main = new Dropzone("#fm_dropzone_main", {
+                maxFilesize: 2,
+                acceptedFiles: "image/*",
+                init: function() {
+                    this.on("complete", function(file) {
+                        this.removeFile(file);
+                    });
+                    this.on("success", function(file) {
+                        console.log("addedfile");
+                        var res = JSON.parse(file.xhr.response);
+                        console.log(JSON.parse(file.xhr.response));
+                        $('.zhuanlan-logo svg').hide();
+                        $('.zhuanlan-logo-img').attr('src',res.url);
+                    });
+                }
+            });
+        });
     </script>
 @endsection

@@ -98,6 +98,13 @@ Route::group([
 Route::group(['domain' => 'zhuanlan.xuegushi.cn'], function() {
     Route::get('/', 'ZhuanLan\ZhuanLanController@index');
     Route::get('/apply', 'ZhuanLan\ZhuanLanController@apply');
+    Route::group([
+        'prefix' =>'zhuanlan'
+    ],function (){
+        Route::post('/create', 'ZhuanLan\ZhuanLanController@store');
+        Route::post('/judgeDomain', 'ZhuanLan\ZhuanLanController@judgeDomain');
+    });
+    Route::post('/uploads_image/{type}', 'LA\UploadsController@uploadZhuanlanAvatar');
 });
 //Route::get('/authors/update', 'Frontend\AuthorController@updateAuthorsLikeCount');
 
