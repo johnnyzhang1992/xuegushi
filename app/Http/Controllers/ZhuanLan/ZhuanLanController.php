@@ -23,6 +23,11 @@ class ZhuanLanController extends Controller
 //        $this->middleware('auth');
     }
     public function index(){
-        return view('zhuan.index');
+        return view('zhuan.index')
+            ->with('query','home');
+    }
+
+    public function apply(){
+        return view('zhuan.zhuanlan.create');
     }
 }

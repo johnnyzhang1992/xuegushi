@@ -19,9 +19,16 @@
 @section('content')
     {{--main-content--}}
     <main class="main_content col-md-12 no-padding">
-        <div class="content col-md-9">
-            <div class="main_left">
-                <input type="hidden" name="_token" value="{{ csrf_token() }}" />
+        <div class="content col-md-9 col-xs-12">
+            <input type="hidden" name="_token" value="{{ csrf_token() }}" />
+            <div class="left-sidebar col-md-3">
+                <ul class="left-sidebar">
+                    <li><a href="">我的订阅</a></li>
+                    <li><a href="">官方推荐</a></li>
+                </ul>
+            </div>
+            <div class="container-stream col-md-9 col-xs-12">
+
             </div>
         </div>
     </main>

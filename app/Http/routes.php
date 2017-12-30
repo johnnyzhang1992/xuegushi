@@ -97,6 +97,7 @@ Route::group([
 });
 Route::group(['domain' => 'zhuanlan.xuegushi.cn'], function() {
     Route::get('/', 'ZhuanLan\ZhuanLanController@index');
+    Route::get('/apply', 'ZhuanLan\ZhuanLanController@apply');
 });
 //Route::get('/authors/update', 'Frontend\AuthorController@updateAuthorsLikeCount');
 
