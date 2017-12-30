@@ -18,7 +18,7 @@
             <a href="{{ url('/apply') }}" class="apply"><span>申请专栏</span></a>
             <a href="{{ url('/write') }}" class="blue-color write"><span>写文章</span></a>
             @if (Auth::guest())
-                <a href="{{url('/login')}}">登录</a>
+                <a href="{{url('/login')}}" class="login">登录</a>
             @else
                 <a role="button" class="avatar nav-user dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                     <img src="{{ asset('static/images/avatar.png') }}" class="user-image" alt="User Image"/>

@@ -39,6 +39,10 @@ ul.navbar-nav li.active a::after {
   a.write{
     margin-left: 15px;
   }
+  a.login{
+    border: none;
+    margin-left: 10px;
+  }
   >a.blue-color{
     background-color: #337ab7;
     color: #fff;
