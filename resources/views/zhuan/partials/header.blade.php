@@ -15,7 +15,10 @@
             </li>
         </ul>
         <div class="nav-right pull-right">
-            <a href="{{ url('/apply') }}" class="apply"><span>申请专栏</span></a>
+            @if(isset($is_has) && $is_has)
+            @else
+                <a href="{{ url('/apply') }}" class="apply"><span>申请专栏</span></a>
+            @endif
             <a href="{{ url('/write') }}" class="blue-color write"><span>写文章</span></a>
             @if (Auth::guest())
                 <a href="{{url('/login')}}" class="login">登录</a>

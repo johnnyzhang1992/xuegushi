@@ -103,8 +103,20 @@ Route::group(['domain' => 'zhuanlan.xuegushi.cn'], function() {
     ],function (){
         Route::post('/create', 'ZhuanLan\ZhuanLanController@store');
         Route::post('/judgeDomain', 'ZhuanLan\ZhuanLanController@judgeDomain');
+
+    });
+    Route::group([
+        'prefix' =>'me'
+    ],function (){
+        Route::post('/publications', 'ZhuanLan\MeController@publications');
+        Route::post('/subscribes', 'ZhuanLan\MeController@subscribes');
     });
     Route::post('/uploads_image/{type}', 'LA\UploadsController@uploadZhuanlanAvatar');
+    Route::get('/write','ZhuanLan\ZhuanLanController@write');
+    Route::get('/login','Auth\AuthController@showLoginForm');
+    Route::get('/register','Auth\AuthController@showRegistrationForm');
+    Route::get('/logout','Auth\AuthController@logout');
+    Route::get('/{domain}','ZhuanLan\ZhuanLanController@show');
 });
 //Route::get('/authors/update', 'Frontend\AuthorController@updateAuthorsLikeCount');
 

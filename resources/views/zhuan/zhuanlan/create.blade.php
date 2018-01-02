@@ -334,6 +334,9 @@
                             animateIn:'bounceIn-hastrans',
                             animateOut:'bounceOut-hastrans'
                         });
+                        setTimeout(function () {
+                            window.location.href = '/zhuanlan/'.$(".zhuanlan-domain").val();
+                        },2000)
                     }else{
                         $('body').toast({
                             position:'fixed',

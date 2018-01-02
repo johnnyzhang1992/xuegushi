@@ -20,16 +20,63 @@ class ZhuanLanController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
-    }
-    public function index(){
-        return view('zhuan.index')
-            ->with('query','home');
+//        $this->middleware('auth');
     }
 
-    public function apply(){
-        return view('zhuan.zhuanlan.create');
+    /**
+     * 专栏首页
+     * @return $this
+     */
+    public function index(){
+        return view('zhuan.index')
+            ->with('query','home')
+            ->with('is_has',$this->isHasZhuanlan());
     }
+
+    /**
+     * 专栏申请页面
+     * @return $this|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function apply(){
+        if (Auth::guest()){
+            return redirect('/login');
+        }
+        return view('zhuan.zhuanlan.create')
+            ->with('is_has',$this->isHasZhuanlan());
+    }
+
+    /**
+     * 专栏详情显示
+     * @param $domain
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function show($domain){
+        $data = DB::table('dev_zhuanlan')->where('name','=',$domain)->first();
+        if(isset($data) && $data){
+            return view('zhuan.zhuanlan.show')
+            ->with('data',$data)
+                ->with('is_has',$this->isHasZhuanlan());
+        }else{
+            return view('errors.404');
+        }
+    }
+
+    /**
+     * 写文章
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function write(){
+        if (Auth::guest()){
+            return redirect('/login');
+        }
+        print 'write';
+    }
+
+    /**
+     * 保存
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function store(Request $request){
         $data = [];
         $data['name'] = $request->input('name');
@@ -55,6 +102,12 @@ class ZhuanLanController extends Controller
             return response()->json($res);
         }
     }
+
+    /**
+     * 判断当前输入域名是否已存在
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function judgeDomain(Request $request){
         $name = $request->input('domain');
         $data = DB::table('dev_zhuanlan')->where('name','=',$name)->first();
@@ -65,5 +118,22 @@ class ZhuanLanController extends Controller
             $_res['status'] = 'success';
         }
         return response()->json($_res);
+    }
+
+    /**
+     * 判断当前用户是否注册过专栏
+     * @return bool
+     */
+    public function isHasZhuanlan(){
+        if (!Auth::guest()){
+            $data = DB::table('dev_zhuanlan')->where('creator_id',Auth::user()->id)->count();
+        }else{
+            $data = 0;
+        }
+        if($data>0){
+            return true;
+        }else{
+            return false;
+        }
     }
 }
