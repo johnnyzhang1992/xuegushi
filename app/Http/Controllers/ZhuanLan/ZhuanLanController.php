@@ -1,7 +1,7 @@
 <?php
 /**
  * Controller show
- * 用户前端主页controller
+ * 专栏 controller
  */
 
 namespace App\Http\Controllers\ZhuanLan;
@@ -54,23 +54,13 @@ class ZhuanLanController extends Controller
         $data = DB::table('dev_zhuanlan')->where('name','=',$domain)->first();
         if(isset($data) && $data){
             return view('zhuan.zhuanlan.show')
-            ->with('data',$data)
+                ->with('data',$data)
                 ->with('is_has',$this->isHasZhuanlan());
         }else{
             return view('errors.404');
         }
     }
 
-    /**
-     * 写文章
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
-     */
-    public function write(){
-        if (Auth::guest()){
-            return redirect('/login');
-        }
-        print 'write';
-    }
 
     /**
      * 保存

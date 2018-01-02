@@ -111,11 +111,23 @@ Route::group(['domain' => 'zhuanlan.xuegushi.cn'], function() {
         Route::post('/publications', 'ZhuanLan\MeController@publications');
         Route::post('/subscribes', 'ZhuanLan\MeController@subscribes');
     });
+    // 上传图片
     Route::post('/uploads_image/{type}', 'LA\UploadsController@uploadZhuanlanAvatar');
-    Route::get('/write','ZhuanLan\ZhuanLanController@write');
+
+    Route::get('/write','ZhuanLan\PostController@write');
+    // 搜索功能
+    Route::group([
+        'prefix' => 'search',
+    ],function () {
+        Route::get('/','Frontend\SearchController@index');
+        Route::get('/poem','Frontend\SearchController@poem');
+        Route::get('/author','Frontend\SearchController@author');
+    });
+    // 登录/注册/登出
     Route::get('/login','Auth\AuthController@showLoginForm');
     Route::get('/register','Auth\AuthController@showRegistrationForm');
     Route::get('/logout','Auth\AuthController@logout');
+
     Route::get('/{domain}','ZhuanLan\ZhuanLanController@show');
 });
 //Route::get('/authors/update', 'Frontend\AuthorController@updateAuthorsLikeCount');
