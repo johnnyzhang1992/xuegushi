@@ -8,7 +8,7 @@
     <meta name="description" itemprop="description"  content="{{ isset($site_description) ? $site_description: config('seo.default_description') }}">
     <meta name="author" content="小小梦工场">
     {{--og meta--}}
-    <meta property="og:title" content="{{ isset($site_title)?$site_title:config('seo.default_site_name') }}{{ isset($site_title_addon) ? ' - '.$site_title_addon: '-'.config('seo.default_sub_title') }}" />
+    <meta property="og:title" content="{{ isset($site_title)?$site_title:config('seo.default_site_name') }}{{ isset($site_title_addon) ? '  -  '.$site_title_addon: '-'.config('seo.default_sub_title') }}" />
     <meta property="og:type" content="website" />
     <meta property="og:description" content="{{ isset($site_description) ? $site_description: config('seo.default_description') }}" />
     <meta property="og:url" content="https://xuegushi.cn" />
