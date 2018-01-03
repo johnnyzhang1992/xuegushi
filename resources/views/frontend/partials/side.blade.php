@@ -69,9 +69,3 @@
         </li>
     </ul>
 </div>
-<div class="side-card">
-    <div class="side-title">
-        <h2><span class="author">微博: <a href="https://weibo.com/3546279424">古诗文小助手</a></span></h2>
-    </div>
-    <wb:follow-button uid="3546279424" type="red_4" width="240" height="64" ></wb:follow-button>
-</div>
