@@ -79,22 +79,75 @@
         .TitleImage-imagePure {
             width: 100%;
         }
-        .WriteCover-editWrapper {
+        .titleInput,.topicInput,.RichText{
+            margin: 15px 0;
+        }
+        .cover-uploadIcon{
+            font-size: 36px;
+        }
+        .cover-uploadIcon::after{
+            content: "\6DFB\52A0\9898\56FE";
+            color: #b3b3b3;
             position: absolute;
-            -webkit-box-orient: horizontal;
-            -webkit-box-direction: normal;
-            -ms-flex-direction: row;
-            flex-direction: row;
-            height: 42px;
-            right: 0;
+            width: 100%;
+            text-align: center;
+            left: 0;
+            bottom: 52px;
+            line-height: 1;
+            opacity: 0;
+            z-index: 0;
+            -webkit-transform: translateY(-12px);
+            transform: translateY(-12px);
+            -webkit-transition: all .2s;
+            transition: all .2s;
+            font-size: 20px;
+        }
+        .cover-uploadIcon:hover{
+            cursor: pointer;
+        }
+        .cover-uploadIcon:hover::after{
+            opacity: 1;
+            -webkit-transform: translateY(0);
+            transform: translateY(0);
+        }
+        .WriteCover-editWrapper{
+            position: absolute;
+            height: 48px;
+            width: 98px;
             bottom: 0;
-            z-index: 1;
+            right: 0;
+            line-height: 48px;
             background: rgba(0,0,0,.75);
             border-radius: 4px 0 0 0;
             border: 0;
         }
-        .titleInput,.topicInput,.RichText{
-            margin: 15px 0;
+        .WriteCover-editWrapper .Button{
+            width: 48px;
+            height: 48px;
+            float: left;
+            border: 0;
+            border-radius: 0;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            padding: 0;
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .Button{
+            color: #fff;
+            font-size: 20px;
+            cursor: pointer;
+            background: inherit;
+        }
+        .Button:hover {
+            background-color: rgba(207,216,230,.1);
+        }
+        .dz-preview{
+            display: none;
         }
     </style>
 @endsection
@@ -105,34 +158,42 @@
             <input type="hidden" name="_token" value="{{ csrf_token() }}" />
             <div class="container-stream col-md-12 col-xs-12">
                 <div class="left col-md-9">
-                    <div class="WriteCover-wrapper">
+                    <div class="WriteCover-wrapper clearfix">
                         <div class="WriteCover-previewWrapper WriteCover-previewWrapper--empty">
-                            {{--<div class="TitleImage">--}}
-                                {{--<img alt="" src="https://pic2.zhimg.com/v2-ee4ee92c39dd3bcbb2f4b21b2f2536d2_r.jpg" class="TitleImage-imagePure TitleImage-imagePure--fixed" height="240px">--}}
-                            {{--</div>--}}
-                            {{--<div class="WriteCover-editWrapper">--}}
-                                {{--<button class="Button WriteCover-editButton WriteCover-uploadButton" title="更换" aria-label="更换" type="button">--}}
-                                    {{--<i class="icon-ic_phot_camera_alt"></i>--}}
-                                {{--</button>--}}
-                                {{--<button class="Button WriteCover-editButton WriteCover-deleteButton" title="删除" aria-label="删除" type="button"><i class="icon-ic_phot_delete"></i></button>--}}
-                            {{--</div>--}}
+                            <form action="{{ url('uploads_image/post_cover') }}" id="fm_dropzone_main" enctype="multipart/form-data" method="POST">
+                                {{ csrf_field() }}
+                                <div class="cover-uploadIcon dz-message">
+                                    <i class="fa fa-camera"></i>
+                                </div>
+                            </form>
+                            <div class="TitleImage" style="display: none">
+                                <img alt="" src="" class="TitleImage-imagePure TitleImage-imagePure--fixed" height="240px">
+                            </div>
+                            <div class="WriteCover-editWrapper clearfix" style="display: none">
+                                <div class="WriteCover-previewWrapper WriteCover-previewWrapper--empty">
+                                    <form action="{{ url('uploads_image/post_cover') }}" id="fm_dropzone_main1" enctype="multipart/form-data" method="POST">
+                                        {{ csrf_field() }}
+                                        <button class="Button editButton dz-message" title="更换" data-toggle="tooltip" data-placement="top" type="button">
+                                            <i class="fa fa-camera"></i>
+                                        </button>
+                                    </form>
+                                <button class="Button deleteButton" title="删除" data-toggle="tooltip" data-placement="top" type="button"><i class="fa fa-trash-o"></i></button>
+                            </div>
+                        </div>
                         </div>
                     </div>
-                    <form action="/admin/pages" method="post">
-                        <input type="hidden" name="type" value="create">
-                        <div class="titleInput input-group col-md-12">
-                            <input type="text" name="page[display_name]" class="form-control" value="{{ @old('page[title]') }}" placeholder="输入标题（限64字）">
-                        </div>
-                        <div class="topicInput input-group col-md-12">
-                            <input type="text" name="page[tags]" value="{{ @old('page[tage]') }}" class="form-control" placeholder="输入标签,英文逗号分开(可选)">
-                        </div>
-                        <div class="RichText clearfix col-md-12 no-padding">
-                            <textarea name="page[html_content]" id="summernote" cols="30" rows="10">正文内容{!! @old('page[html_content]') !!}</textarea>
-                        </div>
-                        <div class="row col-md-12">
-                            <button type="submit"  id="save-poem" class="btn btn-success">提交</button>
-                        </div>
-                    </form>
+                    <div class="titleInput input-group col-md-12">
+                        <input type="text" name="page[display_name]" class="form-control" value="{{ @old('page[title]') }}" placeholder="输入标题（限64字）">
+                    </div>
+                    <div class="topicInput input-group col-md-12">
+                        <input type="text" name="page[tags]" value="{{ @old('page[tage]') }}" class="form-control" placeholder="输入标签,英文逗号分开(可选)">
+                    </div>
+                    <div class="RichText clearfix col-md-12 no-padding">
+                        <textarea name="page[html_content]" id="summernote" cols="30" rows="10">正文内容{!! @old('page[html_content]') !!}</textarea>
+                    </div>
+                    <div class="row col-md-12">
+                        <button type="submit"  id="save-poem" class="btn btn-success">提交</button>
+                    </div>
                 </div>
                 <div class="right col-md-3">
                     @include('zhuan.partials.side_tool')
@@ -151,8 +212,8 @@
         $(document).ready(function() {
             $('#summernote').summernote({
                 lang: 'zh-CN', // default: 'en-US'
-                height: 300,                 // set editor height
-                minHeight: null,             // set minimum height of editor
+                height: 'auto',                 // set editor height
+                minHeight: 300,             // set minimum height of editor
                 maxHeight: null,             // set maximum height of editor
                 focus: true,                  // set focus to editable area after initializing summe
                 callbacks: {
@@ -186,69 +247,7 @@
                     }
                 }
             });
-            function getSearchPoem() {
-                $.get(
-                    '/search/poem',
-                    {
-                        'value': $('#search-poem').val(),
-                        '_token': $('input[name="_token"]').val()
-                    },
-                    function (res) {
-                        var html = '';
-                        if(res.length>0){
-                            for(var i =0;i<res.length;i++){
-                                html = html + '<li class="item"><a class="item-link" data-href="https://xuegushi.cn/poem/'+res[i].id+'" data-title="'+res[i].title+'" data-dynasty="'+res[i].dynasty+'" data-author="'+res[i].author+'">《'+ res[i].title+'》 -'+res[i].dynasty+':'+res[i].author+'</a></li>'
-                            }
-                            $('.poem-lists').html(html).show();
-                        }
-                        // console.log(res);
-                    }
-                )
-            }
-            function getSearchAuthor() {
-                $.get(
-                    '/search/author',
-                    {
-                        'value': $('#search-author').val(),
-                        '_token': $('input[name="_token"]').val()
-                    },
-                    function (res) {
-                        var html = '';
-                        if(res.length>0){
-                            for(var i =0;i<res.length;i++){
-                                html = html + '<li class="item"><a class="item-link" data-href="https://xuegushi.cn/author/'+res[i].id+'" data-dynasty="'+res[i].dynasty+'" data-author="'+res[i].author_name+'">'+res[i].dynasty+':'+res[i].author_name+'</a></li>'
-                            }
-                            $('.author-lists').html(html).show();
-                        }
-                        // console.log(res);
-                    }
-                )
-            }
-            $('#search-poem').bind('input propertychange', function() {
-                if($('#search-poem').val() !=''){
-                    getSearchPoem();
-                }
-            });
-            $('#search-author').bind('input propertychange', function() {
-                if($('#search-author').val() !=''){
-                    getSearchAuthor();
-                }
-            });
-            $('.poem-lists').on('click','a',function(){
-                $('#tool-poem-url').val($(this).attr('data-href'));
-                $('#tool-poem-title').val($(this).attr('data-title'));
-                $('#tool-poem-dynasty').val($(this).attr('data-dynasty'));
-                $('#tool-poem-author').val($(this).attr('data-author'));
-                $('.poem-lists').hide();
-            });
-            $('.author-lists').on('click','a',function(){
-                $('#tool-author-url').val($(this).attr('data-href'));
-                $('#tool-author-dynasty').val($(this).attr('data-dynasty'));
-                $('#tool-author-author').val($(this).attr('data-author'));
-                $('.author-lists').hide();
-            })
         });
-
         $("#navigation").sticky({
             topSpacing:0,
             zIndex:999
@@ -258,26 +257,52 @@
             zIndex:999
         });
         // upload
-        {{--var bsurl = '{{ url('') }}';--}}
-        {{--var fm_dropzone_main = null;--}}
-        {{--var cntFiles = null;--}}
-        {{--$(function () {--}}
-            {{--fm_dropzone_main = new Dropzone("#fm_dropzone_main", {--}}
-                {{--maxFilesize: 2,--}}
-                {{--acceptedFiles: "image/*",--}}
-                {{--init: function() {--}}
-                    {{--this.on("complete", function(file) {--}}
-                        {{--this.removeFile(file);--}}
-                    {{--});--}}
-                    {{--this.on("success", function(file) {--}}
-                        {{--console.log("addedfile");--}}
-                        {{--var res = JSON.parse(file.xhr.response);--}}
-                        {{--console.log(JSON.parse(file.xhr.response));--}}
-                        {{--$('.zhuanlan-logo svg').hide();--}}
-                        {{--$('.zhuanlan-logo-img').attr('src',res.url);--}}
-                    {{--});--}}
-                {{--}--}}
-            {{--});--}}
-        {{--});--}}
+        var bsurl = '{{ url('') }}';
+        var fm_dropzone_main = null;
+        var cntFiles = null;
+        $(function () {
+            fm_dropzone_main = new Dropzone("#fm_dropzone_main", {
+                maxFilesize: 2,
+                acceptedFiles: "image/*",
+                init: function() {
+                    this.on("complete", function(file) {
+                        this.removeFile(file);
+                    });
+                    this.on("success", function(file) {
+                        var res = JSON.parse(file.xhr.response);
+                        console.log(JSON.parse(file.xhr.response));
+                        $('.cover-uploadIcon').hide();
+                        $('.TitleImage').show();
+                        $('.WriteCover-editWrapper').show();
+                        $('.TitleImage-imagePure').attr('src',res.url);
+                    });
+                }
+            });
+        });
+        $(function () {
+            fm_dropzone_main = new Dropzone("#fm_dropzone_main1", {
+                maxFilesize: 2,
+                acceptedFiles: "image/*",
+                init: function() {
+                    this.on("complete", function(file) {
+                        this.removeFile(file);
+                    });
+                    this.on("success", function(file) {
+                        var res = JSON.parse(file.xhr.response);
+                        console.log(JSON.parse(file.xhr.response));
+                        $('.cover-uploadIcon').hide();
+                        $('.TitleImage').show();
+                        $('.WriteCover-editWrapper').show();
+                        $('.TitleImage-imagePure').attr('src',res.url);
+                    });
+                }
+            });
+        });
+        $('.deleteButton').on('click',function () {
+            $('.cover-uploadIcon').show();
+            $('.TitleImage').hide();
+            $('.WriteCover-editWrapper').hide();
+            $('.TitleImage-imagePure').attr('src','');
+        })
     </script>
 @endsection

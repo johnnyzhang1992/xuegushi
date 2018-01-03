@@ -23,6 +23,7 @@ use DB;
 use File;
 use Validator;
 use Datatables;
+use App\Helpers\ImageUtil;
 
 use App\Models\Upload;
 
@@ -526,6 +527,8 @@ class UploadsController extends Controller
                 ];
                 DB::table('dev_photo')->insert($_ret);
                 $data['url'] = '/static/zhuanlan/avatar/'.$date_append.$filename;
+                chmod('static/zhuanlan/avatar/'.$date_append.$filename, 0777);
+//                ImageUtil::makeAvatar($folder.$date_append.$filename,$folder.$date_append.'lg-'.$filename ,750,250);
                 return response()->json($data,200);
             }
         }else{
