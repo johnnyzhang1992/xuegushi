@@ -60,6 +60,12 @@ class PostController extends Controller
         }
         return response()->json($res);
     }
+
+    /**
+     * update 文章
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function update(Request $request){
         $id = $request->input('id');
         $data = [];
@@ -76,7 +82,23 @@ class PostController extends Controller
         }
         return response()->json($res);
     }
-
+    public function show($id){
+        $data = DB::table('dev_post')
+            ->where('dev_post.id',$id)
+            ->leftJoin('users','users.id','=','dev_post.creator_id')
+            ->leftJoin('dev_zhuanlan','dev_zhuanlan.id','=','dev_post.zhuanlan_id')
+            ->select('dev_post.*','users.name as user_name','users.avatar','dev_zhuanlan.alia_name as zhuan_alia_name',
+                'dev_zhuanlan.specialty','dev_zhuanlan.avatar as zhuan_avatar','dev_zhuanlan.name as zhuan_name')
+            ->first();
+        if(isset($data) && $data){
+            return view('zhuan.post.show')
+                ->with('post',$data)
+                ->with('is_has',$this->isHasZhuanlan())
+                ->with('site_title',$data->title);
+        }else{
+            return view('errors.404')->with('record_id',$id)->with('record_name','文章');
+        }
+    }
     /**
      * 判断当前用户是否注册过专栏
      * @return bool
