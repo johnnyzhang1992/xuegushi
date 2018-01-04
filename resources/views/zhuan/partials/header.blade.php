@@ -4,7 +4,7 @@
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                 <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-horizontal" color="#999" data-reactid="801"><circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle><circle cx="5" cy="12" r="1"></circle></svg>
             </button>
-            <a class="navbar-brand" href="{{url('/')}}"><b>古诗专栏</b></a>
+            <a class="navbar-brand" href="{{url('/')}}"><b>古诗专栏 <small>beta</small></b></a>
         </div>
         <ul class="nav navbar-nav nav-left">
             <li @if(isset($query) && $query =='home') class="active" @endif>

@@ -63,6 +63,7 @@ class SearchController extends Controller{
     }
 
     /**
+     * 搜索古诗文
      * @param Request $request
      * @return mixed
      */
@@ -76,6 +77,12 @@ class SearchController extends Controller{
             ->get();
         return response()->json($poems);
     }
+
+    /**
+     * 搜索作者
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function author(Request $request){
         $_key = $request->input('value');
         $authors = DB::table('dev_author')
@@ -85,5 +92,8 @@ class SearchController extends Controller{
             ->limit(5)
             ->get();
         return response()->json($authors);
+    }
+    public function topic(Request $request){
+        // 自动填充
     }
 }

@@ -98,12 +98,23 @@ Route::group([
 Route::group(['domain' => 'zhuanlan.xuegushi.cn'], function() {
     Route::get('/', 'ZhuanLan\ZhuanLanController@index');
     Route::get('/apply', 'ZhuanLan\ZhuanLanController@apply');
+    // 专栏
     Route::group([
         'prefix' =>'zhuanlan'
     ],function (){
         Route::post('/create', 'ZhuanLan\ZhuanLanController@store');
         Route::post('/judgeDomain', 'ZhuanLan\ZhuanLanController@judgeDomain');
 
+    });
+    // 文章
+    Route::group([
+        'prefix' => 'post'
+    ],function (){
+        Route::post('/create','ZhuanLan\PostController@store');
+        Route::post('/update','ZhuanLan\PostController@update');
+        Route::post('{id}','ZhuanLan\PostController@show')->where('id', '[0-9]+');
+        Route::post('{id}/edit','ZhuanLan\PostController@edit')->where('id', '[0-9]+');
+        Route::post('{id}/preview','ZhuanLan\PostController@edit')->where('id', '[0-9]+');
     });
     Route::group([
         'prefix' =>'me'

@@ -110,7 +110,7 @@ class PagesController extends Controller
                     // ok,
                 }
             }
-            $photos = DB::table('dev_photo')->whereNull('type_id')->get();
+            $photos = DB::table('dev_photo')->where('type','page')->whereNull('type_id')->get();
             foreach ($photos as $photo){
                 if(file_exists('static/page/tmps/'.$photo->name)){
                     DB::table('dev_photo')->where('id',$photo->id)->update(['type_id'=>$page_id]);

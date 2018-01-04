@@ -20,7 +20,7 @@ class PostController extends Controller
 {
     public function __construct()
     {
-//        $this->middleware('auth');
+        $this->middleware('auth');
     }
 
     /**
@@ -35,6 +35,48 @@ class PostController extends Controller
             ->with('is_has',$this->isHasZhuanlan())
             ->with('site_title','写文章');
     }
+
+    /**
+     * c创建文章
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function store(Request $request){
+        $data = [];
+        $data['creator_id'] = Auth::user()->id;
+        $data['created_at'] = date('Y-m-d H:i:s',time());
+        $data['updated_at'] = date('Y-m-d H:i:s',time());
+        $data['zhuanlan_id'] = $this->getUserZhuanId(Auth::user()->id);
+        $data['title'] = $request->input('title');
+        $data['topic']=$request->input('topic');
+        $data['content']=$request->input('content');
+        $data['cover_url']=$request->input('cover_image');
+        $data['status'] = $request->input('status');
+        $_id = DB::table('dev_post')->insertGetId($data);
+        $res = [];
+        if($_id){
+            $res['id'] = $_id;
+            $res['status'] = 'success';
+        }
+        return response()->json($res);
+    }
+    public function update(Request $request){
+        $id = $request->input('id');
+        $data = [];
+        $data['updated_at'] = date('Y-m-d H:i:s',time());
+        $data['title'] = $request->input('title');
+        $data['topic']=$request->input('topic');
+        $data['content']=$request->input('content');
+        $data['cover_url']=$request->input('cover_image');
+        $data['status'] = $request->input('status');
+        $_res = DB::table('dev_post')->where('id',$id)->update($data);
+        $res = [];
+        if($_res){
+            $res['status'] = 'success';
+        }
+        return response()->json($res);
+    }
+
     /**
      * 判断当前用户是否注册过专栏
      * @return bool
@@ -49,6 +91,19 @@ class PostController extends Controller
             return true;
         }else{
             return false;
+        }
+    }
+    /**
+     * 返回用户的专栏id
+     * @param $id
+     * @return mixed
+     */
+    public function getUserZhuanId($id){
+        $data = DB::table('dev_zhuanlan')->where('creator_id',$id)->first();
+        if(isset($data) && $data){
+            return $data->id;
+        }else{
+            return -1;
         }
     }
 }

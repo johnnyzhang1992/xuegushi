@@ -3,6 +3,9 @@
 @section('content-css')
     <link href="{{ asset('lib/summernote/dist/summernote.css') }}" rel="stylesheet" type="text/css">
     <style>
+        .container-stream {
+            padding-bottom: 30px;
+        }
         section{
             overflow: hidden;
             clear: both;
@@ -86,7 +89,7 @@
             font-size: 36px;
         }
         .cover-uploadIcon::after{
-            content: "\6DFB\52A0\9898\56FE";
+            content: "\6dfb\52a0\5c01\9762\56fe";
             color: #b3b3b3;
             position: absolute;
             width: 100%;
@@ -149,6 +152,9 @@
         .dz-preview{
             display: none;
         }
+        .post-buttons{
+            text-align: center;
+        }
     </style>
 @endsection
 
@@ -158,7 +164,12 @@
             <input type="hidden" name="_token" value="{{ csrf_token() }}" />
             <div class="container-stream col-md-12 col-xs-12">
                 <div class="left col-md-9">
+                    <ol class="breadcrumb">
+                        <li>写文章</li>
+                        <li class="active">草稿自动保存</li>
+                    </ol>
                     <div class="WriteCover-wrapper clearfix">
+                        <input type="hidden" name="post[id]">
                         <div class="WriteCover-previewWrapper WriteCover-previewWrapper--empty">
                             <form action="{{ url('uploads_image/post_cover') }}" id="fm_dropzone_main" enctype="multipart/form-data" method="POST">
                                 {{ csrf_field() }}
@@ -167,7 +178,7 @@
                                 </div>
                             </form>
                             <div class="TitleImage" style="display: none">
-                                <img alt="" src="" class="TitleImage-imagePure TitleImage-imagePure--fixed" height="240px">
+                                <img alt="" src="" id="postCoverImage" class="TitleImage-imagePure TitleImage-imagePure--fixed" height="240px">
                             </div>
                             <div class="WriteCover-editWrapper clearfix" style="display: none">
                                 <div class="WriteCover-previewWrapper WriteCover-previewWrapper--empty">
@@ -183,16 +194,18 @@
                         </div>
                     </div>
                     <div class="titleInput input-group col-md-12">
-                        <input type="text" name="page[display_name]" class="form-control" value="{{ @old('page[title]') }}" placeholder="输入标题（限64字）">
+                        <input type="text" name="post[title]" class="form-control" value="{{ @old('page[title]') }}" placeholder="输入标题（限64字）">
                     </div>
                     <div class="topicInput input-group col-md-12">
-                        <input type="text" name="page[tags]" value="{{ @old('page[tage]') }}" class="form-control" placeholder="输入标签,英文逗号分开(可选)">
+                        <input type="text" name="post[tags]" value="{{ @old('page[tags]') }}" class="form-control" placeholder="输入标签,英文逗号分开(可选)">
                     </div>
                     <div class="RichText clearfix col-md-12 no-padding">
-                        <textarea name="page[html_content]" id="summernote" cols="30" rows="10">正文内容{!! @old('page[html_content]') !!}</textarea>
+                        <textarea name="post[html_content]" id="summernote" cols="30" rows="10">{!! @old('page[html_content]') !!}</textarea>
                     </div>
-                    <div class="row col-md-12">
-                        <button type="submit"  id="save-poem" class="btn btn-success">提交</button>
+                    <div class="post-buttons row col-md-12">
+                        <button type="submit"  id="preview-post" class="btn btn-success">预览</button>
+                        <button type="submit"  id="draft-post" class="btn btn-success">保存草稿</button>
+                        <button type="submit"  id="save-post" class="btn btn-success">立即发布</button>
                     </div>
                 </div>
                 <div class="right col-md-3">
@@ -222,9 +235,10 @@
                         var img_id = $(this);
                         var formData = new FormData();
                         formData.append("file", files[0]);
-                        formData.append("_type", 'create');
+                        formData.append("_token",$('input[name="_token"]').val() );
+                        formData.append("type_id",$('input[name="post[id]"]').val() );
                         $.ajax({
-                            url: "/admin/uploads_image/page",
+                            url: "/uploads_image/post",
                             data: formData,
                             type: 'POST',
                             cache: false,
@@ -303,6 +317,70 @@
             $('.TitleImage').hide();
             $('.WriteCover-editWrapper').hide();
             $('.TitleImage-imagePure').attr('src','');
+        });
+        function saveDraft() {
+            // 只要一项不为空即自动保存更新（除标签外
+            var id = $('input[name="post[id]"]').val();
+            var title = $('input[name="post[title]"]').val();
+            var tags = $('input[name="post[tags]"]').val();
+            var content = $('textarea[name="post[html_content]"]').val();
+            var cover_image = $('#postCoverImage').attr('src');
+            var data = {
+                'id': id,
+                'title':title,
+                'topic':tags,
+                'content':content,
+                'cover_image':cover_image,
+                'status': 'draft',
+                '_token':$('input[name="_token"]').val()
+            };
+            if(title !='' || content !='' || cover_image !=''){
+                console.log('------draft---');
+                // console.log(data);
+                postData(data);
+            }
+        }
+        var _interval = 10;//保存时间间隔(秒)
+        setInterval("saveDraft()",1000*_interval);
+        function postData(data) {
+            var _url = '/post/';
+            if(data.id && data.id>0){
+                _url = _url+'update';
+                // 结束后
+            }else{
+                _url = _url+'create';
+            }
+            $.ajax({
+                url:  _url,
+                data:data,
+                type: 'POST',
+                cache: false,
+                success: function (res) {
+                    if(!data.id && res.id){
+                        $('input[name="post[id]"]').val(res.id);
+                        var url = 'https://'+ window.location.host+'/post/'+res.id+'/edit';
+                        window.history.pushState({},0,url);
+                    }
+                    console.log(res);
+                },
+                error: function (res) {
+                    console.log(res);
+                }
+            });
+
+        }
+        $('#preview-post').on('click',function () {
+            var _id = $('input[name="_token"]').val();
+            if(_id && _id>0){
+                window.location.href = 'https://'+window.location.host+'/post/'+ _id+'/preview'
+            }
+            console.log('预览');
+        });
+        $('#save-post').on('click',function () {
+            // 修改状态为active 并且跳转到详情页
+        });
+        $('#draft-post').on('click',function () {
+            // 保存为草稿
         })
     </script>
 @endsection

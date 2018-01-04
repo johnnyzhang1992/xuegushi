@@ -163,7 +163,7 @@
                     <div class="item zhuanlan-logo-item">
                         <label>专栏头像</label>
                         <div class="item-value">
-                            <form action="{{ url('uploads_image/zhuanlan_avatar') }}" id="fm_dropzone_main" enctype="multipart/form-data" method="POST">
+                            <form action="{{ url('uploads_image/avatar') }}" id="fm_dropzone_main" enctype="multipart/form-data" method="POST">
                                 {{ csrf_field() }}
                                 <div class="dz-message">
                                     <div class="zhuanlan-logo-dropzone dz-clickable"><div class="zhuanlan-logo">

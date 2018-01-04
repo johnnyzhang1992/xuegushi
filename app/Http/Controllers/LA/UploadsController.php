@@ -508,12 +508,14 @@ class UploadsController extends Controller
             $file = Input::file('file');
 
             // print_r($file);
-            $folder = public_path('static/zhuanlan/avatar');
+            $folder = public_path('static/zhuanlan/').$type.'/';
             $filename = $file->getClientOriginalName();
 
             $date_append = date("Y-m-d-His-");
             $upload_success = Input::file('file')->move($folder, $date_append.$filename);
             $data = array();
+            $type_id = Input::get('type_id');
+            $type_id = isset($type_id)&& $type_id ? $type_id : -1;
             if($upload_success){
                 // 上传成功，信息入库
                 $_ret = [
@@ -521,13 +523,14 @@ class UploadsController extends Controller
                     "extension" => pathinfo($filename, PATHINFO_EXTENSION),
                     "uid" => Auth::user()->id,
                     'type'=>$type,
-                    'source_url'=> 'static/zhuanlan/avatar/'.$date_append.$filename,
+                    'type_id' => $type_id,
+                    'source_url'=> 'static/zhuanlan/'.$type.'/'.$date_append.$filename,
                     'created_at' => date('Y-m-d H:i:s',time()),
                     'updated_at' => date('Y-m-d H:i:s',time()),
                 ];
                 DB::table('dev_photo')->insert($_ret);
-                $data['url'] = '/static/zhuanlan/avatar/'.$date_append.$filename;
-                chmod('static/zhuanlan/avatar/'.$date_append.$filename, 0777);
+                $data['url'] = '/static/zhuanlan/'.$type.'/'.$date_append.$filename;
+                chmod('static/zhuanlan/'.$type.'/'.$date_append.$filename, 0777);
 //                ImageUtil::makeAvatar($folder.$date_append.$filename,$folder.$date_append.'lg-'.$filename ,750,250);
                 return response()->json($data,200);
             }
