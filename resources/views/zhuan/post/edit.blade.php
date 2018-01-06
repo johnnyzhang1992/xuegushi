@@ -205,8 +205,8 @@
                     </div>
                     <div class="post-buttons row col-md-12">
                         <a href="{{url('/post/'.@$post->id.'/preview')}}"  target="_blank"  id="preview-post" class="btn btn-success">预览</a>
-                        <button type="submit"  id="draft-post" class="btn btn-success">保存草稿</button>
-                        <button type="submit"  id="save-post" class="btn btn-success">立即发布</button>
+                        <button type="button"  id="draft-post" class="btn btn-success">保存草稿</button>
+                        <button type="button"  id="save-post" class="btn btn-success">立即发布</button>
                     </div>
                 </div>
                 <div class="right col-md-3">
@@ -345,13 +345,8 @@
         var _interval = 10;//保存时间间隔(秒)
         setInterval("saveDraft()",1000*_interval);
         function postData(data) {
-            var _url = '/post/';
-            if(data.id && data.id>0){
-                _url = _url+'update';
-                // 结束后
-            }
             $.ajax({
-                url:  _url,
+                url: '/post/update',
                 data:data,
                 type: 'POST',
                 cache: false,
