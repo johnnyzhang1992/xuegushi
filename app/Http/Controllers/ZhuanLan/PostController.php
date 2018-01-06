@@ -100,6 +100,24 @@ class PostController extends Controller
         }
     }
     /**
+     * 编辑
+     * @param $id
+     * @return mixed
+     */
+    public function edit($id=null){
+        $data = DB::table('dev_post')
+            ->where('dev_post.id',$id)
+            ->first();
+        if(isset($data) && $data){
+            return view('zhuan.post.edit')
+                ->with('post',$data)
+                ->with('is_has',$this->isHasZhuanlan())
+                ->with('site_title','编辑-'.$data->title);
+        }else{
+            return view('errors.404')->with('record_id',$id)->with('record_name','文章');
+        }
+    }
+    /**
      * 判断当前用户是否注册过专栏
      * @return bool
      */
