@@ -82,6 +82,29 @@ class PostController extends Controller
         }
         return response()->json($res);
     }
+
+    /**
+     * 删除
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function delete(Request $request){
+        $id = $request->input('id');
+        $_res = DB::table('dev_post')->where('id',$id)->update([
+            'status' => 'delete',
+            'updated_at' => date('Y-m-d H:i:s',time())
+        ]);
+        $res = [];
+        if($_res){
+            $res['status'] = 'success';
+        }
+        return response()->json($res);
+    }
+    /**
+     * 详情页
+     * @param $id
+     * @return $this
+     */
     public function show($id){
         $data = DB::table('dev_post')
             ->where('dev_post.id',$id)

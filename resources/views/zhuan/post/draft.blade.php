@@ -67,7 +67,7 @@ use App\Helpers\DateUtil;
                                         <div class="Drafts-meta">
                                             <time class="Drafts-updated" title="">{{@ DateUtil::formatDate(strtotime($post->created_at))}}</time>
                                             <span class="Bull"></span>
-                                            <span class="Drafts-removeButton">删除</span>
+                                            <span class="Drafts-removeButton" data-id="{{@$post->id}}">删除</span>
                                         </div>
                                     </li>
                                 @endforeach
@@ -81,5 +81,36 @@ use App\Helpers\DateUtil;
 @endsection
 
 @section('content-js')
-
+    <script>
+        $('.Drafts-removeButton').on('click',function () {
+            var id = $(this).attr('data-id');
+            $.ajax({
+                url: '/post/delete',
+                data:{
+                    'id':id,
+                    '_token':$('input[name="_token"]').val()
+                },
+                type: 'POST',
+                cache: false,
+                success: function (res) {
+                    console.log(res);
+                    if(res.status == 'success'){
+                        $('body').toast({
+                            position:'fixed',
+                            content:'删除成功！',
+                            duration:1000,
+                            isCenter:true,
+                            background:'rgba(0,0,0,0.5)',
+                            animateIn:'bounceIn-hastrans',
+                            animateOut:'bounceOut-hastrans'
+                        });
+                        window.location.reload();
+                    }
+                },
+                error: function (res) {
+                    console.log(res);
+                }
+            });
+        });
+    </script>
 @endsection

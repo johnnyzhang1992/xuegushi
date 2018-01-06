@@ -33,6 +33,7 @@ class ZhuanLanController extends Controller
             $zhuanlans[$key]->post_count = DB::table('dev_post')->where('zhuanlan_id',$zhuan->id)->count();
         }
         $posts = DB::table('dev_post')
+            ->where('dev_post.status','active')
             ->leftJoin('users','users.id','=','dev_post.creator_id')
             ->select('dev_post.*','users.name as author_name')
             ->orderBy('dev_post.pv_count','asc')->paginate(6);
