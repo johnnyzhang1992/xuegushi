@@ -51,7 +51,7 @@ Route::group([
         'prefix' => 'people',
 //        'middleware' => ['auth']
     ],function (){
-        Route::get('/{id}','People\ShowController@index');
+        Route::get('/{id}','People\ShowController@index')->where('value', '[0-9]+');
     });
     /* =============== 收藏=========================== */
     Route::group([

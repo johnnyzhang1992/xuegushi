@@ -84,8 +84,13 @@ class AuthorController extends Controller
         $author = null;
         $hot_poems = null;
         $poems_count = 0;
-        $author = DB::table('dev_author')->where('id',$id)->first();
-        DB::table('dev_author')->where('id',$id)->increment("pv_count");
+        $author = DB::table('dev_author')->where('author_name',$id)->first();
+        if($author){
+            DB::table('dev_author')->where('author_name',$id)->increment("pv_count");
+        }else{
+            $author = DB::table('dev_author')->where('id',$id)->first();
+            DB::table('dev_author')->where('id',$id)->increment("pv_count");
+        }
         if($author){
             if(!Auth::guest()){
                 $res = DB::table('dev_like')
@@ -121,7 +126,7 @@ class AuthorController extends Controller
             }
             return view('frontend.author.show')
 //                ->with('query','authors')
-                ->with('site_title',$author->author_name.'-介绍、生平、轶事以及代表作品')
+                ->with('site_title',$author->author_name.'-介绍|生平|轶事以及代表作品')
                 ->with('site_description',$site_des)
                 ->with('hot_poems',$hot_poems)
                 ->with($this->getClAndLkCount())

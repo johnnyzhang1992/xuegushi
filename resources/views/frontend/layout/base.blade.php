@@ -14,7 +14,7 @@
     <meta property="og:url" content="https://xuegushi.cn" />
     <meta property="og:sitename" content="学古诗" />
     <meta property="og:image" content="{{ asset('/static/images/avatar.png')}}">
-    <meta itemprop="name" content="{{ isset($site_title)?$site_title:config('seo.default_site_name') }}}}"/>
+    <meta itemprop="name" content="{{ isset($site_title)?$site_title:config('seo.default_site_name') }}"/>
     <meta itemprop="image" content="{{ asset('/static/images/avatar.png')}}" />
     <meta name="sogou_site_verification" content="qZUdNCxRqM"/>
     <meta name="360-site-verification" content="692a791faf2667be55acfff23615caaf" />
