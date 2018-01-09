@@ -371,7 +371,7 @@ use App\Helpers\DateUtil;
                                 <button class="Button ColumnFollowButton btn btn-success" type="button">审核中</button>
                             @endif
                             <div class="Menu ColumnAbout-menu">
-                                <button class="MenuButton  ColumnAbout-menuButton"><i class="fa fa-angle-up"></i></button>
+                                <button class="MenuButton  ColumnAbout-menuButton down"><i class="fa fa-angle-down "></i></button>
                                 <div class="Menu-dropdown" style="display: none">
                                     <ul class="Menu-list">
                                         <li class="Menu-item">
@@ -448,12 +448,12 @@ use App\Helpers\DateUtil;
 @section('content-js')
     <script>
         $('.MenuButton').on('click',function () {
-            if($(this).hasClass('up')){
-                $(this).removeClass('up').addClass('down');
-                $(this).find('.fa').removeClass('fa-angle-up').addClass('fa-angle-down');
-            }else{
+            if($(this).hasClass('down')){
                 $(this).removeClass('down').addClass('up');
                 $(this).find('.fa').removeClass('fa-angle-down').addClass('fa-angle-up');
+            }else{
+                $(this).removeClass('up').addClass('down');
+                $(this).find('.fa').removeClass('fa-angle-up').addClass('fa-angle-down');
             }
             $('.Menu-dropdown').toggle();
         })
