@@ -6,14 +6,14 @@
             </button>
             <a class="navbar-brand" href="{{url('/')}}"><b>古诗专栏 <small>beta</small></b></a>
         </div>
-        <ul class="nav navbar-nav nav-left">
-            <li @if(isset($query) && $query =='home') class="active" @endif>
-                <a href="{{url('/')}}" class="nav-item">首页</a>
-            </li>
-            <li @if(isset($query) && $query =='explore') class="active" @endif>
-                <a href="{{url('/explore')}}" class="nav-item">发现</a>
-            </li>
-        </ul>
+        {{--<ul class="nav navbar-nav nav-left">--}}
+            {{--<li @if(isset($query) && $query =='home') class="active" @endif>--}}
+                {{--<a href="{{url('/')}}" class="nav-item">首页</a>--}}
+            {{--</li>--}}
+            {{--<li @if(isset($query) && $query =='explore') class="active" @endif>--}}
+                {{--<a href="{{url('/explore')}}" class="nav-item">发现</a>--}}
+            {{--</li>--}}
+        {{--</ul>--}}
         <div class="nav-right pull-right">
             @if(isset($is_has) && $is_has)
             @else

@@ -277,13 +277,13 @@ use App\Helpers\DateUtil;
                     <div class="postMetaInline">
                         <div class="xzl-flex-center">
                             <div class="post-meta-inline-avatar u-flex0">
-                                <a class="link avatar xzl-link-color" href="/u/cryAllen">
+                                <a class="link avatar xzl-link-color" href="{{url('/people/'.@$post->creator_id)}}">
                                     <img class="avatar-image" src="{{ asset(@$post->avatar) }}" alt="0bb4d03eb491f8b3be5091267493affc">
                                 </a>
                             </div>
                             <div class="xzl-author-lockup xzl-author-lockup-user u-flex1 u-noWrapWithEllipsis">
                                 <div class="xzl-author-lockup-header">
-                                    <a class="link link link--darken user-name link--accent u-accentColor--textNormal xzl-text-darken xzl-link-color" href="/u/cryAllen">{{@$post->user_name}}</a>
+                                    <a class="link link link--darken user-name link--accent u-accentColor--textNormal xzl-text-darken xzl-link-color" href="{{url('/people/'.@$post->creator_id)}}">{{@$post->user_name}}</a>
                                 </div>
                                 <div class="xzl-author-lockup xzl-author-lockup-time">
                                     <span class="time"><abbr class="timeago" title="2018-01-04T21:53:35+08:00">{{@ DateUtil::formatDate(strtotime($post->created_at))}}</abbr></span>
@@ -309,7 +309,7 @@ use App\Helpers\DateUtil;
                                         <div class="ContributesItem-nameLine">
                                             <a class="ContributesItem-name" href="{{ url(@$post->zhuan_name)}}">{{@$post->zhuan_alia_name}}</a>
                                         </div>
-                                        <p class="ContributesItem-intro u-ellipsis">{{@$post->specialty}}</p>
+                                        <p class="ContributesItem-intro u-ellipsis">{{@$post->about}}</p>
                                     </div>
                                     <a class="ContributesItem-entrance" href="{{ url(@$post->zhuan_name)}}">进入专栏</a>
                                 </div>

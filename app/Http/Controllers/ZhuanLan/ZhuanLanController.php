@@ -64,8 +64,30 @@ class ZhuanLanController extends Controller
     public function show($domain){
         $data = DB::table('dev_zhuanlan')->where('name','=',$domain)->first();
         if(isset($data) && $data){
+            $posts = DB::table('dev_post')
+                ->where('dev_post.status','active')
+                ->where('dev_post.zhuanlan_id',$data->id)
+                ->leftJoin('users','users.id','=','dev_post.creator_id')
+                ->select('dev_post.*','users.name as author_name')
+                ->orderBy('dev_post.pv_count','asc')->paginate(6);
+            if($posts && count($posts)>0){
+                foreach ($posts as $key=>$post){
+                    $_desc =strip_tags($post->content);
+                    $_desc= str_replace("&nbsp;"," ",$_desc);
+                    $__desc = str_replace(array("&nbsp;","&amp;nbsp;","\t","\r\n","\r","\n"),array("","","","",""),$_desc);
+                    $_content = mb_substr($__desc,0,80);
+                    if(mb_strlen($__desc)>80){
+                        $_content = $_content.'...';
+                    }
+                    $posts[$key]->content = $_content;
+
+
+                }
+            }
             return view('zhuan.zhuanlan.show')
                 ->with('data',$data)
+                ->with('posts',$posts)
+                ->with('site_title',$data->alia_name)
                 ->with('is_has',$this->isHasZhuanlan());
         }else{
             return view('errors.404');

@@ -111,7 +111,7 @@ class PostController extends Controller
             ->leftJoin('users','users.id','=','dev_post.creator_id')
             ->leftJoin('dev_zhuanlan','dev_zhuanlan.id','=','dev_post.zhuanlan_id')
             ->select('dev_post.*','users.name as user_name','users.avatar','dev_zhuanlan.alia_name as zhuan_alia_name',
-                'dev_zhuanlan.specialty','dev_zhuanlan.avatar as zhuan_avatar','dev_zhuanlan.name as zhuan_name')
+                'dev_zhuanlan.about','dev_zhuanlan.avatar as zhuan_avatar','dev_zhuanlan.name as zhuan_name')
             ->first();
         if(isset($data) && $data){
             return view('zhuan.post.show')
