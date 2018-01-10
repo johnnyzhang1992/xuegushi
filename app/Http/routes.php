@@ -121,6 +121,7 @@ Route::group(['domain' => 'zhuanlan.xuegushi.cn'], function() {
         'prefix' =>'me'
     ],function (){
         Route::get('/drafts','ZhuanLan\MeController@drafts');
+        Route::get('/posts','ZhuanLan\MeController@posts');
         Route::get('/publications', 'ZhuanLan\MeController@publications');
         Route::get('/subscribes', 'ZhuanLan\MeController@subscribes');
     });
@@ -142,6 +143,7 @@ Route::group(['domain' => 'zhuanlan.xuegushi.cn'], function() {
     Route::get('/logout','Auth\AuthController@logout');
 
     Route::get('/{domain}','ZhuanLan\ZhuanLanController@show');
+    Route::get('/{domain}/about','ZhuanLan\ZhuanLanController@about');
 });
 //Route::get('/authors/update', 'Frontend\AuthorController@updateAuthorsLikeCount');
 

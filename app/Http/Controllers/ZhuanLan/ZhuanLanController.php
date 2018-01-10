@@ -94,7 +94,23 @@ class ZhuanLanController extends Controller
         }
     }
 
+    /**
+     * 专栏关于页面
+     * @param $domain
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function about($domain){
+        $data = DB::table('dev_zhuanlan')->where('name','=',$domain)->first();
+        if(isset($data) && $data){
 
+            return view('zhuan.zhuanlan.about')
+                ->with('data',$data)
+                ->with('site_title',$data->alia_name)
+                ->with('is_has',$this->isHasZhuanlan());
+        }else{
+            return view('errors.404');
+        }
+    }
     /**
      * 保存
      * @param Request $request
