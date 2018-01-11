@@ -55,6 +55,12 @@ class PostController extends Controller
         $_id = DB::table('dev_post')->insertGetId($data);
         $res = [];
         if($_id){
+            $_data = [];
+            $_data['zhuanlan_id'] = $this->getUserZhuanId(Auth::user()->id);
+            $_data['post_id'] = $_id;
+            $_data['creator_id'] = Auth::user()->id;
+            $_data['created_at'] = date('Y-m-d H:i:s',time());
+            DB::table('dev_post_relation')->insertGetId($_data);
             $res['id'] = $_id;
             $res['status'] = 'success';
         }

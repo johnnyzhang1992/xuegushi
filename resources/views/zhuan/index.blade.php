@@ -435,7 +435,15 @@
         }
     </style>
 @endsection
-
+@section('content-js')
+    <script src="{{ asset('lib/jquery-sticky/jquery.sticky.js') }}"></script>
+    <script>
+        $("#navigation").sticky({
+            topSpacing:0,
+            zIndex:999
+        });
+        </script>
+@endsection
 @section('goTop')
     @include('frontend.partials.goTop')
 @endsection

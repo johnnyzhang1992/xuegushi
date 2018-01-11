@@ -446,7 +446,12 @@ use App\Helpers\DateUtil;
 @endsection
 
 @section('content-js')
+    <script src="{{ asset('lib/jquery-sticky/jquery.sticky.js') }}"></script>
     <script>
+        $("#navigation").sticky({
+            topSpacing:0,
+            zIndex:999
+        });
         $('.MenuButton').on('click',function () {
             if($(this).hasClass('down')){
                 $(this).removeClass('down').addClass('up');

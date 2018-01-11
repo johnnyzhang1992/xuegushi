@@ -102,9 +102,27 @@ class ZhuanLanController extends Controller
     public function about($domain){
         $data = DB::table('dev_zhuanlan')->where('name','=',$domain)->first();
         if(isset($data) && $data){
-
+            $editor = DB::table('users')->where('id',$data->creator_id)->first();
+            $editor->post_count = DB::table('dev_post')
+                ->where('creator_id',$data->creator_id)
+                ->where('zhuanlan_id',$data->id)
+                ->count();
+            $authors = DB::table('dev_post_relation')
+                ->where('dev_post_relation.zhuanlan_id',$data->id)
+                ->leftJoin('users','users.id','=','dev_post_relation.creator_id')
+                ->select('dev_post_relation.creator_id','users.*')
+                ->distinct('users.id')
+                ->get();
+            foreach ($authors as $key=>$author){
+                $authors[$key]->post_count = DB::table('dev_post')
+                    ->where('creator_id',$author->id)
+                    ->where('zhuanlan_id',$data->id)
+                    ->count();
+            }
             return view('zhuan.zhuanlan.about')
-                ->with('data',$data)
+                ->with('zhuan',$data)
+                ->with('editor',$editor)
+                ->with('authors',$authors)
                 ->with('site_title',$data->alia_name)
                 ->with('is_has',$this->isHasZhuanlan());
         }else{

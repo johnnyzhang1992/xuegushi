@@ -52,7 +52,7 @@
                 <li role="separator" class="divider"></li>
                 @if(Auth::user()->id == 1)
                     <li>
-                        <a href="{{ url('admin/') }}" class="btn btn-default btn-flat"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-compass" color="#999" data-reactid="366"><circle cx="12" cy="12" r="10"></circle><polygon points="16.22 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon></svg> <span>后台管理</span></a>
+                        <a href="https://xuegushi.cn/admin" class="btn btn-default btn-flat"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-compass" color="#999" data-reactid="366"><circle cx="12" cy="12" r="10"></circle><polygon points="16.22 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon></svg> <span>后台管理</span></a>
                     </li>
                 @endif
                 <li>

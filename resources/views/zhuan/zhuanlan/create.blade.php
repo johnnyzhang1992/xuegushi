@@ -324,7 +324,7 @@
                 url: "/zhuanlan/create",
                 success: function ( json ) {
                     // console.log(json);
-                    if(js.message == 'success'){
+                    if(json.message == 'success'){
                         $('body').toast({
                             position:'fixed',
                             content:'提交成功，请耐心等待审核',

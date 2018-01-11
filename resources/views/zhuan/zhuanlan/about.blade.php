@@ -246,9 +246,9 @@ use App\Helpers\DateUtil;
 
 @section('top-menu')
     <div class="Navbar-titleContent Navbar">
-        <a class="Navbar-titleAvatar" href="/he110world">
-            <img src="https://pic1.zhimg.com/dd21c8d0c_l.jpg" class="Navbar-avatar" alt="" width="38"></a>
-        <a class="Navbar-titleName" href="/he110world">我们的征途是星辰大海</a>
+        <a class="Navbar-titleAvatar" href="{{url(@$zhuan->name)}}">
+            <img src="{{ asset(@$zhuan->avatar)}}" class="Navbar-avatar" alt="" width="38"></a>
+        <a class="Navbar-titleName" href="{{url(@$zhuan->name)}}">{{@$zhuan->alia_name}}</a>
         <button class="btn btn-success button-follow" type="button">关注专栏</button>
     </div>
 @endsection
@@ -262,23 +262,26 @@ use App\Helpers\DateUtil;
                     <div class="AboutIndex-introWrapper">
                         <h2>关于</h2>
                         <div class="AboutIndex-introContent">
-                            <div class="AboutIndex-introAvatar"><img src="https://pic1.zhimg.com/dd21c8d0c_l.jpg" class="avatar" alt="" width="100"></div>
+                            <div class="AboutIndex-introAvatar"><img src="{{ asset(@$zhuan->avatar)}}" class="avatar" alt="" width="100"></div>
                             <div class="AboutIndex-introInfo">
-                                <h4>我们的征途是星辰大海</h4>
-                                <p>也许是最多合作作者的一个专栏，主打旅游地理和周边…</p>
+                                <h4>{{@$zhuan->alia_name}}</h4>
+                                <p>{{@$zhuan->about}}</p>
                             </div>
                         </div>
                     </div>
                     <div class="AboutIndex-topicWrapper">
                         <h3 class="block-title"><span>专栏话题</span></h3>
                         <div class="AboutIndex-topicList">
-                            <span>旅行</span><span>攻略</span><span>旅游</span>
+                            @if(isset($zhuan->topic) && $zhuan->topic)
+                                @foreach(explode(",",$zhuan->topic) as $tag)
+                                    <span>{{$tag}}</span>
+                                @endforeach
+                            @endif
                         </div>
                     </div>
                     <div class="AboutIndex-descriptionWrapper">
                         <h3 class="block-title"><span>专栏介绍</span></h3>
-                        <p>也许是最多合作作者的一个专栏，主打旅游地理和周边相关。
-                            欢迎投稿，欲加入作者群请联系@windfuture 或@幹戈寥落~</p>
+                        <p>{{@$zhuan->about}}</p>
                     </div>
                     <div class="AboutIndex-AuthorsWrapper">
                         <h3 class="block-title">
@@ -293,14 +296,14 @@ use App\Helpers\DateUtil;
                         <ul class="Users-List">
                             <li>
                                 <div class="Users-Avatar">
-                                    <a href="https://www.zhihu.com/people/windfuture" target="_blank"><img src="https://pic4.zhimg.com/96d8058d83ddcf656faf64ae4be19d2e_l.jpg" class="avatar" alt="" width="50"></a>
+                                    <a href="{{url('/people/'.@$editor->id)}}" target="_blank"><img src="{{asset(@$editor->avatar)}}" class="avatar" alt="" width="50"></a>
                                 </div>
                                 <div class="Users-Intro">
-                                    <a href="https://www.zhihu.com/people/windfuture" target="_blank">windfuture</a>
-                                    <span class="Users-bio">，说不得</span>
+                                    <a href="{{url('/people/'.@$editor->id)}}" target="_blank">{{@$editor->name}}</a>
+                                    <span class="Users-bio">，{{@$editor->about}}</span>
                                 </div>
                                 <div class="Users-postsCount">
-                                    <a href="/he110world?author=windfuture">3 篇文章</a>
+                                    <a href="{{ url(@$zhuan->name.'?author='.$editor->name)}}">{{@$editor->post_count}} 篇文章</a>
                                 </div>
                             </li>
                         </ul>
@@ -316,20 +319,22 @@ use App\Helpers\DateUtil;
                             </span>
                         </h3>
                         <ul class="Users-List">
-                            <li>
-                                <div class="Users-Avatar">
-                                    <a href="https://www.zhihu.com/people/commando" target="_blank">
-                                        <img src="https://pic4.zhimg.com/2cacc4d6d_l.jpg" class="avatar" alt="" width="50">
-                                    </a>
-                                </div>
-                                <div class="Users-Intro">
-                                    <a href="https://www.zhihu.com/people/commando" target="_blank">cOMMANDO</a>
-                                    <span class="Users-bio">，最差劲的夏天</span>
-                                </div>
-                                <div class="Users-postsCount">
-                                    <span>0 篇文章</span>
-                                </div>
-                            </li>
+                            @if(isset($authors) && $authors)
+                                @foreach($authors as $author)
+                                    <li>
+                                        <div class="Users-Avatar">
+                                            <a href="{{url('/people/'.@$author->id)}}" target="_blank"><img src="{{asset(@$author->avatar)}}" class="avatar" alt="" width="50"></a>
+                                        </div>
+                                        <div class="Users-Intro">
+                                            <a href="{{url('/people/'.@$author->id)}}" target="_blank">{{@$author->name}}</a>
+                                            <span class="Users-bio">，{{@$author->about}}</span>
+                                        </div>
+                                        <div class="Users-postsCount">
+                                            <a href="{{ url(@$zhuan->name.'?author='.$author->name)}}">{{@$author->post_count}} 篇文章</a>
+                                        </div>
+                                    </li>
+                                @endforeach
+                            @endif
                         </ul>
                     </div>
                 </div>
@@ -339,5 +344,16 @@ use App\Helpers\DateUtil;
 @endsection
 
 @section('content-js')
-
+    <script src="{{ asset('lib/jquery-sticky/jquery.sticky.js') }}"></script>
+    <script>
+        $("#navigation").sticky({
+            topSpacing:0,
+            zIndex:999
+        });
+        $('.HelpMenu-help svg').hover(function () {
+            $(this).next().show();
+        },function () {
+            $(this).next().hide();
+        })
+    </script>
 @endsection
