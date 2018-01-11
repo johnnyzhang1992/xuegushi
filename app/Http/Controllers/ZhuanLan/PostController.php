@@ -31,8 +31,12 @@ class PostController extends Controller
         if (Auth::guest()){
             return redirect('/login');
         }
+        $zhuanlans = DB::table('dev_zhuanlan')
+            ->where('creator_id',Auth::user()->id)
+            ->get();
         return view('zhuan.post.create')
             ->with('is_has',$this->isHasZhuanlan())
+            ->with('zhuans',$zhuanlans)
             ->with('site_title','写文章');
     }
 
@@ -42,11 +46,13 @@ class PostController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
     public function store(Request $request){
+        $zl_id = $request->input('zhuanlan');
+        $zhuanlan_id = $zl_id == -1 ? $this->getUserZhuanId(Auth::user()->id) : $zl_id;
         $data = [];
         $data['creator_id'] = Auth::user()->id;
         $data['created_at'] = date('Y-m-d H:i:s',time());
         $data['updated_at'] = date('Y-m-d H:i:s',time());
-        $data['zhuanlan_id'] = $this->getUserZhuanId(Auth::user()->id);
+        $data['zhuanlan_id'] = $zhuanlan_id;
         $data['title'] = $request->input('title');
         $data['topic']=$request->input('topic');
         $data['content']=$request->input('content');
@@ -56,7 +62,7 @@ class PostController extends Controller
         $res = [];
         if($_id){
             $_data = [];
-            $_data['zhuanlan_id'] = $this->getUserZhuanId(Auth::user()->id);
+            $_data['zhuanlan_id'] = $zhuanlan_id;
             $_data['post_id'] = $_id;
             $_data['creator_id'] = Auth::user()->id;
             $_data['created_at'] = date('Y-m-d H:i:s',time());
@@ -73,6 +79,8 @@ class PostController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
     public function update(Request $request){
+        $zl_id = $request->input('zhuanlan');
+        $zhuanlan_id = $zl_id == -1 ? $this->getUserZhuanId(Auth::user()->id) : $zl_id;
         $id = $request->input('id');
         $data = [];
         $data['updated_at'] = date('Y-m-d H:i:s',time());
@@ -81,6 +89,7 @@ class PostController extends Controller
         $data['content']=$request->input('content');
         $data['cover_url']=$request->input('cover_image');
         $data['status'] = $request->input('status');
+        $data['zhuanlan_id'] = $zhuanlan_id;
         $_res = DB::table('dev_post')->where('id',$id)->update($data);
         $res = [];
         if($_res){
@@ -138,8 +147,12 @@ class PostController extends Controller
             ->where('dev_post.id',$id)
             ->first();
         if(isset($data) && $data){
+            $zhuanlans = DB::table('dev_zhuanlan')
+                ->where('creator_id',Auth::user()->id)
+                ->get();
             return view('zhuan.post.edit')
                 ->with('post',$data)
+                ->with('zhuans',$zhuanlans)
                 ->with('is_has',$this->isHasZhuanlan())
                 ->with('site_title','编辑-'.$data->title);
         }else{

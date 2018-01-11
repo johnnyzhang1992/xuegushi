@@ -2,6 +2,7 @@
 
 @section('content-css')
     <link href="{{ asset('lib/summernote/dist/summernote.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('lib/chosen/chosen.min.css') }}" rel="stylesheet" type="text/css">
     <style>
         .container-stream {
             padding-bottom: 30px;
@@ -200,6 +201,18 @@
                     <div class="topicInput input-group col-md-12">
                         <input type="text" name="post[tags]" value="{{ @$post->topic }}" class="form-control" placeholder="输入标签,英文逗号分开(可选)">
                     </div>
+                    @if(isset($zhuans) && $zhuans)
+                        <div class="col-md-12 no-padding">
+                            <div class="col-md-2 no-padding"><label for="zhuanlan">选择所属专栏(可多选)</label></div>
+                            <div class="col-md-10 no-padding">
+                                <select id="zhuanlan" class="form-control chosen"  data-placeholder="选择文章归属专栏">
+                                    @foreach($zhuans as $zhuan)
+                                        <option value="{{@$zhuan->id}}">{{@$zhuan->alia_name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                    @endif
                     <div class="RichText clearfix col-md-12 no-padding">
                         <textarea name="post[html_content]" id="summernote" cols="30" rows="10">{!! @$post->content !!}</textarea>
                     </div>
@@ -222,6 +235,7 @@
     <script src="{{ asset('lib/summernote/dist/summernote.min.js') }}"></script>
     <script src="{{ asset('lib/summernote/lang/summernote-zh-CN.js') }}"></script>
     <script src="{{ asset('lib/jquery-sticky/jquery.sticky.js') }}"></script>
+    <script src="{{ asset('lib/chosen/chosen.jquery.min.js') }}"></script>
     <script type="text/javascript">
         $(document).ready(function() {
             $('#summernote').summernote({
@@ -271,6 +285,7 @@
             topSpacing:65,
             zIndex:999
         });
+        $('.chosen').chosen({});
         // upload
         var bsurl = '{{ url('') }}';
         var fm_dropzone_main = null;
@@ -327,6 +342,10 @@
             var tags = $('input[name="post[tags]"]').val();
             var content = $('textarea[name="post[html_content]"]').val();
             var cover_image = $('#postCoverImage').attr('src');
+            var zhuanlans = -1;
+            if ( $('#zhuanlan').length > 0 ) {
+                zhuanlans = $('#zhuanlan').val()
+            }
             var data = {
                 'id': id,
                 'title':title,
@@ -334,6 +353,7 @@
                 'content':content,
                 'status':status,
                 'cover_image':cover_image,
+                'zhuanlan':zhuanlans,
                 '_token':$('input[name="_token"]').val()
             };
             if(title !='' || content !='' || cover_image !=''){
@@ -377,6 +397,10 @@
             var tags = $('input[name="post[tags]"]').val();
             var content = $('textarea[name="post[html_content]"]').val();
             var cover_image = $('#postCoverImage').attr('src');
+            var zhuanlans = -1;
+            if ( $('#zhuanlan').length > 0 ) {
+                zhuanlans = $('#zhuanlan').val()
+            }
             var data = {
                 'id': id,
                 'title':title,
@@ -384,6 +408,7 @@
                 'content':content,
                 'status':'active',
                 'cover_image':cover_image,
+                'zhuanlan':zhuanlans,
                 '_token':$('input[name="_token"]').val()
             };
             if(title !='' || content !='' || cover_image !=''){
@@ -424,6 +449,10 @@
             var tags = $('input[name="post[tags]"]').val();
             var content = $('textarea[name="post[html_content]"]').val();
             var cover_image = $('#postCoverImage').attr('src');
+            var zhuanlans = -1;
+            if ( $('#zhuanlan').length > 0 ) {
+                zhuanlans = $('#zhuanlan').val()
+            }
             var data = {
                 'id': id,
                 'title':title,
@@ -431,6 +460,7 @@
                 'content':content,
                 'status':'draft',
                 'cover_image':cover_image,
+                'zhuanlan':zhuanlans,
                 '_token':$('input[name="_token"]').val()
             };
             if(title !='' || content !='' || cover_image !=''){

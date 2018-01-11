@@ -40,8 +40,8 @@
                         @foreach($zhuans as $zhuan)
                             <li class="col-md-3 col-xs-12">
                                 <p class="HomeColumn-avatar"><a target="_blank" href="{{ url('/'.@$zhuan->name) }}"><img class="Avatar-hemingway" alt="专栏头像" src="{{ asset(@$zhuan->avatar) }}" ></a></p>
-                                <p class="HomeColumn-title"><a target="_blank" href="/jimmychow">{{ @$zhuan->alia_name }}</a></p>
-                                <p class="HomeColumn-description"><a target="_blank" href="/jimmychow">{{ @$zhuan->about }}</a></p>
+                                <p class="HomeColumn-title"><a target="_blank" href="{{ url('/'.@$zhuan->name) }}">{{ @$zhuan->alia_name }}</a></p>
+                                <p class="HomeColumn-description"><a target="_blank" href="{{ url('/'.@$zhuan->name) }}">{{ @$zhuan->about }}</a></p>
                                 <p class="HomeColumn-meta">545人关注<span> | </span>{{@$zhuan->post_count}}篇文章</p>
                                 <a class="Button HomeColumn-btn Button--green" target="_blank" href="{{ url('/'.@$zhuan->name) }}" type="button">进入专栏</a>
                             </li>

@@ -2,6 +2,7 @@
 
 @section('content-css')
     <link href="{{ asset('lib/summernote/dist/summernote.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('lib/chosen/chosen.min.css') }}" rel="stylesheet" type="text/css">
     <style>
         .container-stream {
             padding-bottom: 30px;
@@ -199,6 +200,18 @@
                     <div class="topicInput input-group col-md-12">
                         <input type="text" name="post[tags]" value="{{ @old('page[tags]') }}" class="form-control" placeholder="输入标签,英文逗号分开(可选)">
                     </div>
+                    @if(isset($zhuans) && $zhuans)
+                        <div class="col-md-12 no-padding">
+                            <div class="col-md-2 no-padding"><label for="zhuanlan">选择所属专栏</label></div>
+                            <div class="col-md-10 no-padding">
+                                <select id="zhuanlan" class="form-control chosen" data-placeholder="选择文章归属专栏(可多选)">
+                                    @foreach($zhuans as $zhuan)
+                                        <option value="{{@$zhuan->id}}">{{@$zhuan->alia_name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                    @endif
                     <div class="RichText clearfix col-md-12 no-padding">
                         <textarea name="post[html_content]" id="summernote" cols="30" rows="10">{!! @old('page[html_content]') !!}</textarea>
                     </div>
@@ -221,6 +234,7 @@
     <script src="{{ asset('lib/summernote/dist/summernote.min.js') }}"></script>
     <script src="{{ asset('lib/summernote/lang/summernote-zh-CN.js') }}"></script>
     <script src="{{ asset('lib/jquery-sticky/jquery.sticky.js') }}"></script>
+    <script src="{{ asset('lib/chosen/chosen.jquery.min.js') }}"></script>
     <script type="text/javascript">
         $(document).ready(function() {
             $('#summernote').summernote({
@@ -270,6 +284,7 @@
             topSpacing:65,
             zIndex:999
         });
+        $('.chosen').chosen({});
         // upload
         var bsurl = '{{ url('') }}';
         var fm_dropzone_main = null;
@@ -325,6 +340,10 @@
             var tags = $('input[name="post[tags]"]').val();
             var content = $('textarea[name="post[html_content]"]').val();
             var cover_image = $('#postCoverImage').attr('src');
+            var zhuanlans = -1;
+            if ( $('#zhuanlan').length > 0 ) {
+                zhuanlans = $('#zhuanlan').val()
+            }
             var data = {
                 'id': id,
                 'title':title,
@@ -332,6 +351,7 @@
                 'content':content,
                 'cover_image':cover_image,
                 'status': 'draft',
+                'zhuanlan':zhuanlans,
                 '_token':$('input[name="_token"]').val()
             };
             if(title !='' || content !='' || cover_image !=''){
@@ -370,7 +390,7 @@
 
         }
         $('#preview-post').on('click',function () {
-            var _id = $('input[name="_token"]').val();
+            var _id = $('input[name="post[id]"]').val();
             if(_id && _id>0){
                 window.location.href = 'https://'+window.location.host+'/post/'+ _id+'/preview'
             }
@@ -378,9 +398,107 @@
         });
         $('#save-post').on('click',function () {
             // 修改状态为active 并且跳转到详情页
+            var id = $('input[name="post[id]"]').val();
+            var title = $('input[name="post[title]"]').val();
+            var tags = $('input[name="post[tags]"]').val();
+            var content = $('textarea[name="post[html_content]"]').val();
+            var cover_image = $('#postCoverImage').attr('src');
+            var zhuanlans = -1;
+            if ( $('#zhuanlan').length > 0 ) {
+                zhuanlans = $('#zhuanlan').val()
+            }
+            var data = {
+                'id': id,
+                'title':title,
+                'topic':tags,
+                'content':content,
+                'status':'active',
+                'cover_image':cover_image,
+                'zhuanlan':zhuanlans,
+                '_token':$('input[name="_token"]').val()
+            };
+            if(title !='' || content !='' || cover_image !=''){
+                console.log('------draft---');
+                // console.log(data);
+                $.ajax({
+                    url: '/post/update',
+                    data:data,
+                    type: 'POST',
+                    cache: false,
+                    success: function (res) {
+                        console.log(res);
+                        if(res.status == 'success'){
+                            $('body').toast({
+                                position:'fixed',
+                                content:'发布成功',
+                                duration:1000,
+                                isCenter:true,
+                                background:'rgba(0,0,0,0.5)',
+                                animateIn:'bounceIn-hastrans',
+                                animateOut:'bounceOut-hastrans'
+                            });
+                            setTimeout(function () {
+                                window.location.href = 'https://zhuanlan.xuegushi.cn/post/'+id;
+                            },2000)
+                        }
+                    },
+                    error: function (res) {
+                        console.log(res);
+                    }
+                });
+            }
         });
         $('#draft-post').on('click',function () {
-            // 保存为草稿
+            // 修改状态为active 并且跳转到详情页
+            var id = $('input[name="post[id]"]').val();
+            var title = $('input[name="post[title]"]').val();
+            var tags = $('input[name="post[tags]"]').val();
+            var content = $('textarea[name="post[html_content]"]').val();
+            var cover_image = $('#postCoverImage').attr('src');
+            var zhuanlans = -1;
+            if ( $('#zhuanlan').length > 0 ) {
+                zhuanlans = $('#zhuanlan').val()
+            }
+            var data = {
+                'id': id,
+                'title':title,
+                'topic':tags,
+                'content':content,
+                'status':'draft',
+                'cover_image':cover_image,
+                'zhuanlan':zhuanlans,
+                '_token':$('input[name="_token"]').val()
+            };
+            if(title !='' || content !='' || cover_image !=''){
+                console.log('------draft---');
+                // console.log(data);
+                $.ajax({
+                    url: '/post/update',
+                    data:data,
+                    type: 'POST',
+                    cache: false,
+                    success: function (res) {
+                        console.log(res);
+                        if(res.status == 'success'){
+                            $('body').toast({
+                                position:'fixed',
+                                content:'草稿保存成功',
+                                duration:1000,
+                                isCenter:true,
+                                background:'rgba(0,0,0,0.5)',
+                                animateIn:'bounceIn-hastrans',
+                                animateOut:'bounceOut-hastrans'
+                            });
+                            setTimeout(function () {
+                                window.location.href = 'https://zhuanlan.xuegushi.cn/post/'+id+'/preview';
+                            },2000)
+                        }
+                    },
+                    error: function (res) {
+                        console.log(res);
+                    }
+                });
+            }
         })
     </script>
 @endsection
