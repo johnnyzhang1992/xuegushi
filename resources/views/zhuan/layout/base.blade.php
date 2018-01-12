@@ -14,9 +14,7 @@
     <meta property="og:url" content="https://xuegushi.cn" />
     <meta property="og:sitename" content="学古诗" />
     <meta name="baidu-site-verification" content="EtwIgzlgfz" />
-    <meta name="sogou_site_verification" content="qZUdNCxRqM"/>
-    <meta name="360-site-verification" content="692a791faf2667be55acfff23615caaf" />
-    <meta name="msvalidate.01" content="5C4998A61A6BA963E7C7B3F6C148F865" />
+    <meta name="google-site-verification" content="Tvr52v5BR_OKh8MfCPU1-oEkPHcu8y2kEnPRfgZwnCc" />
     <link rel="shortcut icon" type="image/x-icon" href="{{asset('favicon.ico')}}">
     {{--<meta property="og:image" content="http://demo.adminlte.acacha.org/img/LaraAdmin-600x600.jpg" />--}}
     <title>{{ isset($site_title)?$site_title:config('seo.zhuanlan_site_name') }}{{ isset($site_title_addon) ? ' - '.$site_title_addon: '-'.config('seo.zhuanlan_sub_title') }}</title>
