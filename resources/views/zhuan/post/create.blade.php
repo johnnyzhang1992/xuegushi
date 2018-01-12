@@ -360,7 +360,7 @@
                 postData(data);
             }
         }
-        var _interval = 10;//保存时间间隔(秒)
+        var _interval = 60;//保存时间间隔(秒)
         setInterval("saveDraft()",1000*_interval);
         function postData(data) {
             var _url = '/post/';

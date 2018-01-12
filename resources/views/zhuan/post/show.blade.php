@@ -26,9 +26,9 @@ use App\Helpers\DateUtil;
         .topic-title {
             margin-top: 40px;
             font-weight: bold;
-            font-size: 32px;
+            font-size: 24px;
             color: #2D2D2F;
-            line-height: 45px;
+            line-height: 32px;
         }
         .topic-header {
             margin-top: 24px;
@@ -267,7 +267,7 @@ use App\Helpers\DateUtil;
 @endsection
 
 @section('content')
-    <main class="main_content col-md-12 no-padding">
+    <main class="main_content col-md-12 no-padding clearfix">
         <div class="content col-md-9 col-md-offset-1 col-xs-12 zhuanlan-new">
             <input type="hidden" name="_token" value="{{ csrf_token() }}" />
             <div class="container-stream col-md-9  col-xs-12">

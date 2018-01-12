@@ -36,7 +36,9 @@ class ZhuanLanController extends Controller
             ->where('dev_post.status','active')
             ->leftJoin('users','users.id','=','dev_post.creator_id')
             ->select('dev_post.*','users.name as author_name')
-            ->orderBy('dev_post.pv_count','asc')->paginate(6);
+            ->orderBy('dev_post.pv_count','desc')
+            ->orderBy('dev_post.created_at','desc')
+            ->paginate(6);
         return view('zhuan.index')
             ->with('query','home')
             ->with('zhuans',$zhuanlans)
@@ -69,7 +71,8 @@ class ZhuanLanController extends Controller
                 ->where('dev_post.zhuanlan_id',$data->id)
                 ->leftJoin('users','users.id','=','dev_post.creator_id')
                 ->select('dev_post.*','users.name as author_name')
-                ->orderBy('dev_post.pv_count','asc')->paginate(6);
+                ->orderBy('dev_post.id','desc')->paginate(6);
+            DB::table('dev_zhuanlan')->where('id',$data->id)->increment("pv_count");
             if($posts && count($posts)>0){
                 foreach ($posts as $key=>$post){
                     $_desc =strip_tags($post->content);

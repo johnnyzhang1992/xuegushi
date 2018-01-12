@@ -129,6 +129,7 @@ class PostController extends Controller
                 'dev_zhuanlan.about','dev_zhuanlan.avatar as zhuan_avatar','dev_zhuanlan.name as zhuan_name')
             ->first();
         if(isset($data) && $data){
+            DB::table('dev_post')->where('id',$data->id)->increment("pv_count");
             return view('zhuan.post.show')
                 ->with('post',$data)
                 ->with('is_has',$this->isHasZhuanlan())
