@@ -13,6 +13,7 @@
     <meta property="og:description" content="{{ isset($site_description) ? $site_description: config('seo.zhuanlan_description') }}" />
     <meta property="og:url" content="https://xuegushi.cn" />
     <meta property="og:sitename" content="学古诗" />
+    <meta name="baidu-site-verification" content="EtwIgzlgfz" />
     <meta name="sogou_site_verification" content="qZUdNCxRqM"/>
     <meta name="360-site-verification" content="692a791faf2667be55acfff23615caaf" />
     <meta name="msvalidate.01" content="5C4998A61A6BA963E7C7B3F6C148F865" />
@@ -22,7 +23,7 @@
     @yield('base-css')
     @yield('content-css')
     {{--百度统计--}}
-    {{--@yield('baidutongji')--}}
+    @yield('baidutongji')
     {{--谷歌统计--}}
     {{--@yield('googletongji')--}}
 </head>

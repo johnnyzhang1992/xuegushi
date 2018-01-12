@@ -1,8 +1,8 @@
 @extends('zhuan.layout.base')
 
-{{--@section('baidutongji')--}}
-{{--@include('frontend.partials.baidutongji')--}}
-{{--@endsection--}}
+@section('baidutongji')
+    @include('zhuan.partials.baidutongji')
+@endsection
 
 {{--@section('googletongji')--}}
 {{--@include('frontend.partials.googletongji')--}}
