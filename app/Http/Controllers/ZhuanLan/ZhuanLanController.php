@@ -31,6 +31,7 @@ class ZhuanLanController extends Controller
         $zhuanlans = DB::table('dev_zhuanlan')->paginate(8);
         foreach ($zhuanlans as $key=>$zhuan){
             $zhuanlans[$key]->post_count = DB::table('dev_post')->where('zhuanlan_id',$zhuan->id)->count();
+            $zhuanlans[$key]->follow_count = $this->getZLFollowCount($zhuan->id);
         }
         $posts = DB::table('dev_post')
             ->where('dev_post.status','active')
@@ -90,6 +91,8 @@ class ZhuanLanController extends Controller
             return view('zhuan.zhuanlan.show')
                 ->with('data',$data)
                 ->with('posts',$posts)
+                ->with('is_follow',$this->is_follow($data->id))
+                ->with('follow_count',$this->getZLFollowCount($data->id))
                 ->with('site_title',$data->alia_name)
                 ->with('is_has',$this->isHasZhuanlan());
         }else{
@@ -126,6 +129,7 @@ class ZhuanLanController extends Controller
                 ->with('zhuan',$data)
                 ->with('editor',$editor)
                 ->with('authors',$authors)
+                ->with('is_follow',$this->is_follow($data->id))
                 ->with('site_title',$data->alia_name)
                 ->with('is_has',$this->isHasZhuanlan());
         }else{
@@ -191,6 +195,104 @@ class ZhuanLanController extends Controller
             $data = 0;
         }
         if($data>0){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    /**
+     * 关注专栏
+     * @param $domain
+     * @return mixed
+     */
+    public function follow($domain){
+        $res = null;
+        $_data = [];
+        // 通过name获取id
+        $zl = DB::table('dev_zhuanlan')->where('name','=',$domain)->first();
+        $zl_id = $zl->id;
+        // 检测是否有记录
+        $_follow = DB::table('dev_zl_follow')
+            ->where('u_id',Auth::user()->id)
+            ->where('zl_id',$zl_id)
+            ->first();
+        if(isset($_follow) && $_follow){
+            // 是
+            $status = 0;
+            if($_follow->status <1){
+                // 已关注
+                $status = 1;
+            }
+            $res = DB::table('dev_zl_follow')
+                ->where('u_id',Auth::user()->id)
+                ->where('zl_id',$zl_id)
+                ->update([
+                    'status'=>$status,
+                    'updated_at' => date('Y-m-d H:i:s',time())
+                ]);
+        }else{
+            // 否
+            $data = [];
+            $data['u_id'] = Auth::user()->id;
+            $data['zl_id'] = $zl_id;
+            $data['created_at'] = date('Y-m-d H:i:s',time());
+            $data['updated_at'] = date('Y-m-d H:i:s',time());
+            $data['status'] = 1;
+            $res = DB::table('dev_zl_follow')->insert($data);
+        }
+        if($res){
+            $_data['status'] = 'success';
+        }else{
+            $_data['status'] = 'fail';
+        }
+        $_data['count'] = $this->getZLFollowCount($zl_id);
+        return response()->json($_data);
+    }
+    public function followers($domain){
+        // 通过name获取id
+        $zl = DB::table('dev_zhuanlan')->where('name','=',$domain)->first();
+
+        if(isset($zl) && $zl){
+            $zl_id = $zl->id;
+            $_followers = DB::table('dev_zl_follow')
+                ->where('dev_zl_follow.zl_id',$zl_id)
+                ->where('dev_zl_follow.status',1)
+                ->leftJoin('users','users.id','=','dev_zl_follow.u_id')
+                ->select('dev_zl_follow.u_id','users.*')
+                ->get();
+            return view('zhuan.zhuanlan.followers')
+                ->with('site_title','关注者')
+                ->with('count',$this->getZLFollowCount($zl_id))
+                ->with('followers',$_followers);
+        }else{
+            return view('errors.404');
+        }
+    }
+    /**
+     * 获取专栏关注人数
+     * @param $id
+     * @return string
+     */
+    static function getZLFollowCount($id){
+        $count = DB::table('dev_zl_follow')
+            ->where('dev_zl_follow.zl_id',$id)
+            ->where('dev_zl_follow.status',1)
+            ->count();
+        return number_format($count);
+    }
+
+    /**
+     * 判断是否关注
+     * @param $id
+     * @return bool
+     */
+    static function is_follow($id){
+        $_follow = DB::table('dev_zl_follow')
+            ->where('u_id',Auth::user()->id)
+            ->where('zl_id',$id)
+            ->where('status',1)
+            ->first();
+        if(isset($_follow) && $_follow){
             return true;
         }else{
             return false;

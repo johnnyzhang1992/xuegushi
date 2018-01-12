@@ -48,6 +48,7 @@ use App\Helpers\DateUtil;
             padding: 5px 15px;
             font-size: 16px;
             line-height: 25px;
+            min-width: 96px;
         }
         .container-stream{
             padding-left: 0;
@@ -249,7 +250,11 @@ use App\Helpers\DateUtil;
         <a class="Navbar-titleAvatar" href="{{url(@$zhuan->name)}}">
             <img src="{{ asset(@$zhuan->avatar)}}" class="Navbar-avatar" alt="" width="38"></a>
         <a class="Navbar-titleName" href="{{url(@$zhuan->name)}}">{{@$zhuan->alia_name}}</a>
-        <button class="btn btn-success button-follow" type="button">关注专栏</button>
+        @if($is_follow)
+            <button class="Button button-follow btn btn-default follow" type="button">已关注</button>
+        @else
+            <button class="Button  button-follow btn btn-success follow" type="button">关注专栏</button>
+        @endif
     </div>
 @endsection
 
@@ -354,6 +359,59 @@ use App\Helpers\DateUtil;
             $(this).next().show();
         },function () {
             $(this).next().hide();
+        });
+        $('.follow').on('click',function () {
+            var th = $(this);
+            var is_follow = $(this).hasClass('btn-success');
+            $.ajax({
+                url: '{{ url(@$zhuan->name) }}/follow',
+                type:'POST',
+                data:{
+                    '_token': $('input[name="_token"]').val()
+                },
+                success:function (res) {
+                    if(res.status =='success'){
+                        $('.ColumnAbout-followers .count').html(res.count);
+                        if(is_follow){
+                            $(th).removeClass('btn-success').addClass('btn-default').html('已关注');
+                            $(th).hover(function () {
+                                $(this).html('取消关注')
+                            },function () {
+                                $(this).html('已关注')
+                            })
+                        }else{
+                            $(th).removeClass('btn-default').addClass('btn-success').html('关注专栏');
+                        }
+                    }else if(res.status == 'fail'){
+                        $('body').toast({
+                            position:'fixed',
+                            content:'操作失败',
+                            duration:1000,
+                            isCenter:true,
+                            background:'rgba(0,0,0,0.5)',
+                            animateIn:'bounceIn-hastrans',
+                            animateOut:'bounceOut-hastrans'
+                        });
+                    }
+                },
+                error:function (res) {
+                    console.log(res);
+                    $('body').toast({
+                        position:'fixed',
+                        content:'操作失败',
+                        duration:1000,
+                        isCenter:true,
+                        background:'rgba(0,0,0,0.5)',
+                        animateIn:'bounceIn-hastrans',
+                        animateOut:'bounceOut-hastrans'
+                    });
+                }
+            })
+        });
+        $('.follow.btn-default').hover(function () {
+            $(this).html('取消关注')
+        },function () {
+            $(this).html('已关注')
         })
     </script>
 @endsection

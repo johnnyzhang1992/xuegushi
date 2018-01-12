@@ -351,6 +351,9 @@ use App\Helpers\DateUtil;
                 height: 220px;
             }
         }
+        .follow.btn{
+            min-width: 82px;
+        }
     </style>
 @endsection
 
@@ -366,7 +369,11 @@ use App\Helpers\DateUtil;
                     <div>
                         <div class="ColumnAbout-actions">
                             @if(isset($data->verified) && $data->verified)
-                                <button class="Button ColumnFollowButton btn btn-success" type="button">关注专栏</button>
+                                @if($is_follow)
+                                    <button class="Button ColumnFollowButton btn btn-default follow" type="button">已关注</button>
+                                @else
+                                    <button class="Button ColumnFollowButton btn btn-success follow" type="button">关注专栏</button>
+                                @endif
                             @else
                                 <button class="Button ColumnFollowButton btn btn-success" type="button">审核中</button>
                             @endif
@@ -381,7 +388,7 @@ use App\Helpers\DateUtil;
                                 </div>
                             </div>
                         </div>
-                        <a class="ColumnAbout-followers" href="{{ url($data->name.'/followers') }}" target="_blank">41,543人关注</a>
+                        <a class="ColumnAbout-followers" href="{{ url($data->name.'/followers') }}" target="_blank"><span class="count">{{@$follow_count}}</span> 人关注</a>
                     </div>
                     {{--<ul class="ColumnTopicList">--}}
                         {{--<li>--}}
@@ -461,6 +468,59 @@ use App\Helpers\DateUtil;
                 $(this).find('.fa').removeClass('fa-angle-up').addClass('fa-angle-down');
             }
             $('.Menu-dropdown').toggle();
+        });
+        $('.follow').on('click',function () {
+            var th = $(this);
+            var is_follow = $(this).hasClass('btn-success');
+            $.ajax({
+                url: '{{ url(@$data->name) }}/follow',
+                type:'POST',
+                data:{
+                    '_token': $('input[name="_token"]').val()
+                },
+                success:function (res) {
+                    if(res.status =='success'){
+                        $('.ColumnAbout-followers .count').html(res.count);
+                        if(is_follow){
+                            $(th).removeClass('btn-success').addClass('btn-default').html('已关注');
+                            $(th).hover(function () {
+                                $(this).html('取消关注')
+                            },function () {
+                                $(this).html('已关注')
+                            })
+                        }else{
+                            $(th).removeClass('btn-default').addClass('btn-success').html('关注专栏');
+                        }
+                    }else if(res.status == 'fail'){
+                        $('body').toast({
+                            position:'fixed',
+                            content:'操作失败',
+                            duration:1000,
+                            isCenter:true,
+                            background:'rgba(0,0,0,0.5)',
+                            animateIn:'bounceIn-hastrans',
+                            animateOut:'bounceOut-hastrans'
+                        });
+                    }
+                },
+                error:function (res) {
+                    console.log(res);
+                    $('body').toast({
+                        position:'fixed',
+                        content:'操作失败',
+                        duration:1000,
+                        isCenter:true,
+                        background:'rgba(0,0,0,0.5)',
+                        animateIn:'bounceIn-hastrans',
+                        animateOut:'bounceOut-hastrans'
+                    });
+                }
+            })
+        });
+        $('.follow.btn-default').hover(function () {
+            $(this).html('取消关注')
+        },function () {
+          $(this).html('已关注')
         })
     </script>
 @endsection
