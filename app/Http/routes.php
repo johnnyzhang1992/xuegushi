@@ -125,6 +125,11 @@ Route::group(['domain' => 'zhuanlan.xuegushi.cn'], function() {
         Route::get('/publications', 'ZhuanLan\MeController@publications');
         Route::get('/subscribes', 'ZhuanLan\MeController@subscribes');
     });
+    Route::group([
+        'prefix' => 'people'
+    ],function (){
+        Route::get('/{id}','ZhuanLan\MeController@show')->where('id', '[0-9]+');
+    });
     // 上传图片
     Route::post('/uploads_image/{type}', 'LA\UploadsController@uploadZhuanlanAvatar');
 

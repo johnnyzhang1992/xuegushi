@@ -22,6 +22,23 @@ class MeController extends Controller
     {
         $this->middleware('auth');
     }
+    public function show($id){
+        $me = DB::table('users')
+            ->where('id',$id)
+            ->first();
+        if(isset($me) && $me){
+            return view('zhuan.me.show')
+                ->with('me',$me)
+                ->with('is_has',$this->isHasZhuanlan())
+                ->with('site_title','我的首页');
+        }else{
+            return view('errors.404');
+        }
+    }
+    /**
+     * 我的草稿
+     * @return mixed
+     */
     public function drafts(){
         $posts = DB::table('dev_post')
             ->where('creator_id',Auth::user()->id)
