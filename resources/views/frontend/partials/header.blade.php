@@ -53,7 +53,9 @@
                             <img src="{{ asset('static/images/avatar.png') }}" class="user-image" alt="User Image"/>{{--{{ Auth::user()->name }}--}}<span class="caret"></span>
                         </a>
                         <ul id="dropdown" class="dropdown-menu">
-                            <li><a href="{{ url('people/'.Auth::user()->id) }}" class="btn btn-default btn-flat"><i class="fa fa-user"></i> 个人页面</a></li>
+                            {{--<li><a href="{{ url('people/'.Auth::user()->id) }}" class="btn btn-default btn-flat"><i class="fa fa-user"></i> 个人页面</a></li>--}}
+                            <li><a href="{{ url('collections') }}" class="btn btn-default btn-flat"><i class="fa fa-star-o"></i> 我的收藏</a></li>
+                            <li><a href="{{ url('likes') }}" class="btn btn-default btn-flat"><i class="fa fa-thumbs-o-up"></i> 我的喜欢</a></li>
                             @if(Auth::user()->id == 1)
                                 <li><a href="{{ url('admin/') }}" class="btn btn-default btn-flat"><i class="fa fa-tachometer"></i> 后台管理</a></li>
                             @endif
