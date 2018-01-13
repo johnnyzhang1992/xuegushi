@@ -212,10 +212,58 @@ use App\Helpers\DateUtil;
         .no-write-topics span, .no-comments span, .no-favorites span, .no-subscribes span {
             margin-top: 40px;
         }
+        .Drafts-list {
+            margin-bottom: 80px;
+        }
+        .Drafts-item {
+            padding: 20px 0;
+            margin: 0;
+            border-bottom: 1px solid rgba(0,0,0,.06);
+        }
+        .Drafts-link, .Drafts-title {
+            color: #333;
+            text-decoration: none;
+        }
+        .Drafts-title {
+            font-size: 16px;
+            padding: 0 0 8px;
+            font-weight: 400;
+            line-height: 1.5;
+            word-break: break-all;
+            max-height: 60px;
+            margin: 0;
+            overflow: hidden;
+        }
+        .Drafts-meta {
+            color: gray;
+            text-decoration: none;
+            font-size: 14px;
+            display: inline;
+        }
+        .Drafts-updated {
+            position: relative;
+            cursor: pointer;
+            color: gray;
+        }
+        .Bull {
+            margin: 0 6px;
+        }
+        .Bull:before {
+            content: "\B7";
+        }
+        .Drafts-removeButton {
+            cursor: pointer;
+        }
+        ul{
+            padding-left: 0;
+        }
         @media (max-width: 730px){
             .mobile-third-accounts {
                 display: block;
                 margin-top: 20px;
+            }
+            ul.nav-tabs>li{
+                display: inline-block;
             }
         }
     </style>
@@ -338,28 +386,47 @@ use App\Helpers\DateUtil;
                     <div class="tab-content">
                         <div role="tabpanel" class="tab-pane active" id="poem">
                             <div class="pane-content">
-                                <div class="no-write-topics">
-                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="78px" height="93px" viewBox="0 0 78 93" version="1.1">
-                                        <!-- Generator: Sketch 44.1 (41455) - http://www.bohemiancoding.com/sketch -->
-                                        <title></title>
-                                        <desc>Created with Sketch.</desc>
-                                        <defs></defs>
-                                        <g id="A-首页-更改" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                            <g id="C-个人中心-01-Copy" transform="translate(-681.000000, -1011.000000)">
-                                                <g id="Group-4" transform="translate(650.000000, 987.000000)">
-                                                    <g id="Group-3" transform="translate(29.000000, 20.000000)"></g>
-                                                    <rect id="Rectangle-24" fill="#F5F5F5" opacity="0" x="0" y="0" width="140" height="140"></rect>
-                                                    <rect id="Rectangle-60" stroke="#C7C7C7" stroke-width="3" x="32.5" y="25.5" width="75" height="90"></rect>
-                                                    <rect id="Rectangle-61" fill="#FF7055" x="47" y="43" width="46" height="3"></rect>
-                                                    <rect id="Rectangle-61" fill="#FF7055" x="47" y="56" width="46" height="3"></rect>
+                                @if(isset($posts) && count($posts)<1)
+                                    <div class="no-write-topics">
+                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="78px" height="93px" viewBox="0 0 78 93" version="1.1">
+                                            <!-- Generator: Sketch 44.1 (41455) - http://www.bohemiancoding.com/sketch -->
+                                            <title></title>
+                                            <desc>Created with Sketch.</desc>
+                                            <defs></defs>
+                                            <g id="A-首页-更改" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                <g id="C-个人中心-01-Copy" transform="translate(-681.000000, -1011.000000)">
+                                                    <g id="Group-4" transform="translate(650.000000, 987.000000)">
+                                                        <g id="Group-3" transform="translate(29.000000, 20.000000)"></g>
+                                                        <rect id="Rectangle-24" fill="#F5F5F5" opacity="0" x="0" y="0" width="140" height="140"></rect>
+                                                        <rect id="Rectangle-60" stroke="#C7C7C7" stroke-width="3" x="32.5" y="25.5" width="75" height="90"></rect>
+                                                        <rect id="Rectangle-61" fill="#FF7055" x="47" y="43" width="46" height="3"></rect>
+                                                        <rect id="Rectangle-61" fill="#FF7055" x="47" y="56" width="46" height="3"></rect>
+                                                    </g>
                                                 </g>
                                             </g>
-                                        </g>
-                                    </svg>
-                                    <span>您目前还没有写文章</span>
-                                </div>
+                                        </svg>
+                                        <span>您目前还没有写文章</span>
+                                    </div>
+                                @endif
                                 <div class="write-topics">
-
+                                    <div class="InfiniteList Drafts-list">
+                                        <ul>
+                                            @if(isset($posts) && $posts)
+                                                @foreach($posts as $post)
+                                                    <li class="Drafts-item">
+                                                        <div class="Drafts-title">
+                                                            <a class="Drafts-link" href="{{url('post/'.@$post->id.'/edit')}}">{{@$post->title}}</a>
+                                                        </div>
+                                                        <div class="Drafts-meta">
+                                                            <time class="Drafts-updated" title="">{{@ DateUtil::formatDate(strtotime($post->created_at))}}</time>
+                                                            {{--<span class="Bull"></span>--}}
+                                                            {{--<span class="Drafts-removeButton" data-id="{{@$post->id}}">删除</span>--}}
+                                                        </div>
+                                                    </li>
+                                                @endforeach
+                                            @endif
+                                        </ul>
+                                    </div><!-- react-empty: 414 -->
                                 </div>
                             </div>
                         </div>

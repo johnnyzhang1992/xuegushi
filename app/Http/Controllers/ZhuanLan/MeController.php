@@ -27,10 +27,16 @@ class MeController extends Controller
             ->where('id',$id)
             ->first();
         if(isset($me) && $me){
+            $posts = DB::table('dev_post')
+                ->where('creator_id',$id)
+                ->where('status','active')
+                ->orderBy('id','desc')
+                ->get();
             return view('zhuan.me.show')
+                ->with('posts',$posts)
                 ->with('me',$me)
                 ->with('is_has',$this->isHasZhuanlan())
-                ->with('site_title','我的首页');
+                ->with('site_title',$me->name);
         }else{
             return view('errors.404');
         }
