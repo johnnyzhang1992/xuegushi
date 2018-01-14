@@ -329,19 +329,25 @@ use App\Helpers\DateUtil;
                             <div class="pane-content">
                                 @if(isset($zls) && count($zls)<1)
                                     <div class="no-write-topics">
-                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="78px" height="93px" viewBox="0 0 78 93" version="1.1">
+                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="104px" height="88px" viewBox="0 0 104 88" version="1.1">
                                             <!-- Generator: Sketch 44.1 (41455) - http://www.bohemiancoding.com/sketch -->
                                             <title></title>
                                             <desc>Created with Sketch.</desc>
                                             <defs></defs>
                                             <g id="A-首页-更改" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                                <g id="C-个人中心-01-Copy" transform="translate(-681.000000, -1011.000000)">
-                                                    <g id="Group-4" transform="translate(650.000000, 987.000000)">
-                                                        <g id="Group-3" transform="translate(29.000000, 20.000000)"></g>
+                                                <g id="C-个人中心-01-Copy" transform="translate(-419.000000, -1419.000000)">
+                                                    <g id="Group-9" transform="translate(401.000000, 1393.000000)">
                                                         <rect id="Rectangle-24" fill="#F5F5F5" opacity="0" x="0" y="0" width="140" height="140"></rect>
-                                                        <rect id="Rectangle-60" stroke="#C7C7C7" stroke-width="3" x="32.5" y="25.5" width="75" height="90"></rect>
-                                                        <rect id="Rectangle-61" fill="#FF7055" x="47" y="43" width="46" height="3"></rect>
-                                                        <rect id="Rectangle-61" fill="#FF7055" x="47" y="56" width="46" height="3"></rect>
+                                                        <g id="Group-5" transform="translate(18.000000, 26.000000)">
+                                                            <path d="M102.5,79.5 L102.5,1.5 L1.5,1.5 L1.5,79.5 L45.7218254,79.5 L52,85.7781746 L58.2781746,79.5 L102.5,79.5 Z" id="Combined-Shape" stroke="#C7C7C7" stroke-width="3"></path>
+                                                            <rect id="Rectangle-64" stroke="#C7C7C7" stroke-width="3" x="52.5" y="9.5" width="1" height="62"></rect>
+                                                            <rect id="Rectangle" fill="#C7C7C7" x="59" y="25" width="36" height="3"></rect>
+                                                            <rect id="Rectangle-Copy-2" fill="#C7C7C7" x="9" y="25" width="36" height="3"></rect>
+                                                            <rect id="Rectangle-Copy" fill="#C7C7C7" x="59" y="35" width="36" height="3"></rect>
+                                                            <rect id="Rectangle-Copy-3" fill="#C7C7C7" x="9" y="35" width="36" height="3"></rect>
+                                                            <rect id="Rectangle-Copy-3" fill="#C7C7C7" x="9" y="45" width="14" height="3"></rect>
+                                                            <polygon id="icon_mark" fill="#FF7055" points="87 3 97 3 97 16.3333333 92 14.6673642 87 16.3333333"></polygon>
+                                                        </g>
                                                     </g>
                                                 </g>
                                             </g>

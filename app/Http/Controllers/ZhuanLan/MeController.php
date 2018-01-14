@@ -47,6 +47,12 @@ class MeController extends Controller
             return view('errors.404');
         }
     }
+
+    /**
+     * 我的订阅
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function subscribes($id){
         $me = DB::table('users')
             ->where('id',$id)
@@ -85,8 +91,25 @@ class MeController extends Controller
             ->orderBy('id','desc')
             ->get();
         return view('zhuan.post.draft')
+            ->with('status','drafts')
             ->with('is_has',$this->isHasZhuanlan())
             ->with('site_title','我的草稿')
+            ->with('posts',$posts);
+    }
+
+    /**
+     * 我的文章
+     * @return mixed
+     */
+    public function posts(){
+        $posts = DB::table('dev_post')
+            ->where('creator_id',Auth::user()->id)
+            ->orderBy('id','desc')
+            ->get();
+        return view('zhuan.post.draft')
+            ->with('status','posts')
+            ->with('is_has',$this->isHasZhuanlan())
+            ->with('site_title','我的文章')
             ->with('posts',$posts);
     }
     /**

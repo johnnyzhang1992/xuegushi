@@ -66,6 +66,7 @@
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
+                <li class="write"><a href="">专栏 · 发现</a></li>
                 @if (Auth::guest())
                     <li><a href="{{ url('/login') }}">登录</a></li>
                 @else
@@ -74,10 +75,9 @@
                     @else
                         <li class="write"><a href="{{ url('/write') }}"><span>申请专栏</span></a></li>
                     @endif
+                    <li class="write"><a href="{{ url('me/posts') }}">我的文章</a></li>
                     <li class="write"><a href="{{ url('/write') }}"><span>写文章</span></a></li>
-                    <li class="write"><a href="">我的文章</a></li>
                 @endif
-                    <li class="write"><a href="">专栏 · 发现</a></li>
             </ul>
         </div>
     </div>
