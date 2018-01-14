@@ -287,6 +287,9 @@ class ZhuanLanController extends Controller
      * @return bool
      */
     static function is_follow($id){
+        if (Auth::guest()){
+            return false;
+        }
         $_follow = DB::table('dev_zl_follow')
             ->where('u_id',Auth::user()->id)
             ->where('zl_id',$id)

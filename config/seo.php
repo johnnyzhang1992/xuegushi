@@ -41,7 +41,7 @@ return array(
     |
     |
     */
-    'zhuanlan_keywords' => env('SEO_DEFAULT_KEYWORDS', '古诗词赏析,诗人轶事,古诗赏析,诗词赏析,名句赏析,唐诗宋词,学古诗'),
+    'zhuanlan_keywords' => env('SEO_DEFAULT_KEYWORDS', '诗词专栏,古诗词专栏,古诗专栏,古诗词赏析,诗人轶事,古诗赏析,诗词赏析,名句赏析,唐诗宋词,学古诗'),
     'zhuanlan_description' => env('SEO_DEFAULT_DESCRIPTION', '古代诗词曲名句赏析,名人轶事分享,记录与分享关于古诗词的一切'),
 
 

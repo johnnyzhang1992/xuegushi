@@ -257,10 +257,16 @@ use App\Helpers\DateUtil;
             font-weight: 600;
             font-synthesis: style;
         }
+        p{
+            text-align: justify;
+        }
         @media(max-width: 768px){
             .content{
                 padding-left: 0;
                 padding-right: 0;
+            }
+            .breadcrumb{
+                display: none;
             }
         }
     </style>
