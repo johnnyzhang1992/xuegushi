@@ -18,7 +18,7 @@
 
 @section('content')
     {{--main-content--}}
-    <main class="main_content col-md-12 no-padding clearfix">
+    <main class="main_content col-md-12 no-padding">
         <div class="content col-md-9 col-xs-12">
             <input type="hidden" name="_token" value="{{ csrf_token() }}" />
             <div class="HomeTop">

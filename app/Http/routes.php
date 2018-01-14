@@ -129,6 +129,7 @@ Route::group(['domain' => 'zhuanlan.xuegushi.cn'], function() {
         'prefix' => 'people'
     ],function (){
         Route::get('/{id}','ZhuanLan\MeController@show')->where('id', '[0-9]+');
+        Route::get('/{id}/subscribes','ZhuanLan\MeController@subscribes')->where('id', '[0-9]+');
     });
     // 上传图片
     Route::post('/uploads_image/{type}', 'LA\UploadsController@uploadZhuanlanAvatar');

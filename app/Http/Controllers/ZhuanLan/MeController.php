@@ -22,6 +22,12 @@ class MeController extends Controller
     {
         $this->middleware('auth');
     }
+
+    /**
+     * 个人主页
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function show($id){
         $me = DB::table('users')
             ->where('id',$id)
@@ -37,6 +43,33 @@ class MeController extends Controller
                 ->with('me',$me)
                 ->with('is_has',$this->isHasZhuanlan())
                 ->with('site_title',$me->name);
+        }else{
+            return view('errors.404');
+        }
+    }
+    public function subscribes($id){
+        $me = DB::table('users')
+            ->where('id',$id)
+            ->first();
+        if(isset($me) && $me){
+            $zls = DB::table('dev_zl_follow')
+                ->where('dev_zl_follow.u_id',$id)
+                ->where('dev_zl_follow.status',1)
+                ->leftJoin('dev_zhuanlan','dev_zhuanlan.id','=','dev_zl_follow.zl_id')
+                ->select('dev_zl_follow.updated_at as time','dev_zhuanlan.*')
+                ->orderBy('dev_zl_follow.id','desc')
+                ->get();
+            if(isset($zls) && $zls){
+                foreach ($zls as $key=>$zl){
+                    $zls[$key]->post_count = $this->getZLPostCount($zl->id);
+                    $zls[$key]->followers_count = $this->getZLFollowCount($zl->id);
+                }
+            }
+            return view('zhuan.me.subscribes')
+                ->with('zls',$zls)
+                ->with('me',$me)
+                ->with('is_has',$this->isHasZhuanlan())
+                ->with('site_title',$me->name.'的订阅');
         }else{
             return view('errors.404');
         }
@@ -71,5 +104,24 @@ class MeController extends Controller
         }else{
             return false;
         }
+    }
+    /**
+     * 获取专栏关注人数
+     * @param $id
+     * @return string
+     */
+    static function getZLFollowCount($id){
+        $count = DB::table('dev_zl_follow')
+            ->where('dev_zl_follow.zl_id',$id)
+            ->where('dev_zl_follow.status',1)
+            ->count();
+        return number_format($count);
+    }
+    public function getZLPostCount($id){
+        $count=DB::table('dev_post')
+            ->where('zhuanlan_id',$id)
+            ->where('status','active')
+            ->count();
+        return $count;
     }
 }

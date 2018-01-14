@@ -213,65 +213,80 @@ use App\Helpers\DateUtil;
         .no-write-topics span, .no-comments span, .no-favorites span, .no-subscribes span {
             margin-top: 40px;
         }
-        .Drafts-list {
-            margin-bottom: 80px;
-        }
-        .Drafts-item {
-            padding: 20px 0;
-            margin: 0;
-            border-bottom: 1px solid rgba(0,0,0,.06);
-        }
-        .Drafts-link, .Drafts-title {
-            color: #333;
-            text-decoration: none;
-        }
-        .Drafts-title {
-            font-size: 16px;
-            padding: 0 0 8px;
-            font-weight: 400;
-            line-height: 1.5;
-            word-break: break-all;
-            max-height: 60px;
-            margin: 0;
-            overflow: hidden;
-        }
-        .Drafts-meta {
-            color: gray;
-            text-decoration: none;
-            font-size: 14px;
-            display: inline;
-        }
-        .Drafts-updated {
-            position: relative;
-            cursor: pointer;
-            color: gray;
-        }
-        .Bull {
-            margin: 0 6px;
-        }
-        .Bull:before {
-            content: "\B7";
-        }
-        .Drafts-removeButton {
-            cursor: pointer;
-        }
         ul{
             padding-left: 0;
+        }
+        .xzl-zhuanlans-list .zhuanlan {
+            padding: 0px;
+            margin-top: 25px;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+        }
+        .zhuanlan {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            width: 100%;
+            margin-top: 20px;
+        }
+        .zhuanlan .zl-body {
+            margin-left: 12px;
+            vertical-align: top;
+            margin-right: 30px;
+        }
+        .zhuanlan .zl-header .avatar {
+            width: 80px;
+            height: 80px;
+        }
+        .zhuanlan .zl-body .zl-title {
+            line-height: 25px;
+            font-weight: bold;
+            font-size: 18px;
+            color: #2D2D2F;
+        }
+        .zhuanlan .zl-body .zl-title a {
+            font-weight: bold;
+            font-size: 18px;
+            color: #2D2D2F;
+        }
+        .zhuanlan .zl-body .zl-others span {
+            font-size: 14px;
+            color: #818181;
+            line-height: 23px;
+        }
+        .zhuanlan .zl-body .zl-others span.subscribe-count {
+            margin-left: 31px;
+        }
+        .zhuanlan .zl-body .zl-bio {
+            margin-top: 4px;
+            font-size: 14px;
+            color: #818181;
+            line-height: 23px;
+        }
+        .zhuanlan .zl-body .zl-others {
+            margin-top: 2px;
+            font-size: 14px;
+            color: #818181;
+            line-height: 23px;
         }
         @media (max-width: 730px){
             .mobile-third-accounts {
                 display: block;
                 margin-top: 20px;
             }
-            .content{
-                padding-left: 0;
-                padding-right: 0;
-            }
             ul.nav-tabs>li{
                 display: inline-block;
             }
             ul.nav-tabs>li>a{
                 padding: 5px 8px;
+            }
+            .zhuanlan .zl-body {
+                margin-right: 0px;
+            }
+            .content{
+                padding-left: 0;
+                padding-right: 0;
             }
         }
     </style>
@@ -292,10 +307,10 @@ use App\Helpers\DateUtil;
                 <div class="home-container">
                     <!-- Nav tabs -->
                     <ul class="nav nav-tabs" role="tablist">
-                        <li role="presentation" class="active">
+                        <li role="presentation">
                             <a href="{{ url('/people/'.@$me->id) }}" >文章</a>
                         </li>
-                        <li role="presentation">
+                        <li role="presentation" class="active">
                             <a href="{{ url('people/'.@$me->id.'/subscribes') }}" >订阅</a>
                         </li>
                         <li role="presentation">
@@ -312,7 +327,7 @@ use App\Helpers\DateUtil;
                     <div class="tab-content">
                         <div role="tabpanel" class="tab-pane active" id="poem">
                             <div class="pane-content">
-                                @if(isset($posts) && count($posts)<1)
+                                @if(isset($zls) && count($zls)<1)
                                     <div class="no-write-topics">
                                         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="78px" height="93px" viewBox="0 0 78 93" version="1.1">
                                             <!-- Generator: Sketch 44.1 (41455) - http://www.bohemiancoding.com/sketch -->
@@ -331,29 +346,29 @@ use App\Helpers\DateUtil;
                                                 </g>
                                             </g>
                                         </svg>
-                                        <span>您目前还没有写文章</span>
+                                        <span>您目前还没有订阅任何专栏</span>
                                     </div>
                                 @endif
                                 <div class="write-topics">
-                                    <div class="InfiniteList Drafts-list">
-                                        <ul>
-                                            @if(isset($posts) && $posts)
-                                                @foreach($posts as $post)
-                                                    <li class="Drafts-item">
-                                                        <div class="Drafts-title">
-                                                            <a class="Drafts-link" href="{{url('post/'.@$post->id.'/edit')}}">{{@$post->title}}</a>
-                                                        </div>
-                                                        <div class="Drafts-meta">
-                                                            <time class="Drafts-updated" title="">{{@ DateUtil::formatDate(strtotime($post->created_at))}}</time>
-                                                            <span class="Bull"></span>
-                                                            <span class="Drafts-removeButton" data-id="{{@$post->id}}">阅读 {{@$post->pv_count}}</span>
-                                                        </div>
-                                                    </li>
-                                                @endforeach
-                                            @endif
-                                        </ul>
-                                    </div>
-                                </div>
+                                    @if(isset($zls) && $zls)
+                                        @foreach($zls as $zl)
+                                            <div class="zhuanlan">
+                                                <div class="zl-header">
+                                                    <a href="{{url(@$zl->name)}}">
+                                                        <img class="avatar" src="{{asset(@$zl->avatar)}}" alt="38a91dd14991f96cfa5c00aeb4667263">
+                                                    </a>
+                                                </div>
+                                                <div class="zl-body">
+                                                    <div class="zl-title"><a href="{{url(@$zl->name)}}">{{@$zl->alia_name}}</a></div>
+                                                    <div class="zl-bio">{{@$zl->about}}</div>
+                                                    <div class="zl-others">
+                                                        <span>已发表 {{@$zl->post_count}}</span>
+                                                        <span class="subscribe-count">订阅数 {{@$zl->followers_count}}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endforeach
+                                    @endif
                             </div>
                         </div>
                     </div>
