@@ -35,6 +35,11 @@
       display: inline-block;
       border-radius: 6px;
     }
+    a.follow_btn,.follow_data a{
+      padding: 0;
+      margin-bottom: 0;
+      border: none;
+    }
     a:hover, a:focus {
       color: #175199;
     }

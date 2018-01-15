@@ -69,3 +69,11 @@
         </li>
     </ul>
 </div>
+<div class="side-card">
+    <div class="side-title">
+        <h2><span class="author">微博 <small>古诗文小助手</small></span></h2>
+    </div>
+    <div class="side-content">
+        <wb:follow-button uid="3546279424" type="red_2" width="136" height="24" ></wb:follow-button>
+    </div>
+</div>
