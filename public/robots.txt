@@ -1,4 +1,3 @@
 User-agent: *
-Disallow:
-/collections
-/likes
+Disallow: /collections
+Disallow: /likes

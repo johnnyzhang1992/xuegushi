@@ -63,7 +63,8 @@
         {{--</span>--}}
         {{--</a>--}}
         {{--</div>--}}
-        <div class="xzl-button-set xzl-profile-button-set xzl-profile-button-set-setting  u-inlineBlock">
+        @if (!Auth::guest() && Auth::user()->id == $me->id)
+            <div class="xzl-button-set xzl-profile-button-set xzl-profile-button-set-setting  u-inlineBlock">
                <span class="followState js-followState xzl-button-set-inner">
                    <button class="btn btn-default profile-setting-btn  edit-profile-button">
                        <span class="button-label  xzl-default-state-btn js-buttonLabel">设置</span>
@@ -75,6 +76,7 @@
                        <span class="button-label js-buttonLabel">取消</span>
                    </button>
                </span>
-        </div>
+            </div>
+        @endif
     </div>
 </header>

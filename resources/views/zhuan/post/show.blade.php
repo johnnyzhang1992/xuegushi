@@ -260,6 +260,128 @@ use App\Helpers\DateUtil;
         p{
             text-align: justify;
         }
+        .PostIndex-footer{
+            margin-bottom: 20px;
+        }
+        .PostIndex-vote,.PostIndex-control,.Fav,.PostShare{
+            display: inline-block;
+        }
+        .btn .fa{
+            margin-right: 5px;
+        }
+        .PostIndex-control .btn{
+            line-height: inherit;
+            background-color: transparent;
+            border: none;
+            border-radius: 0;
+            color: gray;
+            font-size: 18px;
+        }
+        .Button-green {
+            color: #50c87e;
+            background-color: #50c87e;
+            border-color: #50c87e;
+        }
+        .Button-green:hover ,.Button-green:focus,.Button-green:active{
+            background-color: rgba(77,190,46,.06);
+            color: #50c87e;
+            border-color: #50c87e;
+        }
+        .PostIndex-voteButton{
+            background-color: transparent;
+        }
+        .PostIndex-voteButton.active{
+            color: #fff;
+            background-color: #50c87e;
+        }
+        .btn:focus,.btn:active{
+            outline: 5px auto #f1f2f3;
+            box-shadow: none;
+        }
+        .PostIndex-control .btn:focus,.PostIndex-control .btn:active {
+            color: gray;
+            background: transparent;
+        }
+        .PostShare .Menu-dropdown {
+            top: 100%;
+            width: 134px;
+            left: 50%;
+            margin-left: -66px;
+        }
+        .Menu{
+            position: relative;
+        }
+        .Menu--open>.Menu-dropdown {
+            visibility: visible;
+            opacity: 1;
+            -webkit-transform: none;
+            transform: none;
+        }
+        .Menu-dropdown {
+            position: absolute;
+            border: 1px solid rgba(0,0,0,.08);
+            border-radius: 4px;
+            line-height: 54px;
+            font-size: 14px;
+            text-align: left;
+            color: #333;
+            background: #fff;
+            -webkit-box-shadow: 0 8px 18px rgba(0,0,0,.05);
+            box-shadow: 0 8px 18px rgba(0,0,0,.05);
+            -webkit-transform: translateY(-10%);
+            transform: translateY(-10%);
+            z-index: 100;
+            visibility: hidden;
+            opacity: 0;
+            -webkit-transition: all .1s;
+            transition: all .1s;
+        }
+        ul{
+            padding-left: 0;
+        }
+        .PostShare .Menu-item:first-child {
+            border-top: 0;
+        }
+        .Menu-dropdown li:last-child {
+            border-bottom-left-radius: 4px;
+            border-bottom-right-radius: 4px;
+        }
+        .PostShare .Menu-item {
+            border-top: 1px solid rgba(0,0,0,.08);
+        }
+        .Menu-item {
+            display: block;
+            width: 100%;
+            padding: 0 20px;
+            text-align: left;
+            cursor: pointer;
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+        .Menu-dropdown li>a {
+            width: 100%;
+            height: auto;
+            line-height: 42px;
+            text-align: left;
+            display: block;
+            color: #333;
+        }
+        .Menu-dropdown li:hover {
+            background: #f7f8f9;
+        }
+        .PostShare-qrCode {
+            width: 99px;
+            height: 99px;
+        }
+        .IconWeibo {
+            color: #e16a70;
+        }
+        .IconWechat {
+            color: #81d300;
+        }
+        i.fa{
+            margin-right: 5px;
+        }
         @media(max-width: 768px){
             .content{
                 padding-left: 0;
@@ -306,6 +428,32 @@ use App\Helpers\DateUtil;
                 </div>
                 <div class="topic-body">
                     {!! @$post->content !!}
+                </div>
+                <div class="PostIndex-footer">
+                    <div class="PostIndex-vote">
+                        <button class="btn PostIndex-voteButton Button-green btn-large" aria-label="取消赞" type="button"><i class="fa fa-thumbs-o-up"></i>19,990</button>
+                    </div>
+                    <div class="PostIndex-control pull-right">
+                        <div class="Fav">
+                            <button class="btn btn-default Button--plain FavButton" type="button"><i class="fa fa-star-o"></i>收藏</button>
+                        </div>
+                        <div class="PostShare">
+                            <div class="Menu Menu--open">
+                                <button class="btn btn-default  Button--plain MenuButton MenuButton-listen-click" type="button"><i class="fa fa-share-alt"></i>分享</button>
+                                <div class="Menu-dropdown" style="display: none">
+                                    <ul class="Menu-list">
+                                        <li class="Menu-item PostShare-sina">
+                                            <a class=" WeiboShareButton PostShare-button" type="button"><i class="fa fa-weibo IconWeibo"></i>微博分享</a>
+                                        </li>
+                                        <li class="Menu-item PostShare-wechat">
+                                            <a class=" WechatShareButton PostShare-button" type="button"><i class="fa fa-weixin IconWechat"></i>微信扫一扫 {!! QrCode::size(100)->margin(0)->generate(url('/post/'.$post->id)) !!}
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="topic-footer">
                     <div class="topic-contributes">

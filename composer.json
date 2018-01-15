@@ -9,7 +9,8 @@
         "laravel/framework": "5.2.*",
         "dwij/laraadmin": "1.0.40",
         "jormin/laravel-baidu-speech": "^1.0",
-        "jenssegers/agent": "^2.6"
+        "jenssegers/agent": "^2.6",
+        "simplesoftwareio/simple-qrcode": "~2"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

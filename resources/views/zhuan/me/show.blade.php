@@ -341,7 +341,7 @@ use App\Helpers\DateUtil;
                                                 @foreach($posts as $post)
                                                     <li class="Drafts-item">
                                                         <div class="Drafts-title">
-                                                            <a class="Drafts-link" href="{{url('post/'.@$post->id.'/edit')}}">{{@$post->title}}</a>
+                                                            <a class="Drafts-link" href="{{url('post/'.@$post->id)}}">{{@$post->title}}</a>
                                                         </div>
                                                         <div class="Drafts-meta">
                                                             <time class="Drafts-updated" title="">{{@ DateUtil::formatDate(strtotime($post->created_at))}}</time>

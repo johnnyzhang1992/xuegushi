@@ -163,6 +163,8 @@ return [
         Jormin\BaiduSpeech\BaiduSpeechServiceProvider::class,
         // agent
         Jenssegers\Agent\AgentServiceProvider::class,
+        // 二维码
+        SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class,
 
     ],
 
@@ -210,7 +212,8 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'BaiduSpeech' => Jormin\BaiduSpeech\BaiduSpeech::class,
-        'Agent' => Jenssegers\Agent\Facades\Agent::class
+        'Agent' => Jenssegers\Agent\Facades\Agent::class,
+        'QrCode' => SimpleSoftwareIO\QrCode\Facades\QrCode::class
     ],
 
 ];

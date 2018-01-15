@@ -20,7 +20,7 @@ class MeController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+//        $this->middleware('auth');
     }
 
     /**
@@ -85,6 +85,9 @@ class MeController extends Controller
      * @return mixed
      */
     public function drafts(){
+        if (Auth::guest()){
+            return redirect('/login');
+        }
         $posts = DB::table('dev_post')
             ->where('creator_id',Auth::user()->id)
             ->where('status','draft')
@@ -102,6 +105,9 @@ class MeController extends Controller
      * @return mixed
      */
     public function posts(){
+        if (Auth::guest()){
+            return redirect('/login');
+        }
         $posts = DB::table('dev_post')
             ->where('creator_id',Auth::user()->id)
             ->orderBy('id','desc')
