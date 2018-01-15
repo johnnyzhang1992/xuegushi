@@ -302,7 +302,7 @@ use App\Helpers\DateUtil;
     <main class="main_content col-md-12 no-padding">
         <div class="content col-md-9 col-xs-12">
             <input type="hidden" name="_token" value="{{ csrf_token() }}" />
-            <div class="container-stream col-md-9 col-md-offset-2 col-xs-12">
+            <div class="container-stream col-md-10 col-md-offset-1 col-xs-12">
                 @include('zhuan.partials.me_top')
                 <div class="home-container">
                     <!-- Nav tabs -->
