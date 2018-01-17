@@ -46,9 +46,9 @@
                 <li class="write">
                     <a href="{{ url('me/drafts') }}"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash" color="#999" data-reactid="1166"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg><span>我的草稿</span></a>
                 </li>
-                <li class="write">
-                    <a href="{{ url('me/collections') }}"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bookmark" color="#999" data-reactid="211"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg><span>我的收藏</span></a>
-                </li>
+                {{--<li class="write">--}}
+                    {{--<a href="{{ url('me/collections') }}"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bookmark" color="#999" data-reactid="211"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg><span>我的收藏</span></a>--}}
+                {{--</li>--}}
                 <li role="separator" class="divider"></li>
                 @if(Auth::user()->id == 1)
                     <li>

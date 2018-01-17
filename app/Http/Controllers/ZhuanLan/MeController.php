@@ -80,6 +80,76 @@ class MeController extends Controller
             return view('errors.404');
         }
     }
+
+    /**
+     * 我的喜欢
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function favorites($id){
+        $me = DB::table('users')
+            ->where('id',$id)
+            ->first();
+        if(isset($me) && $me){
+            $posts = DB::table('dev_like')
+                ->where('dev_like.type','post')
+                ->where('dev_like.user_id',$id)
+                ->where('dev_like.status','active')
+                ->leftJoin('dev_post','dev_post.id','=','dev_like.like_id')
+                ->select('dev_like.created_at as create_time','dev_post.*')
+                ->orderBy('dev_like.created_at','desc')
+                ->get();
+            return view('zhuan.me.favorites')
+                ->with('posts',$posts)
+                ->with('me',$me)
+                ->with('is_has',$this->isHasZhuanlan())
+                ->with('site_title',$me->name.'的喜欢');
+        }else{
+            return view('errors.404');
+        }
+    }
+
+    /**
+     * 我的收藏
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function collects($id){
+        $me = DB::table('users')
+            ->where('id',$id)
+            ->first();
+        if(isset($me) && $me){
+            $posts = DB::table('dev_collect')
+                ->where('dev_collect.type','post')
+                ->where('dev_collect.user_id',$id)
+                ->where('dev_collect.status','active')
+                ->leftJoin('dev_post','dev_post.id','=','dev_collect.like_id')
+                ->select('dev_collect.created_at as create_time','dev_post.*')
+                ->orderBy('dev_collect.created_at','desc')
+                ->get();
+            return view('zhuan.me.collects')
+                ->with('posts',$posts)
+                ->with('me',$me)
+                ->with('is_has',$this->isHasZhuanlan())
+                ->with('site_title',$me->name.'的收藏');
+        }else{
+            return view('errors.404');
+        }
+    }
+    public function comments($id){
+        $me = DB::table('users')
+            ->where('id',$id)
+            ->first();
+        if(isset($me) && $me) {
+            return view('zhuan.me.comments')
+                ->with('me', $me)
+                ->with('posts',[])
+                ->with('is_has', $this->isHasZhuanlan())
+                ->with('site_title', $me->name . '的回复');
+        }else{
+            return view('errors.404');
+        }
+    }
     /**
      * 我的草稿
      * @return mixed

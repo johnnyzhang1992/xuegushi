@@ -132,6 +132,9 @@ Route::group(['domain' => 'zhuanlan.xuegushi.cn'], function() {
     ],function (){
         Route::get('/{id}','ZhuanLan\MeController@show')->where('id', '[0-9]+');
         Route::get('/{id}/subscribes','ZhuanLan\MeController@subscribes')->where('id', '[0-9]+');
+        Route::get('/{id}/favorites','ZhuanLan\MeController@favorites')->where('id', '[0-9]+');
+        Route::get('/{id}/collects','ZhuanLan\MeController@collects')->where('id', '[0-9]+');
+        Route::get('/{id}/comments','ZhuanLan\MeController@comments')->where('id', '[0-9]+');
     });
     // 上传图片
     Route::post('/uploads_image/{type}', 'LA\UploadsController@uploadZhuanlanAvatar');

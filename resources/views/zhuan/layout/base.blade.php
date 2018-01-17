@@ -14,6 +14,7 @@
     <meta property="og:url" content="https://xuegushi.cn" />
     <meta property="og:sitename" content="学古诗" />
     <meta name="baidu-site-verification" content="EtwIgzlgfz" />
+    <meta name="baidu-site-verification" content="bbb40ac73b3d86dda6fc93e7ee62974c"/>
     <meta name="google-site-verification" content="Tvr52v5BR_OKh8MfCPU1-oEkPHcu8y2kEnPRfgZwnCc" />
     <link rel="shortcut icon" type="image/x-icon" href="{{asset('favicon.ico')}}">
     {{--<meta property="og:image" content="http://demo.adminlte.acacha.org/img/LaraAdmin-600x600.jpg" />--}}
