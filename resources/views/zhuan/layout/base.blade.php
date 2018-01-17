@@ -8,7 +8,7 @@
     <meta name="description" content="{{ isset($site_description) ? $site_description: config('seo.zhuanlan_description') }}">
     <meta name="author" content="小小梦工场">
     {{--og meta--}}
-    <meta property="og:title" content="{{ isset($site_title)?$site_title:config('seo.zhuanlan_site_name') }}{{ isset($site_title_addon) ? ' - '.$site_title_addon: '-'.config('seo.zhuanlan_sub_title') }}" />
+    <meta property="og:title" content="{{ isset($site_title)?$site_title:config('seo.zhuanlan_site_name') }}{{ isset($site_title_addon) ? ' - '.$site_title_addon: ' - '.config('seo.zhuanlan_sub_title') }}" />
     <meta property="og:type" content="website" />
     <meta property="og:description" content="{{ isset($site_description) ? $site_description: config('seo.zhuanlan_description') }}" />
     <meta property="og:url" content="https://xuegushi.cn" />
@@ -17,7 +17,7 @@
     <meta name="google-site-verification" content="Tvr52v5BR_OKh8MfCPU1-oEkPHcu8y2kEnPRfgZwnCc" />
     <link rel="shortcut icon" type="image/x-icon" href="{{asset('favicon.ico')}}">
     {{--<meta property="og:image" content="http://demo.adminlte.acacha.org/img/LaraAdmin-600x600.jpg" />--}}
-    <title>{{ isset($site_title)?$site_title:config('seo.zhuanlan_site_name') }}{{ isset($site_title_addon) ? ' - '.$site_title_addon: '-'.config('seo.zhuanlan_sub_title') }}</title>
+    <title>{{ isset($site_title)?$site_title:config('seo.zhuanlan_site_name') }}{{ isset($site_title_addon) ? ' - '.$site_title_addon: ' - '.config('seo.zhuanlan_sub_title') }}</title>
     @yield('base-css')
     @yield('content-css')
     {{--百度统计--}}

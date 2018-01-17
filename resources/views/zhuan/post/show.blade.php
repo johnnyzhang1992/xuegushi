@@ -131,10 +131,11 @@ use App\Helpers\DateUtil;
             color: #C7C7C7;
             display: inline-block;
         }
-        span.time{
+        span.time,span.views-count,span.likes-count,span.collects-count{
             font-size: 14px;
             color: #C7C7C7;
             display: inline-block;
+            margin-right: 5px;
         }
         .time {
             display: -webkit-box;
@@ -294,13 +295,20 @@ use App\Helpers\DateUtil;
             color: #fff;
             background-color: #50c87e;
         }
-        .btn:focus,.btn:active{
+
+        .btn:focus,.btn:active,.btn.active:focus,.btn:active{
             outline: 5px auto #f1f2f3;
             box-shadow: none;
         }
-        .PostIndex-control .btn:focus,.PostIndex-control .btn:active {
+        .PostIndex-control .btn{
             color: gray;
             background: transparent;
+        }
+        .PostIndex-control .ColButton.active{
+            outline: none;
+            box-shadow: none;
+            color: #50c87e;
+            background-color: #fff;
         }
         .PostShare .Menu-dropdown {
             top: 100%;
@@ -421,6 +429,9 @@ use App\Helpers\DateUtil;
                                 </div>
                                 <div class="xzl-author-lockup xzl-author-lockup-time">
                                     <span class="time"><abbr class="timeago" title="2018-01-04T21:53:35+08:00">{{@ DateUtil::formatDate(strtotime($post->created_at))}}</abbr></span>
+                                    <span class="views-count">阅读 {{@$post->pv_count}}</span>
+                                    <span class="likes-count">喜欢 {{@$post->like_count}}</span>
+                                    <span class="collects-count">收藏 {{@$post->collect_count}}</span>
                                 </div>
                             </div>
                         </div>
@@ -431,15 +442,19 @@ use App\Helpers\DateUtil;
                 </div>
                 <div class="PostIndex-footer">
                     <div class="PostIndex-vote">
-                        <button class="btn PostIndex-voteButton Button-green btn-large" aria-label="取消赞" type="button"><i class="fa fa-thumbs-o-up"></i>19,990</button>
+                        <button class="btn PostIndex-voteButton Button-green btn-large FavButton @if(isset($is_like) && $is_like) active @endif " type="button"><i class="fa fa-thumbs-o-up"></i><span class="like_count">{{number_format($post->like_count)}}</span></button>
                     </div>
                     <div class="PostIndex-control pull-right">
                         <div class="Fav">
-                            <button class="btn btn-default Button--plain FavButton" type="button"><i class="fa fa-star-o"></i>收藏</button>
+                            @if(isset($is_collect) && $is_collect)
+                                <button class="btn Button--plain ColButton active" type="button"><i class="fa fa-star"></i><span class="collect-name">收藏</span></button>
+                            @else
+                                <button class="btn Button--plain ColButton" type="button"><i class="fa fa-star-o"></i><span class="collect-name">收藏</span></button>
+                            @endif
                         </div>
                         <div class="PostShare">
                             <div class="Menu Menu--open">
-                                <button class="btn btn-default  Button--plain MenuButton MenuButton-listen-click" type="button"><i class="fa fa-share-alt"></i>分享</button>
+                                <button class="btn shareButton MenuButton-listen-click" type="button"><i class="fa fa-share-alt"></i>分享</button>
                                 <div class="Menu-dropdown" style="display: none">
                                     <ul class="Menu-list">
                                         <li class="Menu-item PostShare-sina">
@@ -488,6 +503,113 @@ use App\Helpers\DateUtil;
         $("#navigation").sticky({
             topSpacing:0,
             zIndex:999
+        });
+        $('.shareButton').on('click',function () {
+            $(this).next().toggle();
+        });
+        // 喜欢
+        $('.FavButton').on('click',function () {
+            var like = $(this).find('.like_count');
+            $.post(
+                '/post/{{@$post->id}}/like',
+                {
+                    '_token': $('input[name="_token"]').val()
+                },
+                function (res) {
+                    if(res && res.status == 'active'){
+                        $(like).html(res.num);
+                        $(like).parent().addClass('active');
+                        $('body').toast({
+                            position:'fixed',
+                            content:res.msg,
+                            duration:1000,
+                            isCenter:true,
+                            background:'rgba(51,122,183,0.8)',
+                            animateIn:'bounceIn-hastrans',
+                            animateOut:'bounceOut-hastrans'
+                        });
+                    }else if(res && res.status == 'delete'){
+                        $(like).html(res.num);
+                        if($(like).hasClass('active')){
+                            $(like).removeClass('active')
+                        }
+                        $('body').toast({
+                            position:'fixed',
+                            content:res.msg,
+                            duration:1000,
+                            isCenter:true,
+                            background:'rgba(51,122,183,0.8)',
+                            animateIn:'bounceIn-hastrans',
+                            animateOut:'bounceOut-hastrans'
+                        });
+                    }else{
+                        $('body').toast({
+                            position:'fixed',
+                            content:res.msg,
+                            duration:1000,
+                            isCenter:true,
+                            background:'rgba(0,0,0,0.5)',
+                            animateIn:'bounceIn-hastrans',
+                            animateOut:'bounceOut-hastrans'
+                        });
+                    }
+                }
+            )
+        });
+        // 收藏
+        $('.ColButton').on('click',function () {
+            var th = $(this);
+            $.post(
+                '/post/{{@$post->id}}/collect',
+                {
+                    '_token': $('input[name="_token"]').val()
+                },
+                function (res) {
+                    if(res && res.status == 'active'){
+                        $(th).addClass('active');
+                        $(th).find('i').removeClass('fa-star-o');
+                        $(th).find('i').addClass('fa-star');
+                        if($(th).find('.collect-name')){
+                            $(th).find('.collect-name').html('已收藏');
+                        }
+                        $('body').toast({
+                            position:'fixed',
+                            content:res.msg,
+                            duration:1000,
+                            isCenter:true,
+                            background:'rgba(51,122,183,0.8)',
+                            animateIn:'bounceIn-hastrans',
+                            animateOut:'bounceOut-hastrans'
+                        });
+                    }else if(res && res.status == 'delete'){
+                        $(th).removeClass('active');
+                        $(th).find('i').removeClass('fa-star');
+                        $(th).find('i').addClass('fa-star-o');
+                        if($(th).find('.collect-name')){
+                            $(th).find('.collect-name').html('收藏');
+                        }
+                        $('body').toast({
+                            position:'fixed',
+                            content:res.msg,
+                            duration:1000,
+                            isCenter:true,
+                            background:'rgba(51,122,183,0.8)',
+                            animateIn:'bounceIn-hastrans',
+                            animateOut:'bounceOut-hastrans'
+                        });
+                    }else{
+                        $('body').toast({
+                            position:'fixed',
+                            content:res.msg,
+                            duration:1000,
+                            isCenter:true,
+                            background:'rgba(0,0,0,0.5)',
+                            animateIn:'bounceIn-hastrans',
+                            animateOut:'bounceOut-hastrans'
+                        });
+                    }
+                }
+            )
         });
     </script>
 @endsection

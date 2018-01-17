@@ -139,6 +139,7 @@ class PostController extends Controller
      * @return $this
      */
     public function show($id){
+        $user_id = null;
         $data = DB::table('dev_post')
             ->where('dev_post.id',$id)
             ->leftJoin('users','users.id','=','dev_post.creator_id')
@@ -146,10 +147,15 @@ class PostController extends Controller
             ->select('dev_post.*','users.name as user_name','users.avatar','dev_zhuanlan.alia_name as zhuan_alia_name',
                 'dev_zhuanlan.about','dev_zhuanlan.avatar as zhuan_avatar','dev_zhuanlan.name as zhuan_name')
             ->first();
+        if (!Auth::guest()){
+          $user_id = Auth::user()->id;
+        }
         if(isset($data) && $data){
             DB::table('dev_post')->where('id',$data->id)->increment("pv_count");
             return view('zhuan.post.show')
                 ->with('post',$data)
+                ->with('is_like',$this->judgeLikeOrCollect('dev_like',$id,$user_id))
+                ->with('is_collect',$this->judgeLikeOrCollect('dev_collect',$id,$user_id))
                 ->with('is_has',$this->isHasZhuanlan())
                 ->with('site_title',$data->title);
         }else{
@@ -162,18 +168,26 @@ class PostController extends Controller
      * @return mixed
      */
     public function edit($id=null){
+        if (Auth::guest()){
+            return redirect('/login');
+        }
         $data = DB::table('dev_post')
             ->where('dev_post.id',$id)
             ->first();
         if(isset($data) && $data){
-            $zhuanlans = DB::table('dev_zhuanlan')
-                ->where('creator_id',Auth::user()->id)
-                ->get();
-            return view('zhuan.post.edit')
-                ->with('post',$data)
-                ->with('zhuans',$zhuanlans)
-                ->with('is_has',$this->isHasZhuanlan())
-                ->with('site_title','编辑-'.$data->title);
+            if($data->creator_id == Auth::user()->id){
+                $zhuanlans = DB::table('dev_zhuanlan')
+                    ->where('creator_id',Auth::user()->id)
+                    ->get();
+                return view('zhuan.post.edit')
+                    ->with('post',$data)
+                    ->with('zhuans',$zhuanlans)
+                    ->with('is_has',$this->isHasZhuanlan())
+                    ->with('site_title','编辑-'.$data->title);
+            }else{
+                return view('errors.403');
+            }
+
         }else{
             return view('errors.404')->with('record_id',$id)->with('record_name','文章');
         }
@@ -206,5 +220,131 @@ class PostController extends Controller
         }else{
             return -1;
         }
+    }
+    /**
+     * 更新 post 的like_count
+     * @param $id
+     * @param $type
+     * @return mixed
+     */
+    public function updateLikeOrCollect($id,$type){
+        $_table_name = 'dev_like';
+        if(isset($type) && $type && $type== 'collect'){
+            $_table_name = 'dev_collect';
+        }
+        $data = array();
+        $msg = null;
+        $res = false;
+        $_data = null;
+        if($id  && !Auth::guest()){
+            // 先判断是否存在
+            $_res = DB::table($_table_name)
+                ->where('user_id',Auth::user()->id)
+                ->where('like_id',$id)
+                ->where('type','post')
+                ->first();
+            if(!$_res){
+                // 新的like
+                if($type =='collect'){
+                    $res = DB::table('dev_post')->where('id',$id)->increment("collect_count");
+                }else{
+                    $res = DB::table('dev_post')->where('id',$id)->increment("like_count");
+                }
+                $_data = DB::table('dev_post')->where('id',$id)->first();
+                DB::table($_table_name)->insertGetId(
+                    [
+                        'like_id' => $id,
+                        'type' => 'post',
+                        'created_at' => date('Y-m-d H:i:s',time()),
+                        'updated_at' => date('Y-m-d H:i:s',time()),
+                        'user_id'=> Auth::user()->id,
+                        'status' => 'active'
+                    ]
+                );
+
+                $msg = '喜欢+1';
+                if($type =='collect'){
+                    $msg = '收藏+1';
+                }
+                $data['status'] = 'active';
+            }else{
+                // 更新like状态
+                if($_res->status == 'active'){
+                    if($type =='collect'){
+                        $res = DB::table('dev_post')->where('id',$id)->decrement("collect_count");
+                    }else{
+                        $res = DB::table('dev_post')->where('id',$id)->decrement("like_count");
+                    }
+                    $_data = DB::table('dev_post')->where('id',$id)->first();
+                    DB::table($_table_name)
+                        ->where('user_id',Auth::user()->id)
+                        ->where('id',$_res->id)
+                        ->update([
+                            'status' => 'delete',
+                            'updated_at' => date('Y-m-d H:i:s',time())
+                        ]);
+                    $msg = '取消喜欢成功';
+                    if($type =='collect'){
+                        $msg = '取消收藏成功';
+                    }
+                    $data['status'] = 'delete';
+                }else{
+                    if($type =='collect'){
+                        $res = DB::table('dev_post')->where('id',$id)->increment("collect_count");
+                    }else{
+                        $res = DB::table('dev_post')->where('id',$id)->increment("like_count");
+                    }
+                    $_data = DB::table('dev_post')->where('id',$id)->first();
+                    DB::table($_table_name)
+                        ->where('user_id',Auth::user()->id)
+                        ->where('id',$_res->id)
+                        ->update([
+                            'status' => 'active',
+                            'updated_at' => date('Y-m-d H:i:s',time()),
+                        ]);
+                    $msg = '喜欢+1';
+                    if($type =='collect'){
+                        $msg = '收藏+1';
+                    }
+                    $data['status'] = 'active';
+                }
+            }
+        }else{
+            $msg = '需要先登录哦！';
+        }
+        if($res){
+            $data['msg'] = $msg;
+            $data['num'] = $_data->like_count;
+            if($type =='collect'){
+                $data['num'] = $_data->collect_count;
+            }
+            return response()->json($data);
+        }else{
+            $data['msg'] = $msg;
+            $data['status'] = 'fail';
+            return response()->json($data);
+        }
+    }
+    /**
+     * 判断是否like
+     * @param $table_name
+     * @param $id
+     * @param $user_id
+     * @return boolean
+     */
+    public function judgeLikeOrCollect($table_name,$id,$user_id){
+        $status = false ;
+        if($id && $user_id){
+            $_res = DB::table($table_name)
+                ->where('like_id',$id)
+                ->where('user_id',$user_id)
+                ->where('status','active')
+                ->where('type','post')
+                ->first();
+            if($_res){
+                $status = true;
+            }
+        }
+        return $status;
     }
 }

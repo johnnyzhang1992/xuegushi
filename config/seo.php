@@ -45,7 +45,7 @@ return array(
     'zhuanlan_description' => env('SEO_DEFAULT_DESCRIPTION', '古代诗词曲名句赏析,名人轶事分享,记录与分享关于古诗词的一切'),
 
 
-    'zhuanlan_sub_title' => '分享关于古诗词的一切',
+    'zhuanlan_sub_title' => '一个专门分享古诗词的知识社区',
 
     'google_tag_manager' =>[
         'gtm_code' => env('GOOGLE_TAG_MANAGER_CODE','GTM-T4PSDDL'),
