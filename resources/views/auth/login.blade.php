@@ -1,7 +1,7 @@
 @extends('la.layouts.auth')
 
 @section('htmlheader_title')
-    学古诗 后台登录
+    学古诗 登录
 @endsection
 
 @section('content')

@@ -47,7 +47,6 @@ class MeController extends Controller
             return view('errors.404');
         }
     }
-
     /**
      * 我的订阅
      * @param $id
@@ -80,7 +79,44 @@ class MeController extends Controller
             return view('errors.404');
         }
     }
-
+    /**
+     * 我的专栏
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function publications(){
+        if (Auth::guest()){
+            return redirect('/login');
+        }
+        $subs = DB::table('dev_zl_follow')
+              ->where('dev_zl_follow.u_id',Auth::user()->id)
+              ->where('dev_zl_follow.status',1)
+              ->leftJoin('dev_zhuanlan','dev_zhuanlan.id','=','dev_zl_follow.zl_id')
+              ->select('dev_zl_follow.updated_at as time','dev_zhuanlan.*')
+              ->orderBy('dev_zl_follow.id','desc')
+              ->get();
+        if(isset($subs) && $subs){
+            foreach ($subs as $key=>$zl){
+                $subs[$key]->post_count = $this->getZLPostCount($zl->id);
+                $subs[$key]->followers_count = $this->getZLFollowCount($zl->id);
+            }
+        }
+        $zls = DB::table('dev_zhuanlan')
+            ->where('creator_id',Auth::user()->id)
+            ->orderBy('id','desc')
+            ->get();
+        if(isset($zls) && $zls){
+            foreach ($zls as $key=>$zl){
+                $zls[$key]->post_count = $this->getZLPostCount($zl->id);
+                $zls[$key]->followers_count = $this->getZLFollowCount($zl->id);
+            }
+        }
+        return view('zhuan.me.publications')
+            ->with('status','posts')
+            ->with('is_has',$this->isHasZhuanlan())
+            ->with('site_title','我的专栏')
+            ->with('zls',$zls)
+            ->with('subs',$subs);
+    }
     /**
      * 我的喜欢
      * @param $id
@@ -108,7 +144,6 @@ class MeController extends Controller
             return view('errors.404');
         }
     }
-
     /**
      * 我的收藏
      * @param $id
@@ -136,6 +171,11 @@ class MeController extends Controller
             return view('errors.404');
         }
     }
+    /**
+     * 我的评论
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function comments($id){
         $me = DB::table('users')
             ->where('id',$id)
@@ -169,7 +209,6 @@ class MeController extends Controller
             ->with('site_title','我的草稿')
             ->with('posts',$posts);
     }
-
     /**
      * 我的文章
      * @return mixed
@@ -216,6 +255,11 @@ class MeController extends Controller
             ->count();
         return number_format($count);
     }
+    /**
+     * 获取专栏文章数量
+     * @param $id
+     * @return mixed
+     */
     public function getZLPostCount($id){
         $count=DB::table('dev_post')
             ->where('zhuanlan_id',$id)

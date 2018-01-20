@@ -1,7 +1,7 @@
 @extends('la.layouts.auth')
 
 @section('htmlheader_title')
-    Register
+    注册
 @endsection
 
 @section('content')
