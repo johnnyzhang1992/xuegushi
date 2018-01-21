@@ -228,6 +228,77 @@ class MeController extends Controller
             ->with('posts',$posts);
     }
     /**
+     * 我的设置
+     * @return mixed
+     */
+    public function setting(){
+        if (Auth::guest()){
+            return redirect('/login');
+        }
+        $me = DB::table('users')
+            ->where('id',Auth::user()->id)
+            ->first();
+        return view('zhuan.me.setting')
+            ->with('is_has',$this->isHasZhuanlan())
+            ->with('me',$me)
+            ->with('site_title','账号设置');
+    }
+
+    /**
+     * 更新我的设置
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function updateSetting(Request $request){
+        // 每次仅更新某一个值
+        $_data = [];
+        if (Auth::guest()){
+           $_data['msg'] = '你没有登录哦！';
+           $_data['status'] = false;
+           return response()->json($_data);
+        }
+        $name = $request->input('name');
+        $val = $request->input('val');
+        if($name == 'name'){
+            // 判断name是否已存在
+            $_name =  DB::table('users')
+                ->where('id',Auth::user()->id)
+                ->where('name',$val)
+                ->first();
+            if($_name){
+                $_data['msg'] = '你输入的用户名已存在！';
+                $_data['status'] = false;
+                return response()->json($_data);
+            }
+        }
+        if($name == 'domain'){
+            // 判断name是否已存在
+            $_name =  DB::table('users')
+                ->where('id',Auth::user()->id)
+                ->where('domain',$val)
+                ->first();
+            if($_name){
+                $_data['msg'] = '你输入的域名已存在！';
+                $_data['status'] = false;
+                return response()->json($_data);
+            }
+        }
+        $res = DB::table('users')
+            ->where('id',Auth::user()->id)
+            ->update([
+               $name => $val,
+                'updated_at' => date('Y-m-d H:i:s',time())
+            ]);
+        if($res){
+            $_data['msg'] = '更新成功';
+            $_data['status'] = true;
+        }else{
+            $_data['msg'] = '更新失败';
+            $_data['status'] = false;
+        }
+        return response()->json($_data);
+    }
+    /**
      * 判断当前用户是否注册过专栏
      * @return bool
      */

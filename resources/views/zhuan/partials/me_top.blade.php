@@ -25,7 +25,13 @@
         </div></div>
     <div class="other-basic-info">
         <p class="profile-name hero-title">{{@$me->name}}</p>
-        <div class="hero-description user-profile-bio " id="user-profile-bio" data-text="完善自我介绍，方面大家了解你">{{@$me->about}}</div>
+        <div class="hero-description user-profile-bio " id="user-profile-bio" data-text="完善自我介绍，方面大家了解你">
+            @if(isset($me->about) && $me->about && mb_strlen($me->about)>0)
+                {{@$me->about}}
+            @else
+                暂无简介
+            @endif
+        </div>
         <div class="user-profile-bio-count hidden">100 / 140</div>
         <textarea class="user-profile-bio-edit hidden" id="user-profile-bio-edit" placeholder="完善自我介绍，方面大家了解你(140字以内">时间会告诉你答案。</textarea>
         <div class="xzl-button-set xzl-profile-button-set">
@@ -66,9 +72,9 @@
         @if (!Auth::guest() && Auth::user()->id == $me->id)
             <div class="xzl-button-set xzl-profile-button-set xzl-profile-button-set-setting  u-inlineBlock">
                <span class="followState js-followState xzl-button-set-inner">
-                   <button class="btn btn-default profile-setting-btn  edit-profile-button">
-                       <span class="button-label  xzl-default-state-btn js-buttonLabel">设置</span>
-                   </button>
+                   <a class="btn btn-default profile-setting-btn  edit-profile-button" type="button" href="{{url('/me/setting')}}">
+                       <span class="button-label  xzl-default-state-btn js-buttonLabel">编辑个人资料</span>
+                   </a>
                    <button class="btn btn-default edit-profile-save-button  hidden" data-action="save-profile" data-url="/users/29047" data-profile-url="/u/5775582212">
                        <span class="button-label   js-buttonLabel">保存</span>
                    </button>

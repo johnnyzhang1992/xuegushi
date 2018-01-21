@@ -25,7 +25,7 @@
                 <a href="{{url('/login')}}" class="login">登录</a>
             @else
                 <a role="button" class="avatar nav-user dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                    <img src="{{ asset('static/images/avatar.png') }}" class="user-image" alt="User Image"/>
+                    <img src="{{ asset(@Auth::user()->avatar) }}" class="user-image" alt="User Image"/>
                 </a>
             @endif
             @if (!Auth::guest())

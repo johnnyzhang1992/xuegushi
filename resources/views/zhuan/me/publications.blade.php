@@ -302,6 +302,7 @@ use App\Helpers\DateUtil;
                     </div>
                 </div>
             </div>
+        </div>
     </main>
 @endsection
 

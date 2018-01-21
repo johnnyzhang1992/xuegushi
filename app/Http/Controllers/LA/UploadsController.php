@@ -538,4 +538,41 @@ class UploadsController extends Controller
             return response()->json('error: upload file not found.', 400);
         }
     }
+    public function uploadUserAvatar(){
+        $input = Input::all();
+        if(Input::hasFile('file')) {
+            $file = Input::file('file');
+
+            // print_r($file);
+            $folder = public_path('static/avatar/');
+            $filename = $file->getClientOriginalName();
+
+            $date_append = Auth::user()->id.'_';
+            $upload_success = Input::file('file')->move($folder, $date_append.$filename);
+            $data = array();
+            if($upload_success){
+                // 上传成功，信息入库
+                $_ret = [
+                    'name' => $date_append.$filename,
+                    "extension" => pathinfo($filename, PATHINFO_EXTENSION),
+                    "uid" => Auth::user()->id,
+                    'type'=>'user_avatar',
+                    'type_id' => Auth::user()->id,
+                    'source_url'=> 'static/avatar/'.$date_append.$filename,
+                    'created_at' => date('Y-m-d H:i:s',time()),
+                    'updated_at' => date('Y-m-d H:i:s',time()),
+                ];
+                DB::table('dev_photo')->insert($_ret);
+                $data['url'] = '/static/avatar/'.$date_append.$filename;
+                DB::table('users')->where('id',Auth::user()->id)->update([
+                    'avatar' => $data['url']
+                ]);
+                chmod('static/avatar/'.$date_append.$filename, 0777);
+//                ImageUtil::makeAvatar($folder.$date_append.$filename,$folder.$date_append.'lg-'.$filename ,750,250);
+                return response()->json($data,200);
+            }
+        }else{
+            return response()->json('error: upload file not found.', 400);
+        }
+    }
 }

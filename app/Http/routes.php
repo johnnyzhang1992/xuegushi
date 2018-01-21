@@ -126,6 +126,8 @@ Route::group(['domain' => 'zhuanlan.xuegushi.cn'], function() {
         Route::get('/posts','ZhuanLan\MeController@posts');
         Route::get('/publications', 'ZhuanLan\MeController@publications');
         Route::get('/subscribes', 'ZhuanLan\MeController@subscribes');
+        Route::get('/setting', 'ZhuanLan\MeController@setting');
+        Route::post('/update', 'ZhuanLan\MeController@updateSetting');
     });
     Route::group([
         'prefix' => 'people'
@@ -138,6 +140,7 @@ Route::group(['domain' => 'zhuanlan.xuegushi.cn'], function() {
     });
     // 上传图片
     Route::post('/uploads_image/{type}', 'LA\UploadsController@uploadZhuanlanAvatar');
+    Route::post('/uploads/userAvatar', 'LA\UploadsController@uploadUserAvatar');
 
     Route::get('/write','ZhuanLan\PostController@write');
     // 搜索功能
