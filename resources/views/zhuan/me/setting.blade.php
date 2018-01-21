@@ -476,11 +476,11 @@ use App\Helpers\DateUtil;
                                 <label class="notop">个人简介</label>
                                 <div class="item-value ">
                                     <div class="item-value-partial item-show bio_show ">
-                                        <span class="bio">时间会告诉你答案。</span>
+                                        <span class="bio">{{@$me->about}}</span>
                                         <a class="setting-edit-btn edit-btn setting-bio-edit-btn hidden" href="javascript:void(0)">编辑</a>
                                     </div>
                                     <div class="bio-item-edit edit-item bio-item-edit hidden">
-                                        <textarea type="text" id="user-bio-item" class="user-bio-item">时间会告诉你答案。</textarea>
+                                        <textarea type="text" id="user-bio-item" class="user-bio-item">{{@$me->about}}</textarea>
                                         <button class="button button--small xzl-base-color-normal-btn hidden save-button bio-btn bio-save-btn xzl-basic-btn xzl-btn-with-chrome xzl-base-color-normal-btn">
                                             <span class="button-label  xzl-default-state-btn ">确定</span>
                                         </button>
