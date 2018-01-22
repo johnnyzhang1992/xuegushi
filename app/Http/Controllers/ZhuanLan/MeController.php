@@ -29,15 +29,22 @@ class MeController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function show($id){
-        $me = DB::table('users')
-            ->where('id',$id)
-            ->first();
+        $me = DB::table('users')->where('domain',$id)->first();
+        if(isset($me) && $me){
+            DB::table('users')->where('domain',$id)->increment("pv_count");
+        }elseif(is_numeric( $id ) ){
+            $me = DB::table('users')->where('id',$id)->first();
+            DB::table('users')->where('id',$id)->increment("pv_count");
+        }
         if(isset($me) && $me){
             $posts = DB::table('dev_post')
-                ->where('creator_id',$id)
+                ->where('creator_id',$me->id)
                 ->where('status','active')
                 ->orderBy('id','desc')
                 ->get();
+            if(!isset($me->domain) && strlen($me->domain)<1){
+                $me->domain = $me->id;
+            }
             return view('zhuan.me.show')
                 ->with('posts',$posts)
                 ->with('me',$me)
@@ -53,17 +60,21 @@ class MeController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function subscribes($id){
-        $me = DB::table('users')
-            ->where('id',$id)
-            ->first();
+        $me = DB::table('users')->where('domain',$id)->first();
+        if(!isset($me) && is_numeric($id)){
+            $me = DB::table('users')->where('id',$id)->first();
+        }
         if(isset($me) && $me){
             $zls = DB::table('dev_zl_follow')
-                ->where('dev_zl_follow.u_id',$id)
+                ->where('dev_zl_follow.u_id',$me->id)
                 ->where('dev_zl_follow.status',1)
                 ->leftJoin('dev_zhuanlan','dev_zhuanlan.id','=','dev_zl_follow.zl_id')
                 ->select('dev_zl_follow.updated_at as time','dev_zhuanlan.*')
                 ->orderBy('dev_zl_follow.id','desc')
                 ->get();
+            if(!isset($me->domain) && strlen($me->domain)<1){
+                $me->domain = $me->id;
+            }
             if(isset($zls) && $zls){
                 foreach ($zls as $key=>$zl){
                     $zls[$key]->post_count = $this->getZLPostCount($zl->id);
@@ -123,18 +134,22 @@ class MeController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function favorites($id){
-        $me = DB::table('users')
-            ->where('id',$id)
-            ->first();
+        $me = DB::table('users')->where('domain',$id)->first();
+        if(!isset($me) && is_numeric($id)){
+            $me = DB::table('users')->where('id',$id)->first();
+        }
         if(isset($me) && $me){
             $posts = DB::table('dev_like')
                 ->where('dev_like.type','post')
-                ->where('dev_like.user_id',$id)
+                ->where('dev_like.user_id',$me->id)
                 ->where('dev_like.status','active')
                 ->leftJoin('dev_post','dev_post.id','=','dev_like.like_id')
                 ->select('dev_like.created_at as create_time','dev_post.*')
                 ->orderBy('dev_like.created_at','desc')
                 ->get();
+            if(!isset($me->domain) && strlen($me->domain)<1){
+                $me->domain = $me->id;
+            }
             return view('zhuan.me.favorites')
                 ->with('posts',$posts)
                 ->with('me',$me)
@@ -150,18 +165,22 @@ class MeController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function collects($id){
-        $me = DB::table('users')
-            ->where('id',$id)
-            ->first();
+        $me = DB::table('users')->where('domain',$id)->first();
+        if(!isset($me) && is_numeric($id)){
+            $me = DB::table('users')->where('id',$id)->first();
+        }
         if(isset($me) && $me){
             $posts = DB::table('dev_collect')
                 ->where('dev_collect.type','post')
-                ->where('dev_collect.user_id',$id)
+                ->where('dev_collect.user_id',$me->id)
                 ->where('dev_collect.status','active')
                 ->leftJoin('dev_post','dev_post.id','=','dev_collect.like_id')
                 ->select('dev_collect.created_at as create_time','dev_post.*')
                 ->orderBy('dev_collect.created_at','desc')
                 ->get();
+            if(!isset($me->domain) && strlen($me->domain)<1){
+                $me->domain = $me->id;
+            }
             return view('zhuan.me.collects')
                 ->with('posts',$posts)
                 ->with('me',$me)
@@ -177,10 +196,14 @@ class MeController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function comments($id){
-        $me = DB::table('users')
-            ->where('id',$id)
-            ->first();
+        $me = DB::table('users')->where('domain',$id)->first();
+        if(!isset($me) && is_numeric($id)){
+            $me = DB::table('users')->where('id',$id)->first();
+        }
         if(isset($me) && $me) {
+            if(!isset($me->domain) && strlen($me->domain)<1){
+                $me->domain = $me->id;
+            }
             return view('zhuan.me.comments')
                 ->with('me', $me)
                 ->with('posts',[])

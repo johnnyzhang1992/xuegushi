@@ -293,19 +293,19 @@ use App\Helpers\DateUtil;
                     <!-- Nav tabs -->
                     <ul class="nav nav-tabs" role="tablist">
                         <li role="presentation" class="active">
-                            <a href="{{ url('/people/'.@$me->id) }}" >文章</a>
+                            <a href="{{ url('/people/'.@$me->domain) }}" >文章</a>
                         </li>
                         <li role="presentation">
-                            <a href="{{ url('people/'.@$me->id.'/subscribes') }}" >订阅</a>
+                            <a href="{{ url('people/'.@$me->domain.'/subscribes') }}" >订阅</a>
                         </li>
                         <li role="presentation">
-                            <a href="{{ url('people/'.@$me->id.'/comments') }}" >回复</a>
+                            <a href="{{ url('people/'.@$me->domain.'/comments') }}" >回复</a>
                         </li>
                         <li role="presentation">
-                            <a href="{{ url('people/'.@$me->id.'/favorites') }}" >喜欢</a>
+                            <a href="{{ url('people/'.@$me->domain.'/favorites') }}" >喜欢</a>
                         </li>
                         <li role="presentation">
-                            <a href="{{ url('people/'.@$me->id.'/collects') }}" >收藏</a>
+                            <a href="{{ url('people/'.@$me->domain.'/collects') }}" >收藏</a>
                         </li>
                     </ul>
                     <!-- Tab panes -->
