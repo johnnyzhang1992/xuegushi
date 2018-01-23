@@ -545,7 +545,8 @@ class UploadsController extends Controller
 
             // print_r($file);
             $folder = public_path('static/avatar/');
-            $filename = $file->getClientOriginalName();
+//            $filename = $file->getClientOriginalName();
+            $filename =  str_random(4).'_'.$file->getClientOriginalName();
 
             $date_append = Auth::user()->id.'_';
             $upload_success = Input::file('file')->move($folder, $date_append.$filename);

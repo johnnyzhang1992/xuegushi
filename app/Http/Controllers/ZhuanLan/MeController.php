@@ -296,11 +296,15 @@ class MeController extends Controller
         }
         if($name == 'domain'){
             // 判断name是否已存在
+            // 且不能和专栏domain重名
             $_name =  DB::table('users')
                 ->where('id',Auth::user()->id)
                 ->where('domain',$val)
                 ->first();
-            if($_name){
+            $_zl = DB::table('dev_zhuanlan')
+                ->where('name',$val)
+                ->first();
+            if($_name || $val == 'me' || $val == 'people' || $_zl){
                 $_data['msg'] = '你输入的域名已存在！';
                 $_data['status'] = false;
                 return response()->json($_data);

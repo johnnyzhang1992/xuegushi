@@ -356,6 +356,9 @@ use App\Helpers\DateUtil;
             border: 1px solid #EDEDED;
             border-radius: 4px;
         }
+        .dz-preview{
+            display: none;
+        }
         @media (max-width: 730px){
             .content{
                 padding-left: 0;
@@ -470,6 +473,9 @@ use App\Helpers\DateUtil;
                                             </form>
                                         </div>
                                     </div>
+                                </div>
+                                <div class="item-value">
+                                    <span class="tip item-show-tip">图片建议为正方形，200*200</span>
                                 </div>
                             </div>
                             <div class="item item-center">
