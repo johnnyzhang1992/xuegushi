@@ -116,7 +116,7 @@ Route::group(['domain' => 'zhuanlan.xuegushi.cn'], function() {
         Route::post('/reset','ZhuanLan\PostController@reset')->where('id', '[0-9]+');
         Route::get('{id}','ZhuanLan\PostController@show')->where('id', '[0-9]+');
         Route::get('{id}/edit','ZhuanLan\PostController@edit')->where('id', '[0-9]+');
-        Route::post('{id}/preview','ZhuanLan\PostController@show')->where('id', '[0-9]+');
+        Route::get('{id}/preview','ZhuanLan\PostController@show')->where('id', '[0-9]+');
         Route::post('{id}/{type}','ZhuanLan\PostController@updateLikeOrCollect')->where('id', '[0-9]+');
     });
     Route::group([
