@@ -28,17 +28,21 @@ class ZhuanLanController extends Controller
      * @return $this
      */
     public function index(){
-        $zhuanlans = DB::table('dev_zhuanlan')->paginate(8);
+        $zhuanlans = DB::table('dev_zhuanlan')
+            ->paginate(8);
         foreach ($zhuanlans as $key=>$zhuan){
-            $zhuanlans[$key]->post_count = DB::table('dev_post')->where('zhuanlan_id',$zhuan->id)->count();
+            $zhuanlans[$key]->post_count = DB::table('dev_post')
+                ->where('zhuanlan_id',$zhuan->id)
+                ->where('status','active')
+                ->count();
             $zhuanlans[$key]->follow_count = $this->getZLFollowCount($zhuan->id);
         }
         $posts = DB::table('dev_post')
             ->where('dev_post.status','active')
             ->leftJoin('users','users.id','=','dev_post.creator_id')
             ->select('dev_post.*','users.name as author_name')
-            ->orderBy('dev_post.pv_count','desc')
             ->orderBy('dev_post.created_at','desc')
+            ->orderBy('dev_post.pv_count','desc')
             ->paginate(6);
         return view('zhuan.index')
             ->with('query','home')
