@@ -401,7 +401,8 @@ use App\Helpers\DateUtil;
         }
     </style>
 @endsection
-@yield('review')
+@include('zhuan.partials.review')
+
 @section('content')
     <main class="main_content col-md-12 no-padding clearfix">
         <div class="content col-md-9 col-md-offset-1 col-xs-12 zhuanlan-new">
@@ -492,11 +493,11 @@ use App\Helpers\DateUtil;
                         </ul>
                     </div>
                 </div>
-                @include('zhuan.partials.review')
+                @yield('review')
             </div>
         </div>
     </main>
-
+    @yield('review-modal')
 @endsection
 
 @section('content-js')
@@ -614,4 +615,5 @@ use App\Helpers\DateUtil;
             )
         });
     </script>
+    @yield('review-js')
 @endsection
