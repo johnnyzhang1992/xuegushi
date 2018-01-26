@@ -109,7 +109,8 @@ return [
     |
     */
 
-    'cookie' => 'laravel_session',
+    'cookie' => 'xuegushi_session',
+//    'cookie' => 'laravel_session',
 
     /*
     |--------------------------------------------------------------------------
@@ -135,7 +136,8 @@ return [
     |
     */
 
-    'domain' => null,
+    'domain' => 'xuegushi.cn',
+//    'domain' => null,
 
     /*
     |--------------------------------------------------------------------------
