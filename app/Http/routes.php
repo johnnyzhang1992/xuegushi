@@ -110,6 +110,7 @@ Route::group(['domain' => 'zhuanlan.xuegushi.cn'], function() {
     Route::group([
         'prefix' => 'post'
     ],function (){
+        Route::get('/','ZhuanLan\PostController@index');
         Route::post('/create','ZhuanLan\PostController@store');
         Route::post('/update','ZhuanLan\PostController@update');
         Route::post('/delete','ZhuanLan\PostController@delete')->where('id', '[0-9]+');

@@ -70,7 +70,7 @@
                         @endforeach
                     @endif
                 </ul>
-                <p class="Home-random"><button class="Button Refresh-button-wrapper" type="button"><i class="fa fa-refresh Refresh-button"></i>换一换</button></p>
+                <p class="Home-random"><a class="Button Refresh-button-wrapper" href="{{url('/post')}}">查看更多</a></p>
             </section>
         </div>
     </main>

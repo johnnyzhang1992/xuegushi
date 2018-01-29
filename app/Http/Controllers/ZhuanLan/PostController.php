@@ -23,6 +23,19 @@ class PostController extends Controller
 //        $this->middleware('auth');
     }
 
+    public function index(){
+        $posts = DB::table('dev_post')
+            ->where('dev_post.status','active')
+            ->leftJoin('users','users.id','=','dev_post.creator_id')
+            ->select('dev_post.*','users.name as author_name')
+            ->orderBy('dev_post.created_at','desc')
+            ->orderBy('dev_post.pv_count','desc')
+            ->paginate(9);
+        return view('zhuan.post.index')
+            ->with('query','home')
+            ->with('posts',$posts)
+            ->with('is_has',$this->isHasZhuanlan());
+    }
     /**
      * 写文章
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
