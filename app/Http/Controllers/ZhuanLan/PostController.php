@@ -164,12 +164,35 @@ class PostController extends Controller
           $user_id = Auth::user()->id;
         }
         if(isset($data) && $data){
+            $comments = DB::table('dev_review')
+                ->where('dev_review.t_id',$id)
+                ->leftJoin('users','users.id','=','dev_review.u_id')
+                ->select('dev_review.*','users.name','users.avatar','users.domain')
+                ->orderBy('dev_review.like_count','desc')
+                ->orderBy('dev_review.created_at','asc')
+                ->paginate(9);
+            $comments->setPath('api/posts/'.$id.'/comments');
+            foreach ($comments as $key=>$comment){
+                $_comment = DB::table('dev_review')
+                    ->where('dev_review.id',$comment->parent_id)
+                    ->leftJoin('users','users.id','=','dev_review.u_id')
+                    ->select('dev_review.*','users.name','users.avatar','users.domain')
+                    ->orderBy('dev_review.like_count','desc')
+                    ->orderBy('dev_review.created_at','asc')
+                    ->first();
+                if($_comment){
+                    $comments[$key]->p_u_id = $_comment->u_id;
+                    $comments[$key]->p_name = $_comment->name;
+                    $comments[$key]->p_domain = $_comment->domain;
+                }
+            }
             DB::table('dev_post')->where('id',$data->id)->increment("pv_count");
             return view('zhuan.post.show')
                 ->with('post',$data)
                 ->with('is_like',$this->judgeLikeOrCollect('dev_like',$id,$user_id))
                 ->with('is_collect',$this->judgeLikeOrCollect('dev_collect',$id,$user_id))
                 ->with('is_has',$this->isHasZhuanlan())
+                ->with('comments',$comments)
                 ->with('site_title',$data->title);
         }else{
             return view('errors.404')->with('record_id',$id)->with('record_name','文章');

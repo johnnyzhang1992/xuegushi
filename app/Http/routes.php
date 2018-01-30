@@ -156,7 +156,13 @@ Route::group(['domain' => 'zhuanlan.xuegushi.cn'], function() {
     Route::get('/login','Auth\AuthController@showLoginForm');
     Route::get('/register','Auth\AuthController@showRegistrationForm');
     Route::get('/logout','Auth\AuthController@logout');
-
+    // api
+    Route::group([
+        'prefix' => 'api'
+    ],function (){
+        Route::post('/posts/{id}/comments','ZhuanLan\ReviewController@create');
+        Route::get('/posts/{id}/comments','ZhuanLan\ReviewController@show');
+    });
     Route::get('/{domain}','ZhuanLan\ZhuanLanController@show');
     Route::get('/{domain}/about','ZhuanLan\ZhuanLanController@about');
     Route::post('/{domain}/follow','ZhuanLan\ZhuanLanController@follow');

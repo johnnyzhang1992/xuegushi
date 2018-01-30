@@ -409,7 +409,7 @@ use App\Helpers\DateUtil;
             <input type="hidden" name="_token" value="{{ csrf_token() }}" />
             <div class="container-stream col-md-9  col-xs-12">
                 <ol class="breadcrumb">
-                    <li><a href="{{url('/')}}">文章</a></li>
+                    <li><a href="{{url('/post')}}">文章</a></li>
                     <li class="active">{{@$post->title}}</li>
                 </ol>
                 <div class="xzl-aspect-ratio-placeholder-fill">
