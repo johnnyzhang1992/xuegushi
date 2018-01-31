@@ -28,6 +28,9 @@ class DateUtil{
             case $t < 60 * 60 * 24 * 3:
                 $text = floor($time/(60*60*24)) ==1 ?'昨天 ' . date('H:i', $time) : '前天 ' . date('H:i', $time) ; //昨天和前天
                 break;
+            case $t < 60 * 60 * 24 * 7:
+                $text = floor($t/(60*60*24)).' 天前'; //7天内
+                break;
             case $t < 60 * 60 * 24 * 30:
                 $text = date('m月d日 H:i', $time); //一个月内
                 break;

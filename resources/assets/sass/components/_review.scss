@@ -157,6 +157,9 @@
   position: absolute;
   left: 0;
 }
+.CommentItem-authorTitle {
+  color: gray;
+}
 .Avatar-hemingway {
   width: 36px;
   height: 36px;
@@ -205,6 +208,8 @@
   -ms-flex-direction: row;
   flex-direction: row;
   line-height: 24px;
+  margin-right: 86px;
+  display: flex;
 }
 .CommentItem-context {
   overflow: hidden;
@@ -350,4 +355,9 @@
 .commentModal .modal-header {
   padding: 15px;
   border-bottom: none;
+}
+@media(max-width: 440px) {
+  .PostComment-split{
+    width: 100%;
+  }
 }

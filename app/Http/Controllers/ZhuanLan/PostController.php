@@ -166,19 +166,21 @@ class PostController extends Controller
         if(isset($data) && $data){
             $comments = DB::table('dev_review')
                 ->where('dev_review.t_id',$id)
+                ->where('dev_review.status','active')
                 ->leftJoin('users','users.id','=','dev_review.u_id')
                 ->select('dev_review.*','users.name','users.avatar','users.domain')
                 ->orderBy('dev_review.like_count','desc')
-                ->orderBy('dev_review.created_at','asc')
-                ->paginate(9);
-            $comments->setPath('api/posts/'.$id.'/comments');
+                ->orderBy('dev_review.created_at','desc')
+                ->paginate(4);
+            $comments->setPath('/api/posts/'.$id.'/comments');
             foreach ($comments as $key=>$comment){
                 $_comment = DB::table('dev_review')
                     ->where('dev_review.id',$comment->parent_id)
+                    ->where('dev_review.status','active')
                     ->leftJoin('users','users.id','=','dev_review.u_id')
                     ->select('dev_review.*','users.name','users.avatar','users.domain')
                     ->orderBy('dev_review.like_count','desc')
-                    ->orderBy('dev_review.created_at','asc')
+                    ->orderBy('dev_review.created_at','desc')
                     ->first();
                 if($_comment){
                     $comments[$key]->p_u_id = $_comment->u_id;
@@ -193,7 +195,9 @@ class PostController extends Controller
                 ->with('is_collect',$this->judgeLikeOrCollect('dev_collect',$id,$user_id))
                 ->with('is_has',$this->isHasZhuanlan())
                 ->with('comments',$comments)
-                ->with('site_title',$data->title);
+                ->with('site_title',$data->title)
+                ->with('user_id',$user_id ? $user_id : -1)
+                ->with('type','comments');
         }else{
             return view('errors.404')->with('record_id',$id)->with('record_name','文章');
         }

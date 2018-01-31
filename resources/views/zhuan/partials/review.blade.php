@@ -11,7 +11,7 @@ use App\Helpers\DateUtil;
             @if (Auth::guest())
                 <img class="Avatar-hemingway CommentEditor-avatar Avatar--xs" alt="小小梦工场" src="{{asset('/static/images/avatar.png')}}">
             @else
-                <img class="Avatar-hemingway CommentEditor-avatar Avatar--xs" alt="小小梦工场" src="{{asset(Auth::user()->avatar)}}">
+                <img class="Avatar-hemingway CommentEditor-avatar Avatar--xs" alt="{{asset(Auth::user()->name)}}" src="{{asset(Auth::user()->avatar)}}">
             @endif
             <div class="CommentEditor-input">
                 <div class="Input-wrapper Input-wrapper--spread Input-wrapper--large Input-wrapper--noPadding">
@@ -24,49 +24,7 @@ use App\Helpers\DateUtil;
             </div>
         </div>
         <div class="PostCommentList">
-            @if(isset($comments) && $comments)
-                @foreach($comments as $key=>$comment)
-                    <div class="CommentItem">
-                        <a class="UserAvatar CommentItem-author" href="{{url($comment->domain ? 'people/'.$comment->domain : 'people/'.$comment->u_id)}}" target="_blank"><img class="Avatar-hemingway Avatar--xs" alt="{{@$comment->name}}" src="{{asset(@$comment->avatar)}}"></a>
-                        <div class="CommentItem-headWrapper">
-                            @if(isset($comment->parent_id) && $comment->parent_id>0)
-                                <button class="Button CommentItem-conversationButton Button--plain" type="button" data-toggle="modal" data-target="#commentModal">
-                                    <i class="fa fa-comments"></i> 查看对话
-                                </button>
-                            @endif
-                            <div class="CommentItem-head">
-                                <span class="CommentItem-context">
-                                    <a href="{{url($comment->domain ? 'people/'.$comment->domain : 'people/'.$comment->u_id)}}" class="" target="_blank">{{@$comment->name}}</a>
-                                    @if(isset($comment->parent_id) && $comment->parent_id>0)
-                                        <span class="CommentItem-replyTo">
-                                        <span class="CommentItem-replySplit">回复</span>
-                                        <a href="{{url($comment->p_domain ? 'people/'.$comment->p_domain : 'people/'.$comment->p_u_id)}}" class="" target="_blank">{{@$comment->p_name}}</a>
-                                    </span>
-                                    @endif
-                                </span>
-                            </div>
-                        </div>
-                        <div class="CommentItem-content">{{@$comment->content}}</div>
-                        <div class="CommentItem-foot">
-                            <span class="CommentItem-like" title="382 人觉得这个很赞">{{@$comment->like_count}} 赞</span>
-                            <div class="HoverTitle CommentItem-createdTime" data-hover-title="2017 年 11月 27 日星期一晚上 11 点 50 分">
-                                <time datetime="Mon Nov 27 2017 23:50:54 GMT+0800 (中国标准时间)">{{@ DateUtil::formatDate(strtotime($comment->created_at))}}</time>
-                            </div>
-                            <button class="Button CommentItem-action CommentItem-actionReply Button--plain" type="button" data-id="{{@$comment->id}}"><i class="fa fa-reply"></i>回复</button>
-                            <button class="Button CommentItem-action CommentItem-actionLike Button--plain" type="button"><i class="fa fa-thumbs-o-up"></i>赞</button>
-                        </div>
-                    </div>
-                    @if($key == 3 && $comment->currentPage()==1)
-                        {{--这部分只有第一页存在--}}
-                        <div class="BlockTitle av-marginLeft av-borderColor PostComment-split">
-                            <span class="BlockTitle-title">以上为精选评论</span>
-                            <span class="BlockTitle-line"></span>
-                        </div>
-                    @endif
-                @endforeach
-            @endif
-            {{@$comments->links()}}
-            {{--分页--}}
+            @include('zhuan.partials.comments')
         </div>
     </div>
 @endsection
@@ -83,35 +41,7 @@ use App\Helpers\DateUtil;
                     <div class="ConversationDialog">
                         <div>
                             <div class="ConversationDialog-list">
-                                <div class="CommentItem">
-                                    <a class="UserAvatar CommentItem-author" href="https://www.zhihu.com/people/cheneyfm" target="_blank">
-                                        @if (Auth::guest())
-                                            <img class="Avatar-hemingway CommentEditor-avatar Avatar--xs" alt="小小梦工场" src="{{asset('/static/images/avatar.png')}}">
-                                        @else
-                                            <img class="Avatar-hemingway CommentEditor-avatar Avatar--xs" alt="小小梦工场" src="{{asset(Auth::user()->avatar)}}">
-                                        @endif
-                                    </a>
-                                    <div class="CommentItem-headWrapper">
-                                        <div class="CommentItem-head">
-                                    <span class="CommentItem-context">
-                                        <a href="https://www.zhihu.com/people/gu-rui-80" class="" target="_blank">白鸟</a>
-                                        <span class="CommentItem-replyTo">
-                                            <span class="CommentItem-replySplit">回复</span>
-                                            <a href="https://www.zhihu.com/people/guo-zhi-89-43" class="" target="_blank">沉浮世</a>
-                                        </span>
-                                    </span>
-                                        </div>
-                                    </div>
-                                    <div class="CommentItem-content">有的家长的宠溺连孩子的成绩都不求，不能理解</div>
-                                    <div class="CommentItem-foot">
-                                        <span class="CommentItem-like" title="382 人觉得这个很赞">382 赞</span>
-                                        <div class="HoverTitle CommentItem-createdTime" data-hover-title="2017 年 11月 27 日星期一晚上 11 点 50 分">
-                                            <time datetime="Mon Nov 27 2017 23:50:54 GMT+0800 (中国标准时间)">2 个月前</time>
-                                        </div>
-                                        {{--<button class="Button CommentItem-action CommentItem-actionReply Button--plain" type="button"><i class="fa fa-reply"></i>回复</button>--}}
-                                        <button class="Button CommentItem-action CommentItem-actionLike Button--plain" type="button"><i class="fa fa-thumbs-o-up"></i>赞</button>
-                                    </div>
-                                </div>
+                                {{--对话内容--}}
                             </div>
                         </div>
                     </div>
@@ -145,11 +75,11 @@ use App\Helpers\DateUtil;
             $(this).parent().parent().find('.CommentEditor-actions').hide();
         });
         // 回复下的取消
-        $('.PostComment').on('click','.cancel-review',function () {
+        $('.PostComment,.ConversationDialog-list').on('click','.cancel-review',function () {
             $(this).parent().parent().parent().remove();
         });
         // 点击回复
-        $('.PostComment').on('click','.CommentItem-actionReply',function () {
+        $('.PostComment,.ConversationDialog-list').on('click','.CommentItem-actionReply',function () {
             if($(this).parent().parent().find('.CommentEditor').length>0){
                 $(this).parent().parent().find('.CommentEditor').remove();
                 return false;
@@ -174,33 +104,117 @@ use App\Helpers\DateUtil;
                 '                </div>')
         });
         // 提交
-        $('.PostComment').on('click','.saveReview',function () {
+        $('.PostComment,.ConversationDialog-list').on('click','.saveReview',function () {
+            var th = $(this);
             var _id = $(this).attr('data-id');
-            console.log(_id);
             var content = $(this).parent().parent().find('.richText').val();
-            console.log(content);
-            $.post(
-                '/api/posts/{{@$post->id}}/comments',
-                {
-                    '_token': $('input[name="_token"]').val(),
-                    'content': content,
-                    'parent_id':_id
+            if(content && $.trim(content)!=''){
+                $.post(
+                    '/api/posts/{{@$post->id}}/comments',
+                    {
+                        '_token': $('input[name="_token"]').val(),
+                        'content': content,
+                        'parent_id':_id
+                    },
+                    function (res) {
+                        if(res && res.status == 'success'){
+                            $('body').toast({
+                                position:'fixed',
+                                content:res.msg,
+                                duration:1000,
+                                isCenter:true,
+                                background:'rgba(51,122,183,0.8)',
+                                animateIn:'bounceIn-hastrans',
+                                animateOut:'bounceOut-hastrans'
+                            });
+                            $(th).parent().parent().find('.richText').val('');
+                            getComments('/api/posts/{{@$post->id}}/comments');
+                        }else{
+                            $('body').toast({
+                                position:'fixed',
+                                content:res.msg,
+                                duration:1000,
+                                isCenter:true,
+                                background:'rgba(0,0,0,0.5)',
+                                animateIn:'bounceIn-hastrans',
+                                animateOut:'bounceOut-hastrans'
+                            });
+                        }
+                    }
+                )
+            }else{
+                $('body').toast({
+                    position:'fixed',
+                    content:'评论内容不能为空哦',
+                    duration:1000,
+                    isCenter:true,
+                    background:'rgba(0,0,0,0.5)',
+                    animateIn:'bounceIn-hastrans',
+                    animateOut:'bounceOut-hastrans'
+                });
+            }
+        });
+        // 查看对话
+        $('.PostCommentList').on('click','.CommentItem-conversationButton',function () {
+            var _id = $(this).attr('data-id');
+            var _link = '/api/posts/'+'{{@$post->id}}'+'/comments/'+_id+'/conversation';
+            var form_data1 = {
+                _token:"{{ csrf_token() }}"
+            };
+            $.ajax({
+                url: _link,
+                type: 'GET',
+                dataType: "html",
+                cache: false,
+                data: form_data1,
+                success: function(data){
+                    $('.ConversationDialog-list').html(data);
+                    $('#commentModal').modal('show')
                 },
-                function (res) {
-                    if(res && res.status == 'success'){
+                error: function(){
+                    console.log("获取评论信息失败");
+                }
+            });
+            return false;
+        });
+        // 获取评论信息
+        $('.PostCommentList').on('click','.pagination a',function () {
+            var _link = $(this).attr('href');
+            getComments(_link);
+            return false;
+        });
+        // 删除评论
+        // CommentItem-actionDelete
+        // 查看对话
+        $('.PostCommentList').on('click','.CommentItem-actionDelete',function () {
+            var th = $(this);
+            var _id = $(this).attr('data-id');
+            var _link = '/api/posts/'+'{{@$post->id}}'+'/comments/'+_id+'/delete';
+            var form_data1 = {
+                _token:"{{ csrf_token() }}"
+            };
+            $.ajax({
+                url: _link,
+                type: 'GET',
+                cache: false,
+                data: form_data1,
+                success: function(data){
+                    console.log(data);
+                    if(data && data.status == 'success'){
                         $('body').toast({
                             position:'fixed',
-                            content:res.msg,
+                            content:data.msg,
                             duration:1000,
                             isCenter:true,
                             background:'rgba(51,122,183,0.8)',
                             animateIn:'bounceIn-hastrans',
                             animateOut:'bounceOut-hastrans'
                         });
+                        $(th).parent().parent().remove();
                     }else{
                         $('body').toast({
                             position:'fixed',
-                            content:res.msg,
+                            content:data.msg,
                             duration:1000,
                             isCenter:true,
                             background:'rgba(0,0,0,0.5)',
@@ -208,8 +222,39 @@ use App\Helpers\DateUtil;
                             animateOut:'bounceOut-hastrans'
                         });
                     }
+                },
+                error: function(){
+                    $('body').toast({
+                        position:'fixed',
+                        content:'删除失败',
+                        duration:1000,
+                        isCenter:true,
+                        background:'rgba(0,0,0,0.5)',
+                        animateIn:'bounceIn-hastrans',
+                        animateOut:'bounceOut-hastrans'
+                    });
                 }
-            )
-        })
+            });
+            return false;
+        });
+        function getComments(_link) {
+            var form_data1 = {
+                _token:"{{ csrf_token() }}"
+            };
+            $.ajax({
+                url: _link,
+                type: 'GET',
+                dataType: "html",
+                cache: false,
+                data: form_data1,
+                success: function(data){
+                    $('.PostCommentList').html(data);
+                },
+                error: function(){
+                    console.log("获取评论信息失败");
+                }
+
+            });
+        }
     </script>
 @endsection

@@ -162,6 +162,9 @@ Route::group(['domain' => 'zhuanlan.xuegushi.cn'], function() {
     ],function (){
         Route::post('/posts/{id}/comments','ZhuanLan\ReviewController@create');
         Route::get('/posts/{id}/comments','ZhuanLan\ReviewController@show');
+        Route::get('/posts/{id}/comments/{parent_id}/conversation','ZhuanLan\ReviewController@conversation');
+        Route::get('/posts/{id}/comments/{t_id}/like','ZhuanLan\ReviewController@like');
+        Route::get('/posts/{id}/comments/{t_id}/delete','ZhuanLan\ReviewController@delete');
     });
     Route::get('/{domain}','ZhuanLan\ZhuanLanController@show');
     Route::get('/{domain}/about','ZhuanLan\ZhuanLanController@about');
