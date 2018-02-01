@@ -73,7 +73,6 @@ class ReviewController extends Controller
             ->where('dev_review.status','active')
             ->leftJoin('users','users.id','=','dev_review.u_id')
             ->select('dev_review.*','users.name','users.avatar','users.domain')
-            ->orderBy('dev_review.like_count','desc')
             ->orderBy('dev_review.created_at','desc')
             ->paginate(4);
         $comments->setPath('/api/posts/'.$id.'/comments');
@@ -83,7 +82,6 @@ class ReviewController extends Controller
                 ->where('dev_review.status','active')
                 ->leftJoin('users','users.id','=','dev_review.u_id')
                 ->select('dev_review.*','users.name','users.avatar','users.domain')
-                ->orderBy('dev_review.like_count','desc')
                 ->orderBy('dev_review.created_at','desc')
                 ->first();
             if($_comment){
@@ -131,7 +129,6 @@ class ReviewController extends Controller
             ->where('dev_review.status','active')
             ->leftJoin('users','users.id','=','dev_review.u_id')
             ->select('dev_review.*','users.name','users.avatar','users.domain')
-            ->orderBy('dev_review.like_count','desc')
             ->orderBy('dev_review.created_at','desc')
             ->get();
         foreach ($_comments as $key=>$_comment){
