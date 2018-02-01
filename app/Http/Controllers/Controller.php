@@ -41,4 +41,42 @@ class Controller extends BaseController{
             'collect_count' =>$collect_count
         ];
     }
+    /**
+     * 判断是否已点赞
+     * @param $id
+     * @return bool
+     */
+    public function is_like($id){
+        if (Auth::guest()){
+            return false;
+        }
+        $data = DB::table('dev_like')
+            ->where('like_id',$id)
+            ->where('type','post_review')
+            ->where('user_id',Auth::user()->id)
+            ->where('status','active')
+            ->first();
+        if(isset($data) && $data){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    /**
+     * 获取某个评论的点赞数
+     * @param $id
+     * @return int
+     */
+    static function getLikeCount($id){
+        if (Auth::guest()){
+            return 0;
+        }
+        $data = DB::table('dev_like')
+            ->where('like_id',$id)
+            ->where('user_id',Auth::user()->id)
+            ->where('type','post_review')
+            ->where('status','active')
+            ->count();
+        return isset($data) && $data ? $data : 0;
+    }
 }

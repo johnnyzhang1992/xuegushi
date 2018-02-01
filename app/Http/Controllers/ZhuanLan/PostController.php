@@ -169,7 +169,6 @@ class PostController extends Controller
                 ->where('dev_review.status','active')
                 ->leftJoin('users','users.id','=','dev_review.u_id')
                 ->select('dev_review.*','users.name','users.avatar','users.domain')
-                ->orderBy('dev_review.like_count','desc')
                 ->orderBy('dev_review.created_at','desc')
                 ->paginate(4);
             $comments->setPath('/api/posts/'.$id.'/comments');
@@ -179,7 +178,6 @@ class PostController extends Controller
                     ->where('dev_review.status','active')
                     ->leftJoin('users','users.id','=','dev_review.u_id')
                     ->select('dev_review.*','users.name','users.avatar','users.domain')
-                    ->orderBy('dev_review.like_count','desc')
                     ->orderBy('dev_review.created_at','desc')
                     ->first();
                 if($_comment){
@@ -187,6 +185,8 @@ class PostController extends Controller
                     $comments[$key]->p_name = $_comment->name;
                     $comments[$key]->p_domain = $_comment->domain;
                 }
+                $comments[$key]->is_like = $this->is_like($comment->id);
+                $comments[$key]->like_count = $this->getLikeCount($comment->id);
             }
             DB::table('dev_post')->where('id',$data->id)->increment("pv_count");
             return view('zhuan.post.show')
@@ -387,4 +387,5 @@ class PostController extends Controller
         }
         return $status;
     }
+
 }

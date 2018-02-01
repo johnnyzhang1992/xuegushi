@@ -184,8 +184,6 @@ use App\Helpers\DateUtil;
             return false;
         });
         // 删除评论
-        // CommentItem-actionDelete
-        // 查看对话
         $('.PostCommentList').on('click','.CommentItem-actionDelete',function () {
             var th = $(this);
             var _id = $(this).attr('data-id');
@@ -236,6 +234,54 @@ use App\Helpers\DateUtil;
                 }
             });
             return false;
+        });
+        // 点赞
+        $('.PostCommentList,.ConversationDialog-list').on('click','.CommentItem-actionLike',function () {
+            var th = $(this);
+            var _id = $(this).attr('data-id');
+            var _link = '/api/posts/'+'{{@$post->id}}'+'/comments/'+_id+'/like';
+            var form_data1 = {
+                _token:"{{ csrf_token() }}"
+            };
+            $.ajax({
+                url: _link,
+                type: 'POST',
+                cache: false,
+                data: form_data1,
+                success: function(res){
+                    if(res && res.status){
+                        $('body').toast({
+                            position:'fixed',
+                            content:res.msg,
+                            duration:1000,
+                            isCenter:true,
+                            background:'rgba(51,122,183,0.8)',
+                            animateIn:'bounceIn-hastrans',
+                            animateOut:'bounceOut-hastrans'
+                        });
+                        $(th).parent().find('.likeCount').html(res.count);
+                        if(res.status == 'active'){
+                            $(th).find('.likeText').html('取消赞');
+                        }else{
+                            $(th).find('.likeText').html('赞');
+                        }
+                    }else{
+                        $('body').toast({
+                            position:'fixed',
+                            content:res.msg,
+                            duration:1000,
+                            isCenter:true,
+                            background:'rgba(0,0,0,0.5)',
+                            animateIn:'bounceIn-hastrans',
+                            animateOut:'bounceOut-hastrans'
+                        });
+                    }
+                },
+                error: function(){
+                    console.log("获取评论信息失败");
+                }
+
+            });
         });
         function getComments(_link) {
             var form_data1 = {

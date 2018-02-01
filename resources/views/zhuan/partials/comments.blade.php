@@ -25,14 +25,14 @@ use App\Helpers\DateUtil;
                     </span>
                 </div>
             </div>
-            <div class="CommentItem-content">{{@$comment->content}}</div>
+            <div class="CommentItem-content">{!! @$comment->content !!}</div>
             <div class="CommentItem-foot">
-                <span class="CommentItem-like" title="{{@$comment->like_count}}  人觉得这个很赞">{{@$comment->like_count}} 赞</span>
+                <span class="CommentItem-like" title="{{@$comment->like_count}}人觉得这个很赞"><span class="likeCount">{{@$comment->like_count}}</span> 赞</span>
                 <div class="HoverTitle CommentItem-createdTime" data-hover-title="2017 年 11月 27 日星期一晚上 11 点 50 分">
                     <time datetime="Mon Nov 27 2017 23:50:54 GMT+0800 (中国标准时间)">{{@ DateUtil::formatDate(strtotime($comment->created_at))}}</time>
                 </div>
                 <button class="Button CommentItem-action CommentItem-actionReply Button--plain" type="button" data-id="{{@$comment->id}}"><i class="fa fa-reply"></i>回复</button>
-                <button class="Button CommentItem-action CommentItem-actionLike Button--plain" type="button"><i class="fa fa-thumbs-o-up"></i>赞</button>
+                <button class="Button CommentItem-action CommentItem-actionLike Button--plain" type="button" data-id="{{@$comment->id}}"><i class="fa fa-thumbs-o-up"></i><span class="likeText">@if($comment->is_like)取消赞 @else 赞@endif</span></button>
                 @if ((!Auth::guest() && Auth::user()->id == $comment->u_id) || (!Auth::guest() && Auth::user()->id==1))
                     <button class="Button CommentItem-action CommentItem-actionDelete Button--plain" data-id="{{@$comment->id}}" type="button">删除</button>
                 @endif

@@ -91,6 +91,8 @@ class ReviewController extends Controller
                 $comments[$key]->p_name = $_comment->name;
                 $comments[$key]->p_domain = $_comment->domain;
             }
+            $comments[$key]->is_like = $this->is_like($comment->id);
+            $comments[$key]->like_count = $this->getLikeCount($comment->id);
         }
         return view('zhuan.partials.comments')
             ->with('comments',$comments)
@@ -113,14 +115,18 @@ class ReviewController extends Controller
         }
         $comments = array();
         $comment = DB::table('dev_review')
+            ->where('t_id',$id)
             ->where('dev_review.id',$parent_id)
             ->where('dev_review.status','active')
             ->leftJoin('users','users.id','=','dev_review.u_id')
             ->select('dev_review.*','users.name','users.avatar','users.domain')
             ->orderBy('dev_review.created_at','desc')
             ->first();
+        $comment->is_like = $this->is_like($parent_id);
+        $comment->like_count = $this->getLikeCount($parent_id);
         array_push($comments,$comment);
         $_comments = DB::table('dev_review')
+            ->where('t_id',$id)
             ->where('dev_review.parent_id',$parent_id)
             ->where('dev_review.status','active')
             ->leftJoin('users','users.id','=','dev_review.u_id')
@@ -133,6 +139,8 @@ class ReviewController extends Controller
                 $_comments[$key]->p_u_id = $_comment->u_id;
                 $_comments[$key]->p_name = $_comment->name;
                 $_comments[$key]->p_domain = $_comment->domain;
+                $_comments[$key]->is_like = $this->is_like($_comment->id);
+                $_comments[$key]->like_count = $this->getLikeCount($_comment->id);
             }
             array_push($comments,$_comments[$key]);
         }
@@ -142,10 +150,76 @@ class ReviewController extends Controller
             ->with('user_id',$user_id)
             ->with('type','conversation');
     }
+    /**
+     * 更新点赞状态
+     * @param $id
+     * @param $t_id
+     * @return mixed
+     */
     public function like($id,$t_id){
         // id 为文章id
         // t_id为评论id
+        $data = array();
+        $msg = null;
+        $_data = null;
+        if ($t_id && !Auth::guest()) {
+            $_data = DB::table('dev_like')
+                ->where('type','post_review')
+                ->where('like_id',$t_id)
+                ->where('user_id',Auth::user()->id)
+                ->first();
+            if (isset($_data) && $_data)  {
+                // 已存在记录
+                if($_data->status == 'active'){
+                    DB::table('dev_like')
+                        ->where('type','post_review')
+                        ->where('like_id',$t_id)
+                        ->where('user_id',Auth::user()->id)
+                        ->update([
+                            'status' => 'delete',
+                            'updated_at' =>date('Y-m-d H:i:s', time())
+                        ]);
+                    $data['msg'] = '赞 -1';
+                    $data['status'] = 'delete';
+                }else{
+                    DB::table('dev_like')
+                        ->where('type','post_review')
+                        ->where('like_id',$t_id)
+                        ->where('user_id',Auth::user()->id)
+                        ->update([
+                            'status' => 'active',
+                            'updated_at' =>date('Y-m-d H:i:s', time())
+                        ]);
+                    $data['msg'] = '赞 +1';
+                    $data['status'] = 'active';
+                }
+            } else {
+                // 新纪录
+                DB::table('dev_like')
+                    ->insert([
+                        'user_id'=>Auth::user()->id,
+                        'like_id'=>$t_id,
+                        'type'=> 'post_review',
+                        'status' => 'active',
+                        'created_at' =>date('Y-m-d H:i:s', time()),
+                        'updated_at' =>date('Y-m-d H:i:s', time())
+                    ]);
+                $data['msg'] = '赞 +1';
+                $data['status'] = 'active';
+            }
+            $data['count'] = $this->getLikeCount($t_id);
+        } else {
+            $data['msg'] = '需要先登录哦！';
+        }
+        return response()->json($data);
     }
+
+    /**
+     * 删除评论
+     * @param $id
+     * @param $t_id
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function delete($id,$t_id){
         $res = DB::table('dev_review')
             ->where('id',$t_id)
