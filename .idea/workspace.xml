@@ -5,8 +5,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8d00fce8-fe4d-4c69-ab7f-b491bf82fdd6" name="Default" comment="">
+      <change beforePath="" afterPath="$PROJECT_DIR$/resources/assets/sass/components/_me_side.scss" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/resources/views/zhuan/partials/me_side.blade.php" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ZhuanLan/MeController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/ZhuanLan/MeController.php" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ZhuanLan/ReviewController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/ZhuanLan/ReviewController.php" />
+      <change beforePath="$PROJECT_DIR$/resources/assets/sass/layouts/_zhuanlan.scss" afterPath="$PROJECT_DIR$/resources/assets/sass/layouts/_zhuanlan.scss" />
+      <change beforePath="$PROJECT_DIR$/resources/assets/sass/zhuanlan.scss" afterPath="$PROJECT_DIR$/resources/assets/sass/zhuanlan.scss" />
+      <change beforePath="$PROJECT_DIR$/resources/views/zhuan/me/collects.blade.php" afterPath="$PROJECT_DIR$/resources/views/zhuan/me/collects.blade.php" />
+      <change beforePath="$PROJECT_DIR$/resources/views/zhuan/me/comments.blade.php" afterPath="$PROJECT_DIR$/resources/views/zhuan/me/comments.blade.php" />
+      <change beforePath="$PROJECT_DIR$/resources/views/zhuan/me/favorites.blade.php" afterPath="$PROJECT_DIR$/resources/views/zhuan/me/favorites.blade.php" />
+      <change beforePath="$PROJECT_DIR$/resources/views/zhuan/me/show.blade.php" afterPath="$PROJECT_DIR$/resources/views/zhuan/me/show.blade.php" />
+      <change beforePath="$PROJECT_DIR$/resources/views/zhuan/me/subscribes.blade.php" afterPath="$PROJECT_DIR$/resources/views/zhuan/me/subscribes.blade.php" />
+      <change beforePath="$PROJECT_DIR$/resources/views/zhuan/partials/me_top.blade.php" afterPath="$PROJECT_DIR$/resources/views/zhuan/partials/me_top.blade.php" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -24,8 +35,8 @@
       <file leaf-file-name="routes.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Http/routes.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="565">
-              <caret line="167" column="7" lean-forward="true" selection-start-line="167" selection-start-column="7" selection-end-line="167" selection-end-column="7" />
+            <state relative-caret-position="526">
+              <caret line="139" column="60" lean-forward="true" selection-start-line="139" selection-start-column="60" selection-end-line="139" selection-end-column="60" />
               <folding>
                 <element signature="e#470#3652#1#PHP" expanded="false" />
                 <element signature="e#673#708#0#PHP" expanded="false" />
@@ -39,185 +50,174 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="review.blade.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/resources/views/zhuan/partials/review.blade.php">
+      <file leaf-file-name="MeController.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/Http/Controllers/ZhuanLan/MeController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="604">
-              <caret line="250" column="39" lean-forward="false" selection-start-line="250" selection-start-column="39" selection-end-line="250" selection-end-column="39" />
+            <state relative-caret-position="688">
+              <caret line="172" column="34" lean-forward="false" selection-start-line="172" selection-start-column="34" selection-end-line="172" selection-end-column="34" />
               <folding>
-                <element signature="e#2624#2893#0#HTML" expanded="false" />
-                <element signature="e#2979#3311#0#HTML" expanded="false" />
-                <element signature="e#3408#3653#0#HTML" expanded="false" />
-                <element signature="e#3765#3833#0#HTML" expanded="false" />
-                <element signature="e#3953#5607#0#HTML" expanded="false" />
-                <element signature="e#5712#7869#0#HTML" expanded="false" />
-                <element signature="e#7975#8703#0#HTML" expanded="false" />
-                <element signature="e#8793#8908#0#HTML" expanded="false" />
-                <element signature="e#9008#11012#0#HTML" expanded="false" />
-                <element signature="e#13005#13511#0#HTML" expanded="false" />
-                <marker date="1517497646993" expanded="true" signature="44:52" ph="..." />
-                <marker date="1517497646993" expanded="true" signature="411:424" ph="..." />
-                <marker date="1517497646993" expanded="true" signature="523:557" ph="..." />
-                <marker date="1517497646993" expanded="true" signature="665:690" ph="..." />
-                <marker date="1517497646993" expanded="true" signature="701:728" ph="..." />
-                <marker date="1517497646993" expanded="true" signature="1462:1487" ph="..." />
-                <marker date="1517497646993" expanded="true" signature="1537:1551" ph="..." />
-                <marker date="1517497646993" expanded="true" signature="2539:2550" ph="..." />
-                <marker date="1517497646993" expanded="true" signature="4212:4225" ph="..." />
-                <marker date="1517497646993" expanded="true" signature="4265:4299" ph="..." />
-                <marker date="1517497646993" expanded="true" signature="4360:4389" ph="..." />
-                <marker date="1517497646993" expanded="true" signature="5974:5984" ph="..." />
-                <marker date="1517497646993" expanded="true" signature="6889:6899" ph="..." />
-                <marker date="1517497646993" expanded="true" signature="8065:8075" ph="..." />
-                <marker date="1517497646993" expanded="true" signature="8170:8184" ph="..." />
-                <marker date="1517497646993" expanded="true" signature="9128:9138" ph="..." />
-                <marker date="1517497646993" expanded="true" signature="9227:9241" ph="..." />
-                <marker date="1517497646993" expanded="true" signature="11253:11263" ph="..." />
-                <marker date="1517497646993" expanded="true" signature="11350:11364" ph="..." />
-                <marker date="1517497646993" expanded="true" signature="13064:13078" ph="..." />
+                <element signature="e#3371#4766#0#PHP" expanded="false" />
+                <element signature="e#9017#9515#0#PHP" expanded="false" />
+                <element signature="e#10081#10451#0#PHP" expanded="false" />
+                <element signature="e#10563#12306#0#PHP" expanded="false" />
+                <element signature="e#12368#12674#0#PHP" expanded="false" />
+                <element signature="e#12751#12993#0#PHP" expanded="false" />
+                <element signature="e#13069#13272#0#PHP" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file leaf-file-name="comments.blade.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/resources/views/zhuan/partials/comments.blade.php">
+        <entry file="file://$PROJECT_DIR$/resources/views/zhuan/me/comments.blade.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="123">
-              <caret line="34" column="215" lean-forward="false" selection-start-line="34" selection-start-column="215" selection-end-line="34" selection-end-column="215" />
+            <state relative-caret-position="1111">
+              <caret line="411" column="26" lean-forward="true" selection-start-line="411" selection-start-column="26" selection-end-line="411" selection-end-column="26" />
               <folding>
-                <marker date="1517497605624" expanded="true" signature="39:68" ph="..." />
-                <marker date="1517497605624" expanded="true" signature="83:110" ph="..." />
-                <marker date="1517497605624" expanded="true" signature="207:284" ph="..." />
-                <marker date="1517497605624" expanded="true" signature="352:367" ph="..." />
-                <marker date="1517497605624" expanded="true" signature="378:402" ph="..." />
-                <marker date="1517497605624" expanded="true" signature="481:519" ph="..." />
-                <marker date="1517497605624" expanded="true" signature="545:596" ph="..." />
-                <marker date="1517497605624" expanded="true" signature="715:735" ph="..." />
-                <marker date="1517497605624" expanded="true" signature="1025:1102" ph="..." />
-                <marker date="1517497605624" expanded="true" signature="1133:1148" ph="..." />
-                <marker date="1517497605624" expanded="true" signature="1158:1184" ph="..." />
-                <marker date="1517497605624" expanded="true" signature="1270:1321" ph="..." />
-                <marker date="1517497605624" expanded="true" signature="1508:1591" ph="..." />
-                <marker date="1517497605624" expanded="true" signature="1622:1639" ph="..." />
-                <marker date="1517497605624" expanded="true" signature="1649:1675" ph="..." />
-                <marker date="1517497605624" expanded="true" signature="1918:1938" ph="..." />
-                <marker date="1517497605624" expanded="true" signature="2047:2068" ph="..." />
-                <marker date="1517497605624" expanded="true" signature="2105:2126" ph="..." />
-                <marker date="1517497605624" expanded="true" signature="2342:2397" ph="..." />
-                <marker date="1517497605624" expanded="true" signature="2551:2564" ph="..." />
-                <marker date="1517497605624" expanded="true" signature="2727:2740" ph="..." />
-                <marker date="1517497605624" expanded="true" signature="2804:2821" ph="..." />
-                <marker date="1517497605624" expanded="true" signature="2877:2974" ph="..." />
-                <marker date="1517497605624" expanded="true" signature="2878:2930" ph="..." />
-                <marker date="1517497605624" expanded="true" signature="2878:2973" ph="..." />
-                <marker date="1517497605624" expanded="true" signature="2878:2974" ph="..." />
-                <marker date="1517497605624" expanded="true" signature="3088:3101" ph="..." />
-                <marker date="1517497605624" expanded="true" signature="3200:3240" ph="..." />
-                <marker date="1517497605624" expanded="true" signature="3241:3272" ph="{...}" />
-                <marker date="1517497605624" expanded="true" signature="3602:3640" ph="..." />
-                <marker date="1517497605624" expanded="true" signature="3641:3673" ph="..." />
-                <marker date="1517497605624" expanded="true" signature="3652:3671" ph="..." />
+                <element signature="e#9846#10838#0#HTML" expanded="false" />
+                <element signature="e#10906#15999#0#HTML" expanded="false" />
+                <element signature="e#11797#13713#0#HTML" expanded="false" />
+                <marker date="1517566610843" expanded="true" signature="44:61" ph="..." />
+                <marker date="1517566610843" expanded="true" signature="73:86" ph="..." />
+                <marker date="1517566610843" expanded="true" signature="9308:9318" ph="..." />
+                <marker date="1517566610843" expanded="true" signature="9341:9349" ph="..." />
+                <marker date="1517566610843" expanded="true" signature="9361:9370" ph="..." />
+                <marker date="1517566610843" expanded="true" signature="9539:9553" ph="..." />
+                <marker date="1517566610843" expanded="true" signature="9648:9671" ph="..." />
+                <marker date="1517566610843" expanded="true" signature="16162:16186" ph="..." />
+                <marker date="1517566610843" expanded="true" signature="16185:16186" ph="..." />
+                <marker date="1517566610843" expanded="true" signature="16337:16349" ph="..." />
+                <marker date="1517566610843" expanded="true" signature="16370:16415" ph="..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ReviewController.php" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/Http/Controllers/ZhuanLan/ReviewController.php">
+      <file leaf-file-name="me_side.blade.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/resources/views/zhuan/partials/me_side.blade.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="451">
-              <caret line="132" column="20" lean-forward="true" selection-start-line="132" selection-start-column="20" selection-end-line="132" selection-end-column="20" />
+            <state relative-caret-position="646">
+              <caret line="24" column="153" lean-forward="false" selection-start-line="24" selection-start-column="153" selection-end-line="24" selection-end-column="153" />
               <folding>
-                <element signature="e#6#54#0#PHP" expanded="true" />
-                <element signature="e#5141#7375#0#PHP" expanded="false" />
-                <element signature="e#7492#8079#0#PHP" expanded="false" />
+                <element signature="n#style#0;n#svg#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#svg#0;n#div#0;n#div#0;n#div#1;n#div#1;n#div#0;n#!!top" expanded="true" />
+                <marker date="1517569224534" expanded="true" signature="2697:2721" ph="..." />
+                <marker date="1517569224534" expanded="true" signature="2864:2885" ph="..." />
+                <marker date="1517569224534" expanded="true" signature="2973:2987" ph="..." />
+                <marker date="1517569224534" expanded="true" signature="3155:3168" ph="..." />
+                <marker date="1517569224534" expanded="true" signature="3391:3407" ph="..." />
+                <marker date="1517569224534" expanded="true" signature="3514:3529" ph="..." />
+                <marker date="1517569224534" expanded="true" signature="3636:3654" ph="..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PostController.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/Http/Controllers/ZhuanLan/PostController.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="489">
-              <caret line="187" column="72" lean-forward="false" selection-start-line="187" selection-start-column="72" selection-end-line="187" selection-end-column="72" />
-              <folding>
-                <element signature="e#1562#2745#0#PHP" expanded="false" />
-                <element signature="e#2860#3664#0#PHP" expanded="false" />
-                <element signature="e#7474#8368#0#PHP" expanded="false" />
-                <element signature="e#8430#8736#0#PHP" expanded="false" />
-                <element signature="e#8813#9045#0#PHP" expanded="false" />
-                <element signature="e#9152#13064#0#PHP" expanded="false" />
-                <element signature="e#13191#13651#0#PHP" expanded="false" />
-              </folding>
-            </state>
+      <file leaf-file-name="heart.svg" pinned="false" current-in-tab="false">
+        <entry file="file://$USER_HOME$/Downloads/heart.svg">
+          <provider selected="true" editor-type-id="images">
+            <state />
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ZhuanLanController.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/Http/Controllers/ZhuanLan/ZhuanLanController.php">
+      <file leaf-file-name="_me_side.scss" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/resources/assets/sass/components/_me_side.scss">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="736">
-              <caret line="306" column="5" lean-forward="false" selection-start-line="306" selection-start-column="5" selection-end-line="306" selection-end-column="5" />
+            <state relative-caret-position="1396">
+              <caret line="98" column="3" lean-forward="false" selection-start-line="98" selection-start-column="3" selection-end-line="98" selection-end-column="3" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Controller.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Controller.php">
+      <file leaf-file-name="favorites.blade.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/resources/views/zhuan/me/favorites.blade.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="229">
-              <caret line="78" column="22" lean-forward="false" selection-start-line="78" selection-start-column="22" selection-end-line="78" selection-end-column="22" />
-              <folding />
+            <state relative-caret-position="914">
+              <caret line="410" column="11" lean-forward="true" selection-start-line="410" selection-start-column="11" selection-end-line="410" selection-end-column="11" />
+              <folding>
+                <element signature="e#9738#14963#0#HTML" expanded="false" />
+                <marker date="1517566616578" expanded="true" signature="44:61" ph="..." />
+                <marker date="1517566616578" expanded="true" signature="73:86" ph="..." />
+                <marker date="1517566616578" expanded="true" signature="9308:9318" ph="..." />
+                <marker date="1517566616578" expanded="true" signature="9341:9349" ph="..." />
+                <marker date="1517566616578" expanded="true" signature="9361:9370" ph="..." />
+                <marker date="1517566616578" expanded="true" signature="9530:9544" ph="..." />
+                <marker date="1517566616578" expanded="true" signature="9639:9662" ph="..." />
+                <marker date="1517566616578" expanded="true" signature="15099:15123" ph="..." />
+                <marker date="1517566616578" expanded="true" signature="15122:15123" ph="..." />
+                <marker date="1517566616578" expanded="true" signature="15274:15286" ph="..." />
+                <marker date="1517566616578" expanded="true" signature="15307:15352" ph="..." />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file leaf-file-name="show.blade.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/resources/views/zhuan/post/show.blade.php">
+        <entry file="file://$PROJECT_DIR$/resources/views/zhuan/me/show.blade.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="209">
-              <caret line="445" column="243" lean-forward="true" selection-start-line="445" selection-start-column="243" selection-end-line="445" selection-end-column="243" />
+            <state relative-caret-position="475">
+              <caret line="404" column="43" lean-forward="false" selection-start-line="404" selection-start-column="43" selection-end-line="404" selection-end-column="43" />
               <folding>
-                <marker date="1517319159884" expanded="true" signature="44:67" ph="..." />
-                <marker date="1517319159884" expanded="true" signature="79:92" ph="..." />
-                <marker date="1517319159884" expanded="true" signature="112:157" ph="..." />
-                <marker date="1517319159884" expanded="true" signature="11196:11219" ph="..." />
-                <marker date="1517319159884" expanded="true" signature="11231:11240" ph="..." />
-                <marker date="1517319159884" expanded="true" signature="11438:11452" ph="..." />
-                <marker date="1517319159884" expanded="true" signature="11597:11609" ph="..." />
-                <marker date="1517319159884" expanded="true" signature="11666:11679" ph="..." />
-                <marker date="1517319159884" expanded="true" signature="11824:11848" ph="..." />
-                <marker date="1517319159884" expanded="true" signature="11859:11872" ph="..." />
-                <marker date="1517319159884" expanded="true" signature="11943:11956" ph="..." />
-                <marker date="1517319159884" expanded="true" signature="12263:12297" ph="..." />
-                <marker date="1517319159884" expanded="true" signature="12371:12394" ph="..." />
-                <marker date="1517319159884" expanded="true" signature="12851:12885" ph="..." />
-                <marker date="1517319159884" expanded="true" signature="12891:12908" ph="..." />
-                <marker date="1517319159884" expanded="true" signature="13154:13206" ph="..." />
-                <marker date="1517319159884" expanded="true" signature="13290:13306" ph="..." />
-                <marker date="1517319159884" expanded="true" signature="13383:13401" ph="..." />
-                <marker date="1517319159884" expanded="true" signature="13481:13502" ph="..." />
-                <marker date="1517319159884" expanded="true" signature="13731:13748" ph="..." />
-                <marker date="1517319159884" expanded="true" signature="13972:13999" ph="..." />
-                <marker date="1517319159884" expanded="true" signature="14091:14123" ph="..." />
-                <marker date="1517319159884" expanded="true" signature="14306:14339" ph="..." />
-                <marker date="1517319159884" expanded="true" signature="15673:15738" ph="..." />
-                <marker date="1517319159884" expanded="true" signature="16732:16756" ph="..." />
-                <marker date="1517319159884" expanded="true" signature="16797:16817" ph="..." />
-                <marker date="1517319159884" expanded="true" signature="17060:17084" ph="..." />
-                <marker date="1517319159884" expanded="true" signature="17090:17113" ph="..." />
-                <marker date="1517319159884" expanded="true" signature="17253:17266" ph="..." />
-                <marker date="1517319159884" expanded="true" signature="17396:17420" ph="..." />
-                <marker date="1517319159884" expanded="true" signature="17609:17617" ph="..." />
-                <marker date="1517319159884" expanded="true" signature="17676:17690" ph="..." />
-                <marker date="1517319159884" expanded="true" signature="17714:17726" ph="..." />
-                <marker date="1517319159884" expanded="true" signature="17747:17792" ph="..." />
-                <marker date="1517319159884" expanded="true" signature="18174:18184" ph="..." />
-                <marker date="1517319159884" expanded="true" signature="20250:20260" ph="..." />
-                <marker date="1517319159884" expanded="true" signature="22581:22592" ph="..." />
+                <element signature="e#92#9285#0#HTML" expanded="false" />
+                <element signature="e#9738#14960#0#HTML" expanded="false" />
+                <marker date="1517566621110" expanded="true" signature="44:61" ph="..." />
+                <marker date="1517566621110" expanded="true" signature="73:86" ph="..." />
+                <marker date="1517566621110" expanded="true" signature="9308:9318" ph="..." />
+                <marker date="1517566621110" expanded="true" signature="9341:9349" ph="..." />
+                <marker date="1517566621110" expanded="true" signature="9361:9370" ph="..." />
+                <marker date="1517566621110" expanded="true" signature="9530:9544" ph="..." />
+                <marker date="1517566621110" expanded="true" signature="9639:9662" ph="..." />
+                <marker date="1517566621110" expanded="true" signature="15096:15120" ph="..." />
+                <marker date="1517566621110" expanded="true" signature="15119:15120" ph="..." />
+                <marker date="1517566621110" expanded="true" signature="15271:15283" ph="..." />
+                <marker date="1517566621110" expanded="true" signature="15304:15349" ph="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="subscribes.blade.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/resources/views/zhuan/me/subscribes.blade.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="754">
+              <caret line="426" column="43" lean-forward="true" selection-start-line="426" selection-start-column="43" selection-end-line="426" selection-end-column="43" />
+              <folding>
+                <element signature="e#10259#16425#0#HTML" expanded="false" />
+                <marker date="1517566626199" expanded="true" signature="44:61" ph="..." />
+                <marker date="1517566626199" expanded="true" signature="73:86" ph="..." />
+                <marker date="1517566626199" expanded="true" signature="9829:9839" ph="..." />
+                <marker date="1517566626199" expanded="true" signature="9862:9870" ph="..." />
+                <marker date="1517566626199" expanded="true" signature="9882:9891" ph="..." />
+                <marker date="1517566626199" expanded="true" signature="10051:10065" ph="..." />
+                <marker date="1517566626199" expanded="true" signature="10160:10183" ph="..." />
+                <marker date="1517566626199" expanded="true" signature="16561:16585" ph="..." />
+                <marker date="1517566626199" expanded="true" signature="16584:16585" ph="..." />
+                <marker date="1517566626199" expanded="true" signature="16736:16748" ph="..." />
+                <marker date="1517566626199" expanded="true" signature="16769:16814" ph="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="collects.blade.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/resources/views/zhuan/me/collects.blade.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="113">
+              <caret line="299" column="13" lean-forward="true" selection-start-line="299" selection-start-column="13" selection-end-line="299" selection-end-column="13" />
+              <folding>
+                <element signature="e#9837#10829#0#HTML" expanded="false" />
+                <element signature="e#10897#16519#0#HTML" expanded="false" />
+                <marker date="1517566632485" expanded="true" signature="44:61" ph="..." />
+                <marker date="1517566632485" expanded="true" signature="73:86" ph="..." />
+                <marker date="1517566632485" expanded="true" signature="9308:9318" ph="..." />
+                <marker date="1517566632485" expanded="true" signature="9341:9349" ph="..." />
+                <marker date="1517566632485" expanded="true" signature="9361:9370" ph="..." />
+                <marker date="1517566632485" expanded="true" signature="9530:9544" ph="..." />
+                <marker date="1517566632485" expanded="true" signature="9639:9662" ph="..." />
+                <marker date="1517566632485" expanded="true" signature="16682:16706" ph="..." />
+                <marker date="1517566632485" expanded="true" signature="16857:16869" ph="..." />
+                <marker date="1517566632485" expanded="true" signature="16890:16935" ph="..." />
               </folding>
             </state>
           </provider>
@@ -261,14 +261,13 @@
       <find>zhuanlan-bio</find>
       <find>#384047</find>
       <find>24</find>
-      <find>$post</find>
       <find>poem</find>
       <find>$table_name</find>
       <find>dev_like</find>
       <find>$me-&gt;id</find>
+      <find>$post</find>
     </findStrings>
     <replaceStrings>
-      <replace>more_info</replace>
       <replace>朝代</replace>
       <replace>类型</replace>
       <replace>data</replace>
@@ -298,6 +297,7 @@
       <replace>'dev_post'</replace>
       <replace>dev_collect</replace>
       <replace>$me-&gt;domain</replace>
+      <replace>$comment</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -306,9 +306,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/app/Http/Controllers/Frontend/AuthorController.php" />
-        <option value="$PROJECT_DIR$/resources/views/zhuan/layout/zhuanlan.blade.php" />
-        <option value="$PROJECT_DIR$/resources/views/zhuan/partials/baidutongji.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/zhuan/post/create.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/zhuan/post/edit.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/zhuan/zhuanlan/show.blade.php" />
@@ -318,7 +315,6 @@
         <option value="$PROJECT_DIR$/resources/assets/sass/components/_reset.scss" />
         <option value="$PROJECT_DIR$/resources/views/zhuan/zhuanlan/subscribes.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/zhuan/post/draft.blade.php" />
-        <option value="$PROJECT_DIR$/resources/views/zhuan/me/subscribes.blade.php" />
         <option value="$PROJECT_DIR$/public/robots.txt" />
         <option value="$PROJECT_DIR$/composer.json" />
         <option value="$PROJECT_DIR$/config/app.php" />
@@ -328,21 +324,13 @@
         <option value="$PROJECT_DIR$/resources/views/zhuan/layout/base.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/auth/login.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/auth/register.blade.php" />
-        <option value="$PROJECT_DIR$/resources/views/zhuan/partials/me_top.blade.php" />
-        <option value="$PROJECT_DIR$/resources/views/zhuan/me/publications.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/zhuan/zhuanlan/create.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/errors/404.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/zhuan/partials/header.blade.php" />
-        <option value="$PROJECT_DIR$/resources/views/zhuan/me/collects.blade.php" />
-        <option value="$PROJECT_DIR$/resources/views/zhuan/me/comments.blade.php" />
-        <option value="$PROJECT_DIR$/resources/views/zhuan/me/favorites.blade.php" />
-        <option value="$PROJECT_DIR$/resources/views/zhuan/me/show.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/frontend/partials/side.blade.php" />
         <option value="$PROJECT_DIR$/resources/assets/sass/components/_left_side.scss" />
-        <option value="$PROJECT_DIR$/app/Http/Controllers/ZhuanLan/MeController.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/LA/UploadsController.php" />
         <option value="$PROJECT_DIR$/resources/views/zhuan/me/setting.blade.php" />
-        <option value="$PROJECT_DIR$/resources/assets/sass/zhuanlan.scss" />
         <option value="$PROJECT_DIR$/config/session.php" />
         <option value="$PROJECT_DIR$/resources/views/frontend/partials/header.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/zhuan/post/index.blade.php" />
@@ -357,6 +345,18 @@
         <option value="$PROJECT_DIR$/resources/views/zhuan/partials/comments.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/zhuan/partials/review.blade.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/ZhuanLan/ReviewController.php" />
+        <option value="$PROJECT_DIR$/resources/views/zhuan/me/publications.blade.php" />
+        <option value="$PROJECT_DIR$/resources/views/zhuan/partials/me_top.blade.php" />
+        <option value="$PROJECT_DIR$/app/Http/Controllers/ZhuanLan/MeController.php" />
+        <option value="$PROJECT_DIR$/resources/views/zhuan/me/comments.blade.php" />
+        <option value="$PROJECT_DIR$/resources/views/zhuan/me/favorites.blade.php" />
+        <option value="$PROJECT_DIR$/resources/views/zhuan/me/show.blade.php" />
+        <option value="$PROJECT_DIR$/resources/views/zhuan/me/subscribes.blade.php" />
+        <option value="$PROJECT_DIR$/resources/views/zhuan/me/collects.blade.php" />
+        <option value="$PROJECT_DIR$/resources/assets/sass/layouts/_zhuanlan.scss" />
+        <option value="$PROJECT_DIR$/resources/assets/sass/zhuanlan.scss" />
+        <option value="$PROJECT_DIR$/resources/assets/sass/components/_me_side.scss" />
+        <option value="$PROJECT_DIR$/resources/views/zhuan/partials/me_side.blade.php" />
       </list>
     </option>
   </component>
@@ -400,8 +400,8 @@
   <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="-8" />
     <option name="y" value="-8" />
-    <option name="width" value="1936" />
-    <option name="height" value="1056" />
+    <option name="width" value="1384" />
+    <option name="height" value="888" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
@@ -422,6 +422,7 @@
     </navigator>
     <panes>
       <pane id="Scope" />
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -532,7 +533,23 @@
               <item name="gushiwen" type="2a2b976b:PhpTreeStructureProvider$1" />
               <item name="resources" type="2a2b976b:PhpTreeStructureProvider$1" />
               <item name="views" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="frontend" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="partials" type="2a2b976b:PhpTreeStructureProvider$1" />
+            </path>
+            <path>
+              <item name="gushiwen" type="b2602c69:ProjectViewProjectNode" />
+              <item name="gushiwen" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="resources" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="views" type="2a2b976b:PhpTreeStructureProvider$1" />
               <item name="zhuan" type="2a2b976b:PhpTreeStructureProvider$1" />
+            </path>
+            <path>
+              <item name="gushiwen" type="b2602c69:ProjectViewProjectNode" />
+              <item name="gushiwen" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="resources" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="views" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="zhuan" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="me" type="2a2b976b:PhpTreeStructureProvider$1" />
             </path>
             <path>
               <item name="gushiwen" type="b2602c69:ProjectViewProjectNode" />
@@ -542,33 +559,16 @@
               <item name="zhuan" type="2a2b976b:PhpTreeStructureProvider$1" />
               <item name="partials" type="2a2b976b:PhpTreeStructureProvider$1" />
             </path>
-            <path>
-              <item name="gushiwen" type="b2602c69:ProjectViewProjectNode" />
-              <item name="gushiwen" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="resources" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="views" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="zhuan" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="post" type="2a2b976b:PhpTreeStructureProvider$1" />
-            </path>
-            <path>
-              <item name="gushiwen" type="b2602c69:ProjectViewProjectNode" />
-              <item name="gushiwen" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="resources" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="views" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="zhuan" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="zhuanlan" type="2a2b976b:PhpTreeStructureProvider$1" />
-            </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="settings.editor.selected.configurable" value="editor.preferences.import" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../newgwildkid" />
     <property name="nodejs_interpreter_path" value="C:/Program Files/nodejs/node" />
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="list.type.of.created.stylesheet" value="SCSS" />
@@ -814,14 +814,8 @@
       <workItem from="1517277077328" duration="8202000" />
       <workItem from="1517364078054" duration="68000" />
       <workItem from="1517371772132" duration="14492000" />
-      <workItem from="1517491505907" duration="5820000" />
-    </task>
-    <task id="LOCAL-00066" summary="分享相关">
-      <created>1514902628367</created>
-      <option name="number" value="00066" />
-      <option name="presentableId" value="LOCAL-00066" />
-      <option name="project" value="LOCAL" />
-      <updated>1514902628367</updated>
+      <workItem from="1517491505907" duration="5873000" />
+      <workItem from="1517536439123" duration="12903000" />
     </task>
     <task id="LOCAL-00067" summary="专栏部分">
       <created>1514902683210</created>
@@ -1159,15 +1153,21 @@
       <option name="project" value="LOCAL" />
       <updated>1517497672827</updated>
     </task>
-    <option name="localTasksCounter" value="115" />
+    <task id="LOCAL-00115" summary="专栏文章评论的点赞功能">
+      <created>1517497783750</created>
+      <option name="number" value="00115" />
+      <option name="presentableId" value="LOCAL-00115" />
+      <option name="project" value="LOCAL" />
+      <updated>1517497783750</updated>
+    </task>
+    <option name="localTasksCounter" value="116" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="820379000" />
+    <option name="totallyTimeSpent" value="833335000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
+    <frame x="-8" y="-8" width="1384" height="888" extended-state="6" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25353646" sideWeight="0.5021322" order="8" side_tool="true" content_ui="tabs" />
@@ -1175,9 +1175,9 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.056583244" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32335907" sideWeight="0.5029737" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.29488575" sideWeight="0.4978678" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26498002" sideWeight="0.4978678" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Gulp" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32335907" sideWeight="0.5029737" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2563966" sideWeight="0.49702632" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21148036" sideWeight="0.49702632" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -1248,50 +1248,15 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="php">
           <url>file://$PROJECT_DIR$/app/Http/Controllers/ZhuanLan/MeController.php</url>
-          <line>197</line>
+          <line>205</line>
           <option name="timeStamp" value="35" />
         </line-breakpoint>
       </breakpoints>
-      <option name="time" value="38" />
+      <option name="time" value="39" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/resources/views/people/like.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4427">
-          <caret line="233" column="48" lean-forward="false" selection-start-line="233" selection-start-column="42" selection-end-line="233" selection-end-column="59" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/composer.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="228">
-          <caret line="12" column="46" lean-forward="false" selection-start-line="12" selection-start-column="46" selection-end-line="12" selection-end-column="46" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/config/seo.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="741">
-          <caret line="37" column="27" lean-forward="false" selection-start-line="37" selection-start-column="27" selection-end-line="37" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/index.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="988">
-          <caret line="57" column="40" lean-forward="false" selection-start-line="57" selection-start-column="40" selection-end-line="57" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/config/app.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1254">
-          <caret line="215" column="65" lean-forward="false" selection-start-line="215" selection-start-column="65" selection-end-line="215" selection-end-column="65" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/errors/403.blade.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="988">
@@ -1341,13 +1306,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/zhuan/me/subscribes.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="171">
-          <caret line="330" column="65" lean-forward="true" selection-start-line="330" selection-start-column="65" selection-end-line="330" selection-end-column="65" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/errors/404.blade.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="361">
@@ -1359,48 +1317,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="665">
           <caret line="84" column="26" lean-forward="false" selection-start-line="84" selection-start-column="26" selection-end-line="84" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/zhuan/me/favorites.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="214">
-          <caret line="301" column="52" lean-forward="true" selection-start-line="301" selection-start-column="52" selection-end-line="301" selection-end-column="52" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/zhuan/me/publications.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3317">
-          <caret line="304" column="14" lean-forward="false" selection-start-line="304" selection-start-column="14" selection-end-line="304" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/zhuan/me/collects.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5358">
-          <caret line="282" column="0" lean-forward="false" selection-start-line="282" selection-start-column="0" selection-end-line="282" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/zhuan/me/show.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5776">
-          <caret line="304" column="66" lean-forward="false" selection-start-line="304" selection-start-column="66" selection-end-line="304" selection-end-column="66" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/zhuan/me/comments.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="6004">
-          <caret line="316" column="46" lean-forward="false" selection-start-line="316" selection-start-column="46" selection-end-line="316" selection-end-column="46" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/zhuan/partials/me_top.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1368">
-          <caret line="70" column="22" lean-forward="false" selection-start-line="70" selection-start-column="22" selection-end-line="70" selection-end-column="22" />
         </state>
       </provider>
     </entry>
@@ -1453,22 +1369,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/ZhuanLan/MeController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="296" column="30" lean-forward="false" selection-start-line="296" selection-start-column="30" selection-end-line="296" selection-end-column="30" />
-          <folding>
-            <element signature="e#3083#4478#0#PHP" expanded="false" />
-            <element signature="e#7747#8245#0#PHP" expanded="false" />
-            <element signature="e#8299#8757#0#PHP" expanded="false" />
-            <element signature="e#8811#9181#0#PHP" expanded="false" />
-            <element signature="e#11098#11404#0#PHP" expanded="false" />
-            <element signature="e#11481#11723#0#PHP" expanded="false" />
-            <element signature="e#11799#12002#0#PHP" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/frontend/partials/side.blade.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="19">
@@ -1480,13 +1380,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/assets/sass/zhuanlan.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="645">
-          <caret line="98" column="14" lean-forward="true" selection-start-line="98" selection-start-column="14" selection-end-line="98" selection-end-column="14" />
         </state>
       </provider>
     </entry>
@@ -1555,7 +1448,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1230">
           <caret line="229" column="21" lean-forward="true" selection-start-line="229" selection-start-column="21" selection-end-line="229" selection-end-column="21" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1568,7 +1460,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/ZhuanLan/ZhuanLanController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="736">
+        <state relative-caret-position="5681">
           <caret line="306" column="5" lean-forward="false" selection-start-line="306" selection-start-column="5" selection-end-line="306" selection-end-column="5" />
           <folding />
         </state>
@@ -1576,8 +1468,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/zhuan/post/show.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="209">
-          <caret line="445" column="243" lean-forward="true" selection-start-line="445" selection-start-column="243" selection-end-line="445" selection-end-column="243" />
+        <state relative-caret-position="8455">
+          <caret line="445" column="243" lean-forward="false" selection-start-line="445" selection-start-column="243" selection-end-line="445" selection-end-column="243" />
           <folding>
             <marker date="1517319159884" expanded="true" signature="44:67" ph="..." />
             <marker date="1517319159884" expanded="true" signature="79:92" ph="..." />
@@ -1620,25 +1512,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/routes.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="565">
-          <caret line="167" column="7" lean-forward="true" selection-start-line="167" selection-start-column="7" selection-end-line="167" selection-end-column="7" />
-          <folding>
-            <element signature="e#470#3652#1#PHP" expanded="false" />
-            <element signature="e#673#708#0#PHP" expanded="false" />
-            <element signature="e#709#847#1#PHP" expanded="false" />
-            <element signature="e#1452#1486#0#PHP" expanded="false" />
-            <element signature="e#1487#1811#1#PHP" expanded="false" />
-            <element signature="e#2136#2212#0#PHP" expanded="false" />
-            <element signature="e#2434#2504#0#PHP" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Controller.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="229">
+        <state relative-caret-position="1368">
           <caret line="78" column="22" lean-forward="false" selection-start-line="78" selection-start-column="22" selection-end-line="78" selection-end-column="22" />
           <folding />
         </state>
@@ -1646,7 +1522,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/ZhuanLan/PostController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="489">
+        <state relative-caret-position="2584">
           <caret line="187" column="72" lean-forward="false" selection-start-line="187" selection-start-column="72" selection-end-line="187" selection-end-column="72" />
           <folding>
             <element signature="e#1562#2745#0#PHP" expanded="false" />
@@ -1662,7 +1538,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/zhuan/partials/comments.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="123">
+        <state relative-caret-position="646">
           <caret line="34" column="215" lean-forward="false" selection-start-line="34" selection-start-column="215" selection-end-line="34" selection-end-column="215" />
           <folding>
             <marker date="1517497605624" expanded="true" signature="39:68" ph="..." />
@@ -1703,19 +1579,9 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/zhuan/partials/review.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="604">
+        <state relative-caret-position="4750">
           <caret line="250" column="39" lean-forward="false" selection-start-line="250" selection-start-column="39" selection-end-line="250" selection-end-column="39" />
           <folding>
-            <element signature="e#2624#2893#0#HTML" expanded="false" />
-            <element signature="e#2979#3311#0#HTML" expanded="false" />
-            <element signature="e#3408#3653#0#HTML" expanded="false" />
-            <element signature="e#3765#3833#0#HTML" expanded="false" />
-            <element signature="e#3953#5607#0#HTML" expanded="false" />
-            <element signature="e#5712#7869#0#HTML" expanded="false" />
-            <element signature="e#7975#8703#0#HTML" expanded="false" />
-            <element signature="e#8793#8908#0#HTML" expanded="false" />
-            <element signature="e#9008#11012#0#HTML" expanded="false" />
-            <element signature="e#13005#13511#0#HTML" expanded="false" />
             <marker date="1517497646993" expanded="true" signature="44:52" ph="..." />
             <marker date="1517497646993" expanded="true" signature="411:424" ph="..." />
             <marker date="1517497646993" expanded="true" signature="523:557" ph="..." />
@@ -1740,14 +1606,275 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/routes.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="526">
+          <caret line="139" column="60" lean-forward="true" selection-start-line="139" selection-start-column="60" selection-end-line="139" selection-end-column="60" />
+          <folding>
+            <element signature="e#470#3652#1#PHP" expanded="false" />
+            <element signature="e#673#708#0#PHP" expanded="false" />
+            <element signature="e#709#847#1#PHP" expanded="false" />
+            <element signature="e#1452#1486#0#PHP" expanded="false" />
+            <element signature="e#1487#1811#1#PHP" expanded="false" />
+            <element signature="e#2136#2212#0#PHP" expanded="false" />
+            <element signature="e#2434#2504#0#PHP" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/ZhuanLan/ReviewController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="451">
-          <caret line="132" column="20" lean-forward="true" selection-start-line="132" selection-start-column="20" selection-end-line="132" selection-end-column="20" />
+        <state relative-caret-position="1026">
+          <caret line="85" column="26" lean-forward="true" selection-start-line="85" selection-start-column="26" selection-end-line="85" selection-end-column="26" />
           <folding>
             <element signature="e#6#54#0#PHP" expanded="true" />
-            <element signature="e#5141#7375#0#PHP" expanded="false" />
-            <element signature="e#7492#8079#0#PHP" expanded="false" />
+            <element signature="e#501#1462#0#PHP" expanded="false" />
+            <element signature="e#3188#5048#0#PHP" expanded="false" />
+            <element signature="e#5142#7376#0#PHP" expanded="false" />
+            <element signature="e#7493#8080#0#PHP" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/zhuan/me/publications.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="303">
+          <caret line="167" column="9" lean-forward="true" selection-start-line="167" selection-start-column="9" selection-end-line="167" selection-end-column="9" />
+          <folding>
+            <marker date="1517561287954" expanded="true" signature="44:61" ph="..." />
+            <marker date="1517561287954" expanded="true" signature="73:86" ph="..." />
+            <marker date="1517561287954" expanded="true" signature="4817:4827" ph="..." />
+            <marker date="1517561287954" expanded="true" signature="4850:4858" ph="..." />
+            <marker date="1517561287954" expanded="true" signature="4870:4879" ph="..." />
+            <marker date="1517561287954" expanded="true" signature="5039:5053" ph="..." />
+            <marker date="1517561287954" expanded="true" signature="5544:5559" ph="..." />
+            <marker date="1517561287954" expanded="true" signature="6073:6101" ph="..." />
+            <marker date="1517561287954" expanded="true" signature="8883:8902" ph="..." />
+            <marker date="1517561287954" expanded="true" signature="8945:8956" ph="..." />
+            <marker date="1517561287954" expanded="true" signature="9136:9151" ph="..." />
+            <marker date="1517561287954" expanded="true" signature="9231:9250" ph="..." />
+            <marker date="1517561287954" expanded="true" signature="9529:9544" ph="..." />
+            <marker date="1517561287954" expanded="true" signature="9550:9565" ph="..." />
+            <marker date="1517561287954" expanded="true" signature="9644:9655" ph="..." />
+            <marker date="1517561287954" expanded="true" signature="9792:9808" ph="..." />
+            <marker date="1517561287954" expanded="true" signature="9902:9923" ph="..." />
+            <marker date="1517561287954" expanded="true" signature="10021:10058" ph="..." />
+            <marker date="1517561287954" expanded="true" signature="10656:10686" ph="..." />
+            <marker date="1517561287954" expanded="true" signature="13468:13489" ph="..." />
+            <marker date="1517561287954" expanded="true" signature="13532:13544" ph="..." />
+            <marker date="1517561287954" expanded="true" signature="13724:13739" ph="..." />
+            <marker date="1517561287954" expanded="true" signature="13819:13838" ph="..." />
+            <marker date="1517561287954" expanded="true" signature="14117:14132" ph="..." />
+            <marker date="1517561287954" expanded="true" signature="14138:14153" ph="..." />
+            <marker date="1517561287954" expanded="true" signature="14232:14243" ph="..." />
+            <marker date="1517561287954" expanded="true" signature="14380:14396" ph="..." />
+            <marker date="1517561287954" expanded="true" signature="14490:14511" ph="..." />
+            <marker date="1517561287954" expanded="true" signature="14890:14902" ph="..." />
+            <marker date="1517561287954" expanded="true" signature="14923:14968" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/zhuan/partials/me_top.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="626">
+          <caret line="31" column="20" lean-forward="true" selection-start-line="31" selection-start-column="20" selection-end-line="31" selection-end-column="20" />
+          <folding>
+            <marker date="1517565796882" expanded="true" signature="407:428" ph="..." />
+            <marker date="1517565796882" expanded="true" signature="439:449" ph="..." />
+            <marker date="1517565796882" expanded="true" signature="2101:2111" ph="..." />
+            <marker date="1517565796882" expanded="true" signature="2240:2298" ph="..." />
+            <marker date="1517565796882" expanded="true" signature="2318:2329" ph="..." />
+            <marker date="1517565796882" expanded="true" signature="3100:3138" ph="..." />
+            <marker date="1517565796882" expanded="true" signature="3148:3169" ph="..." />
+            <marker date="1517565796882" expanded="true" signature="3274:3311" ph="..." />
+            <marker date="1517565796882" expanded="true" signature="3321:3345" ph="..." />
+            <marker date="1517565796882" expanded="true" signature="8741:8786" ph="..." />
+            <marker date="1517565796882" expanded="true" signature="9085:9103" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/ZhuanLan/MeController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="688">
+          <caret line="172" column="34" lean-forward="false" selection-start-line="172" selection-start-column="34" selection-end-line="172" selection-end-column="34" />
+          <folding>
+            <element signature="e#3371#4766#0#PHP" expanded="false" />
+            <element signature="e#9017#9515#0#PHP" expanded="false" />
+            <element signature="e#10081#10451#0#PHP" expanded="false" />
+            <element signature="e#10563#12306#0#PHP" expanded="false" />
+            <element signature="e#12368#12674#0#PHP" expanded="false" />
+            <element signature="e#12751#12993#0#PHP" expanded="false" />
+            <element signature="e#13069#13272#0#PHP" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/frontend/partials/footer.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="247">
+          <caret line="13" column="28" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="18" selection-end-column="9" />
+          <folding>
+            <marker date="1513312696756" expanded="true" signature="157:170" ph="..." />
+            <marker date="1513312696756" expanded="true" signature="393:409" ph="..." />
+            <marker date="1513312696756" expanded="true" signature="516:531" ph="..." />
+            <marker date="1513312696756" expanded="true" signature="638:656" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/zhuan/me/favorites.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="914">
+          <caret line="410" column="11" lean-forward="true" selection-start-line="410" selection-start-column="11" selection-end-line="410" selection-end-column="11" />
+          <folding>
+            <element signature="e#9738#14963#0#HTML" expanded="false" />
+            <marker date="1517566616578" expanded="true" signature="44:61" ph="..." />
+            <marker date="1517566616578" expanded="true" signature="73:86" ph="..." />
+            <marker date="1517566616578" expanded="true" signature="9308:9318" ph="..." />
+            <marker date="1517566616578" expanded="true" signature="9341:9349" ph="..." />
+            <marker date="1517566616578" expanded="true" signature="9361:9370" ph="..." />
+            <marker date="1517566616578" expanded="true" signature="9530:9544" ph="..." />
+            <marker date="1517566616578" expanded="true" signature="9639:9662" ph="..." />
+            <marker date="1517566616578" expanded="true" signature="15099:15123" ph="..." />
+            <marker date="1517566616578" expanded="true" signature="15122:15123" ph="..." />
+            <marker date="1517566616578" expanded="true" signature="15274:15286" ph="..." />
+            <marker date="1517566616578" expanded="true" signature="15307:15352" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/zhuan/me/show.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="475">
+          <caret line="404" column="43" lean-forward="false" selection-start-line="404" selection-start-column="43" selection-end-line="404" selection-end-column="43" />
+          <folding>
+            <element signature="e#92#9285#0#HTML" expanded="false" />
+            <element signature="e#9738#14960#0#HTML" expanded="false" />
+            <marker date="1517566621110" expanded="true" signature="44:61" ph="..." />
+            <marker date="1517566621110" expanded="true" signature="73:86" ph="..." />
+            <marker date="1517566621110" expanded="true" signature="9308:9318" ph="..." />
+            <marker date="1517566621110" expanded="true" signature="9341:9349" ph="..." />
+            <marker date="1517566621110" expanded="true" signature="9361:9370" ph="..." />
+            <marker date="1517566621110" expanded="true" signature="9530:9544" ph="..." />
+            <marker date="1517566621110" expanded="true" signature="9639:9662" ph="..." />
+            <marker date="1517566621110" expanded="true" signature="15096:15120" ph="..." />
+            <marker date="1517566621110" expanded="true" signature="15119:15120" ph="..." />
+            <marker date="1517566621110" expanded="true" signature="15271:15283" ph="..." />
+            <marker date="1517566621110" expanded="true" signature="15304:15349" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/zhuan/me/subscribes.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="754">
+          <caret line="426" column="43" lean-forward="true" selection-start-line="426" selection-start-column="43" selection-end-line="426" selection-end-column="43" />
+          <folding>
+            <element signature="e#10259#16425#0#HTML" expanded="false" />
+            <marker date="1517566626199" expanded="true" signature="44:61" ph="..." />
+            <marker date="1517566626199" expanded="true" signature="73:86" ph="..." />
+            <marker date="1517566626199" expanded="true" signature="9829:9839" ph="..." />
+            <marker date="1517566626199" expanded="true" signature="9862:9870" ph="..." />
+            <marker date="1517566626199" expanded="true" signature="9882:9891" ph="..." />
+            <marker date="1517566626199" expanded="true" signature="10051:10065" ph="..." />
+            <marker date="1517566626199" expanded="true" signature="10160:10183" ph="..." />
+            <marker date="1517566626199" expanded="true" signature="16561:16585" ph="..." />
+            <marker date="1517566626199" expanded="true" signature="16584:16585" ph="..." />
+            <marker date="1517566626199" expanded="true" signature="16736:16748" ph="..." />
+            <marker date="1517566626199" expanded="true" signature="16769:16814" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/zhuan/me/collects.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="113">
+          <caret line="299" column="13" lean-forward="true" selection-start-line="299" selection-start-column="13" selection-end-line="299" selection-end-column="13" />
+          <folding>
+            <element signature="e#9837#10829#0#HTML" expanded="false" />
+            <element signature="e#10897#16519#0#HTML" expanded="false" />
+            <marker date="1517566632485" expanded="true" signature="44:61" ph="..." />
+            <marker date="1517566632485" expanded="true" signature="73:86" ph="..." />
+            <marker date="1517566632485" expanded="true" signature="9308:9318" ph="..." />
+            <marker date="1517566632485" expanded="true" signature="9341:9349" ph="..." />
+            <marker date="1517566632485" expanded="true" signature="9361:9370" ph="..." />
+            <marker date="1517566632485" expanded="true" signature="9530:9544" ph="..." />
+            <marker date="1517566632485" expanded="true" signature="9639:9662" ph="..." />
+            <marker date="1517566632485" expanded="true" signature="16682:16706" ph="..." />
+            <marker date="1517566632485" expanded="true" signature="16857:16869" ph="..." />
+            <marker date="1517566632485" expanded="true" signature="16890:16935" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/assets/sass/layouts/_zhuanlan.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="123">
+          <caret line="40" column="3" lean-forward="true" selection-start-line="40" selection-start-column="3" selection-end-line="40" selection-end-column="3" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/assets/sass/zhuanlan.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1073">
+          <caret line="132" column="14" lean-forward="true" selection-start-line="132" selection-start-column="14" selection-end-line="132" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/zhuan/me/comments.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1111">
+          <caret line="411" column="26" lean-forward="true" selection-start-line="411" selection-start-column="26" selection-end-line="411" selection-end-column="26" />
+          <folding>
+            <element signature="e#9846#10838#0#HTML" expanded="false" />
+            <element signature="e#10906#15999#0#HTML" expanded="false" />
+            <element signature="e#11797#13713#0#HTML" expanded="false" />
+            <marker date="1517566610843" expanded="true" signature="44:61" ph="..." />
+            <marker date="1517566610843" expanded="true" signature="73:86" ph="..." />
+            <marker date="1517566610843" expanded="true" signature="9308:9318" ph="..." />
+            <marker date="1517566610843" expanded="true" signature="9341:9349" ph="..." />
+            <marker date="1517566610843" expanded="true" signature="9361:9370" ph="..." />
+            <marker date="1517566610843" expanded="true" signature="9539:9553" ph="..." />
+            <marker date="1517566610843" expanded="true" signature="9648:9671" ph="..." />
+            <marker date="1517566610843" expanded="true" signature="16162:16186" ph="..." />
+            <marker date="1517566610843" expanded="true" signature="16185:16186" ph="..." />
+            <marker date="1517566610843" expanded="true" signature="16337:16349" ph="..." />
+            <marker date="1517566610843" expanded="true" signature="16370:16415" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Downloads/heart.svg">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/assets/sass/components/_me_side.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1396">
+          <caret line="98" column="3" lean-forward="false" selection-start-line="98" selection-start-column="3" selection-end-line="98" selection-end-column="3" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/zhuan/partials/me_side.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="646">
+          <caret line="24" column="153" lean-forward="false" selection-start-line="24" selection-start-column="153" selection-end-line="24" selection-end-column="153" />
+          <folding>
+            <element signature="n#style#0;n#svg#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#svg#0;n#div#0;n#div#0;n#div#1;n#div#1;n#div#0;n#!!top" expanded="true" />
+            <marker date="1517569224534" expanded="true" signature="2697:2721" ph="..." />
+            <marker date="1517569224534" expanded="true" signature="2864:2885" ph="..." />
+            <marker date="1517569224534" expanded="true" signature="2973:2987" ph="..." />
+            <marker date="1517569224534" expanded="true" signature="3155:3168" ph="..." />
+            <marker date="1517569224534" expanded="true" signature="3391:3407" ph="..." />
+            <marker date="1517569224534" expanded="true" signature="3514:3529" ph="..." />
+            <marker date="1517569224534" expanded="true" signature="3636:3654" ph="..." />
           </folding>
         </state>
       </provider>

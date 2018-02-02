@@ -74,7 +74,7 @@ class ReviewController extends Controller
             ->leftJoin('users','users.id','=','dev_review.u_id')
             ->select('dev_review.*','users.name','users.avatar','users.domain')
             ->orderBy('dev_review.created_at','desc')
-            ->paginate(4);
+            ->paginate(10);
         $comments->setPath('/api/posts/'.$id.'/comments');
         foreach ($comments as $key=>$comment){
             $_comment = DB::table('dev_review')

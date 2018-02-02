@@ -37,6 +37,8 @@ class MeController extends Controller
             DB::table('users')->where('id',$id)->increment("pv_count");
         }
         if(isset($me) && $me){
+            $me->post_like_count = $this->getUserLikeCount($me->id);
+            $me->post_collect_count = $this->getUserCollectCount($me->id);
             $posts = DB::table('dev_post')
                 ->where('creator_id',$me->id)
                 ->where('status','active')
@@ -65,6 +67,8 @@ class MeController extends Controller
             $me = DB::table('users')->where('id',$id)->first();
         }
         if(isset($me) && $me){
+            $me->post_like_count = $this->getUserLikeCount($me->id);
+            $me->post_collect_count = $this->getUserCollectCount($me->id);
             $zls = DB::table('dev_zl_follow')
                 ->where('dev_zl_follow.u_id',$me->id)
                 ->where('dev_zl_follow.status',1)
@@ -139,6 +143,8 @@ class MeController extends Controller
             $me = DB::table('users')->where('id',$id)->first();
         }
         if(isset($me) && $me){
+            $me->post_like_count = $this->getUserLikeCount($me->id);
+            $me->post_collect_count = $this->getUserCollectCount($me->id);
             $posts = DB::table('dev_like')
                 ->where('dev_like.type','post')
                 ->where('dev_like.user_id',$me->id)
@@ -170,6 +176,8 @@ class MeController extends Controller
             $me = DB::table('users')->where('id',$id)->first();
         }
         if(isset($me) && $me){
+            $me->post_like_count = $this->getUserLikeCount($me->id);
+            $me->post_collect_count = $this->getUserCollectCount($me->id);
             $posts = DB::table('dev_collect')
                 ->where('dev_collect.type','post')
                 ->where('dev_collect.user_id',$me->id)
@@ -201,12 +209,23 @@ class MeController extends Controller
             $me = DB::table('users')->where('id',$id)->first();
         }
         if(isset($me) && $me) {
+            $me->post_like_count = $this->getUserLikeCount($me->id);
+            $me->post_collect_count = $this->getUserCollectCount($me->id);
             if(!isset($me->domain) && strlen($me->domain)<1){
                 $me->domain = $me->id;
             }
+            $comments = DB::table('dev_review')
+                ->where('dev_review.u_id',$me->id)
+                ->where('dev_review.status','active')
+                ->where('dev_review.t_type','post')
+                ->leftJoin('users','users.id','=','dev_review.u_id')
+                ->leftJoin('dev_post','dev_post.id','=','dev_review.t_id')
+                ->select('dev_review.*','dev_post.title','users.avatar','users.domain','users.name')
+                ->orderBy('dev_review.updated_at','desc')
+                ->paginate(10);
             return view('zhuan.me.comments')
                 ->with('me', $me)
-                ->with('posts',[])
+                ->with('comments',$comments)
                 ->with('is_has', $this->isHasZhuanlan())
                 ->with('site_title', $me->name . '的回复');
         }else{
@@ -364,5 +383,21 @@ class MeController extends Controller
             ->where('status','active')
             ->count();
         return $count;
+    }
+    public function getUserLikeCount($user_id){
+        $data = DB::table('dev_like')
+            ->where('user_id',$user_id)
+            ->where('status','active')
+            ->where('type','post')
+            ->count();
+        return $data;
+    }
+    public function getUserCollectCount($user_id){
+        $data = DB::table('dev_collect')
+            ->where('user_id',$user_id)
+            ->where('status','active')
+            ->where('type','post')
+            ->count();
+        return $data;
     }
 }

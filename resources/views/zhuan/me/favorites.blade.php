@@ -188,7 +188,7 @@ use App\Helpers\DateUtil;
             line-height: 20px;
         }
         .home-container{
-            margin-top: 60px;
+            margin-top: 20px;
             margin-bottom: 60px;
         }
         .no-write-topics, .no-comments, .no-favorites, .no-subscribes {
@@ -214,7 +214,7 @@ use App\Helpers\DateUtil;
             margin-top: 40px;
         }
         .Drafts-list {
-            margin-bottom: 80px;
+            /*margin-bottom: 80px;*/
         }
         .Drafts-item {
             padding: 20px 0;
@@ -258,7 +258,38 @@ use App\Helpers\DateUtil;
         ul{
             padding-left: 0;
         }
+        .main_content{
+            background-color: #f3f3f3;
+        }
+        .hero--profile{
+            background: #fff;
+            padding: 20px 15px;
+        }
+        .homeLeft{
+            float: left;
+            width: 66%;
+            margin-right: 2%;
+        }
+        .homeRight{
+            width: 32%;
+            float: right;
+        }
+        .homeLeft{
+            background-color: #fff;
+        }
+        .write-topics{
+            padding: 0 10px;
+        }
+        .Drafts-item:last-child{
+            border-bottom: none;
+        }
+        .Draft-content {
+            color: gray;
+        }
         @media (max-width: 730px){
+            .main_content .content{
+                padding-top: 20px;
+            }
             .mobile-third-accounts {
                 display: block;
                 margin-top: 20px;
@@ -272,6 +303,16 @@ use App\Helpers\DateUtil;
             }
             ul.nav-tabs>li>a{
                 padding: 5px 8px;
+            }
+            .homeRight,.homeLeft{
+                width: 100%;
+                background-color: #fff;
+            }
+            .homeLeft{
+                margin-right: 0;
+            }
+            .homeRight{
+                margin-top: 20px;
             }
         }
     </style>
@@ -287,74 +328,81 @@ use App\Helpers\DateUtil;
     <main class="main_content col-md-12 no-padding">
         <div class="content col-md-9 col-xs-12">
             <input type="hidden" name="_token" value="{{ csrf_token() }}" />
-            <div class="container-stream col-md-10 col-md-offset-1 col-xs-12">
+            <div class="container-stream col-md-12 col-xs-12">
                 @include('zhuan.partials.me_top')
-                <div class="home-container">
-                    <!-- Nav tabs -->
-                    <ul class="nav nav-tabs" role="tablist">
-                        <li role="presentation">
-                            <a href="{{ url('/people/'.@$me->domain) }}" >文章</a>
-                        </li>
-                        <li role="presentation">
-                            <a href="{{ url('people/'.@$me->domain.'/subscribes') }}" >订阅</a>
-                        </li>
-                        <li role="presentation">
-                            <a href="{{ url('people/'.@$me->domain.'/comments') }}" >回复</a>
-                        </li>
-                        <li role="presentation" class="active">
-                            <a href="{{ url('people/'.@$me->domain.'/favorites') }}" >喜欢</a>
-                        </li>
-                        <li role="presentation">
-                            <a href="{{ url('people/'.@$me->domain.'/collects') }}" >收藏</a>
-                        </li>
-                    </ul>
-                    <!-- Tab panes -->
-                    <div class="tab-content">
-                        <div role="tabpanel" class="tab-pane active" id="poem">
-                            <div class="pane-content">
-                                @if(isset($posts) && count($posts)<1)
-                                    <div class="no-write-topics">
-                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="78px" height="93px" viewBox="0 0 78 93" version="1.1">
-                                            <!-- Generator: Sketch 44.1 (41455) - http://www.bohemiancoding.com/sketch -->
-                                            <title></title>
-                                            <desc>Created with Sketch.</desc>
-                                            <defs></defs>
-                                            <g id="A-首页-更改" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                                <g id="C-个人中心-01-Copy" transform="translate(-681.000000, -1011.000000)">
-                                                    <g id="Group-4" transform="translate(650.000000, 987.000000)">
-                                                        <g id="Group-3" transform="translate(29.000000, 20.000000)"></g>
-                                                        <rect id="Rectangle-24" fill="#F5F5F5" opacity="0" x="0" y="0" width="140" height="140"></rect>
-                                                        <rect id="Rectangle-60" stroke="#C7C7C7" stroke-width="3" x="32.5" y="25.5" width="75" height="90"></rect>
-                                                        <rect id="Rectangle-61" fill="#FF7055" x="47" y="43" width="46" height="3"></rect>
-                                                        <rect id="Rectangle-61" fill="#FF7055" x="47" y="56" width="46" height="3"></rect>
+                <div class="home-container clearfix">
+                    <div class="homeLeft clearfix ">
+                        <!-- Nav tabs -->
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li role="presentation">
+                                <a href="{{ url('/people/'.@$me->domain) }}" >文章</a>
+                            </li>
+                            <li role="presentation">
+                                <a href="{{ url('people/'.@$me->domain.'/subscribes') }}" >订阅</a>
+                            </li>
+                            <li role="presentation">
+                                <a href="{{ url('people/'.@$me->domain.'/comments') }}" >回复</a>
+                            </li>
+                            <li role="presentation" class="active">
+                                <a href="{{ url('people/'.@$me->domain.'/favorites') }}" >喜欢</a>
+                            </li>
+                            <li role="presentation">
+                                <a href="{{ url('people/'.@$me->domain.'/collects') }}" >收藏</a>
+                            </li>
+                        </ul>
+                        <!-- Tab panes -->
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane active" id="poem">
+                                <div class="pane-content">
+                                    @if(isset($posts) && count($posts)<1)
+                                        <div class="no-write-topics">
+                                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="78px" height="93px" viewBox="0 0 78 93" version="1.1">
+                                                <!-- Generator: Sketch 44.1 (41455) - http://www.bohemiancoding.com/sketch -->
+                                                <title></title>
+                                                <desc>Created with Sketch.</desc>
+                                                <defs></defs>
+                                                <g id="A-首页-更改" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                    <g id="C-个人中心-01-Copy" transform="translate(-681.000000, -1011.000000)">
+                                                        <g id="Group-4" transform="translate(650.000000, 987.000000)">
+                                                            <g id="Group-3" transform="translate(29.000000, 20.000000)"></g>
+                                                            <rect id="Rectangle-24" fill="#F5F5F5" opacity="0" x="0" y="0" width="140" height="140"></rect>
+                                                            <rect id="Rectangle-60" stroke="#C7C7C7" stroke-width="3" x="32.5" y="25.5" width="75" height="90"></rect>
+                                                            <rect id="Rectangle-61" fill="#FF7055" x="47" y="43" width="46" height="3"></rect>
+                                                            <rect id="Rectangle-61" fill="#FF7055" x="47" y="56" width="46" height="3"></rect>
+                                                        </g>
                                                     </g>
                                                 </g>
-                                            </g>
-                                        </svg>
-                                        <span>您目前还没有喜欢的文章</span>
-                                    </div>
-                                @endif
-                                <div class="write-topics">
-                                    <div class="InfiniteList Drafts-list">
-                                        <ul>
-                                            @if(isset($posts) && $posts)
-                                                @foreach($posts as $post)
-                                                    <li class="Drafts-item">
-                                                        <div class="Drafts-title">
-                                                            <a class="Drafts-link" href="{{url('post/'.@$post->id)}}">{{@$post->title}}</a>
-                                                        </div>
-                                                        <div class="Drafts-meta">
-                                                            <time class="Drafts-updated" title="">{{@ DateUtil::formatDate(strtotime($post->create_time))}}</time>
-                                                            <span class="Bull"></span>
-                                                            <span class="Drafts-removeButton" data-id="{{@$post->id}}">阅读 {{@$post->pv_count}}</span>
-                                                        </div>
-                                                    </li>
-                                                @endforeach
-                                            @endif
-                                        </ul>
+                                            </svg>
+                                            <span>您目前还没有喜欢的文章</span>
+                                        </div>
+                                    @endif
+                                    <div class="write-topics">
+                                        <div class="InfiniteList Drafts-list">
+                                            <ul>
+                                                @if(isset($posts) && $posts)
+                                                    @foreach($posts as $post)
+                                                        <li class="Drafts-item">
+                                                            <div class="Drafts-title">
+                                                                <a class="Drafts-link" href="{{url('post/'.@$post->id)}}">{{@$post->title}}</a>
+                                                            </div>
+                                                            <div class="Drafts-meta">
+                                                                <time class="Drafts-updated" title="">{{@ DateUtil::formatDate(strtotime($post->create_time))}}</time>
+                                                                <span class="Bull"></span>
+                                                                <span class="Drafts-removeButton" data-id="{{@$post->id}}">阅读 {{@$post->pv_count}}</span>
+                                                            </div>
+                                                        </li>
+                                                    @endforeach
+                                                @endif
+                                            </ul>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                    <div class="homeRight clearfix">
+                        <div class="meLeft">
+                            @include('zhuan.partials.me_side')
                         </div>
                     </div>
                 </div>

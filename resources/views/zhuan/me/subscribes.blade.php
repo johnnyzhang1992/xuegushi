@@ -188,7 +188,7 @@ use App\Helpers\DateUtil;
             line-height: 20px;
         }
         .home-container{
-            margin-top: 60px;
+            margin-top: 20px;
             margin-bottom: 60px;
         }
         .no-write-topics, .no-comments, .no-favorites, .no-subscribes {
@@ -270,10 +270,48 @@ use App\Helpers\DateUtil;
             color: #818181;
             line-height: 23px;
         }
+        .main_content{
+            background-color: #f3f3f3;
+        }
+        .hero--profile{
+            background: #fff;
+            padding: 20px 15px;
+        }
+        .homeLeft{
+            float: left;
+            width: 66%;
+            margin-right: 2%;
+        }
+        .homeRight{
+            width: 32%;
+            float: right;
+        }
+       .homeLeft{
+            background-color: #fff;
+        }
+        .write-topics{
+            padding: 0 10px;
+        }
+        .Drafts-item:last-child{
+            border-bottom: none;
+        }
+        .Draft-content {
+            color: gray;
+        }
+        .pane-content {
+            padding-bottom: 15px;
+        }
         @media (max-width: 730px){
+            .main_content .content{
+                padding-top: 20px;
+            }
             .mobile-third-accounts {
                 display: block;
                 margin-top: 20px;
+            }
+            .content{
+                padding-left: 0;
+                padding-right: 0;
             }
             ul.nav-tabs>li{
                 display: inline-block;
@@ -281,12 +319,15 @@ use App\Helpers\DateUtil;
             ul.nav-tabs>li>a{
                 padding: 5px 8px;
             }
-            .zhuanlan .zl-body {
-                margin-right: 0px;
+            .homeRight,.homeLeft{
+                width: 100%;
+                background-color: #fff;
             }
-            .content{
-                padding-left: 0;
-                padding-right: 0;
+            .homeLeft{
+                margin-right: 0;
+            }
+            .homeRight{
+                margin-top: 20px;
             }
         }
     </style>
@@ -302,80 +343,88 @@ use App\Helpers\DateUtil;
     <main class="main_content col-md-12 no-padding">
         <div class="content col-md-9 col-xs-12">
             <input type="hidden" name="_token" value="{{ csrf_token() }}" />
-            <div class="container-stream col-md-10 col-md-offset-1 col-xs-12">
+            <div class="container-stream col-md-12 col-xs-12">
                 @include('zhuan.partials.me_top')
-                <div class="home-container">
-                    <!-- Nav tabs -->
-                    <ul class="nav nav-tabs" role="tablist">
-                        <li role="presentation">
-                            <a href="{{ url('/people/'.@$me->id) }}" >文章</a>
-                        </li>
-                        <li role="presentation" class="active">
-                            <a href="{{ url('people/'.@$me->id.'/subscribes') }}" >订阅</a>
-                        </li>
-                        <li role="presentation">
-                            <a href="{{ url('people/'.@$me->id.'/comments') }}" >回复</a>
-                        </li>
-                        <li role="presentation">
-                            <a href="{{ url('people/'.@$me->id.'/favorites') }}" >喜欢</a>
-                        </li>
-                        <li role="presentation">
-                            <a href="{{ url('people/'.@$me->id.'/collects') }}" >收藏</a>
-                        </li>
-                    </ul>
-                    <!-- Tab panes -->
-                    <div class="tab-content">
-                        <div role="tabpanel" class="tab-pane active" id="poem">
-                            <div class="pane-content">
-                                @if(isset($zls) && count($zls)<1)
-                                    <div class="no-write-topics">
-                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="104px" height="88px" viewBox="0 0 104 88" version="1.1">
-                                            <!-- Generator: Sketch 44.1 (41455) - http://www.bohemiancoding.com/sketch -->
-                                            <title></title>
-                                            <desc>Created with Sketch.</desc>
-                                            <defs></defs>
-                                            <g id="A-首页-更改" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                                <g id="C-个人中心-01-Copy" transform="translate(-419.000000, -1419.000000)">
-                                                    <g id="Group-9" transform="translate(401.000000, 1393.000000)">
-                                                        <rect id="Rectangle-24" fill="#F5F5F5" opacity="0" x="0" y="0" width="140" height="140"></rect>
-                                                        <g id="Group-5" transform="translate(18.000000, 26.000000)">
-                                                            <path d="M102.5,79.5 L102.5,1.5 L1.5,1.5 L1.5,79.5 L45.7218254,79.5 L52,85.7781746 L58.2781746,79.5 L102.5,79.5 Z" id="Combined-Shape" stroke="#C7C7C7" stroke-width="3"></path>
-                                                            <rect id="Rectangle-64" stroke="#C7C7C7" stroke-width="3" x="52.5" y="9.5" width="1" height="62"></rect>
-                                                            <rect id="Rectangle" fill="#C7C7C7" x="59" y="25" width="36" height="3"></rect>
-                                                            <rect id="Rectangle-Copy-2" fill="#C7C7C7" x="9" y="25" width="36" height="3"></rect>
-                                                            <rect id="Rectangle-Copy" fill="#C7C7C7" x="59" y="35" width="36" height="3"></rect>
-                                                            <rect id="Rectangle-Copy-3" fill="#C7C7C7" x="9" y="35" width="36" height="3"></rect>
-                                                            <rect id="Rectangle-Copy-3" fill="#C7C7C7" x="9" y="45" width="14" height="3"></rect>
-                                                            <polygon id="icon_mark" fill="#FF7055" points="87 3 97 3 97 16.3333333 92 14.6673642 87 16.3333333"></polygon>
+                <div class="home-container clearfix">
+                    <div class="homeLeft clearfix ">
+                        <!-- Nav tabs -->
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li role="presentation">
+                                <a href="{{ url('/people/'.@$me->id) }}" >文章</a>
+                            </li>
+                            <li role="presentation" class="active">
+                                <a href="{{ url('people/'.@$me->id.'/subscribes') }}" >订阅</a>
+                            </li>
+                            <li role="presentation">
+                                <a href="{{ url('people/'.@$me->id.'/comments') }}" >回复</a>
+                            </li>
+                            <li role="presentation">
+                                <a href="{{ url('people/'.@$me->id.'/favorites') }}" >喜欢</a>
+                            </li>
+                            <li role="presentation">
+                                <a href="{{ url('people/'.@$me->id.'/collects') }}" >收藏</a>
+                            </li>
+                        </ul>
+                        <!-- Tab panes -->
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane active" id="poem">
+                                <div class="pane-content">
+                                    @if(isset($zls) && count($zls)<1)
+                                        <div class="no-write-topics">
+                                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="104px" height="88px" viewBox="0 0 104 88" version="1.1">
+                                                <!-- Generator: Sketch 44.1 (41455) - http://www.bohemiancoding.com/sketch -->
+                                                <title></title>
+                                                <desc>Created with Sketch.</desc>
+                                                <defs></defs>
+                                                <g id="A-首页-更改" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                    <g id="C-个人中心-01-Copy" transform="translate(-419.000000, -1419.000000)">
+                                                        <g id="Group-9" transform="translate(401.000000, 1393.000000)">
+                                                            <rect id="Rectangle-24" fill="#F5F5F5" opacity="0" x="0" y="0" width="140" height="140"></rect>
+                                                            <g id="Group-5" transform="translate(18.000000, 26.000000)">
+                                                                <path d="M102.5,79.5 L102.5,1.5 L1.5,1.5 L1.5,79.5 L45.7218254,79.5 L52,85.7781746 L58.2781746,79.5 L102.5,79.5 Z" id="Combined-Shape" stroke="#C7C7C7" stroke-width="3"></path>
+                                                                <rect id="Rectangle-64" stroke="#C7C7C7" stroke-width="3" x="52.5" y="9.5" width="1" height="62"></rect>
+                                                                <rect id="Rectangle" fill="#C7C7C7" x="59" y="25" width="36" height="3"></rect>
+                                                                <rect id="Rectangle-Copy-2" fill="#C7C7C7" x="9" y="25" width="36" height="3"></rect>
+                                                                <rect id="Rectangle-Copy" fill="#C7C7C7" x="59" y="35" width="36" height="3"></rect>
+                                                                <rect id="Rectangle-Copy-3" fill="#C7C7C7" x="9" y="35" width="36" height="3"></rect>
+                                                                <rect id="Rectangle-Copy-3" fill="#C7C7C7" x="9" y="45" width="14" height="3"></rect>
+                                                                <polygon id="icon_mark" fill="#FF7055" points="87 3 97 3 97 16.3333333 92 14.6673642 87 16.3333333"></polygon>
+                                                            </g>
                                                         </g>
                                                     </g>
                                                 </g>
-                                            </g>
-                                        </svg>
-                                        <span>您目前还没有订阅任何专栏</span>
-                                    </div>
-                                @endif
-                                <div class="write-topics">
-                                    @if(isset($zls) && $zls)
-                                        @foreach($zls as $zl)
-                                            <div class="zhuanlan">
-                                                <div class="zl-header">
-                                                    <a href="{{url(@$zl->name)}}">
-                                                        <img class="avatar" src="{{asset(@$zl->avatar)}}" alt="38a91dd14991f96cfa5c00aeb4667263">
-                                                    </a>
-                                                </div>
-                                                <div class="zl-body">
-                                                    <div class="zl-title"><a href="{{url(@$zl->name)}}">{{@$zl->alia_name}}</a></div>
-                                                    <div class="zl-bio">{{@$zl->about}}</div>
-                                                    <div class="zl-others">
-                                                        <span>已发表 {{@$zl->post_count}}</span>
-                                                        <span class="subscribe-count">订阅数 {{@$zl->followers_count}}</span>
+                                            </svg>
+                                            <span>您目前还没有订阅任何专栏</span>
+                                        </div>
+                                    @endif
+                                    <div class="write-topics">
+                                        @if(isset($zls) && $zls)
+                                            @foreach($zls as $zl)
+                                                <div class="zhuanlan">
+                                                    <div class="zl-header">
+                                                        <a href="{{url(@$zl->name)}}">
+                                                            <img class="avatar" src="{{asset(@$zl->avatar)}}" alt="38a91dd14991f96cfa5c00aeb4667263">
+                                                        </a>
+                                                    </div>
+                                                    <div class="zl-body">
+                                                        <div class="zl-title"><a href="{{url(@$zl->name)}}">{{@$zl->alia_name}}</a></div>
+                                                        <div class="zl-bio">{{@$zl->about}}</div>
+                                                        <div class="zl-others">
+                                                            <span>已发表 {{@$zl->post_count}}</span>
+                                                            <span class="subscribe-count">订阅数 {{@$zl->followers_count}}</span>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        @endforeach
-                                    @endif
+                                            @endforeach
+                                        @endif
+                                    </div>
+                                </div>
                             </div>
+                        </div>
+                    </div>
+                    <div class="homeRight clearfix">
+                        <div class="meLeft">
+                            @include('zhuan.partials.me_side')
                         </div>
                     </div>
                 </div>

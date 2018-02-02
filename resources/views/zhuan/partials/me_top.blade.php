@@ -37,8 +37,8 @@
         <div class="xzl-button-set xzl-profile-button-set">
             {{--<a class="button xzl-button-chrome-less xzl-base-color-normal-btn xzl-marign-right32 no-border" href="/u/5775582212/following">关注 0</a>--}}
             {{--<a class="button xzl-button-chrome-less xzl-base-color-normal-btn xzl-marign-right32 no-border" href="/u/5775582212/followers">被关注 0</a>--}}
-            <a class="button xzl-button-chrome-less xzl-base-color-normal-btn xzl-marign-right32 no-border" href="{{ url('people/'.@$me->id.'/favorites') }}">获得赞 0</a>
-            <a class="button xzl-button-chrome-less xzl-base-color-normal-btn  no-border" href="{{ url('people/'.@$me->id.'/collects') }}">被收藏 0</a>
+            <a class="button xzl-button-chrome-less xzl-base-color-normal-btn xzl-marign-right32 no-border" href="{{ url('people/'.@$me->id.'/favorites') }}">获得赞 {{@$me->post_like_count}}</a>
+            <a class="button xzl-button-chrome-less xzl-base-color-normal-btn  no-border" href="{{ url('people/'.@$me->id.'/collects') }}">被收藏 {{@$me->post_collect_count}}</a>
             {{--<div class="pc-third-accounts">--}}
             {{--<a class="button xzl-button-chrome-less xzl-marign-left32  profile-third-account-logo  weibo  button--withIcon button--withSvgIcon" href="http://weibo.com/u/2477183313" target="_blank">--}}
             {{--<span class="xzl-default-state-btn">--}}

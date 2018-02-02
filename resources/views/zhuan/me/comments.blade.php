@@ -188,7 +188,7 @@ use App\Helpers\DateUtil;
             line-height: 20px;
         }
         .home-container{
-            margin-top: 60px;
+            margin-top: 20px;
             margin-bottom: 60px;
         }
         .no-write-topics, .no-comments, .no-favorites, .no-subscribes {
@@ -214,7 +214,7 @@ use App\Helpers\DateUtil;
             margin-top: 40px;
         }
         .Drafts-list {
-            margin-bottom: 80px;
+            /*margin-bottom: 80px;*/
         }
         .Drafts-item {
             padding: 20px 0;
@@ -258,7 +258,38 @@ use App\Helpers\DateUtil;
         ul{
             padding-left: 0;
         }
+        .main_content{
+            background-color: #f3f3f3;
+        }
+        .hero--profile{
+            background: #fff;
+            padding: 20px 15px;
+        }
+        .homeLeft{
+            float: left;
+            width: 66%;
+            margin-right: 2%;
+        }
+        .homeRight{
+            width: 32%;
+            float: right;
+        }
+        .homeLeft{
+            background-color: #fff;
+        }
+        .write-topics{
+            padding: 0 10px;
+        }
+        .Drafts-item:last-child{
+            border-bottom: none;
+        }
+        .Draft-content {
+            color: gray;
+        }
         @media (max-width: 730px){
+            .main_content .content{
+                padding-top: 20px;
+            }
             .mobile-third-accounts {
                 display: block;
                 margin-top: 20px;
@@ -273,6 +304,16 @@ use App\Helpers\DateUtil;
             ul.nav-tabs>li>a{
                 padding: 5px 8px;
             }
+            .homeRight,.homeLeft{
+                width: 100%;
+                background-color: #fff;
+            }
+            .homeLeft{
+                margin-right: 0;
+            }
+            .homeRight{
+                margin-top: 20px;
+            }
         }
     </style>
 @endsection
@@ -284,79 +325,89 @@ use App\Helpers\DateUtil;
 @yield('me_top')
 
 @section('content')
-    <main class="main_content col-md-12 no-padding">
+    <main class="main_content col-md-12 no-padding clearfix">
         <div class="content col-md-9 col-xs-12">
             <input type="hidden" name="_token" value="{{ csrf_token() }}" />
-            <div class="container-stream col-md-10 col-md-offset-1 col-xs-12">
+            <div class="container-stream col-md-12 col-xs-12">
                 @include('zhuan.partials.me_top')
-                <div class="home-container">
-                    <!-- Nav tabs -->
-                    <ul class="nav nav-tabs" role="tablist">
-                        <li role="presentation">
-                            <a href="{{ url('/people/'.@$me->domain) }}" >文章</a>
-                        </li>
-                        <li role="presentation">
-                            <a href="{{ url('people/'.@$me->domain.'/subscribes') }}" >订阅</a>
-                        </li>
-                        <li role="presentation" class="active">
-                            <a href="{{ url('people/'.@$me->domain.'/comments') }}" >回复</a>
-                        </li>
-                        <li role="presentation">
-                            <a href="{{ url('people/'.@$me->domain.'/favorites') }}" >喜欢</a>
-                        </li>
-                        <li role="presentation">
-                            <a href="{{ url('people/'.@$me->domain.'/collects') }}" >收藏</a>
-                        </li>
-                    </ul>
-                    <!-- Tab panes -->
-                    <div class="tab-content">
-                        <div role="tabpanel" class="tab-pane active" id="poem">
-                            <div class="pane-content">
-                                @if(isset($posts) && count($posts)<1)
-                                    <div class="no-write-topics">
-                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="92px" height="81px" viewBox="0 0 92 81" version="1.1">
-                                            <!-- Generator: Sketch 44.1 (41455) - http://www.bohemiancoding.com/sketch -->
-                                            <title></title>
-                                            <desc>Created with Sketch.</desc>
-                                            <defs></defs>
-                                            <g id="A-首页-更改" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                                <g id="C-个人中心-01-Copy" transform="translate(-681.000000, -1420.000000)">
-                                                    <g id="Group-7" transform="translate(657.000000, 1394.000000)">
-                                                        <rect id="Rectangle-24" fill="#F5F5F5" opacity="0" x="0" y="0" width="140" height="140"></rect>
-                                                        <path d="M29.7691342,104.990059 C33.7373412,103.599863 40.3438707,101.10836 41.2529978,100.798482 C43.6815698,99.9706969 45.8402081,99.3729112 48.1370132,98.9229261 L48.6101584,98.8302285 L49.0487032,99.0305726 C55.439576,101.950169 62.5868735,103.5 70,103.5 C94.6230941,103.5 114.5,86.4317873 114.5,65.5 C114.5,44.5682127 94.6230941,27.5 70,27.5 C45.3769059,27.5 25.5,44.5682127 25.5,65.5 C25.5,72.6645804 27.8265362,79.5378466 32.1606879,85.5015289 L32.6839278,86.2214937 L32.3027719,87.0257633 C29.9389166,92.0136874 28.9776825,97.9648373 29.7691342,104.990059 Z" id="icon_comment" stroke="#C7C7C7" stroke-width="3"></path>
-                                                        <g id="Group-6" transform="translate(55.000000, 64.000000)" fill="#FF7055">
-                                                            <circle id="Oval-18" cx="2.5" cy="2.5" r="2.5"></circle>
-                                                            <circle id="Oval-18-Copy" cx="15.5" cy="2.5" r="2.5"></circle>
-                                                            <circle id="Oval-18-Copy-2" cx="28.5" cy="2.5" r="2.5"></circle>
+                <div class="home-container clearfix">
+                    <div class="homeLeft clearfix ">
+                        <!-- Nav tabs -->
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li role="presentation">
+                                <a href="{{ url('/people/'.@$me->domain) }}" >文章</a>
+                            </li>
+                            <li role="presentation">
+                                <a href="{{ url('people/'.@$me->domain.'/subscribes') }}" >订阅</a>
+                            </li>
+                            <li role="presentation" class="active">
+                                <a href="{{ url('people/'.@$me->domain.'/comments') }}" >回复</a>
+                            </li>
+                            <li role="presentation">
+                                <a href="{{ url('people/'.@$me->domain.'/favorites') }}" >喜欢</a>
+                            </li>
+                            <li role="presentation">
+                                <a href="{{ url('people/'.@$me->domain.'/collects') }}" >收藏</a>
+                            </li>
+                        </ul>
+                        <!-- Tab panes -->
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane active" id="poem">
+                                <div class="pane-content">
+                                    @if(isset($comments) && count($comments)<1)
+                                        <div class="no-write-topics">
+                                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="92px" height="81px" viewBox="0 0 92 81" version="1.1">
+                                                <!-- Generator: Sketch 44.1 (41455) - http://www.bohemiancoding.com/sketch -->
+                                                <title></title>
+                                                <desc>Created with Sketch.</desc>
+                                                <defs></defs>
+                                                <g id="A-首页-更改" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                    <g id="C-个人中心-01-Copy" transform="translate(-681.000000, -1420.000000)">
+                                                        <g id="Group-7" transform="translate(657.000000, 1394.000000)">
+                                                            <rect id="Rectangle-24" fill="#F5F5F5" opacity="0" x="0" y="0" width="140" height="140"></rect>
+                                                            <path d="M29.7691342,104.990059 C33.7373412,103.599863 40.3438707,101.10836 41.2529978,100.798482 C43.6815698,99.9706969 45.8402081,99.3729112 48.1370132,98.9229261 L48.6101584,98.8302285 L49.0487032,99.0305726 C55.439576,101.950169 62.5868735,103.5 70,103.5 C94.6230941,103.5 114.5,86.4317873 114.5,65.5 C114.5,44.5682127 94.6230941,27.5 70,27.5 C45.3769059,27.5 25.5,44.5682127 25.5,65.5 C25.5,72.6645804 27.8265362,79.5378466 32.1606879,85.5015289 L32.6839278,86.2214937 L32.3027719,87.0257633 C29.9389166,92.0136874 28.9776825,97.9648373 29.7691342,104.990059 Z" id="icon_comment" stroke="#C7C7C7" stroke-width="3"></path>
+                                                            <g id="Group-6" transform="translate(55.000000, 64.000000)" fill="#FF7055">
+                                                                <circle id="Oval-18" cx="2.5" cy="2.5" r="2.5"></circle>
+                                                                <circle id="Oval-18-Copy" cx="15.5" cy="2.5" r="2.5"></circle>
+                                                                <circle id="Oval-18-Copy-2" cx="28.5" cy="2.5" r="2.5"></circle>
+                                                            </g>
                                                         </g>
                                                     </g>
                                                 </g>
-                                            </g>
-                                        </svg>
-                                        <span>您目前还没有任何回复</span>
-                                    </div>
-                                @endif
-                                <div class="write-topics">
-                                    <div class="InfiniteList Drafts-list">
-                                        <ul>
-                                            @if(isset($posts) && $posts)
-                                                @foreach($posts as $post)
-                                                    <li class="Drafts-item">
-                                                        <div class="Drafts-title">
-                                                            <a class="Drafts-link" href="{{url('post/'.@$post->id)}}">{{@$post->title}}</a>
-                                                        </div>
-                                                        <div class="Drafts-meta">
-                                                            <time class="Drafts-updated" title="">{{@ DateUtil::formatDate(strtotime($post->create_time))}}</time>
-                                                            <span class="Bull"></span>
-                                                            <span class="Drafts-removeButton" data-id="{{@$post->id}}">阅读 {{@$post->pv_count}}</span>
-                                                        </div>
-                                                    </li>
-                                                @endforeach
-                                            @endif
-                                        </ul>
+                                            </svg>
+                                            <span>您目前还没有任何回复</span>
+                                        </div>
+                                    @endif
+                                    <div class="write-topics">
+                                        <div class="InfiniteList Drafts-list">
+                                            <ul>
+                                                @if(isset($comments) && $comments)
+                                                    @foreach($comments as $comment)
+                                                        <li class="Drafts-item">
+                                                            <div class="Drafts-title">
+                                                                <a class="Drafts-link" href="{{url('post/'.@$comment->t_id)}}">{{@$comment->title}}</a>
+                                                            </div>
+                                                            <div class="Draft-content">
+                                                                <p>{!! @$comment->content !!}</p>
+                                                            </div>
+                                                            <div class="Drafts-meta">
+                                                                <time class="Drafts-updated" title="">{{@ DateUtil::formatDate(strtotime($comment->updated_at))}}</time>
+                                                                <span class="Bull"></span>
+                                                                <a  href="{{ url($comment->domain ? 'people/'.$comment->domain : 'people/'.$comment->u_id) }}" class="Drafts-removeButton" data-id="{{@$comment->id}}"> {{@$comment->name}}</a>
+                                                            </div>
+                                                        </li>
+                                                    @endforeach
+                                                @endif
+                                            </ul>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                    <div class="homeRight clearfix">
+                        <div class="meLeft">
+                            @include('zhuan.partials.me_side')
                         </div>
                     </div>
                 </div>
