@@ -60,9 +60,9 @@ class LikeController extends Controller{
                     ->orderBy('dev_like.id','desc')
                     ->paginate(10);
             }
-            $p_count = $this->getLikeCount(Auth::user()->id,'poem');
-            $a_count = $this->getLikeCount(Auth::user()->id,'author');
-            $m_count = $this->getLikeCount(Auth::user()->id,'sentence');
+            $p_count = $this->getPoemLikeCount(Auth::user()->id,'poem');
+            $a_count = $this->getPoemLikeCount(Auth::user()->id,'author');
+            $m_count = $this->getPoemLikeCount(Auth::user()->id,'sentence');
             return view('people.like')
                 ->with('poems',$c_poems)
                 ->with('query','collect')
@@ -82,7 +82,7 @@ class LikeController extends Controller{
      * @param $type
      * @return mixed
      */
-    public function getLikeCount($user_id,$type){
+    public function getPoemLikeCount($user_id,$type){
        $count = DB::table('dev_like')
             ->where('type',$type)
             ->where('status','active')
