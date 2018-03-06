@@ -165,6 +165,8 @@ return [
         Jenssegers\Agent\AgentServiceProvider::class,
         // 二维码
         SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class,
+        // 小程序
+        Iwanli\Wxxcx\WxxcxServiceProvider::class,
 
     ],
 

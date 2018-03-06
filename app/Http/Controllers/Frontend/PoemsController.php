@@ -48,7 +48,7 @@ class PoemsController extends Controller
                 $_poems->where('type',$type);
                 $site_title = $site_title.$type;
             }
-            $_url = $_url.'type='.$type;
+            $_url = $_url.'type='.$type.'&';
         }
         if($dynasty){
             if($dynasty != 'all'){
@@ -58,7 +58,7 @@ class PoemsController extends Controller
         }
         if($tag){
            $_poems->where('tags','like','%'.$tag.'%');
-            $_url = $_url.'tag='.$tag;
+            $_url = $_url.'tag='.$tag.'&';
             $site_title = '关于'.$tag.'的';
         }
         $_poems->orderBy('like_count','desc');

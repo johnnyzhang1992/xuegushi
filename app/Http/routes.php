@@ -90,6 +90,12 @@ Route::group([
     ],function (){
         Route::get('/{id}', 'Frontend\PageController@show');
     });
+    /* =============== 微信小程序 ==================== */
+    Route::group([
+        'prefix' => 'wxxcx',
+    ],function (){
+        Route::get('/userInfo', 'Frontend\WxxcxController@getWxUserInfo');
+    });
     /* =============== 静态页面 ====================== */
     Route::get('/contact','Frontend\PageController@contact');
     Route::get('/join','Frontend\PageController@join');
