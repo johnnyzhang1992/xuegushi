@@ -119,4 +119,68 @@ class WxxcxController extends Controller
             return $user_id;
         }
     }
+    /**
+     * 随机返回10首古诗文
+     */
+    public function getRandomPoem(){
+        $poems = DB::table('dev_poem')
+            ->whereIn('id',$this->getRandomArray(5))
+            ->orderBy('like_count','desc')
+            ->get();
+        return response()->json($poems);
+    }
+    public function getRandomArray($num){
+        $numbers = range (1,72439);
+        shuffle ($numbers);
+        $result = array_slice($numbers,0,$num);
+        return $result;
+    }
+    /**
+     * poem 详情页
+     * @param $id
+     * @return mixed
+     */
+    public function getPoemDetail($id){
+        $author = null;
+        $poem = DB::table('dev_poem')->where('id',$id)->first();
+        $content = '';
+        if(isset($poem->content) && json_decode($poem->content)){
+            if(isset(json_decode($poem->content)->xu) && json_decode($poem->content)->xu){
+                $content = $content.@json_decode($poem->content)->xu;
+            }
+            if(isset(json_decode($poem->content)->content) && json_decode($poem->content)->content){
+                foreach(json_decode($poem->content)->content as $item){
+                    $content = $content.@$item;
+                }
+            }
+        }
+        if($poem){
+            $poem_detail = DB::table('dev_poem_detail')->where('poem_id',$id)->first();
+            $hot_poems = null;
+            $poems_count = 0;
+            if($poem->author != '佚名'){
+                $author = DB::table('dev_author')->where('source_id',$poem->author_source_id)->first();
+                $poems_count = DB::table('dev_poem')
+                    ->where('author',$poem->author)
+                    ->where('dynasty',$poem->dynasty)
+                    ->count();
+                if($poem->author_source_id != -1){
+                    $poem->author_id = $author->id;
+                }else{
+                    $poem->author_id = -1;
+                }
+            }else{
+                $poem->status = 'delete';
+                $poem->author_id = -1;
+            }
+            $res = [];
+            $res['author'] = $author;
+            $res['detail'] = $poem_detail;;
+            $res['poems_count'] = $poems_count;
+            $res['poem'] = $poem;
+            return response()->json($res);
+        }else{
+            return null;
+        }
+    }
 }

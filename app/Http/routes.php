@@ -95,6 +95,8 @@ Route::group([
         'prefix' => 'wxxcx',
     ],function (){
         Route::get('/userInfo', 'Frontend\WxxcxController@getWxUserInfo');
+        Route::get('/getRandomPoem', 'Frontend\WxxcxController@getRandomPoem');
+        Route::get('/poem/{id}', 'Frontend\WxxcxController@getPoemDetail');
     });
     /* =============== 静态页面 ====================== */
     Route::get('/contact','Frontend\PageController@contact');
