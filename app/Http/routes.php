@@ -96,6 +96,8 @@ Route::group([
     ],function (){
         Route::get('/userInfo', 'Frontend\WxxcxController@getWxUserInfo');
         Route::get('/getRandomPoem', 'Frontend\WxxcxController@getRandomPoem');
+        Route::get('/getHomeData', 'Frontend\WxxcxController@getHomeData');
+        Route::get('/getSentenceData', 'Frontend\WxxcxController@getSentenceData');
         Route::get('/poem/{id}', 'Frontend\WxxcxController@getPoemDetail');
     });
     /* =============== 静态页面 ====================== */
