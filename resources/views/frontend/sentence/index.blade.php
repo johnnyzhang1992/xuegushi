@@ -145,7 +145,7 @@
                     <div class="typeHeaderItem" style="padding-bottom: 10px;">
                         <span role="button" class="topTypeHeader-rightItem pull-left">主题:</span>
                         <div class="topTypeHeader-nav">
-                            <a href="{{url('sentence')}}" class="topTypeHeader-navItem @if(!isset($theme)) active @endif">全部</a>
+                            {{--<a href="{{url('sentence')}}" class="topTypeHeader-navItem @if(!isset($theme)) active @endif">全部</a>--}}
                             @foreach($themes as $_theme)
                                 <a href="{{url('sentence?theme='.$_theme)}}" class="topTypeHeader-navItem @if(isset($theme) && $theme == $_theme) active @endif">{{ $_theme }}</a>
                             @endforeach
@@ -155,7 +155,7 @@
                         <div class="typeHeaderItem" style="padding-bottom: 10px;border-bottom: 1px solid #e6e6e6;">
                             <span role="button" class="topTypeHeader-rightItem pull-left">分类:</span>
                             <div class="topTypeHeader-nav">
-                                <a href="{{url('sentence?theme='.$theme)}}" class="topTypeHeader-navItem @if(!isset($type)) active @endif">全部</a>
+                                {{--<a href="{{url('sentence?theme='.$theme)}}" class="topTypeHeader-navItem @if(!isset($type)) active @endif">全部</a>--}}
                                 @foreach($types as $_type)
                                     <a href="{{url('sentence?theme='.@$theme.'&type='.@$_type)}}" class="topTypeHeader-navItem @if(isset($type) && $type == $_type) active @endif">{{ $_type }}</a>
                                 @endforeach

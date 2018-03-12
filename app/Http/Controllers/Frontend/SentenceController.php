@@ -44,7 +44,7 @@ class SentenceController extends Controller
         $types = array();
         $site_title = '';
         if($theme){
-            if($theme != 'all'){
+            if($theme != '全部'){
                 $_sentences->where('dev_sentence.theme','like','%'.$theme.'%');
                 $types = $this->getThemeTypes($theme);
                 $site_title = '主题为'.$theme;
@@ -52,7 +52,7 @@ class SentenceController extends Controller
             $_url = $_url.'theme='.$theme;
         }
         if($type){
-            if($type != 'all'){
+            if($type != '全部'){
                 $_sentences->where('dev_sentence.type','like','%'.$type.'%');
                 $site_title = $site_title.'_类型为'.$type.'的';
             }
