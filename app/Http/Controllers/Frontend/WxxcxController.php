@@ -136,6 +136,54 @@ class WxxcxController extends Controller
         return $result;
     }
     /**
+     * 诗文页面
+     * @param $request
+     * @return mixed
+     */
+    public function getPoemData(Request $request){
+        $type = $request->input('type');
+        $dynasty = $request->input('dynasty');
+        $tag = $request->input('tag');
+        $poem_types = ['全部','诗','词','曲','文言文'];
+        $poem_dynasty = ['全部','先秦','两汉','魏晋','南北朝','隋代','唐代','五代','宋代','金朝','元代','明代','清代','近代'];
+        $_poems = DB::table('dev_poem');
+        if($type){
+            if($type != '全部'){
+                $_poems->where('type',$type);
+            }
+        }
+        if($dynasty){
+            if($dynasty != '全部'){
+                $_poems->where('dynasty',$dynasty);
+            }
+        }
+        if($tag){
+            $_poems->where('tags','like','%'.$tag.'%');
+        }
+        $_poems->orderBy('like_count','desc');
+        $_poems = $_poems->paginate(10);
+        foreach ($_poems as $key=>$poem){
+            if($poem->author_source_id != -1){
+                $author = DB::table('dev_author')->where('source_id',$poem->author_source_id)->first();
+                $poem->author_id = $author->id;
+            }else{
+                $poem->author_id = -1;
+            }
+            $_content = null;
+            if(isset(json_decode($poem->content)->content) && json_decode($poem->content)->content){
+                foreach(json_decode($poem->content)->content as $item){
+                    $_content = $_content.$item;
+                }
+            }
+            $_poems[$key]->content = mb_substr($_content,0,35,'utf-8');
+        }
+        $res = [];
+        $res['types'] = $poem_types;
+        $res['dynasty'] = $poem_dynasty;
+        $res['poems'] = $_poems;
+        return response()->json($res);
+    }
+    /**
      * poem 详情页
      * @param $id
      * @return mixed
