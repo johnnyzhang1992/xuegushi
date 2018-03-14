@@ -314,14 +314,14 @@ class WxxcxController extends Controller
         $_sentences = DB::table('dev_sentence');
         $types = config('sentence.types');;
         if($theme){
-            if($theme != 'all'){
+            if($theme != '全部'){
                 $_sentences->where('dev_sentence.theme','like','%'.$theme.'%');
 //                $types = $this->getThemeTypes($theme);
             }
             $_url = $_url.'theme='.$theme;
         }
         if($type){
-            if($type != 'all'){
+            if($type != '全部'){
                 $_sentences->where('dev_sentence.type','like','%'.$type.'%');
             }
             $_url = $_url.'&type='.$type;
@@ -382,6 +382,28 @@ class WxxcxController extends Controller
             $data[$key]->content = mb_substr($_content,0,35,'utf-8');
         }
         return $data;
+    }
+    /**
+     * 获取诗人信息
+     * @param $request
+     * @return mixed
+     */
+    public function getPoetData(Request $request){
+        $dynasty = $request->input('dynasty');
+        $dynastys = ['全部','先秦','两汉','魏晋','南北朝','隋代','唐代','五代','宋代','金朝','元代','明代','清代','近代'];
+        $authors = DB::table('dev_author');
+        if($dynasty){
+            if($dynasty != '全部'){
+                $authors->where('dynasty',$dynasty);
+            }
+        }
+        $authors->select('id','author_name','dynasty','profile')->orderBy('like_count','desc');
+        $authors = $authors->paginate(10);
+
+        $res = [];
+        $res['poets'] = $authors;
+        $res['dynasty'] = $dynastys;
+        return response()->json($res);
     }
     /**
      * 随机获取一条名句

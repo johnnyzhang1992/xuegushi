@@ -99,6 +99,7 @@ Route::group([
         Route::get('/getHomeData', 'Frontend\WxxcxController@getHomeData');
         Route::get('/getPoemData', 'Frontend\WxxcxController@getPoemData');
         Route::get('/getSentenceData', 'Frontend\WxxcxController@getSentenceData');
+        Route::get('/getPoetData', 'Frontend\WxxcxController@getPoetData');
         Route::get('/poem/{id}', 'Frontend\WxxcxController@getPoemDetail');
     });
     /* =============== 静态页面 ====================== */
