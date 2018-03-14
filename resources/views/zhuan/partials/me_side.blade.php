@@ -1,4 +1,4 @@
-<div class="Card" data-reactid="381">
+<div class="Card" data-reactid="381" style="display: none">
     <div class="Card-header Profile-sideColumnTitle" data-reactid="382">
         <div class="Card-headerText" data-reactid="383">个人成就</div>
     </div>
