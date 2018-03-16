@@ -90,6 +90,14 @@ Route::group([
     ],function (){
         Route::get('/{id}', 'Frontend\PageController@show');
     });
+    /* =============== 小说 ========================= */
+    Route::group([
+        'prefix' => 'novel'
+    ],function (){
+       Route::get('/','Frontend\NovelController@index');
+       Route::get('/{id}','Frontend\NovelController@show');
+       Route::get('/{id}/{chapter_id}','Frontend\NovelController@detail');
+    });
     /* =============== 微信小程序 ==================== */
     Route::group([
         'prefix' => 'wxxcx',
