@@ -406,6 +406,30 @@ class WxxcxController extends Controller
         return response()->json($res);
     }
     /**
+     * 获取诗人详情
+     * @param $id
+     * @return mixed
+     */
+    public function getPoetDetailData($id){
+        $author = null;
+        $hot_poems = null;
+        $author = DB::table('dev_author')->where('id',$id)->first();
+        if($author->author_name != '佚名'){
+            $hot_poems = DB::table('dev_poem')
+                ->where('author_source_id',$author->source_id)
+                ->orderBy('like_count','desc')
+                ->paginate(5);
+        }else{
+            $hot_poems = [];
+        }
+
+        $res = [];
+        $res['poet'] = $author;
+        $res['poems'] = $hot_poems;
+
+        return response()->json($res);
+    }
+    /**
      * 随机获取一条名句
      */
     public function getRandomSentence(){

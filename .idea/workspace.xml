@@ -25,8 +25,8 @@
       <file leaf-file-name="WxxcxController.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Frontend/WxxcxController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="391">
-              <caret line="323" column="27" lean-forward="false" selection-start-line="323" selection-start-column="27" selection-end-line="323" selection-end-column="27" />
+            <state relative-caret-position="-232">
+              <caret line="234" column="7" lean-forward="true" selection-start-line="234" selection-start-column="7" selection-end-line="234" selection-end-column="7" />
               <folding>
                 <element signature="e#131#154#0#PHP" expanded="true" />
                 <element signature="e#533#3348#0#PHP" expanded="false" />
@@ -38,9 +38,11 @@
                 <element signature="e#6269#8010#0#PHP" expanded="false" />
                 <element signature="e#8090#10123#0#PHP" expanded="false" />
                 <element signature="e#8311#9978#0#PHP" expanded="false" />
+                <element signature="e#10233#11624#0#PHP" expanded="false" />
                 <element signature="e#11686#12644#0#PHP" expanded="false" />
                 <element signature="e#12649#13634#0#PHP" expanded="false" />
-                <element signature="e#14389#14731#0#PHP" expanded="false" />
+                <element signature="e#13713#14352#0#PHP" expanded="false" />
+                <element signature="e#15040#15382#0#PHP" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -49,10 +51,11 @@
       <file leaf-file-name="AuthorController.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Frontend/AuthorController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="193">
-              <caret line="41" column="24" lean-forward="true" selection-start-line="38" selection-start-column="5" selection-end-line="68" selection-end-column="9" />
+            <state relative-caret-position="741">
+              <caret line="86" column="27" lean-forward="false" selection-start-line="83" selection-start-column="6" selection-end-line="137" selection-end-column="9" />
               <folding>
-                <element signature="e#2307#4756#0#PHP" expanded="false" />
+                <element signature="e#628#2229#0#PHP" expanded="false" />
+                <element signature="e#2779#4750#0#PHP" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -61,10 +64,10 @@
       <file leaf-file-name="routes.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Http/routes.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="485">
-              <caret line="105" column="61" lean-forward="true" selection-start-line="105" selection-start-column="61" selection-end-line="105" selection-end-column="61" />
+            <state relative-caret-position="1995">
+              <caret line="105" column="53" lean-forward="false" selection-start-line="105" selection-start-column="53" selection-end-line="105" selection-end-column="53" />
               <folding>
-                <element signature="e#4377#7994#1#PHP" expanded="false" />
+                <element signature="e#4470#8087#1#PHP" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -89,7 +92,7 @@
       <file leaf-file-name="SentenceController.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Frontend/SentenceController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="261">
+            <state relative-caret-position="570">
               <caret line="37" column="44" lean-forward="false" selection-start-line="37" selection-start-column="44" selection-end-line="37" selection-end-column="44" />
               <folding>
                 <element signature="e#594#3060#0#PHP" expanded="false" />
@@ -485,7 +488,7 @@
     <option name="x" value="-8" />
     <option name="y" value="-8" />
     <option name="width" value="1936" />
-    <option name="height" value="632" />
+    <option name="height" value="1056" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
@@ -601,14 +604,14 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
       <pane id="Scratches" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="settings.editor.selected.configurable" value="editor.preferences.import" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../gushi_lite" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path" value="C:/Program Files/nodejs/node" />
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="list.type.of.created.stylesheet" value="SCSS" />
@@ -872,14 +875,9 @@
       <workItem from="1520678244876" duration="16513000" />
       <workItem from="1520863663359" duration="4658000" />
       <workItem from="1520997406971" duration="439000" />
-      <workItem from="1521035978072" duration="3445000" />
-    </task>
-    <task id="LOCAL-00075" summary="专栏主页">
-      <created>1515253472609</created>
-      <option name="number" value="00075" />
-      <option name="presentableId" value="LOCAL-00075" />
-      <option name="project" value="LOCAL" />
-      <updated>1515253472609</updated>
+      <workItem from="1521035978072" duration="4650000" />
+      <workItem from="1521085159957" duration="1194000" />
+      <workItem from="1521208422176" duration="15000" />
     </task>
     <task id="LOCAL-00076" summary="文章编辑功能">
       <created>1515258576235</created>
@@ -1217,11 +1215,18 @@
       <option name="project" value="LOCAL" />
       <updated>1521036020258</updated>
     </task>
-    <option name="localTasksCounter" value="124" />
+    <task id="LOCAL-00124" summary="更新小程序接口">
+      <created>1521042868605</created>
+      <option name="number" value="00124" />
+      <option name="presentableId" value="LOCAL-00124" />
+      <option name="project" value="LOCAL" />
+      <updated>1521042868606</updated>
+    </task>
+    <option name="localTasksCounter" value="125" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="891269000" />
+    <option name="totallyTimeSpent" value="893683000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -1229,13 +1234,12 @@
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25353646" sideWeight="0.5021322" order="8" side_tool="true" content_ui="tabs" />
-      <window_info id="File Transfer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19042437" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.056583244" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32335907" sideWeight="0.5029737" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.16657192" sideWeight="0.4978678" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Gulp" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32335907" sideWeight="0.5029737" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2739872" sideWeight="0.49702632" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.28198293" sideWeight="0.49702632" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -1247,6 +1251,7 @@
       <window_info id="Weex Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2619318" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="File Transfer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19042437" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -1291,10 +1296,10 @@
     <MESSAGE value="专栏个人也没" />
     <MESSAGE value="代码方法冲突解决" />
     <MESSAGE value="小程序创建用户" />
-    <MESSAGE value="更新小程序接口" />
     <MESSAGE value="修复因为小程序引发的错误" />
     <MESSAGE value="隐藏个人页面部分内容" />
-    <option name="LAST_COMMIT_MESSAGE" value="隐藏个人页面部分内容" />
+    <MESSAGE value="更新小程序接口" />
+    <option name="LAST_COMMIT_MESSAGE" value="更新小程序接口" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1315,7 +1320,7 @@
           <option name="timeStamp" value="43" />
         </line-breakpoint>
       </breakpoints>
-      <option name="time" value="44" />
+      <option name="time" value="45" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -1829,21 +1834,12 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="57" lean-forward="false" selection-start-line="0" selection-start-column="57" selection-end-line="0" selection-end-column="57" />
-          <folding>
-            <marker date="1520997453160" expanded="true" signature="2719:2743" ph="..." />
-            <marker date="1520997453160" expanded="true" signature="2886:2907" ph="..." />
-            <marker date="1520997453160" expanded="true" signature="2995:3009" ph="..." />
-            <marker date="1520997453160" expanded="true" signature="3177:3190" ph="..." />
-            <marker date="1520997453160" expanded="true" signature="3413:3429" ph="..." />
-            <marker date="1520997453160" expanded="true" signature="3536:3551" ph="..." />
-            <marker date="1520997453160" expanded="true" signature="3658:3676" ph="..." />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Frontend/SentenceController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="261">
+        <state relative-caret-position="570">
           <caret line="37" column="44" lean-forward="false" selection-start-line="37" selection-start-column="44" selection-end-line="37" selection-end-column="44" />
           <folding>
             <element signature="e#594#3060#0#PHP" expanded="false" />
@@ -1853,28 +1849,29 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Frontend/AuthorController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="193">
-          <caret line="41" column="24" lean-forward="true" selection-start-line="38" selection-start-column="5" selection-end-line="68" selection-end-column="9" />
+        <state relative-caret-position="741">
+          <caret line="86" column="27" lean-forward="false" selection-start-line="83" selection-start-column="6" selection-end-line="137" selection-end-column="9" />
           <folding>
-            <element signature="e#2307#4756#0#PHP" expanded="false" />
+            <element signature="e#628#2229#0#PHP" expanded="false" />
+            <element signature="e#2779#4750#0#PHP" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/routes.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="485">
-          <caret line="105" column="61" lean-forward="true" selection-start-line="105" selection-start-column="61" selection-end-line="105" selection-end-column="61" />
+        <state relative-caret-position="1995">
+          <caret line="105" column="53" lean-forward="false" selection-start-line="105" selection-start-column="53" selection-end-line="105" selection-end-column="53" />
           <folding>
-            <element signature="e#4377#7994#1#PHP" expanded="false" />
+            <element signature="e#4470#8087#1#PHP" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Frontend/WxxcxController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="323" column="27" lean-forward="false" selection-start-line="323" selection-start-column="27" selection-end-line="323" selection-end-column="27" />
+        <state relative-caret-position="-232">
+          <caret line="234" column="7" lean-forward="true" selection-start-line="234" selection-start-column="7" selection-end-line="234" selection-end-column="7" />
           <folding>
             <element signature="e#131#154#0#PHP" expanded="true" />
             <element signature="e#533#3348#0#PHP" expanded="false" />
@@ -1886,9 +1883,11 @@
             <element signature="e#6269#8010#0#PHP" expanded="false" />
             <element signature="e#8090#10123#0#PHP" expanded="false" />
             <element signature="e#8311#9978#0#PHP" expanded="false" />
+            <element signature="e#10233#11624#0#PHP" expanded="false" />
             <element signature="e#11686#12644#0#PHP" expanded="false" />
             <element signature="e#12649#13634#0#PHP" expanded="false" />
-            <element signature="e#14389#14731#0#PHP" expanded="false" />
+            <element signature="e#13713#14352#0#PHP" expanded="false" />
+            <element signature="e#15040#15382#0#PHP" expanded="false" />
           </folding>
         </state>
       </provider>
