@@ -49,7 +49,12 @@
                 </ol>
             </div>
             <div class="novel-content">
-                {!! str_replace('    ','<br><br>',@$detail->content) !!}
+                @if($detail->book_id == 1)
+                    {!! str_replace('    ','<br><br>',@$detail->content) !!}
+                @else
+                    {!! str_replace('&nbsp;&nbsp;','<br>',htmlentities(trim(@$detail->content))) !!}
+                @endif
+
             </div>
             <div class="next-chapter">
                 <a href="{{ url('/novel/'.$detail->book_id.'/'.($detail->id-1)) }}" class="btn btn-info">上一章</a>

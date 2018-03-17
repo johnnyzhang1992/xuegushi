@@ -8,6 +8,9 @@
         ul{
             padding-left: 0;
         }
+        li{
+            padding: 5px 0;
+        }
     </style>
 @endsection
 
