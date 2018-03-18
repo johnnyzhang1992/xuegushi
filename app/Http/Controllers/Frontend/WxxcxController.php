@@ -413,12 +413,34 @@ class WxxcxController extends Controller
     public function getPoetDetailData($id){
         $author = null;
         $hot_poems = null;
-        $author = DB::table('dev_author')->where('id',$id)->first();
+        $author = DB::table('dev_author')
+            ->where('id',$id)
+            ->select('id','dynasty','author_name','profile','source_id')
+            ->first();
+        if(file_exists('static/author/'.@$author->author_name.'.jpg')){
+            $author->avatar = asset('static/author/'.@$author->author_name.'.jpg');
+        }
         if($author->author_name != '佚名'){
             $hot_poems = DB::table('dev_poem')
                 ->where('author_source_id',$author->source_id)
+                ->select('dev_poem.id','dev_poem.author','dev_poem.content','dev_poem.dynasty','dev_poem.like_count','dev_poem.title')
                 ->orderBy('like_count','desc')
                 ->paginate(5);
+            foreach ($hot_poems as $key=>$poem){
+                $content = '';
+                if(isset($poem->content) && json_decode($poem->content)){
+                    if(isset(json_decode($poem->content)->xu) && json_decode($poem->content)->xu){
+                        $content = $content.@json_decode($poem->content)->xu;
+                    }
+                    if(isset(json_decode($poem->content)->content) && json_decode($poem->content)->content){
+                        foreach(json_decode($poem->content)->content as $item){
+                            $content = $content.@$item;
+                        }
+                    }
+                }
+                $hot_poems[$key]->content = $content;
+            }
+
         }else{
             $hot_poems = [];
         }
