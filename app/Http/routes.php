@@ -110,6 +110,7 @@ Route::group([
         Route::get('/getPoetData', 'Frontend\WxxcxController@getPoetData');
         Route::get('/getPoetDetailData/{id}', 'Frontend\WxxcxController@getPoetDetailData');
         Route::get('/poem/{id}', 'Frontend\WxxcxController@getPoemDetail');
+        Route::get('/{id}/collect/{type}', 'Frontend\WxxcxController@updateCollect')->where('id', '[0-9]+');
     });
     /* =============== 静态页面 ====================== */
     Route::get('/contact','Frontend\PageController@contact');

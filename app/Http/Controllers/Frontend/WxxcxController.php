@@ -186,9 +186,11 @@ class WxxcxController extends Controller
     /**
      * poem 详情页
      * @param $id
+     * @param $request
      * @return mixed
      */
-    public function getPoemDetail($id){
+    public function getPoemDetail(Request $request,$id){
+        $user_id = $request->input('user_id');
         $author = null;
         $poem = DB::table('dev_poem')->where('id',$id)->first();
         $content = '';
@@ -220,6 +222,15 @@ class WxxcxController extends Controller
             }else{
                 $poem->status = 'delete';
                 $poem->author_id = -1;
+            }
+            $collect = DB::table('dev_collect')
+                ->where('user_id',$user_id)
+                ->where('like_id',$poem->id)
+                ->where('type','poem')->first();
+            if(isset($collect) && $collect->status == 'active'){
+                $poem->collect_status = true;
+            }else{
+                $poem->collect_status = false;
             }
             $res = [];
 //            $res['author'] = $author;
@@ -461,5 +472,79 @@ class WxxcxController extends Controller
             ->whereIn('dev_sentence.id',$this->getRandomArray(1))
             ->get();
         return $post;
+    }
+
+    /**
+     * 收藏诗文
+     * @param Request $request
+     * @param $id
+     * @param $type
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function updateCollect(Request $request,$id,$type){
+        $user_id = $request->input('user_id');
+        $data = array();
+        $msg = null;
+        $_data = null;
+        $table_name = 'dev_'.$type;
+        $_res = DB::table('dev_collect')
+            ->where('user_id',$user_id)
+            ->where('like_id',$id)
+            ->where('type',trim($type))
+            ->first();
+        if(!$_res){
+            // 新的like
+            $res = DB::table($table_name)->where('id',$id)->increment("collect_count");
+            $res1 = DB::table('users')->where('id',$user_id)->increment("collect_count");
+//                $_data = DB::table($table_name)->where('id',$id)->first();
+            DB::table('dev_collect')->insertGetId(
+                [
+                    'like_id' => $id,
+                    'type' => trim($type),
+                    'created_at' => date('Y-m-d H:i:s',time()),
+                    'updated_at' => date('Y-m-d H:i:s',time()),
+                    'user_id'=> $user_id,
+                    'status' => 'active'
+                ]
+            );
+            $msg = '收藏成功';
+            $data['status'] = true;
+        }else{
+            // 更新like状态
+            if($_res->status == 'active'){
+                $res = DB::table($table_name)->where('id',$id)->decrement("collect_count");
+                $res1 = DB::table('users')->where('id',$user_id)->decrement("collect_count");
+//                    $_data = DB::table($table_name)->where('id',$id)->first();
+                DB::table('dev_collect')
+                    ->where('user_id',$user_id)
+                    ->where('id',$_res->id)
+                    ->update([
+                        'status' => 'delete',
+                        'updated_at' => date('Y-m-d H:i:s',time())
+                    ]);
+                $msg = '取消收藏成功';
+                $data['status'] = false;
+            }else{
+                $res = DB::table($table_name)->where('id',$id)->increment("collect_count");
+                $res1 = DB::table('users')->where('id',$user_id)->increment("collect_count");
+                DB::table('dev_collect')
+                    ->where('user_id',$user_id)
+                    ->where('id',$_res->id)
+                    ->update([
+                        'status' => 'active',
+                        'updated_at' => date('Y-m-d H:i:s',time()),
+                    ]);
+                $msg = '收藏成功';
+                $data['status'] = true;
+            }
+        }
+        if($res){
+            $data['msg'] = $msg;
+            return response()->json($data);
+        }else{
+            $data['msg'] = $msg;
+            $data['status'] = false;
+            return response()->json($data);
+        }
     }
 }
