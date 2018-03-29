@@ -111,6 +111,7 @@ Route::group([
         Route::get('/getPoetDetailData/{id}', 'Frontend\WxxcxController@getPoetDetailData');
         Route::get('/poem/{id}', 'Frontend\WxxcxController@getPoemDetail');
         Route::get('/{id}/collect/{type}', 'Frontend\WxxcxController@updateCollect')->where('id', '[0-9]+');
+        Route::get('/getCollect/{user_id}/{type}', 'Frontend\WxxcxController@getUserCollect')->where('user_id', '[0-9]+');
     });
     /* =============== 静态页面 ====================== */
     Route::get('/contact','Frontend\PageController@contact');

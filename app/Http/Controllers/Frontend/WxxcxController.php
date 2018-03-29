@@ -547,4 +547,48 @@ class WxxcxController extends Controller
             return response()->json($data);
         }
     }
+
+    /**
+     * 用户收藏列表
+     * @param $user_id
+     * @param $type
+     * @param $request
+     * @return mixed
+     */
+    public function getUserCollect(Request $request,$user_id,$type){
+        $data = null;
+        if($type== 'poem'){
+            $data = DB::table('dev_collect')
+                ->where('dev_collect.type','poem')
+                ->where('dev_collect.status','active')
+                ->where('dev_collect.user_id',$user_id)
+                ->leftJoin('dev_poem','dev_poem.id','=','dev_collect.like_id')
+                ->select('dev_collect.*','dev_poem.title','dev_poem.author','dev_poem.dynasty','dev_poem.id as poem_id','dev_poem.like_count','dev_poem.collect_count','dev_poem.content')
+                ->orderBy('dev_collect.id','desc')
+                ->paginate(10);
+            foreach ($data as $key=>$poem){
+                $_content = null;
+                if(isset(json_decode($poem->content)->content) && json_decode($poem->content)->content){
+                    foreach(json_decode($poem->content)->content as $item){
+                        $_content = $_content.$item;
+                    }
+                }
+                $data[$key]->content = mb_substr($_content,0,35,'utf-8');
+            }
+        }else{
+            $data =  DB::table('dev_collect')
+                ->where('dev_collect.type','author')
+                ->where('dev_collect.status','active')
+                ->where('dev_collect.user_id',$user_id)
+                ->leftJoin('dev_author','dev_author.id','=','dev_collect.like_id')
+                ->select('dev_collect.*','dev_author.author_name','dev_author.dynasty','dev_author.like_count','dev_author.collect_count')
+                ->orderBy('dev_collect.id','desc')
+                ->paginate(10);
+        }
+        $res = [];
+        $res['data'] = $data;
+        $res['user_id'] = $user_id;
+        $res['type'] = $type;
+        return response()->json($res);
+    }
 }
