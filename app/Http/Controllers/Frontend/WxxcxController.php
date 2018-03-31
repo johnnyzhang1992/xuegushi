@@ -26,8 +26,8 @@ class WxxcxController extends Controller
     }
 
     /**
-     * @param $request
      * 小程序登录获取用户信息
+     * @param $request
      * @return mixed
      */
     public function getWxUserInfo(Request $request)
@@ -223,15 +223,20 @@ class WxxcxController extends Controller
                 $poem->status = 'delete';
                 $poem->author_id = -1;
             }
-            $collect = DB::table('dev_collect')
-                ->where('user_id',$user_id)
-                ->where('like_id',$poem->id)
-                ->where('type','poem')->first();
-            if(isset($collect) && $collect->status == 'active'){
-                $poem->collect_status = true;
-            }else{
+            if($user_id == 0){
                 $poem->collect_status = false;
+            }else{
+                $collect = DB::table('dev_collect')
+                    ->where('user_id',$user_id)
+                    ->where('like_id',$poem->id)
+                    ->where('type','poem')->first();
+                if(isset($collect) && $collect->status == 'active'){
+                    $poem->collect_status = true;
+                }else{
+                    $poem->collect_status = false;
+                }
             }
+
             $res = [];
 //            $res['author'] = $author;
             $res['detail'] = $poem_detail;;
@@ -419,11 +424,13 @@ class WxxcxController extends Controller
     /**
      * 获取诗人详情
      * @param $id
+     * @param $request
      * @return mixed
      */
-    public function getPoetDetailData($id){
+    public function getPoetDetailData(Request $request,$id){
         $author = null;
         $hot_poems = null;
+        $user_id = $request->input('user_id');
         $author = DB::table('dev_author')
             ->where('id',$id)
             ->select('id','dynasty','author_name','profile','source_id')
@@ -447,6 +454,19 @@ class WxxcxController extends Controller
                         foreach(json_decode($poem->content)->content as $item){
                             $content = $content.@$item;
                         }
+                    }
+                }
+                if($user_id == 0){
+                    $author->collect_status = false;
+                }else{
+                    $collect = DB::table('dev_collect')
+                        ->where('user_id',$user_id)
+                        ->where('like_id',$author->id)
+                        ->where('type','author')->first();
+                    if(isset($collect) && $collect->status == 'active'){
+                        $author->collect_status = true;
+                    }else{
+                        $author->collect_status = false;
                     }
                 }
                 $hot_poems[$key]->content = $content;
@@ -581,7 +601,7 @@ class WxxcxController extends Controller
                 ->where('dev_collect.status','active')
                 ->where('dev_collect.user_id',$user_id)
                 ->leftJoin('dev_author','dev_author.id','=','dev_collect.like_id')
-                ->select('dev_collect.*','dev_author.author_name','dev_author.dynasty','dev_author.like_count','dev_author.collect_count')
+                ->select('dev_collect.*','dev_author.author_name','dev_author.dynasty','dev_author.id as author_id','dev_author.like_count','dev_author.collect_count')
                 ->orderBy('dev_collect.id','desc')
                 ->paginate(10);
         }
@@ -590,5 +610,27 @@ class WxxcxController extends Controller
         $res['user_id'] = $user_id;
         $res['type'] = $type;
         return response()->json($res);
+    }
+
+    /**
+     * 获取用户的基本信息
+     * @param $user_id
+     * @return mixed
+     */
+    public function getUserInfo($user_id){
+        $p_count = DB::table('dev_collect')
+            ->where('dev_collect.type','poem')
+            ->where('dev_collect.status','active')
+            ->where('dev_collect.user_id',$user_id)
+            ->count();
+        $a_count = DB::table('dev_collect')
+            ->where('dev_collect.type','author')
+            ->where('dev_collect.status','active')
+            ->where('dev_collect.user_id',$user_id)
+            ->count();
+        return response()->json([
+            'p_count' => $p_count,
+            'a_count' => $a_count
+        ]);
     }
 }
