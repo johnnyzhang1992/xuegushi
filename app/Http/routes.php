@@ -106,10 +106,12 @@ Route::group([
         Route::get('/getRandomPoem', 'Frontend\WxxcxController@getRandomPoem');
         Route::get('/getHomeData', 'Frontend\WxxcxController@getHomeData');
         Route::get('/getPoemData', 'Frontend\WxxcxController@getPoemData');
+        Route::get('/getPostData', 'Frontend\WxxcxController@getPostData');
+        Route::get('/getPostDetailData/{id}', 'Frontend\WxxcxController@getPostDetailData')->where('id', '[0-9]+');
         Route::get('/getSentenceData', 'Frontend\WxxcxController@getSentenceData');
         Route::get('/getPoetData', 'Frontend\WxxcxController@getPoetData');
-        Route::get('/getPoetDetailData/{id}', 'Frontend\WxxcxController@getPoetDetailData');
-        Route::get('/poem/{id}', 'Frontend\WxxcxController@getPoemDetail');
+        Route::get('/getPoetDetailData/{id}', 'Frontend\WxxcxController@getPoetDetailData')->where('id', '[0-9]+');
+        Route::get('/poem/{id}', 'Frontend\WxxcxController@getPoemDetail')->where('id', '[0-9]+');
         Route::get('/{id}/collect/{type}', 'Frontend\WxxcxController@updateCollect')->where('id', '[0-9]+');
         Route::get('/getCollect/{user_id}/{type}', 'Frontend\WxxcxController@getUserCollect')->where('user_id', '[0-9]+');
         Route::get('/getUserInfo/{user_id}', 'Frontend\WxxcxController@getUserInfo')->where('user_id', '[0-9]+');

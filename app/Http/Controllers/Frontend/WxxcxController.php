@@ -15,6 +15,7 @@ use Config;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Mockery\Exception;
+use App\Helpers\DateUtil;
 
 class WxxcxController extends Controller
 {
@@ -193,6 +194,7 @@ class WxxcxController extends Controller
         $user_id = $request->input('user_id');
         $author = null;
         $poem = DB::table('dev_poem')->where('id',$id)->first();
+        DB::table('dev_poem')->where('id',$id)->increment("pv_count");
         $content = '';
         if(isset($poem->content) && json_decode($poem->content)){
             if(isset(json_decode($poem->content)->xu) && json_decode($poem->content)->xu){
@@ -431,6 +433,7 @@ class WxxcxController extends Controller
         $author = null;
         $hot_poems = null;
         $user_id = $request->input('user_id');
+        DB::table('dev_author')->where('id',$id)->increment("pv_count");
         $author = DB::table('dev_author')
             ->where('id',$id)
             ->select('id','dynasty','author_name','profile','source_id')
@@ -605,6 +608,9 @@ class WxxcxController extends Controller
                 ->orderBy('dev_collect.id','desc')
                 ->paginate(10);
         }
+        foreach ($data as $key=>$item){
+            $data[$key]->updated_at = DateUtil::formatDate(strtotime($item->created_at));
+        }
         $res = [];
         $res['data'] = $data;
         $res['user_id'] = $user_id;
@@ -632,5 +638,38 @@ class WxxcxController extends Controller
             'p_count' => $p_count,
             'a_count' => $a_count
         ]);
+    }
+
+    /**
+     * 获取专栏文章
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getPostData(){
+        $posts = DB::table('dev_post')
+            ->where('dev_post.status','active')
+            ->leftJoin('users','users.id','=','dev_post.creator_id')
+            ->select('dev_post.*','users.name as author_name')
+            ->orderBy('dev_post.created_at','desc')
+            ->orderBy('dev_post.pv_count','desc')
+            ->paginate(9);
+        foreach ($posts as $key=>$item){
+            $posts[$key]->updated_at = DateUtil::formatDate(strtotime($item->updated_at));
+            $posts[$key]->content = mb_substr(strip_tags($item->content),0,35,'utf-8');
+        }
+        return response()->json($posts);
+    }
+    public function getPostDetailData($id){
+        $data = DB::table('dev_post')
+            ->where('dev_post.id',$id)
+            ->leftJoin('users','users.id','=','dev_post.creator_id')
+            ->leftJoin('dev_zhuanlan','dev_zhuanlan.id','=','dev_post.zhuanlan_id')
+            ->select('dev_post.*','users.name as user_name','users.avatar','dev_zhuanlan.alia_name as zhuan_alia_name',
+                'dev_zhuanlan.about','dev_zhuanlan.avatar as zhuan_avatar','dev_zhuanlan.name as zhuan_name')
+            ->first();
+        $data->cover_url = url($data->cover_url);
+        $data->avatar = url($data->avatar);
+        $data->updated_at = DateUtil::formatDate(strtotime($data->updated_at));
+        DB::table('dev_post')->where('id',$data->id)->increment("pv_count");
+        return response()->json($data);
     }
 }
