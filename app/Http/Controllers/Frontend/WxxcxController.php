@@ -672,4 +672,60 @@ class WxxcxController extends Controller
         DB::table('dev_post')->where('id',$data->id)->increment("pv_count");
         return response()->json($data);
     }
+
+    /**
+     * 搜索功能
+     * @param $_key
+     * @return mixed
+     */
+    public function getSearchResult($_key){
+        $authors = DB::table('dev_author')
+            ->where('author_name','like','%'.$_key.'%')
+            ->select('id','dynasty','author_name','like_count','profile')
+            ->orderBy('like_count','desc')
+            ->paginate(3);
+        $tags = DB::table('dev_poem')
+            ->where('tags','like','%'.$_key.'%')
+            ->select('tags')
+            ->paginate(3);
+        $_tags = array();
+        foreach ($tags as $tag){
+            foreach(explode(',',$tag->tags) as $_tag){
+                if(strpos($_tag,$_key)!== false){
+                    array_push($_tags,$_tag);
+                }
+            }
+        }
+        $_tags = array_unique($_tags);
+        $sentences = DB::table('dev_sentence')
+            ->where('dev_sentence.title','like','%'.$_key.'%')
+            ->leftJoin('dev_poem','dev_poem.source_id','=','dev_sentence.target_source_id')
+            ->select('dev_sentence.title','dev_poem.id','dev_poem.author','dev_poem.dynasty','dev_poem.title as poem_title')
+            ->paginate(3);
+        $poems = DB::table('dev_poem')
+            ->where('title','like','%'.$_key.'%')
+            ->select('id','title','author','dynasty','like_count','content')
+            ->orderBy('like_count','desc')
+            ->paginate(3);
+        foreach ($poems as $key=>$poem){
+            $content = '';
+            if(isset($poem->content) && json_decode($poem->content)){
+                if(isset(json_decode($poem->content)->xu) && json_decode($poem->content)->xu){
+                    $content = $content.@json_decode($poem->content)->xu;
+                }
+                if(isset(json_decode($poem->content)->content) && json_decode($poem->content)->content){
+                    foreach(json_decode($poem->content)->content as $item){
+                        $content = $content.@$item;
+                    }
+                }
+            }
+            $poems[$key]->content = mb_substr($content,0,35,'utf-8');
+        }
+        return response()->json([
+            'tags' => $_tags,
+            'sentences' => $sentences,
+            'poems' => $poems,
+            'poets' =>$authors
+        ]);
+    }
 }

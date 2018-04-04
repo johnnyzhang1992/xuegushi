@@ -182,7 +182,7 @@ class PoemsController extends Controller
                 ->with('hot_poems',$hot_poems)
                 ->with('poems_count',$poems_count)
                 ->with('site_description',$content)
-                ->with('site_title',$poem->title.'_翻译、注释及赏析-'.$poem->dynasty.'-'.$poem->author)
+                ->with('site_title',$poem->title.'原文_翻译、注释及赏析-'.$poem->dynasty.'-'.$poem->author)
                 ->with($this->getClAndLkCount())
                 ->with('h_authors',$this->getHotAuthors())
                 ->with('poem',$poem);
