@@ -116,6 +116,7 @@ Route::group([
         Route::get('/getCollect/{user_id}/{type}', 'Frontend\WxxcxController@getUserCollect')->where('user_id', '[0-9]+');
         Route::get('/getUserInfo/{user_id}', 'Frontend\WxxcxController@getUserInfo')->where('user_id', '[0-9]+');
         Route::get('/search/{_key}','Frontend\WxxcxController@getSearchResult');
+        Route::get('/getsHotSearch','Frontend\WxxcxController@getHotSearchWord');
     });
     /* =============== 静态页面 ====================== */
     Route::get('/contact','Frontend\PageController@contact');

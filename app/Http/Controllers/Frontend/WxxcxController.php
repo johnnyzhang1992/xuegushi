@@ -700,6 +700,7 @@ class WxxcxController extends Controller
      * @return mixed
      */
     public function getSearchResult($_key){
+        $this->searchRecord($_key);
         $authors = DB::table('dev_author')
             ->where('author_name','like','%'.$_key.'%')
             ->select('id','dynasty','author_name','like_count','profile')
@@ -748,5 +749,44 @@ class WxxcxController extends Controller
             'poems' => $poems,
             'poets' =>$authors
         ]);
+    }
+
+    /**
+     * 记录搜索记录
+     * @param $key
+     */
+    public function searchRecord($key){
+        $today = date('Y-m-d',time()).' 00:00:00';
+        $_result = DB::table('dev_search')
+            ->where('name',$key)
+            ->where('created_at','>',$today)
+            ->first();
+        if(isset($_result)&& $_result){
+            DB::table('dev_search')->where('id',$_result->id)->increment("count");
+        }else{
+            DB::table('dev_search')->insertGetId([
+                'name' =>$key,
+                'created_at' =>date('Y-m-d H:i:s',time())
+            ]);
+        }
+    }
+
+    /**
+     * 获取热门搜索词
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getHotSearchWord(){
+        $today = date('Y-m-d',time()).' 00:00:00';
+        $_result = DB::table('dev_search')
+            ->where('created_at','>',$today)
+            ->orderBy('count','desc')
+            ->select('name')
+            ->limit(8)
+            ->get();
+        $_lists = array();
+        foreach ($_result as $_list){
+            array_push($_lists,$_list->name);
+        }
+        return response()->json($_lists);
     }
 }
