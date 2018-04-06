@@ -144,22 +144,28 @@ class WxxcxController extends Controller
     public function getPoemData(Request $request){
         $type = $request->input('type');
         $dynasty = $request->input('dynasty');
-        $tag = $request->input('tag');
+        $_type = $request->input('_type');
+        $_keyWord = $request->input('keyWord');
         $poem_types = ['全部','诗','词','曲','文言文'];
         $poem_dynasty = ['全部','先秦','两汉','魏晋','南北朝','隋代','唐代','五代','宋代','金朝','元代','明代','清代','近代'];
         $_poems = DB::table('dev_poem');
-        if($type){
-            if($type != '全部'){
-                $_poems->where('type',$type);
+        if(isset($_type) && $_type){
+           if($_type == 'tag'){
+               $_poems->where('tags','like','%'.$_keyWord.'%');
+           }elseif($_type =='poem'){
+               $_poems->where('title','like','%'.$_keyWord.'%');
+           }
+        }else{
+            if($type){
+                if($type != '全部'){
+                    $_poems->where('type',$type);
+                }
             }
-        }
-        if($dynasty){
-            if($dynasty != '全部'){
-                $_poems->where('dynasty',$dynasty);
+            if($dynasty){
+                if($dynasty != '全部'){
+                    $_poems->where('dynasty',$dynasty);
+                }
             }
-        }
-        if($tag){
-            $_poems->where('tags','like','%'.$tag.'%');
         }
         $_poems->orderBy('like_count','desc');
         $_poems = $_poems->paginate(10);
@@ -177,6 +183,13 @@ class WxxcxController extends Controller
                 }
             }
             $_poems[$key]->content = mb_substr($_content,0,35,'utf-8');
+            if(isset($poem->tags) && $poem->tags){
+                $_tag = array();
+                foreach (explode(',',$poem->tags) as $tag){
+                    array_push($_tag,$tag);
+                }
+                $_poems[$key]->tags = $_tag;
+            }
         }
         $res = [];
         $res['types'] = $poem_types;
@@ -328,6 +341,7 @@ class WxxcxController extends Controller
         $type = $request->input('type');
         $theme = $request->input('theme');
         $themes = config('sentence.themes');
+        $_keyWord = $request->input('keyWord');
         $_url = 'sentence?';
         $_sentences = DB::table('dev_sentence');
         $types = config('sentence.types');;
@@ -343,6 +357,9 @@ class WxxcxController extends Controller
                 $_sentences->where('dev_sentence.type','like','%'.$type.'%');
             }
             $_url = $_url.'&type='.$type;
+        }
+        if(isset($_keyWord) && $_keyWord){
+            $_sentences ->where('dev_sentence.title','like','%'.$_keyWord.'%');
         }
         $_sentences->orderBy('dev_sentence.like_count','desc');
         $_sentences->leftJoin('dev_poem','dev_poem.source_id','=','dev_sentence.target_source_id');
@@ -408,12 +425,16 @@ class WxxcxController extends Controller
      */
     public function getPoetData(Request $request){
         $dynasty = $request->input('dynasty');
+        $_keyWord = $request->input('keyWord');
         $dynastys = ['全部','先秦','两汉','魏晋','南北朝','隋代','唐代','五代','宋代','金朝','元代','明代','清代','近代'];
         $authors = DB::table('dev_author');
         if($dynasty){
             if($dynasty != '全部'){
                 $authors->where('dynasty',$dynasty);
             }
+        }
+        if(isset($_keyWord) && $_keyWord){
+            $authors->where('author_name','like','%'.$_keyWord.'%');
         }
         $authors->select('id','author_name','dynasty','profile')->orderBy('like_count','desc');
         $authors = $authors->paginate(10);
