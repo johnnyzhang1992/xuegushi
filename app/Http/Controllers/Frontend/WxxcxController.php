@@ -15,6 +15,7 @@ use Config;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Mockery\Exception;
+use BaiduSpeech;
 use App\Helpers\DateUtil;
 
 class WxxcxController extends Controller
@@ -788,5 +789,72 @@ class WxxcxController extends Controller
             array_push($_lists,$_list->name);
         }
         return response()->json($_lists);
+    }
+    /**
+     * 百度语音合成
+     * @param $id
+     * @return mixed
+     */
+//参数	类型	说明	可为空
+//text	String	合成的文本	N
+//userID	String	用户唯一标识	Y
+//lan	String	语言，可选值 ['zh']，默认为zh	Y
+//speed	Integer	语速，取值0-9，默认为5中语速	Y
+//pitch	Integer	音调，取值0-9，默认为5中语调	Y
+//volume	Integer	音量，取值0-15，默认为5中音量	Y
+//person	Integer	发音人选择, 0为女声，1为男声，3为情感合成-度逍遥，4为情感合成-度丫丫，默认为普通女	Y
+//fileName	String	文件存储路径名称，默认存储在public/audios/目录下
+    public function getVoiceCombine($id){
+//        $type = $request->input('type');
+//        $id = $request->input('id');
+        $poem_text = '';
+        $poem = null;
+        $data = array();
+        if($id){
+            if(file_exists('static/audios/poem'.$id.'.mp3')){
+                $data['src'] = url('static/audios/poem'.$id.'.mp3');
+                $data['status'] = 'success';
+            }else{
+                $poem = DB::table('dev_poem')->where('id',trim($id))->first();
+                if($poem){
+                    // poem exist
+                    $poem_text = $poem_text.$poem->title.'   ';
+                    $poem_text = $poem_text.$poem->dynasty.'   ';
+                    $poem_text = $poem_text.$poem->author.'   ';
+                    if(isset($poem->content) && $poem->content){
+                        if(isset($poem->content) && json_decode($poem->content)){
+                            if(isset(json_decode($poem->content)->xu) && json_decode($poem->content)->xu){
+                                $poem_text = $poem_text.json_decode($poem->content)->xu.' ';
+                            }
+                            if(isset(json_decode($poem->content)->content) && json_decode($poem->content)->content){
+                                foreach(json_decode($poem->content)->content as $item){
+                                    $poem_text = $poem_text.$item.'   ';
+                                }
+                            }
+                        }
+                    }
+                    $userID = config('laravel-baidu-speech.user-id','xuegushi');
+                    $lan = 'zh';
+                    $speed = 4;
+                    $pitch = 5;
+                    $volume = 8;
+                    $person = 0;
+                    $filename = '/static/audios/poem-'.$poem->id.'.mp3';
+                    $voice = BaiduSpeech::combine($poem_text, $userID, $lan, $speed, $pitch, $volume, $person, $filename);
+                    if(isset($voice['success']) && $voice['success']){
+                        $data['src'] = asset($voice['data']);
+                        $data['status'] = 'success';
+                    }
+                }else{
+                    $data['status'] = 'fail';
+                    $data['msg'] = '古诗文不存在！';
+                }
+            }
+
+        }else{
+            $data['status'] = 'fail';
+            $data['msg'] = '信息不全，无法正常查询！';
+        }
+        return response()->json($data);
     }
 }
