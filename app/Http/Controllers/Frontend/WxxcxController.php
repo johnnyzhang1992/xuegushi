@@ -255,7 +255,7 @@ class WxxcxController extends Controller
 
             $res = [];
 //            $res['author'] = $author;
-            $res['detail'] = $poem_detail;;
+            $res['detail'] = $poem_detail;
             $res['poems_count'] = $poems_count;
             $res['poem'] = $poem;
             return response()->json($res);
@@ -263,7 +263,29 @@ class WxxcxController extends Controller
             return null;
         }
     }
-
+    public function getPoemContent($id){
+        $poem = DB::table('dev_poem')->where('id',$id)->first();
+        DB::table('dev_poem')->where('id',$id)->increment("pv_count");
+        $content = '';
+        if(isset($poem->content) && json_decode($poem->content)){
+            if(isset(json_decode($poem->content)->xu) && json_decode($poem->content)->xu){
+                $content = $content.@json_decode($poem->content)->xu;
+            }
+            if(isset(json_decode($poem->content)->content) && json_decode($poem->content)->content){
+                foreach(json_decode($poem->content)->content as $item){
+                    $content = $content.@$item;
+                }
+            }
+        }
+        if($poem){
+            $res = [];
+//            $res['author'] = $author;
+            $res['poem'] = $poem;
+            return response()->json($res);
+        }else{
+            return null;
+        }
+    }
     /**
      * 获取首页内容
      * @param $request
@@ -828,7 +850,7 @@ class WxxcxController extends Controller
                             }
                             if(isset(json_decode($poem->content)->content) && json_decode($poem->content)->content){
                                 foreach(json_decode($poem->content)->content as $item){
-                                    $poem_text = $poem_text.$item.'   ';
+                                    $poem_text = '    '.$poem_text.$item.'   ';
                                 }
                             }
                         }
