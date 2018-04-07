@@ -243,6 +243,13 @@ $(document).ready(function () {
         'trigger': 'hover | focus | click',
         'content':'<img src="/static/common/wechat.jpg" style="width:100%" alt="">'
     });
+    $('.wxxcx-qrcode').popover({
+        'animation':true,
+        'html':true,
+        'placement':'bottom',
+        'trigger': 'hover | focus | click',
+        'content':'<img src="/static/common/xcx.jpg" style="width:100%" alt="">'
+    });
     function getSearchResult() {
         $.get(
             '/search',
