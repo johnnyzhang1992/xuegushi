@@ -840,17 +840,17 @@ class WxxcxController extends Controller
                 $poem = DB::table('dev_poem')->where('id',trim($id))->first();
                 if($poem){
                     // poem exist
-                    $poem_text = $poem_text.$poem->title.'   ';
-                    $poem_text = $poem_text.$poem->dynasty.'   ';
-                    $poem_text = $poem_text.$poem->author.'   ';
+                    $poem_text = $poem_text.$poem->title.',';
+                    $poem_text = $poem_text.$poem->dynasty.',';
+                    $poem_text = $poem_text.$poem->author.',,';
                     if(isset($poem->content) && $poem->content){
                         if(isset($poem->content) && json_decode($poem->content)){
                             if(isset(json_decode($poem->content)->xu) && json_decode($poem->content)->xu){
-                                $poem_text = $poem_text.json_decode($poem->content)->xu.' ';
+                                $poem_text = $poem_text.json_decode($poem->content)->xu.',';
                             }
                             if(isset(json_decode($poem->content)->content) && json_decode($poem->content)->content){
                                 foreach(json_decode($poem->content)->content as $item){
-                                    $poem_text = '    '.$poem_text.$item.'   ';
+                                    $poem_text = ','.$poem_text.$item.',';
                                 }
                             }
                         }
