@@ -678,9 +678,16 @@ class WxxcxController extends Controller
             ->where('dev_collect.status','active')
             ->where('dev_collect.user_id',$user_id)
             ->count();
+        $today = date('Y-m-d',time()).' 00:00:00';
+        $_t_users = DB::table('dev_wx_users')
+            ->where('created_at','>',$today)
+            ->count();
+        $_user_count = DB::table('dev_wx_users')->count();
         return response()->json([
             'p_count' => $p_count,
-            'a_count' => $a_count
+            'a_count' => $a_count,
+            'u_t_count' => $_t_users,
+            'u_count' => $_user_count
         ]);
     }
 
@@ -811,6 +818,15 @@ class WxxcxController extends Controller
             array_push($_lists,$_list->name);
         }
         return response()->json($_lists);
+    }
+    /**
+     * 获取微信用户列表
+     */
+    public function getUserList(){
+        $users = DB::table('dev_wx_users')
+            ->orderBy('id','desc')
+            ->paginate(10);
+        return response()->json($users);
     }
     /**
      * 百度语音合成

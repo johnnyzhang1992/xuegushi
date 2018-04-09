@@ -119,6 +119,7 @@ Route::group([
         Route::get('/search/{_key}','Frontend\WxxcxController@getSearchResult');
         Route::get('/getsHotSearch','Frontend\WxxcxController@getHotSearchWord');
         Route::get('/getPoemAudio/{id}','Frontend\WxxcxController@getVoiceCombine');
+        Route::get('/getUserList','Frontend\WxxcxController@getUserList');
     });
     /* =============== 静态页面 ====================== */
     Route::get('/contact','Frontend\PageController@contact');
