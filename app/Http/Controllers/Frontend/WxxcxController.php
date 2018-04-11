@@ -155,6 +155,7 @@ class WxxcxController extends Controller
                $_poems->where('tags','like','%'.$_keyWord.'%');
            }elseif($_type =='poem'){
                $_poems->where('title','like','%'.$_keyWord.'%');
+               $_poems->orWhere('text_content','like','%'.$_keyWord.'%');
            }
         }else{
             if($type){
@@ -756,6 +757,7 @@ class WxxcxController extends Controller
             ->paginate(3);
         $poems = DB::table('dev_poem')
             ->where('title','like','%'.$_key.'%')
+            ->orWhere('text_content','like','%'.$_key.'%')
             ->select('id','title','author','dynasty','like_count','content')
             ->orderBy('like_count','desc')
             ->paginate(3);

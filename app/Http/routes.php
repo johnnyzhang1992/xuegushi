@@ -121,6 +121,8 @@ Route::group([
         Route::get('/getPoemAudio/{id}','Frontend\WxxcxController@getVoiceCombine');
         Route::get('/getUserList','Frontend\WxxcxController@getUserList');
     });
+    /* =============== 公众号开发 =================== */
+    Route::any('/wechat', 'WeChatController@serve');
     /* =============== 静态页面 ====================== */
     Route::get('/contact','Frontend\PageController@contact');
     Route::get('/join','Frontend\PageController@join');

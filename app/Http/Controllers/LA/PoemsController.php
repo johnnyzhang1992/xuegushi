@@ -190,26 +190,37 @@ class PoemsController extends Controller
      * @return mixed
      */
     public function getContent($id){
-        $poem_detail = DB::table('poem_detail')->where('poem_id',$id)->first();
-        $item = array();
-        if($poem_detail){
-            if(isset($poem_detail->content) && $poem_detail->content) {
-                if(isset(json_decode($poem_detail->content)->xu) && json_decode($poem_detail->content)->xu){
-                    $item['xu'] = json_decode($poem_detail->content)->xu;
-                }
-                $item['content'] = json_decode($poem_detail->content)->content;
+        $content = '';
+        $poem = DB::table('dev_poem')->where('id',(int)$id)->first();
+        if(isset($poem->content) && json_decode($poem->content)){
+            if(isset(json_decode($poem->content)->xu) && json_decode($poem->content)->xu){
+                $content = $content.@json_decode($poem->content)->xu;
             }
-        }else{
-            $poem = DB::table('poem')->where('id',$id)->first();
-            if(isset($poem->content) && $poem->content){
-                $poem_content = json_decode($poem->content);
-                if(isset($poem_content->xu) && $poem_detail->xu){
-                    $item['xu'] = $poem_content->xu;
+            if(isset(json_decode($poem->content)->content) && json_decode($poem->content)->content){
+                foreach(json_decode($poem->content)->content as $item){
+                    $content = $content.@$item;
                 }
-                $item['content'] = $poem_content->content;
             }
         }
-        return $item;
+        return $content;
+    }
+    public function getPoemTextContent(){
+        $poems = DB::table('dev_poem')
+            ->where('is_text',false)
+            ->orderBy('id','asc')
+            ->paginate(5000);
+        foreach ($poems as $poem){
+            $content = $this->getContent($poem->id);
+            if(isset($content) && $content){
+                DB::table('dev_poem')
+                    ->where('id','=',(int)$poem->id)
+                    ->update([
+                    'is_text'=>true,
+                    'text_content'=>$content
+                ]);
+            }
+            print ('id-------'.$poem->id.'<br>');
+        }
     }
     /**
      * 翻译

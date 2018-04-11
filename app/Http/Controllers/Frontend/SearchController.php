@@ -50,6 +50,7 @@ class SearchController extends Controller{
             ->get();
         $poems = DB::table('dev_poem')
             ->where('title','like','%'.$_key.'%')
+            ->orWhere('text_content','like','%'.$_key.'%')
             ->select('id','title','author','dynasty','like_count')
             ->orderBy('like_count','desc')
             ->limit(3)
