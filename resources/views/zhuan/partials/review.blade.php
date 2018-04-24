@@ -4,7 +4,7 @@ use App\Helpers\DateUtil;
 @section('review')
     <div class="PostComment">
         <div class="BlockTitle av-marginLeft av-borderColor PostComment-blockTitle">
-            <span class="BlockTitle-title"><!-- react-text: 84 -->760 条评论<!-- /react-text --></span>
+            <span class="BlockTitle-title"><!-- react-text: 84 -->{{@count($comments)}} 条评论<!-- /react-text --></span>
             <span class="BlockTitle-line"></span>
         </div>
         <div class="CommentEditor PostComment-mainEditor">
