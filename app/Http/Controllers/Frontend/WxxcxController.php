@@ -731,6 +731,7 @@ class WxxcxController extends Controller
      * @return mixed
      */
     public function getSearchResult($_key){
+        $_key = trim($_key);
         $this->searchRecord($_key);
         $authors = DB::table('dev_author')
             ->where('author_name','like','%'.$_key.'%')
@@ -797,7 +798,7 @@ class WxxcxController extends Controller
             DB::table('dev_search')->where('id',$_result->id)->increment("count");
         }else{
             DB::table('dev_search')->insertGetId([
-                'name' =>$key,
+                'name' =>trim($key),
                 'created_at' =>date('Y-m-d H:i:s',time())
             ]);
         }
@@ -815,6 +816,48 @@ class WxxcxController extends Controller
             ->select('name')
             ->limit(8)
             ->get();
+        $cur_length = count($_result);
+        $week_time = date('Y-m-d H:i:s', strtotime($today .' -3 day'));
+        if($cur_length<8){
+            $limit = 8 - $cur_length;
+            // 获取最近三天搜索量最多的词
+            $_result1 = DB::table('dev_search')
+                ->where('created_at','>',$week_time)
+                ->where('created_at','<',$today)
+                ->orderBy('count','desc')
+                ->select('name')
+                ->limit($limit)
+                ->get();
+            $_result = array_merge($_result,$_result1);
+        }
+        $_lists = array();
+        foreach ($_result as $_list){
+            array_push($_lists,$_list->name);
+        }
+        return response()->json($_lists);
+    }
+    public function getHotSearchWord1(){
+        $today = date('Y-m-d',time()).' 00:00:00';
+        $_result = DB::table('dev_search')
+            ->where('created_at','>',$today)
+            ->orderBy('count','desc')
+            ->select('name')
+            ->limit(8)
+            ->get();
+        $cur_length = count($_result);
+        $week_time = date('Y-m-d H:i:s', strtotime($today .' -3 day'));
+        if($cur_length<8){
+            $limit = 8- $cur_length;
+            // 获取最近三天搜索量最多的词
+            $_result1 = DB::table('dev_search')
+                ->where('created_at','>',$week_time)
+                ->where('created_at','<',$today)
+                ->orderBy('count','desc')
+                ->select('name')
+                ->limit($limit)
+                ->get();
+            $_result = array_merge($_result,$_result1);
+        }
         $_lists = array();
         foreach ($_result as $_list){
             array_push($_lists,$_list->name);
