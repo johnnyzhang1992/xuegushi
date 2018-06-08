@@ -57,11 +57,11 @@
         {{--s.parentNode.insertBefore(bp, s);--}}
     {{--})();--}}
 {{--</script>--}}
-<script>
-    (function(){
-        var src = (document.location.protocol == "http:") ? "http://js.passport.qihucdn.com/11.0.1.js?0ebc1d49bcf7137a3307e026661f57fe":"https://jspassport.ssl.qhimg.com/11.0.1.js?0ebc1d49bcf7137a3307e026661f57fe";
-        document.write('<script src="' + src + '" id="sozz"><\/script>');
-    })();
-</script>
+{{--<script>--}}
+    {{--(function(){--}}
+        {{--var src = (document.location.protocol == "http:") ? "http://js.passport.qihucdn.com/11.0.1.js?0ebc1d49bcf7137a3307e026661f57fe":"https://jspassport.ssl.qhimg.com/11.0.1.js?0ebc1d49bcf7137a3307e026661f57fe";--}}
+        {{--document.write('<script src="' + src + '" id="sozz"><\/script>');--}}
+    {{--})();--}}
+{{--</script>--}}
 </body>
 </html>

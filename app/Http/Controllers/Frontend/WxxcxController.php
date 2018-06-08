@@ -832,7 +832,7 @@ class WxxcxController extends Controller
         }
         $_lists = array();
         foreach ($_result as $_list){
-            array_push($_lists,$_list->name);
+            array_push($_lists,mb_substr($_list->name,0,8,"UTF-8"));
         }
         return response()->json($_lists);
     }
