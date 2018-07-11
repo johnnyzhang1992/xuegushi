@@ -894,8 +894,8 @@ class WxxcxController extends Controller
         $poem = null;
         $data = array();
         if($id){
-            if(file_exists('static/audios/poem'.$id.'.mp3')){
-                $data['src'] = url('static/audios/poem'.$id.'.mp3');
+            if(file_exists('static/audios/poem-'.$id.'.mp3')){
+                $data['src'] = url('static/audios/poem-'.$id.'.mp3');
                 $data['status'] = 'success';
             }else{
                 $poem = DB::table('dev_poem')->where('id',trim($id))->first();
