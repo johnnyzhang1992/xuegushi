@@ -19,7 +19,7 @@
     <meta name="sogou_site_verification" content="qZUdNCxRqM"/>
     <meta name="360-site-verification" content="692a791faf2667be55acfff23615caaf" />
     <meta name="msvalidate.01" content="5C4998A61A6BA963E7C7B3F6C148F865" />
-    <meta name="shenma-site-verification" content="8e1bd0b2f7d08df54038976dbf51b347_1522558437">
+    <meta name="shenma-site-verification" content="8e1bd0b2f7d08df54038976dbf51b347_1529031177"/>
     <link rel="shortcut icon" type="image/x-icon" href="{{asset('favicon.ico')}}">
     {{--<meta property="og:image" content="http://demo.adminlte.acacha.org/img/LaraAdmin-600x600.jpg" />--}}
     <title>{{ isset($site_title)?$site_title:config('seo.default_site_name') }}{{ isset($site_title_addon) ? ' - '.$site_title_addon: '-'.config('seo.default_sub_title') }}</title>
@@ -29,7 +29,6 @@
     @yield('baidutongji')
     {{--谷歌统计--}}
     @yield('googletongji')
-    <script src="https://tjs.sjs.sinajs.cn/open/api/js/wb.js" type="text/javascript" charset="utf-8"></script>
 </head>
 
 <body>
