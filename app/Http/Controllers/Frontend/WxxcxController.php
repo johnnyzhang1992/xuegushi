@@ -683,10 +683,16 @@ class WxxcxController extends Controller
         $_t_users = DB::table('dev_wx_users')
             ->where('created_at','>',$today)
             ->count();
+        $today = date('Y-m-d',time()).' 00:00:00';
+        $s_total= DB::table('dev_search')
+            ->where('status','active')
+            ->where('created_at','>',$today)
+            ->count();
         $_user_count = DB::table('dev_wx_users')->count();
         return response()->json([
             'p_count' => $p_count,
             'a_count' => $a_count,
+            's_count' => $s_total,
             'u_t_count' => $_t_users,
             'u_count' => $_user_count
         ]);
@@ -811,6 +817,7 @@ class WxxcxController extends Controller
     public function getHotSearchWord(){
         $today = date('Y-m-d',time()).' 00:00:00';
         $_result = DB::table('dev_search')
+            ->where('status','active')
             ->where('created_at','>',$today)
             ->orderBy('count','desc')
             ->select('name')
@@ -822,6 +829,7 @@ class WxxcxController extends Controller
             $limit = 8 - $cur_length;
             // 获取最近三天搜索量最多的词
             $_result1 = DB::table('dev_search')
+                ->where('status','active')
                 ->where('created_at','>',$week_time)
                 ->where('created_at','<',$today)
                 ->orderBy('count','desc')
@@ -839,6 +847,7 @@ class WxxcxController extends Controller
     public function getHotSearchWord1(){
         $today = date('Y-m-d',time()).' 00:00:00';
         $_result = DB::table('dev_search')
+            ->where('status','active')
             ->where('created_at','>',$today)
             ->orderBy('count','desc')
             ->select('name')
@@ -850,6 +859,7 @@ class WxxcxController extends Controller
             $limit = 8- $cur_length;
             // 获取最近三天搜索量最多的词
             $_result1 = DB::table('dev_search')
+                ->where('status','active')
                 ->where('created_at','>',$week_time)
                 ->where('created_at','<',$today)
                 ->orderBy('count','desc')
@@ -872,6 +882,43 @@ class WxxcxController extends Controller
             ->orderBy('id','desc')
             ->paginate(10);
         return response()->json($users);
+    }
+    /**
+     * 搜索列表
+     * @param $request
+     * @return mixed
+     */
+    public function getSearchList(Request $request){
+        $list = DB::table('dev_search')
+            ->where('status','active')
+            ->orderBy('id','desc')
+            ->paginate(10);
+        return response()->json($list);
+    }
+    /**
+     * 搜索内容状态更新
+     * @param $id
+     * @return mixed
+     */
+
+    public function searchUpdate($id){
+        $item = DB::table('dev_search')->where('id',$id)->first();
+        $res = [];
+        if(isset($item) && $item){
+            $result = DB::table('dev_search')->where('id',$id)->update([
+                'status'=>'delete'
+            ]);
+            $item = DB::table('dev_search')->where('id',$id)->first();
+            if($result){
+                $res['status'] = 200;
+                $res['message'] = 'success';
+                $res['data'] = $item;
+            }
+        }else{
+            $res['status'] = 500;
+            $res['message'] = '项目不存在';
+        }
+        return response()->json($res);
     }
     /**
      * 百度语音合成
