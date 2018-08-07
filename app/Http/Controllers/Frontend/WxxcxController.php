@@ -805,6 +805,7 @@ class WxxcxController extends Controller
         }else{
             DB::table('dev_search')->insertGetId([
                 'name' =>trim($key),
+                'status'=>'active',
                 'created_at' =>date('Y-m-d H:i:s',time())
             ]);
         }
@@ -986,5 +987,192 @@ class WxxcxController extends Controller
             $data['msg'] = '信息不全，无法正常查询！';
         }
         return response()->json($data);
+    }
+
+    /**
+     * 获取轮播图
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getSliderImages(){
+        $images = [
+            'http://img02.tooopen.com/images/20150928/tooopen_sy_143912755726.jpg',
+            'http://img06.tooopen.com/images/20160818/tooopen_sy_175866434296.jpg',
+            'http://img06.tooopen.com/images/20160818/tooopen_sy_175833047715.jpg'
+        ];
+
+        return response()->json($images);
+    }
+    public function createPin(Request $request,$user_id){
+        $p_id = $request->input('p_id');
+        $t_type = $request->input('t_type');
+        $content = $request->input('content');
+        $t_id = $request->input('t_id');
+        $location = $request->input('location');
+        $pin_id = DB::table('dev_pin')->insertGetId([
+            't_id' => $t_id,
+            't_type'=>$t_type,
+            'created_at' => date('Y-m-d H:i:s',time()),
+            'updated_at' => date('Y-m-d H:i:s',time()),
+            'u_id'=> $user_id,
+            'status' => 'active',
+            'like_count' =>0,
+            'p_id'=>isset($p_id) && $p_id ? $p_id : 0 ,
+            'content' => $content,
+            'location'=>$location
+        ]);
+        $data = [];
+        if(isset($pin_id) && $pin_id){
+            $data['pin_id'] = $pin_id;
+            $data['status'] = 200;
+        }else{
+            $data['pin_id'] = 0;
+            $data['status'] = 200;
+            $data['msg'] = 'fail';
+        }
+        return response()->json($data);
+    }
+    /**
+     * 获取想法列表
+     * @return mixed
+     */
+    public function getPins(){
+        $pins = DB::table('dev_pin')
+            ->where('status','active')
+            ->orderBy('id','desc')
+            ->paginate(5);
+        foreach ($pins as $key=>$pin){
+            $pins[$key]->updated_at = DateUtil::formatDate(strtotime($pin->updated_at));
+            $user = DB::table('dev_wx_users')->where('user_id',$pin->u_id)->select('name','avatarUrl','city')->first();
+            $pins[$key]->user = $user;
+            $pins[$key]->location = json_decode($pins[$key]->location);
+            if($pin->t_type == 'poem'){
+                $poem = DB::table('dev_poem')->where('id',$pin->t_id)->select('id','title','author','dynasty','type','content','author_id','author_source_id')->first();
+                $_content = null;
+                if(isset(json_decode($poem->content)->content) && json_decode($poem->content)->content){
+                    foreach(json_decode($poem->content)->content as $item){
+                        $_content = $_content.$item;
+                    }
+                }
+                $content = mb_substr($_content,0,50,'utf-8');
+                if(mb_strlen($_content)>50){
+                    $content .= '...';
+                }
+                $poem->content = $content;
+                if($poem->author != '佚名'){
+                    $author = DB::table('dev_author')->where('source_id',$poem->author_source_id)->first();
+                    if($poem->author_source_id != -1){
+                        $poem->author_id = $author->id;
+                    }else{
+                        $poem->author_id = -1;
+                    }
+                }else{
+                    $poem->status = 'delete';
+                    $poem->author_id = -1;
+                }
+                $pins[$key]->poem = $poem;
+            }elseif($pin->t_type == 'poet'){
+                $author = null;
+                $hot_poems = null;
+                $author = DB::table('dev_author')
+                    ->where('id',$pin->t_id)
+                    ->select('id','dynasty','author_name','profile','source_id')
+                    ->first();
+                if(file_exists('static/author/'.@$author->author_name.'.jpg')){
+                    $author->avatar = asset('static/author/'.@$author->author_name.'.jpg');
+                }
+                $pins[$key]->poet = $author;
+            }
+        }
+        return response()->json($pins);
+    }
+
+    /**
+     * 更新想法(喜欢，删除)
+     * @param $id
+     * @param $type
+     * @param $request
+     * @return mixed
+     */
+    public function updatePin(Request $request,$id,$type){
+        // $type like delete
+        $user_id = $request->input('user_id');
+        if($type == 'like'){
+            $this->updateLike($id,$user_id);
+        }else if($type=='update'){
+            $data = array();
+            $msg = null;
+            $res = DB::table('dev_pin')->where('id',$id)->update([
+               'status'=> 'delete',
+                'updated_at'=>date('Y-m-d H:i:s',time())
+            ]);
+            if($res){
+                $msg = '删除成功';
+                $data['status'] = true;
+            }else{
+                $msg = '删除失败';
+                $data['status'] = false;
+            }
+            $data['msg'] = $msg;
+            return response()->json($data);
+        }
+    }
+    public function updateLike($id,$user_id){
+        $data = array();
+        $msg = null;
+        $_data = null;
+        $_res = DB::table('dev_like')
+            ->where('user_id',$user_id)
+            ->where('like_id',$id)
+            ->where('type','pin')
+            ->first();
+        if(!$_res){
+            // 新的like
+            $res = DB::table('dev_pin')->where('id',$id)->increment("like_count");
+            DB::table('dev_collect')->insertGetId(
+                [
+                    'like_id' => $id,
+                    'type' => 'pin',
+                    'created_at' => date('Y-m-d H:i:s',time()),
+                    'updated_at' => date('Y-m-d H:i:s',time()),
+                    'user_id'=> $user_id,
+                    'status' => 'active'
+                ]
+            );
+            $msg = '喜欢成功';
+            $data['status'] = true;
+        }else{
+            // 更新like状态
+            if($_res->status == 'active'){
+                $res = DB::table('dev_pin')->where('id',$id)->decrement("like_count");
+                DB::table('dev_like')
+                    ->where('user_id',$user_id)
+                    ->where('id',$_res->id)
+                    ->update([
+                        'status' => 'delete',
+                        'updated_at' => date('Y-m-d H:i:s',time())
+                    ]);
+                $msg = '取消喜欢成功';
+                $data['status'] = false;
+            }else{
+                $res = DB::table('dev_pin')->where('id',$id)->increment("collect_count");
+                DB::table('dev_like')
+                    ->where('user_id',$user_id)
+                    ->where('id',$_res->id)
+                    ->update([
+                        'status' => 'active',
+                        'updated_at' => date('Y-m-d H:i:s',time()),
+                    ]);
+                $msg = '喜欢成功';
+                $data['status'] = true;
+            }
+        }
+        if($res){
+            $data['msg'] = $msg;
+            return response()->json($data);
+        }else{
+            $data['msg'] = $msg;
+            $data['status'] = false;
+            return response()->json($data);
+        }
     }
 }

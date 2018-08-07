@@ -11,7 +11,8 @@
         "jormin/laravel-baidu-speech": "^1.0",
         "jenssegers/agent": "^2.6",
         "simplesoftwareio/simple-qrcode": "~2",
-        "iwanli/wxxcx": "2.*"
+        "iwanli/wxxcx": "2.*",
+        "froala/wysiwyg-editor-php-sdk": "^1.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

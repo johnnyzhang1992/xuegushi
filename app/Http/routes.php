@@ -122,6 +122,10 @@ Route::group([
         Route::get('/getsHotSearch','Frontend\WxxcxController@getHotSearchWord');
         Route::get('/getPoemAudio/{id}','Frontend\WxxcxController@getVoiceCombine');
         Route::get('/getUserList','Frontend\WxxcxController@getUserList');
+        Route::get('/getSliderImages','Frontend\WxxcxController@getSliderImages');
+        Route::get('/createPin/{user_id}','Frontend\WxxcxController@createPin');
+        Route::get('/getPins','Frontend\WxxcxController@getpins');
+        Route::get('/pin/{id}/{type}','Frontend\WxxcxController@updatePin')->where('id','[0-9]+');
     });
     /* =============== 公众号开发 =================== */
     Route::any('/wechat', 'WeChatController@serve');
@@ -129,6 +133,16 @@ Route::group([
     Route::get('/contact','Frontend\PageController@contact');
     Route::get('/join','Frontend\PageController@join');
     Route::get('/about','Frontend\PageController@about');
+    /* =========== test =======================*/
+    Route::group([
+        'middleware' => 'web',
+        'prefix' => 'test'
+    ],function () {
+        Route::get('/', 'Frontend\TestController@index');
+        Route::match(['GET', 'POST'],'/upload_image', 'Frontend\TestController@upload');
+        Route::match(['GET', 'POST'],'/delete_image', 'Frontend\TestController@delete');
+        Route::match(['GET', 'POST'],'/image_list', 'Frontend\TestController@getList');
+    });
 });
 Route::group(['domain' => 'zhuanlan.xuegushi.cn'], function() {
     Route::get('/', 'ZhuanLan\ZhuanLanController@index');
