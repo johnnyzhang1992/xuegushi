@@ -69,17 +69,23 @@ class WxxcxController extends Controller
                 'updated_at' => date('Y-m-d H:i:s',time()),
                 'timestamp'=> $_user->watermark->timestamp
             ];
+            // 生成32位随机字符串
+            $wx_token = md5(uniqid(microtime(true),true));
             if (isset($_u) && $_u) {
+                // 用户已经存在
                 DB::table('users')->where('openid',$_user->openId)->update([
                     'name' => $_user->nickName,
                     'updated_at' => date('Y-m-d H:i:s',time()),
+                    'wx_token' => $wx_token
                 ]);
                 $user_id= $_u->id;
                 $_wx_user = DB::table('dev_wx_users')->where('openId', $_user->openId)->first();
                 $data['user_id'] = $_u->id;
                 if(!isset($_wx_user) && !$_wx_user){
+                    // 微信数据入库
                     DB::table('dev_wx_users')->insertGetId($data);
                 }else{
+                    // 微信最新信息采集
                     DB::table('dev_wx_users')->where('openId',$_user->openId)->update([
                         'systemInfo'=>$systemInfo,
                         'name' => $_user->nickName,
@@ -88,24 +94,42 @@ class WxxcxController extends Controller
                     ]);
                 }
             }else{
-                //用户信息入库
-                $user_id = $this->createUser($_user);
+                //新用户创建，信息入库
+                $user_id = $this->createUser($_user,$wx_token);
                 $data['user_id'] = $user_id;
                 DB::table('dev_wx_users')->insertGetId($data);
             }
             $_user->user_id = $user_id;
+            $_user->wx_token = $wx_token;
             return response()->json($_user);
         }else{
             return response()->json($_user);
+        }
+    }
+
+    /**
+     * 验证微信token的有效性
+     * @param $token
+     * @param $u_id
+     * @return boolean
+     */
+    public function validateWxToken($u_id,$token){
+        $user = DB::table('users')->where('id',$u_id)->first();
+        if(isset($user) && $user->wx_token == $token){
+            // 验证通过
+            return true;
+        }else{
+            return false;
         }
     }
     /**
      * 创建新用户
      * users表
      * @param $user
+     * @param $wx_token
      * @return mixed
      */
-    public function createUser($user){
+    public function createUser($user,$wx_token){
         if($user){
             $data = [
                 'name' => $user->nickName,
@@ -116,6 +140,7 @@ class WxxcxController extends Controller
                 'openid'=> $user->openId,
                 'created_at' => date('Y-m-d H:i:s',time()),
                 'updated_at' => date('Y-m-d H:i:s',time()),
+                'wx_token' => $wx_token
             ];
             $user_id =  DB::table('users')->insertGetId($data);
             return $user_id;
@@ -551,10 +576,16 @@ class WxxcxController extends Controller
      */
     public function updateCollect(Request $request,$id,$type){
         $user_id = $request->input('user_id');
+        $wx_token = $request->input('wx_token');
         $data = array();
         $msg = null;
         $_data = null;
         $table_name = 'dev_'.$type;
+        if(!$this->validateWxToken($user_id,$wx_token)){
+            $data['msg'] = '操作不合法';
+            $data['status'] = false;
+            return response()->json($data);
+        }
         $_res = DB::table('dev_collect')
             ->where('user_id',$user_id)
             ->where('like_id',$id)
@@ -1008,6 +1039,13 @@ class WxxcxController extends Controller
         $content = $request->input('content');
         $t_id = $request->input('t_id');
         $location = $request->input('location');
+        $wx_token = $request->input('wx_token');
+        if(!$this->validateWxToken($user_id,$wx_token)){
+            $data['pin_id'] = 0;
+            $data['msg'] = '操作不合法';
+            $data['status'] = 200;
+            return response()->json($data);
+        }
         $pin_id = DB::table('dev_pin')->insertGetId([
             't_id' => $t_id,
             't_type'=>$t_type,
@@ -1096,8 +1134,14 @@ class WxxcxController extends Controller
     public function updatePin(Request $request,$id,$type){
         // $type like delete
         $user_id = $request->input('user_id');
+        $wx_token = $request->input('wx_token');
+        if(!$this->validateWxToken($user_id,$wx_token)){
+            $data['msg'] = '操作不合法';
+            $data['status'] = false;
+            return response()->json($data);
+        }
         if($type == 'like'){
-            $this->updateLike($id,$user_id);
+            $this->updateLike($wx_token,$id,$user_id);
         }else if($type=='update'){
             $data = array();
             $msg = null;
@@ -1116,10 +1160,23 @@ class WxxcxController extends Controller
             return response()->json($data);
         }
     }
-    public function updateLike($id,$user_id){
+
+    /**
+     * @param $wx_token
+     * @param $id
+     * @param $user_id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function updateLike($wx_token,$id,$user_id){
         $data = array();
         $msg = null;
         $_data = null;
+        if(!$this->validateWxToken($user_id,$wx_token)){
+            $data['pin_id'] = 0;
+            $data['msg'] = '操作不合法';
+            $data['status'] = 200;
+            return response()->json($data);
+        }
         $_res = DB::table('dev_like')
             ->where('user_id',$user_id)
             ->where('like_id',$id)
