@@ -124,6 +124,7 @@ Route::group([
         Route::get('/getUserList','Frontend\WxxcxController@getUserList');
         Route::get('/getSliderImages','Frontend\WxxcxController@getSliderImages');
         Route::get('/createPinReview/','Frontend\WxxcxController@createPinReview');
+        Route::get('/deletePinReview/','Frontend\WxxcxController@deletePinReview');
         Route::get('/createPin/{user_id}','Frontend\WxxcxController@createPin');
         Route::get('/getPins','Frontend\WxxcxController@getpins');
         Route::get('/getPinReviews/{id}','Frontend\WxxcxController@getpinReviews')->where('id','[0-9]+');
