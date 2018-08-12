@@ -1033,6 +1033,13 @@ class WxxcxController extends Controller
 
         return response()->json($images);
     }
+
+    /**
+     * 创建想法
+     * @param Request $request
+     * @param $user_id
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function createPin(Request $request,$user_id){
         $p_id = $request->input('p_id');
         $t_type = $request->input('t_type');
@@ -1046,9 +1053,19 @@ class WxxcxController extends Controller
             $data['status'] = 200;
             return response()->json($data);
         }
+        if($p_id >0){
+            $p_pin = DB::table('dev_pin')
+                ->leftJoin('dev_wx_users','dev_wx_users.user_id','=','dev_pin.u_id')
+                ->where('dev_pin.id','=',$p_id)
+                ->select('dev_pin.*','dev_wx_users.name')
+                ->first();
+            if(isset($p_pin) && $p_pin){
+                $content = $content.' @'.$p_pin->name.': '.$p_pin->content;
+            }
+        }
         $pin_id = DB::table('dev_pin')->insertGetId([
             't_id' => $t_id,
-            't_type'=>$t_type,
+            't_type'=>isset($t_type) && $t_type !='' ? $t_type : 'pin',
             'created_at' => date('Y-m-d H:i:s',time()),
             'updated_at' => date('Y-m-d H:i:s',time()),
             'u_id'=> $user_id,
@@ -1070,14 +1087,109 @@ class WxxcxController extends Controller
         return response()->json($data);
     }
     /**
-     * 获取想法列表
+     * 评论提交
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function createPinReview(Request $request){
+        $user_id = $request->input('user_id');
+        $t_type = $request->input('t_type');
+        $content = $request->input('content');
+        $t_id = $request->input('t_id');
+        $wx_token = $request->input('wx_token');
+        $data = [];
+        if(!$this->validateWxToken($user_id,$wx_token)){
+            $data['msg'] = '操作不合法';
+            $data['status'] = 200;
+            return response()->json($data);
+        }
+        $review_id = DB::table('dev_review')
+            ->insertGetId([
+                't_id' => $t_id,
+                't_type'=>isset($t_type) && $t_type !='' ? $t_type : 'pin',
+                'created_at' => date('Y-m-d H:i:s',time()),
+                'updated_at' => date('Y-m-d H:i:s',time()),
+                'u_id' => $user_id,
+                'content' => $content,
+                'status' => 'active'
+            ]);
+        if(isset($review_id) && $review_id){
+             $review= DB::table('dev_review')
+                ->leftJoin('dev_wx_users','dev_wx_users.user_id','=','dev_review.u_id')
+                ->where('dev_review.id','=',$review_id)
+                ->select('dev_review.*','dev_wx_users.name','dev_wx_users.avatarUrl')
+                ->first();
+             $review->updated_at = DateUtil::formatDate(strtotime($review->updated_at));
+             $data['review'] = $review;
+             $data['status'] = 200;
+             return response()->json($data);
+        }else{
+            $data['status'] = 500;
+            $data['msg'] = '评论失败，请重新提交。';
+            return response()->json($data);
+        }
+    }
+
+    /**
+     * 删除评论
+     * @param Request $request
      * @return mixed
      */
-    public function getPins(){
-        $pins = DB::table('dev_pin')
-            ->where('status','active')
-            ->orderBy('id','desc')
-            ->paginate(5);
+    public function deletePinReview(Request $request){
+        $user_id = $request->input('user_id');
+        $t_id = $request->input('t_id');
+        $id = $request->input('id');
+        $wx_token = $request->input('wx_token');
+        $data = [];
+        if(!$this->validateWxToken($user_id,$wx_token)){
+            $data['msg'] = '操作不合法';
+            $data['status'] = 500;
+            return response()->json($data);
+        }
+        $review = DB::table('dev_review')
+            ->where('id',$id)
+            ->first();
+        if(isset($review) && $review){
+            if($review->u_id == $user_id && $user_id == 10){
+                $res = DB::table('dev_review')->update([
+                    'updated_at' => date('Y-m-d H:i:s',time()),
+                    'status' => 'delete'
+                ]);
+                $data['msg'] = '删除成功';
+                $data['status'] = 200;
+                return response()->json($data);
+            }else{
+                $data['msg'] = '没有权限操作';
+                $data['status'] = 500;
+                return response()->json($data);
+            }
+        }else{
+            $data['msg'] = '评论不存在';
+            $data['status'] = 500;
+            return response()->json($data);
+        }
+    }
+    /**
+     * 获取想法列表
+     * @param $request
+     * @return mixed
+     */
+    public function getPins(Request $request){
+        $u_id = $request->input('id');
+        if(isset($u_id) && $u_id){
+            $pins = DB::table('dev_pin')
+                ->where('status','active')
+                ->where('u_id',$u_id)
+                ->orderBy('id','desc')
+                ->paginate(5);
+        }else{
+            $pins = DB::table('dev_pin')
+                ->where('status','active')
+                ->orderBy('id','desc')
+                ->paginate(5);
+        }
+
+//        info('------------');
         foreach ($pins as $key=>$pin){
             $pins[$key]->updated_at = DateUtil::formatDate(strtotime($pin->updated_at));
             $user = DB::table('dev_wx_users')->where('user_id',$pin->u_id)->select('name','avatarUrl','city')->first();
@@ -1119,11 +1231,87 @@ class WxxcxController extends Controller
                     $author->avatar = asset('static/author/'.@$author->author_name.'.jpg');
                 }
                 $pins[$key]->poet = $author;
+            }elseif($pin->t_type == 'pin'){
+                $p_pin = DB::table('dev_pin')
+                    ->where('id',$pin->p_id)
+                    ->first();
+                if($p_pin){
+                    info('p_id:'.$p_pin->id);
+                    $p_pin->updated_at = DateUtil::formatDate(strtotime($p_pin->updated_at));
+                    $user = DB::table('dev_wx_users')->where('user_id',$p_pin->u_id)->select('name','avatarUrl','city')->first();
+                    $p_pin->user = $user;
+                    if($p_pin->t_type == 'pin' && $pin->t_id != $pin->p_id){
+                        info('---is no ');
+//                        $pin->content = $pin->content.' @'.$user->name.': '.$p_pin->content;
+                        $p_pin = DB::table('dev_pin')
+                            ->where('id',$pin->t_id)
+                            ->first();
+                        info($pin->id);
+                    }
+                    $p_pin->location = json_decode($p_pin->location);
+                    if($p_pin->t_type == 'poem'){
+                        $poem = DB::table('dev_poem')->where('id',$p_pin->t_id)->select('id','title','author','dynasty','type','content','author_id','author_source_id')->first();
+                        $_content = null;
+                        if(isset(json_decode($poem->content)->content) && json_decode($poem->content)->content){
+                            foreach(json_decode($poem->content)->content as $item){
+                                $_content = $_content.$item;
+                            }
+                        }
+                        $content = mb_substr($_content,0,50,'utf-8');
+                        if(mb_strlen($_content)>50){
+                            $content .= '...';
+                        }
+                        $poem->content = $content;
+                        if($poem->author != '佚名'){
+                            $author = DB::table('dev_author')->where('source_id',$poem->author_source_id)->first();
+                            if($poem->author_source_id != -1){
+                                $poem->author_id = $author->id;
+                            }else{
+                                $poem->author_id = -1;
+                            }
+                        }else{
+                            $poem->status = 'delete';
+                            $poem->author_id = -1;
+                        }
+                        $p_pin->poem = $poem;
+                    }elseif($p_pin->t_type == 'poet') {
+                        $author = DB::table('dev_author')
+                            ->where('id', $p_pin->t_id)
+                            ->select('id', 'dynasty', 'author_name', 'profile', 'source_id')
+                            ->first();
+                        if (file_exists('static/author/' . @$author->author_name . '.jpg')) {
+                            $author->avatar = asset('static/author/' . @$author->author_name . '.jpg');
+                        }
+                        $p_pin->poet = $author;
+                    }
+                }else{
+                    $p_pin = null;
+                }
+                $pins[$key]->p_pin = $p_pin;
             }
         }
         return response()->json($pins);
     }
 
+    /**
+     * 获取某个想法的评论列表
+     * @param Request $request
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getPinReviews(Request $request,$id){
+        $reviews = DB::table('dev_review')
+            ->leftJoin('dev_wx_users','dev_wx_users.user_id','=','dev_review.u_id')
+            ->where('dev_review.t_id','=',$id)
+            ->where('dev_review.t_type','=','pin')
+            ->where('dev_review.status','=','active')
+            ->select('dev_review.*','dev_wx_users.name','dev_wx_users.avatarUrl')
+            ->paginate(10);
+        foreach ($reviews as $key=>$review){
+            $reviews[$key]->updated_at = DateUtil::formatDate(strtotime($review->updated_at));
+        }
+        return response()->json($reviews);
+    }
     /**
      * 更新想法(喜欢，删除)
      * @param $id
@@ -1231,5 +1419,74 @@ class WxxcxController extends Controller
             $data['status'] = false;
             return response()->json($data);
         }
+    }
+    public function getPinDetail($id){
+        $data = array();
+        $msg = null;
+        $pin = DB::table('dev_pin')
+            ->leftJoin('dev_wx_users','dev_wx_users.user_id','=','dev_pin.u_id')
+            ->where('dev_pin.id','=',$id)
+            ->select('dev_pin.*','dev_wx_users.name')
+            ->first();
+        if(isset($pin) && $pin){
+            $pin->updated_at = DateUtil::formatDate(strtotime($pin->updated_at));
+            $user = DB::table('dev_wx_users')->where('user_id',$pin->u_id)->select('name','avatarUrl','city')->first();
+            $pin->user = $user;
+            if($pin->t_type == 'poem'){
+                $poem = DB::table('dev_poem')
+                    ->where('id',$pin->t_id)
+                    ->select('id','title','author','dynasty','text_content','type','author_id')
+                    ->first();
+                $data['poem'] = $poem;
+            }
+            if($pin->t_type == 'poet'){
+                $poet = DB::table('dev_author')
+                    ->where('id',$pin->t_id)
+                    ->select('id','dynasty','author_name','profile')
+                    ->first();
+                $data['poet'] = $poet;
+
+            }
+            if($pin->t_type == 'pin' && $pin->p_id>0){
+                $p_pin = DB::table('dev_pin')
+                    ->leftJoin('dev_wx_users','dev_wx_users.user_id','=','dev_pin.u_id')
+                    ->where('dev_pin.id','=',$pin->t_id)
+                    ->select('dev_pin.*','dev_wx_users.name')
+                    ->first();
+                if($p_pin->t_type == 'pin'){
+                    $pin->p_id = $p_pin->id;
+//                    $pin->id = $p_pin->id;
+                }
+//                $pin->content = $pin->content.' @'.$p_pin->name.': '.$p_pin->content;
+                if($p_pin->t_type == 'poem'){
+                    $poem = DB::table('dev_poem')
+                        ->where('id',$p_pin->t_id)
+                        ->select('id','title','author','dynasty','text_content','type','author_id')
+                        ->first();
+                    $data['poem'] = $poem;
+                    $pin->t_type = 'poem';
+                    $pin->t_id = $poem->id;
+                }
+                if($p_pin->t_type == 'poet'){
+                    $poet = DB::table('dev_author')
+                        ->where('id',$p_pin->t_id)
+                        ->select('id','dynasty','author_name','profile')
+                        ->first();
+                    $data['poet'] = $poet;
+                    $pin->t_type = 'poet';
+                    $pin->t_id = $poet->id;
+                }
+                if($p_pin->t_type == 'pin'){
+                    $pin->pin = $p_pin;
+                }
+            }
+            $pin->location = json_decode($pin->location);
+            $data['pin'] = $pin;
+        }else{
+            $data['msg'] = '查找的内容不存在';
+            $data['pin'] = null;
+        }
+
+        return response()->json($data);
     }
 }

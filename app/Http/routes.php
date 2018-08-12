@@ -123,8 +123,11 @@ Route::group([
         Route::get('/getPoemAudio/{id}','Frontend\WxxcxController@getVoiceCombine');
         Route::get('/getUserList','Frontend\WxxcxController@getUserList');
         Route::get('/getSliderImages','Frontend\WxxcxController@getSliderImages');
+        Route::get('/createPinReview/','Frontend\WxxcxController@createPinReview');
         Route::get('/createPin/{user_id}','Frontend\WxxcxController@createPin');
         Route::get('/getPins','Frontend\WxxcxController@getpins');
+        Route::get('/getPinReviews/{id}','Frontend\WxxcxController@getpinReviews')->where('id','[0-9]+');
+        Route::get('/getPinDetail/{id}','Frontend\WxxcxController@getPinDetail')->where('id','[0-9]+');
         Route::get('/pin/{id}/{type}','Frontend\WxxcxController@updatePin')->where('id','[0-9]+');
     });
     /* =============== 公众号开发 =================== */
