@@ -1150,8 +1150,8 @@ class WxxcxController extends Controller
             ->first();
         if(isset($review) && $review){
             $pin = DB::table('dev_pin')->where('id',$review->t_id)->first();
-            if($review->u_id == $user_id && $user_id == 10 && $pin->u_id ==$user_id ){
-                $res = DB::table('dev_review')->update([
+            if($review->u_id == $user_id || $user_id == 10 || $pin->u_id ==$user_id ){
+                $res = DB::table('dev_review')->where('id',$id)->update([
                     'updated_at' => date('Y-m-d H:i:s',time()),
                     'status' => 'delete'
                 ]);
