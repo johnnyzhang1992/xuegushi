@@ -9,11 +9,11 @@ class DateUtil{
     static function formatDate($time = NULL) {
         // $time 为时间戳
         $text = '';
-        $time = $time === NULL || $time > time() ? time() : intval($time);
+        $time = $time === NULL || $time >= time() ? time() : intval($time);
         $t = time() - $time; //时间差 （秒）
         $y = date('Y', $time)-date('Y', time());//是否跨年
         switch($t){
-            case $t < 15:
+            case $t <= 15:
                 $text = '刚刚';
                 break;
             case $t < 60:

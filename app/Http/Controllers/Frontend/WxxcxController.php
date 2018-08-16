@@ -1026,7 +1026,7 @@ class WxxcxController extends Controller
      */
     public function getSliderImages(){
         $images = [
-            'http://img02.tooopen.com/images/20150928/tooopen_sy_143912755726.jpg',
+            'https://img.starimg.cn/gushi/slider_001.png',
             'http://img06.tooopen.com/images/20160818/tooopen_sy_175866434296.jpg',
             'http://img06.tooopen.com/images/20160818/tooopen_sy_175833047715.jpg'
         ];
@@ -1119,7 +1119,7 @@ class WxxcxController extends Controller
                 ->where('dev_review.id','=',$review_id)
                 ->select('dev_review.*','dev_wx_users.name','dev_wx_users.avatarUrl')
                 ->first();
-             $review->updated_at = DateUtil::formatDate(strtotime($review->updated_at));
+             $review->updated_at = '刚刚';
              $data['review'] = $review;
              $data['status'] = 200;
              return response()->json($data);
@@ -1195,6 +1195,12 @@ class WxxcxController extends Controller
             $user = DB::table('dev_wx_users')->where('user_id',$pin->u_id)->select('name','avatarUrl','city')->first();
             $pins[$key]->user = $user;
             $pins[$key]->location = json_decode($pins[$key]->location);
+            $pin_like = DB::table('dev_like')->where('type','pin')->where('like_id',$pin->id)->where('user_id',$u_id)->where('status','active')->first();
+            if(isset($pin_like) && $pin_like){
+                $pins[$key]->like_status = $pin_like->status;
+            }else{
+                $pins[$key]->like_status = 'delete';
+            }
             if($pin->t_type == 'poem'){
                 $poem = DB::table('dev_poem')->where('id',$pin->t_id)->select('id','title','author','dynasty','type','content','author_id','author_source_id')->first();
                 $_content = null;
@@ -1306,6 +1312,7 @@ class WxxcxController extends Controller
             ->where('dev_review.t_type','=','pin')
             ->where('dev_review.status','=','active')
             ->select('dev_review.*','dev_wx_users.name','dev_wx_users.avatarUrl')
+            ->orderBy('dev_review.id','desc')
             ->paginate(10);
         foreach ($reviews as $key=>$review){
             $reviews[$key]->updated_at = DateUtil::formatDate(strtotime($review->updated_at));
@@ -1329,7 +1336,8 @@ class WxxcxController extends Controller
             return response()->json($data);
         }
         if($type == 'like'){
-            $this->updateLike($wx_token,$id,$user_id);
+           $data = $this->updateLike($wx_token,$id,$user_id);
+            return response()->json($data);
         }else if($type=='update'){
             $data = array();
             $msg = null;
@@ -1353,7 +1361,7 @@ class WxxcxController extends Controller
      * @param $wx_token
      * @param $id
      * @param $user_id
-     * @return \Illuminate\Http\JsonResponse
+     * @return mixed
      */
     public function updateLike($wx_token,$id,$user_id){
         $data = array();
@@ -1362,8 +1370,8 @@ class WxxcxController extends Controller
         if(!$this->validateWxToken($user_id,$wx_token)){
             $data['pin_id'] = 0;
             $data['msg'] = '操作不合法';
-            $data['status'] = 200;
-            return response()->json($data);
+            $data['status'] = 'illegal';
+            return $data;
         }
         $_res = DB::table('dev_like')
             ->where('user_id',$user_id)
@@ -1373,7 +1381,7 @@ class WxxcxController extends Controller
         if(!$_res){
             // 新的like
             $res = DB::table('dev_pin')->where('id',$id)->increment("like_count");
-            DB::table('dev_collect')->insertGetId(
+            DB::table('dev_like')->insertGetId(
                 [
                     'like_id' => $id,
                     'type' => 'pin',
@@ -1384,7 +1392,7 @@ class WxxcxController extends Controller
                 ]
             );
             $msg = '喜欢成功';
-            $data['status'] = true;
+            $data['status'] = 'active';
         }else{
             // 更新like状态
             if($_res->status == 'active'){
@@ -1397,9 +1405,9 @@ class WxxcxController extends Controller
                         'updated_at' => date('Y-m-d H:i:s',time())
                     ]);
                 $msg = '取消喜欢成功';
-                $data['status'] = false;
+                $data['status'] = 'delete';
             }else{
-                $res = DB::table('dev_pin')->where('id',$id)->increment("collect_count");
+                $res = DB::table('dev_pin')->where('id',$id)->increment("like_count");
                 DB::table('dev_like')
                     ->where('user_id',$user_id)
                     ->where('id',$_res->id)
@@ -1408,21 +1416,22 @@ class WxxcxController extends Controller
                         'updated_at' => date('Y-m-d H:i:s',time()),
                     ]);
                 $msg = '喜欢成功';
-                $data['status'] = true;
+                $data['status'] = 'active';
             }
         }
         if($res){
             $data['msg'] = $msg;
-            return response()->json($data);
+            return $data;
         }else{
-            $data['msg'] = $msg;
-            $data['status'] = false;
-            return response()->json($data);
+            $data['msg'] = '操作失败';
+            $data['status'] = 'fail';
+            return $data;
         }
     }
-    public function getPinDetail($id){
+    public function getPinDetail(Request $request,$id){
         $data = array();
         $msg = null;
+        $u_id = $request->input('user_id');
         $pin = DB::table('dev_pin')
             ->leftJoin('dev_wx_users','dev_wx_users.user_id','=','dev_pin.u_id')
             ->where('dev_pin.id','=',$id)
@@ -1432,6 +1441,12 @@ class WxxcxController extends Controller
             $pin->updated_at = DateUtil::formatDate(strtotime($pin->updated_at));
             $user = DB::table('dev_wx_users')->where('user_id',$pin->u_id)->select('name','avatarUrl','city')->first();
             $pin->user = $user;
+            $pin_like = DB::table('dev_like')->where('type','pin')->where('like_id',$pin->id)->where('user_id',$u_id)->where('status','active')->first();
+            if(isset($pin_like) && $pin_like){
+                $pin->like_status = $pin_like->status;
+            }else{
+                $pin->like_status = 'delete';
+            }
             if($pin->t_type == 'poem'){
                 $poem = DB::table('dev_poem')
                     ->where('id',$pin->t_id)
