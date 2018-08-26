@@ -1176,7 +1176,8 @@ class WxxcxController extends Controller
      */
     public function getPins(Request $request){
         $u_id = $request->input('id');
-        if(isset($u_id) && $u_id){
+        $type = $request->input('type');
+        if(isset($type) && $type){
             $pins = DB::table('dev_pin')
                 ->where('status','active')
                 ->where('u_id',$u_id)
@@ -1317,7 +1318,28 @@ class WxxcxController extends Controller
         foreach ($reviews as $key=>$review){
             $reviews[$key]->updated_at = DateUtil::formatDate(strtotime($review->updated_at));
         }
-        return response()->json($reviews);
+        $users = DB::table('dev_like')
+            ->leftJoin('dev_wx_users','dev_wx_users.user_id','=','dev_like.user_id')
+            ->where('dev_like.like_id','=',$id)
+            ->where('dev_like.type','=','pin')
+            ->where('dev_like.status','=','active')
+            ->select('dev_wx_users.user_id','dev_wx_users.name','dev_wx_users.avatarUrl')
+            ->orderBy('dev_like.id','desc')
+            ->paginate(5);
+        $data['reviews'] = $reviews;
+        $data['users'] = $users;
+        return response()->json($data);
+    }
+    public function getPinLikeUsers($id){
+        $users = DB::table('dev_like')
+            ->leftJoin('dev_wx_users','dev_wx_users.user_id','=','dev_like.user_id')
+            ->where('dev_like.like_id','=',$id)
+            ->where('dev_like.type','=','pin')
+            ->where('dev_like.status','=','active')
+            ->select('dev_wx_users.user_id as u_id','dev_wx_users.name','dev_wx_users.avatarUrl')
+            ->orderBy('dev_like.id','desc')
+            ->paginate(10);
+        return response()->json($users);
     }
     /**
      * 更新想法(喜欢，删除)

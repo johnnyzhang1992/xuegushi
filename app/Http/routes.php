@@ -128,6 +128,7 @@ Route::group([
         Route::get('/createPin/{user_id}','Frontend\WxxcxController@createPin');
         Route::get('/getPins','Frontend\WxxcxController@getpins');
         Route::get('/getPinReviews/{id}','Frontend\WxxcxController@getpinReviews')->where('id','[0-9]+');
+        Route::get('/getPinLikeUsers/{id}','Frontend\WxxcxController@getPinLikeUsers')->where('id','[0-9]+');
         Route::get('/getPinDetail/{id}','Frontend\WxxcxController@getPinDetail')->where('id','[0-9]+');
         Route::get('/pin/{id}/{type}','Frontend\WxxcxController@updatePin')->where('id','[0-9]+');
     });
