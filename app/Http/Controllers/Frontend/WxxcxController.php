@@ -1330,15 +1330,25 @@ class WxxcxController extends Controller
         $data['users'] = $users;
         return response()->json($data);
     }
+
+    /**
+     * 某个pin点赞的用户列表
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function getPinLikeUsers($id){
         $users = DB::table('dev_like')
             ->leftJoin('dev_wx_users','dev_wx_users.user_id','=','dev_like.user_id')
             ->where('dev_like.like_id','=',$id)
             ->where('dev_like.type','=','pin')
             ->where('dev_like.status','=','active')
-            ->select('dev_wx_users.user_id as u_id','dev_wx_users.name','dev_wx_users.avatarUrl')
+            ->select('dev_wx_users.user_id as u_id','dev_wx_users.name','dev_wx_users.avatarUrl','dev_like.updated_at')
             ->orderBy('dev_like.id','desc')
             ->paginate(10);
+
+        foreach ($users as $key=>$user){
+            $users[$key]->updated_at = DateUtil::formatDate(strtotime($user->updated_at));
+        }
         return response()->json($users);
     }
     /**
@@ -1450,6 +1460,14 @@ class WxxcxController extends Controller
             return $data;
         }
     }
+
+    /**
+     * 获取某个pin的详细信息
+     * @param Request $request
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+
     public function getPinDetail(Request $request,$id){
         $data = array();
         $msg = null;
