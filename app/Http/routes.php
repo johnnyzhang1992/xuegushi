@@ -132,7 +132,7 @@ Route::group([
         Route::get('/getPinDetail/{id}','Frontend\WxxcxController@getPinDetail')->where('id','[0-9]+');
         Route::get('/pin/{id}/{type}','Frontend\WxxcxController@updatePin')->where('id','[0-9]+');
         Route::get('/createTopic','Frontend\WxxcxController@createTopic');
-        Route::get('/getTopics','Frontend\WxxcxController@getTopics');
+        Route::get('/getRecentTopic','Frontend\WxxcxController@getRecentTopic');
         Route::get('/getTopics','Frontend\WxxcxController@getTopics');
         Route::get('/topic/{id}/delete','Frontend\WxxcxController@deleteTopic')->where('id','[0-9]+');
     });
