@@ -582,11 +582,11 @@ class WxxcxController extends Controller
         $msg = null;
         $_data = null;
         $table_name = 'dev_'.$type;
-        if(!$this->validateWxToken($user_id,$wx_token)){
-            $data['msg'] = '操作不合法';
-            $data['status'] = false;
-            return response()->json($data);
-        }
+//        if(!$this->validateWxToken($user_id,$wx_token)){
+//            $data['msg'] = '操作不合法';
+//            $data['status'] = false;
+//            return response()->json($data);
+//        }
         $_res = DB::table('dev_collect')
             ->where('user_id',$user_id)
             ->where('like_id',$id)
@@ -1064,27 +1064,58 @@ class WxxcxController extends Controller
                 $content = $content.' @'.$p_pin->name.': '.$p_pin->content;
             }
         }
-        $pin_id = DB::table('dev_pin')->insertGetId([
-            't_id' => $t_id,
-            't_type'=>isset($t_type) && $t_type !='' ? $t_type : 'pin',
-            'created_at' => date('Y-m-d H:i:s',time()),
-            'updated_at' => date('Y-m-d H:i:s',time()),
-            'u_id'=> $user_id,
-            'status' => 'active',
-            'like_count' =>0,
-            'p_id'=>isset($p_id) && $p_id ? $p_id : 0 ,
-            'content' => $content,
-            'location'=>$location
-        ]);
         $data = [];
-        if(isset($pin_id) && $pin_id){
-            $data['pin_id'] = $pin_id;
-            $data['status'] = 200;
+        if($t_id>0){
+
+            $pin_id = DB::table('dev_pin')->insertGetId([
+                't_id' => $t_id,
+                't_type'=>isset($t_type) && $t_type !='' ? $t_type : 'pin',
+                'created_at' => date('Y-m-d H:i:s',time()),
+                'updated_at' => date('Y-m-d H:i:s',time()),
+                'u_id'=> $user_id,
+                'status' => 'active',
+                'like_count' =>0,
+                'p_id'=>isset($p_id) && $p_id ? $p_id : 0 ,
+                'content' => $content,
+                'location'=>$location
+            ]);
+            if(isset($pin_id) && $pin_id){
+                $data['pin_id'] = $pin_id;
+                $data['status'] = 200;
+            }else{
+                $data['pin_id'] = 0;
+                $data['status'] = 200;
+                $data['msg'] = 'fail';
+            }
         }else{
-            $data['pin_id'] = 0;
-            $data['status'] = 200;
-            $data['msg'] = 'fail';
+            if(trim($content) == ''){
+                $data['pin_id'] = 0;
+                $data['msg'] = '内容不能为空';
+                $data['status'] = 200;
+            }else{
+                $pin_id = DB::table('dev_pin')->insertGetId([
+                    't_id' => $t_id,
+                    't_type'=>isset($t_type) && $t_type !='' ? $t_type : 'pin',
+                    'created_at' => date('Y-m-d H:i:s',time()),
+                    'updated_at' => date('Y-m-d H:i:s',time()),
+                    'u_id'=> $user_id,
+                    'status' => 'active',
+                    'like_count' =>0,
+                    'p_id'=>isset($p_id) && $p_id ? $p_id : 0 ,
+                    'content' => $content,
+                    'location'=>$location
+                ]);
+                if(isset($pin_id) && $pin_id){
+                    $data['pin_id'] = $pin_id;
+                    $data['status'] = 200;
+                }else{
+                    $data['pin_id'] = 0;
+                    $data['status'] = 200;
+                    $data['msg'] = 'fail';
+                }
+            }
         }
+
         return response()->json($data);
     }
     /**
@@ -1182,11 +1213,13 @@ class WxxcxController extends Controller
             $pins = DB::table('dev_pin')
                 ->where('status','active')
                 ->where('u_id',$u_id)
+                ->orderBy('flag','desc')
                 ->orderBy('id','desc')
                 ->paginate(5);
         }else{
             $pins = DB::table('dev_pin')
                 ->where('status','active')
+                ->orderBy('flag','desc')
                 ->orderBy('id','desc')
                 ->paginate(5);
         }
@@ -1400,12 +1433,12 @@ class WxxcxController extends Controller
         $data = array();
         $msg = null;
         $_data = null;
-        if(!$this->validateWxToken($user_id,$wx_token)){
-            $data['pin_id'] = 0;
-            $data['msg'] = '操作不合法';
-            $data['status'] = 'illegal';
-            return $data;
-        }
+//        if(!$this->validateWxToken($user_id,$wx_token)){
+//            $data['pin_id'] = 0;
+//            $data['msg'] = '操作不合法';
+//            $data['status'] = 'illegal';
+//            return $data;
+//        }
         $_res = DB::table('dev_like')
             ->where('user_id',$user_id)
             ->where('like_id',$id)
