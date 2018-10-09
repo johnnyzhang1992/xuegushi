@@ -19,15 +19,15 @@
                 <li @if(isset($query) && $query =='sentence') class="active" @endif>
                     <a href="{{url('/sentence')}}" class="nav-item">名句</a>
                 </li>
+                <li @if(isset($query) && $query =='authors') class="active" @endif>
+                    <a href="{{url('/author')}}" class="nav-item">作者</a>
+                </li>
                 <li @if(isset($query) && $query =='collect') class="active" @endif>
                     <a href="{{url('/collections')}}" class="nav-item">收藏</a>
                 </li>
                 {{--<li @if(isset($query) && $query =='fhl') class="active" @endif>--}}
                     {{--<a href="{{url('/fhl')}}" class="nav-item">飞花令</a>--}}
                 {{--</li>--}}
-                <li @if(isset($query) && $query =='authors') class="active" @endif>
-                    <a href="{{url('/author')}}" class="nav-item">作者</a>
-                </li>
                 <li style="position: relative">
                     <div class="input-group" style="width:270px;max-width: 300px;line-height:34px;padding: 13px 10px ">
                         <input type="text" id="search-input" class="form-control" placeholder="关键字搜索 诗文、诗人">

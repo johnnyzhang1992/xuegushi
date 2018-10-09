@@ -31,6 +31,7 @@ class WxxcxController extends Controller
     /**
      * 小程序登录获取用户信息
      * @param $request
+     * @throws
      * @return mixed
      */
     public function getWxUserInfo(Request $request)
@@ -40,11 +41,34 @@ class WxxcxController extends Controller
         //encryptedData 和 iv 在小程序端使用 wx.getUserInfo 获取
         $encryptedData = $request->input('encryptedData', '');
         $iv = $request->input('iv', '');
+        $systemInfo = $request->input('systemInfo','');
 
         //根据 code 获取用户 session_key 等信息, 返回用户openid 和 session_key
         $userInfo = $this->wxxcx->getLoginInfo($code);
-
-         $systemInfo = $request->input('systemInfo','');
+        if($userInfo){
+            $openId = $userInfo['openid'];
+            $_u = DB::table('users')->where('openid', $openId)->first();
+            $wx_token = md5(uniqid(microtime(true),true));
+            if (isset($_u) && $_u) {
+                // 用户已经存在
+                DB::table('users')->where('openid',$openId)->update([
+                    'updated_at' => date('Y-m-d H:i:s',time()),
+                    'wx_token' => $wx_token
+                ]);
+                $_wx_user = DB::table('dev_wx_users')->where('openId', $openId)->first();
+                $data['user_id'] = $_u->id;
+                if(isset($_wx_user) && $_wx_user){
+                    // 微信最新信息采集
+                    DB::table('dev_wx_users')->where('openId',$openId)->update([
+                        'systemInfo'=>$systemInfo,
+                        'updated_at' => date('Y-m-d H:i:s',time()),
+                    ]);
+                }
+                $_wx_user->user_id = $_u->id;
+                $_wx_user->wx_token = $wx_token;
+                return response()->json($_wx_user);
+            }
+        }
         //获取解密后的用户信息
         $user =$this->wxxcx->getUserInfo($encryptedData, $iv);
         $user_id = 0;
