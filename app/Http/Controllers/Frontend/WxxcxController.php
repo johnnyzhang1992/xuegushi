@@ -200,7 +200,8 @@ class WxxcxController extends Controller
         $poem_types = ['全部','诗','词','曲','文言文'];
         $poem_dynasty = ['全部','先秦','两汉','魏晋','南北朝','隋代','唐代','五代','宋代','金朝','元代','明代','清代','近代'];
         $_poems = DB::table('dev_poem');
-        if(isset($_type) && $_type){
+        if(isset($_type) && $_type != null && $_type !='null'){
+            \Log::info('----'.$_type);
            if($_type == 'tag'){
                $_poems->where('tags','like','%'.$_keyWord.'%');
            }elseif($_type =='poem'){
