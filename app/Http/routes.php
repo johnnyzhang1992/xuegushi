@@ -135,6 +135,7 @@ Route::group([
         Route::get('/getRecentTopic','Frontend\WxxcxController@getRecentTopic');
         Route::get('/getTopics','Frontend\WxxcxController@getTopics');
         Route::get('/topic/{id}/delete','Frontend\WxxcxController@deleteTopic')->where('id','[0-9]+');
+        Route::any('/getWXACode','Frontend\WxxcxController@getWXACode');
     });
     /* =============== 公众号开发 =================== */
     Route::any('/wechat', 'WeChatController@serve');

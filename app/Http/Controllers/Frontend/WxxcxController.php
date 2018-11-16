@@ -13,6 +13,7 @@ use Iwanli\Wxxcx\Wxxcx;
 use App\Http\Controllers\Controller;
 use Log;
 use Config;
+use \stdClass;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Mockery\Exception;
@@ -22,10 +23,22 @@ use App\Helpers\DateUtil;
 class WxxcxController extends Controller
 {
     protected $wxxcx;
-
-    function __construct(Wxxcx $wxxcx)
-    {
+    private $appid;
+    private $secret;
+    private $code2session_url;
+    private $accessToken_url;
+    private $wxacode_url;
+    /**
+     * Constructor
+     */
+    public function __construct (Wxxcx $wxxcx) {
+//        parent::__construct();
         $this->wxxcx = $wxxcx;
+        $this->appid = config('wxxcx.appid', '');
+        $this->secret = config('wxxcx.secret', '');
+        $this->code2session_url = config('wxxcx.code2session_url', '');
+        $this->accessToken_url = config('wxxcx.accessToken_url','');
+        $this->wxacode_url = config('wxxcx.wxacode_url');
     }
 
     /**
@@ -1708,4 +1721,120 @@ class WxxcxController extends Controller
         }
         return \response()->json($data);
     }
+
+
+    /**
+     * 生成小程序码
+     * @param $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getWXACode(Request $request){
+        $path = $request->input('path');
+        $width = $request->input('width');
+        $auto_color = $request->input('auto_color');
+        $line_color = $request->input('line_color');
+        $is_hyaline = $request->input('is_hyaline');
+        $type = $request->input('type');
+        $target_id = $request->input('target_id');
+        $path = isset($path) && $path != '' ? $path : 'pages/poem/detail/index?id=69906';
+        $file_path = public_path('static/wx/');
+        $file_name = $type.'_'.$target_id.'.png';
+        if(file_exists($file_name)){
+            return \response()->json([
+               'file_name' => 'https://xuegushi.cn/static/wx/' .$file_name,
+                'message' => '图片已存在'
+            ]);
+        } else{
+            // 先生成 accessToken ,有效时间俩小时
+            $access_token = $this->getAccessToken();
+            if(isset($access_token) && $access_token){
+                // 正确获取 accessToken
+                if(isset($access_token['errcode']) && $access_token['errcode']){
+                    return \response()->json($access_token);
+                }else{
+                    $data = array(
+                        'path' => $path,
+                        'width'=> $width,
+                        'auto_color'=> $auto_color,
+//                    'line_color'=> '{"r":"xxx","g":"xxx","b":"xxx"}',
+                        'is_hyaline' => $is_hyaline
+                    );
+                    $code_url = sprintf($this->wxacode_url,$access_token['access_token']);
+                    $_code = $this->httpRequest($code_url,$data);
+                    $sData = file_get_contents("php://input");
+                    chmod($file_path, 0777);
+                    file_put_contents($file_path.$file_name,$_code);
+                    chmod($file_path.$file_name, 0777);
+                    return \response()->json([
+                        'file_name' => 'https://xuegushi.cn/static/wx/' .$file_name,
+                        'message' => '小程序码生成完成'
+                    ]);
+                }
+            }else{
+                return response()->json([
+                    'message' => '获取 accessToken 失败'
+                ]);
+            }
+        }
+    }
+    /**
+     * 获取 accessToken
+     * @return mixed
+     */
+    private function getAccessToken(){
+        // accessToken_url
+        $accessToken_url = sprintf($this->accessToken_url,$this->appid,$this->secret);
+        $token = $this->httpRequest($accessToken_url);
+        return $token;
+    }
+    /**
+     * 请求小程序api
+     * @date   2017-05-27T11:51:10+0800
+     * @param  [type]                   $url  [description]
+     * @param  [type]                   $data [description]
+     * @return mixed
+     */
+    private function httpRequest($url, $data = null)
+    {
+        $curl = curl_init();
+        curl_setopt($curl, CURLOPT_URL, $url);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, FALSE);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, FALSE);
+        if (!empty($data)){
+            $data = json_encode($data,JSON_UNESCAPED_UNICODE);
+            curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "POST");
+            curl_setopt($curl, CURLOPT_POST, true);
+            curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+            curl_setopt($curl, CURLOPT_HTTPHEADER, array(
+                    'Content-Type: application/json',
+                    'Content-Length: ' . strlen($data))
+            );
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+            $output = curl_exec($curl);
+            if($output === FALSE ){
+                return false;
+            }
+            curl_close($curl);
+            return $output;
+        }else{
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+            $output = curl_exec($curl);
+            if($output === FALSE ){
+                return false;
+            }
+            curl_close($curl);
+            return json_decode($output,JSON_UNESCAPED_UNICODE);
+        }
+
+    }
+    function binary_to_file($file){
+        $content = $GLOBALS['HTTP_RAW_POST_DATA'];  // 需要php.ini设置
+        if(empty($content)){
+            $content = file_get_contents('php://input');    // 不需要php.ini设置，内存压力小
+        }
+        $ret = file_put_contents($file, $content, true);
+        return $ret;
+    }
+
+
 }
