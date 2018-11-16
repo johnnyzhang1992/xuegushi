@@ -1736,12 +1736,13 @@ class WxxcxController extends Controller
         $is_hyaline = $request->input('is_hyaline');
         $type = $request->input('type');
         $target_id = $request->input('target_id');
-        $path = isset($path) && $path != '' ? $path : 'pages/poem/detail/index?id=69906';
+        $path = isset($path) && $path != '' ? $path : 'pages/index/index';
         $file_path = public_path('static/wx/');
-        $file_name = $type.'_'.$target_id.'.png';
-        if(file_exists($file_name)){
+        $file_name = isset($type) && $type ? $type.'_'.$target_id.'.png' : 'xcx.png';
+        if(file_exists($file_path.$file_name)){
             return \response()->json([
-               'file_name' => 'https://xuegushi.cn/static/wx/' .$file_name,
+                'status' => 200,
+                'file_name' => 'https://xuegushi.cn/static/wx/' .$file_name,
                 'message' => '图片已存在'
             ]);
         } else{
@@ -1754,24 +1755,36 @@ class WxxcxController extends Controller
                 }else{
                     $data = array(
                         'path' => $path,
-                        'width'=> $width,
-                        'auto_color'=> $auto_color,
+                        'width'=> $width ? $width : 300,
+                        'auto_color'=> isset($auto_color) ? $auto_color : true,
 //                    'line_color'=> '{"r":"xxx","g":"xxx","b":"xxx"}',
-                        'is_hyaline' => $is_hyaline
+                        'is_hyaline' => isset($is_hyaline) ? $is_hyaline : true
                     );
                     $code_url = sprintf($this->wxacode_url,$access_token['access_token']);
+//                    print $code_url;
                     $_code = $this->httpRequest($code_url,$data);
+//                    print $_code;
                     $sData = file_get_contents("php://input");
                     chmod($file_path, 0777);
-                    file_put_contents($file_path.$file_name,$_code);
-                    chmod($file_path.$file_name, 0777);
-                    return \response()->json([
-                        'file_name' => 'https://xuegushi.cn/static/wx/' .$file_name,
-                        'message' => '小程序码生成完成'
-                    ]);
+                    if(!is_object($_code)){
+                        file_put_contents($file_path.$file_name,$_code);
+                        chmod($file_path.$file_name, 0777);
+                        return \response()->json([
+                            'status' => 200,
+                            'file_name' => 'https://xuegushi.cn/static/wx/' .$file_name,
+                            'message' => '小程序码生成成功'
+                        ]);
+                    }else{
+                        return \response()->json([
+                            'status' => 500,
+                            'message' => '小程序码生成失败',
+                            'error_data' => json_decode($_code)
+                        ]);
+                    }
                 }
             }else{
                 return response()->json([
+                    'status' => 500,
                     'message' => '获取 accessToken 失败'
                 ]);
             }
@@ -1827,14 +1840,4 @@ class WxxcxController extends Controller
         }
 
     }
-    function binary_to_file($file){
-        $content = $GLOBALS['HTTP_RAW_POST_DATA'];  // 需要php.ini设置
-        if(empty($content)){
-            $content = file_get_contents('php://input');    // 不需要php.ini设置，内存压力小
-        }
-        $ret = file_put_contents($file, $content, true);
-        return $ret;
-    }
-
-
 }
