@@ -317,12 +317,18 @@ class WxxcxController extends Controller
                     $poem->collect_status = false;
                 }
             }
+//            if(isset($poem_detail) && $poem_detail){
+//                if(isset($poem_detail->zhu) && $poem_detail->zhu){
+//                    $poem_detail->zhu = json_decode($poem_detail->zhu);
+//                }
+//            }
 
             $res = [];
 //            $res['author'] = $author;
             $res['detail'] = $poem_detail;
             $res['poems_count'] = $poems_count;
             $res['poem'] = $poem;
+            $res['bg_image'] = 'https://xuegushi.cn/static/xcx/gugong1.jpg';
             return response()->json($res);
         }else{
             return null;
