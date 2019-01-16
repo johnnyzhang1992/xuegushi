@@ -39,6 +39,7 @@ class WxxcxController extends Controller
         $this->code2session_url = config('wxxcx.code2session_url', '');
         $this->accessToken_url = config('wxxcx.accessToken_url','');
         $this->wxacode_url = config('wxxcx.wxacode_url');
+
     }
 
     /**
@@ -233,6 +234,7 @@ class WxxcxController extends Controller
                 }
             }
         }
+        $_poems->select('id','source_id','title','author','dynasty','content','type','like_count','author_id','author_source_id');
         $_poems->orderBy('like_count','desc');
         $_poems = $_poems->paginate(10);
         foreach ($_poems as $key=>$poem){
@@ -258,8 +260,8 @@ class WxxcxController extends Controller
             }
         }
         $res = [];
-        $res['types'] = $poem_types;
-        $res['dynasty'] = $poem_dynasty;
+//        $res['types'] = $poem_types;
+//        $res['dynasty'] = $poem_dynasty;
         $res['poems'] = $_poems;
         return response()->json($res);
     }

@@ -37,7 +37,7 @@ class HomeController extends Controller
         $poems = DB::table('dev_poem')
 //            ->where('like_count','>',100)
 //            ->where('type','!=','文言文')
-            ->whereIn('id',$this->numberRand(1,72439,10))
+            ->whereIn('id',$this->numberRand(1,72439,8))
             ->orderBy('like_count','desc')
             ->get();
         if(!Auth::guest()){
