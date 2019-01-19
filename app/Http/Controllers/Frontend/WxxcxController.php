@@ -522,7 +522,6 @@ class WxxcxController extends Controller
     public function getPoetData(Request $request){
         $dynasty = $request->input('dynasty');
         $_keyWord = $request->input('keyWord');
-        $dynastys = ['全部','先秦','两汉','魏晋','南北朝','隋代','唐代','五代','宋代','金朝','元代','明代','清代','近代'];
         $authors = DB::table('dev_author');
         if($dynasty){
             if($dynasty != '全部'){
@@ -534,10 +533,15 @@ class WxxcxController extends Controller
         }
         $authors->select('id','author_name','dynasty','profile')->orderBy('like_count','desc');
         $authors = $authors->paginate(10);
-
+        foreach ($authors as $index=>$author){
+            if(file_exists('static/author/'.@$author->author_name.'.jpg')){
+                $authors[$index]->avatar = asset('static/author/'.@$author->author_name.'.jpg');
+            }else{
+                $authors[$index]->avatar =null;
+            }
+        }
         $res = [];
         $res['poets'] = $authors;
-        $res['dynasty'] = $dynastys;
         return response()->json($res);
     }
     /**
