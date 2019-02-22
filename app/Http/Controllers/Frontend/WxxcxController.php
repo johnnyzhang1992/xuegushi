@@ -211,8 +211,8 @@ class WxxcxController extends Controller
         $dynasty = $request->input('dynasty');
         $_type = $request->input('_type');
         $_keyWord = $request->input('keyWord');
-        $poem_types = ['全部','诗','词','曲','文言文'];
-        $poem_dynasty = ['全部','先秦','两汉','魏晋','南北朝','隋代','唐代','五代','宋代','金朝','元代','明代','清代','近代'];
+//        $poem_types = ['全部','诗','词','曲','文言文'];
+//        $poem_dynasty = ['全部','先秦','两汉','魏晋','南北朝','隋代','唐代','五代','宋代','金朝','元代','明代','清代','近代'];
         $_poems = DB::table('dev_poem');
         if(isset($_type) && $_type != null && $_type !='null'){
             \Log::info('----'.$_type);
@@ -250,6 +250,8 @@ class WxxcxController extends Controller
                     $_content = $_content.$item;
                 }
             }
+            $_poems[$key]->key = $_keyWord;
+            $_poems[$key]->name = $poem->title;
             $_poems[$key]->content = mb_substr($_content,0,35,'utf-8');
             if(isset($poem->tags) && $poem->tags){
                 $_tag = array();
@@ -850,6 +852,14 @@ class WxxcxController extends Controller
             ->select('id','title','author','dynasty','like_count','content')
             ->orderBy('like_count','desc')
             ->paginate(3);
+        foreach ($sentences as $key=>$_sentence){
+            $sentences[$key]->name = $_sentence->title;
+            $sentences[$key]->key =$_key;
+        }
+        foreach ($authors as $key=>$_author){
+            $authors[$key]->name = $_author->author_name;
+            $authors[$key]->key = $_key;
+        }
         foreach ($poems as $key=>$poem){
             $content = '';
             if(isset($poem->content) && json_decode($poem->content)){
@@ -863,6 +873,9 @@ class WxxcxController extends Controller
                 }
             }
             $poems[$key]->content = mb_substr($content,0,35,'utf-8');
+            $poems[$key]->key = $_key;
+            $poems[$key]->name = $poem->title;
+            $poems[$key]->type = 'poem';
         }
         return response()->json([
             'tags' => $_tags,
