@@ -102,7 +102,10 @@ Route::group([
     Route::group([
         'prefix' => 'wxxcx',
     ],function (){
-        Route::get('/userInfo', 'Frontend\WxxcxController@getWxUserInfo');
+        Route::get('/userInfo', 'Wxapp\AppController@getWxUserInfo');
+        Route::get('/userCrate', 'Wxapp\AppController@wxUserCreate');
+        Route::get('/getUserInfo/{user_id}', 'Frontend\WxxcxController@getUserInfo')->where('user_id', '[0-9]+');
+
         Route::get('/getRandomPoem', 'Frontend\WxxcxController@getRandomPoem');
         Route::get('/getHomeData', 'Frontend\WxxcxController@getHomeData');
         Route::get('/getPoemData', 'Frontend\WxxcxController@getPoemData');
@@ -115,11 +118,13 @@ Route::group([
         Route::get('/poem/{id}', 'Frontend\WxxcxController@getPoemDetail')->where('id', '[0-9]+');
         Route::get('/{id}/collect/{type}', 'Frontend\WxxcxController@updateCollect')->where('id', '[0-9]+');
         Route::get('/getCollect/{user_id}/{type}', 'Frontend\WxxcxController@getUserCollect')->where('user_id', '[0-9]+');
-        Route::get('/getUserInfo/{user_id}', 'Frontend\WxxcxController@getUserInfo')->where('user_id', '[0-9]+');
+
+
         Route::get('/search/{_key}','Frontend\WxxcxController@getSearchResult');
         Route::get('/search_list','Frontend\WxxcxController@getSearchList');
         Route::get('/search/{id}/update','Frontend\WxxcxController@searchUpdate')->where('id','[0-9]+');
         Route::get('/getsHotSearch','Frontend\WxxcxController@getHotSearchWord');
+
         Route::get('/getPoemAudio/{id}','Frontend\WxxcxController@getVoiceCombine');
         Route::get('/getUserList','Frontend\WxxcxController@getUserList');
         Route::get('/getSliderImages','Frontend\WxxcxController@getSliderImages');
