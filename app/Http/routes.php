@@ -116,7 +116,8 @@ Route::group([
         Route::get('/getPostData', 'Frontend\WxxcxController@getPostData');
         Route::get('/getPostDetailData/{id}', 'Frontend\WxxcxController@getPostDetailData')->where('id', '[0-9]+');
         // sentence
-        Route::get('/getSentenceData', 'Frontend\WxxcxController@getSentenceData');
+        Route::get('/getSentenceData', 'Wxapp\SentenceController@getSentenceData');
+        Route::get('/getSentenceDetail/{id}', 'Wxapp\SentenceController@getSentenceDetail')->where('id', '[0-9]+');
         // poet
         Route::get('/getPoetData', 'Frontend\WxxcxController@getPoetData');
         Route::get('/getPoetDetailData/{id}', 'Frontend\WxxcxController@getPoetDetailData')->where('id', '[0-9]+');

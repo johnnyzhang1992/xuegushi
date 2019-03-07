@@ -83,8 +83,6 @@ class WxxcxController extends Controller
         $dynasty = $request->input('dynasty');
         $_type = $request->input('_type');
         $_keyWord = $request->input('keyWord');
-//        $poem_types = ['全部','诗','词','曲','文言文'];
-//        $poem_dynasty = ['全部','先秦','两汉','魏晋','南北朝','隋代','唐代','五代','宋代','金朝','元代','明代','清代','近代'];
         $_poems = DB::table('dev_poem');
         if(isset($_type) && $_type != null && $_type !='null'){
             \Log::info('----'.$_type);
@@ -108,7 +106,7 @@ class WxxcxController extends Controller
         }
         $_poems->select('id','source_id','title','author','dynasty','content','type','like_count','author_id','author_source_id');
         $_poems->orderBy('like_count','desc');
-        $_poems = $_poems->paginate(10);
+        $_poems = $_poems->paginate(6);
         foreach ($_poems as $key=>$poem){
             if($poem->author_source_id != -1){
                 $author = DB::table('dev_author')->where('source_id',$poem->author_source_id)->first();
@@ -134,8 +132,6 @@ class WxxcxController extends Controller
             }
         }
         $res = [];
-//        $res['types'] = $poem_types;
-//        $res['dynasty'] = $poem_dynasty;
         $res['poems'] = $_poems;
         return response()->json($res);
     }
@@ -334,7 +330,7 @@ class WxxcxController extends Controller
         $_sentences->orderBy('dev_sentence.like_count','desc');
         $_sentences->leftJoin('dev_poem','dev_poem.source_id','=','dev_sentence.target_source_id');
         $_sentences->select('dev_sentence.*','dev_poem.id as poem_id','dev_poem.author','dev_poem.dynasty','dev_poem.title as poem_title','dev_poem.tags');
-        $_sentences = $_sentences->paginate(10)->setPath($_url);
+        $_sentences = $_sentences->paginate(6)->setPath($_url);
 
         $res = [];
         $res['poems'] = $_sentences;
@@ -357,7 +353,7 @@ class WxxcxController extends Controller
             ->leftJoin('dev_author','dev_author.source_id','=','dev_poem.author_source_id')
             ->select('dev_poem.id','dev_poem.author','dev_poem.content','dev_poem.dynasty','dev_poem.like_count','dev_poem.title','dev_author.id as authorId')
             ->orderBy('dev_poem.like_count','desc')
-            ->paginate(10);
+            ->paginate(6);
         foreach ($data as $key=>$poem){
             $_content = null;
             if(isset(json_decode($poem->content)->content) && json_decode($poem->content)->content){
@@ -369,6 +365,12 @@ class WxxcxController extends Controller
         }
         return $data;
     }
+
+    /**
+     * 获取某一分类的所有古诗词
+     * @param $name
+     * @return mixed
+     */
     public function getAllData($name){
         $data = DB::table('dev_poem_book')
             ->where('dev_poem_book.belong_name','=',$name)
@@ -376,7 +378,7 @@ class WxxcxController extends Controller
             ->leftJoin('dev_author','dev_author.source_id','=','dev_poem.author_source_id')
             ->select('dev_poem.id','dev_poem.author','dev_poem.title','dev_poem.dynasty','dev_poem.like_count','dev_poem.content','dev_author.id as authorId')
             ->orderBy('dev_poem.like_count','desc')
-            ->paginate(10);
+            ->paginate(6);
         foreach ($data as $key=>$poem){
             $_content = null;
             if(isset(json_decode($poem->content)->content) && json_decode($poem->content)->content){
@@ -406,7 +408,7 @@ class WxxcxController extends Controller
             $authors->where('author_name','like','%'.$_keyWord.'%');
         }
         $authors->select('id','author_name','dynasty','profile')->orderBy('like_count','desc');
-        $authors = $authors->paginate(10);
+        $authors = $authors->paginate(6);
         foreach ($authors as $index=>$author){
             if(file_exists('static/author/'.@$author->author_name.'.jpg')){
                 $authors[$index]->avatar = asset('static/author/'.@$author->author_name.'.jpg');
@@ -486,7 +488,7 @@ class WxxcxController extends Controller
     public function getRandomSentence(){
         $post = DB::table('dev_sentence')
             ->leftJoin('dev_poem','dev_poem.source_id','=','dev_sentence.target_source_id')
-            ->select('dev_sentence.title','dev_poem.id')
+            ->select('dev_sentence.title','dev_poem.id as poem_id','dev_sentence.id')
             ->whereIn('dev_sentence.id',$this->getRandomArray(1))
             ->get();
         return $post;
@@ -506,11 +508,11 @@ class WxxcxController extends Controller
         $msg = null;
         $_data = null;
         $table_name = 'dev_'.$type;
-//        if(!$this->validateWxToken($user_id,$wx_token)){
-//            $data['msg'] = '操作不合法';
-//            $data['status'] = false;
-//            return response()->json($data);
-//        }
+        if(!$this->validateWxToken($user_id,$wx_token)){
+            $data['msg'] = '操作不合法';
+            $data['status'] = false;
+            return response()->json($data);
+        }
         $_res = DB::table('dev_collect')
             ->where('user_id',$user_id)
             ->where('like_id',$id)
