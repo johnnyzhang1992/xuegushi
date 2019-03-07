@@ -102,45 +102,59 @@ Route::group([
     Route::group([
         'prefix' => 'wxxcx',
     ],function (){
+        // user
         Route::get('/userInfo', 'Wxapp\AppController@getWxUserInfo');
         Route::get('/userCrate', 'Wxapp\AppController@wxUserCreate');
         Route::get('/getUserInfo/{user_id}', 'Frontend\WxxcxController@getUserInfo')->where('user_id', '[0-9]+');
-
+        Route::get('/getUserList','Frontend\WxxcxController@getUserList');
+        Route::get('/getCollect/{user_id}/{type}', 'Frontend\WxxcxController@getUserCollect')->where('user_id', '[0-9]+');
+        // homepage
         Route::get('/getRandomPoem', 'Frontend\WxxcxController@getRandomPoem');
         Route::get('/getHomeData', 'Frontend\WxxcxController@getHomeData');
         Route::get('/getPoemData', 'Frontend\WxxcxController@getPoemData');
+        // post
         Route::get('/getPostData', 'Frontend\WxxcxController@getPostData');
         Route::get('/getPostDetailData/{id}', 'Frontend\WxxcxController@getPostDetailData')->where('id', '[0-9]+');
+        // sentence
         Route::get('/getSentenceData', 'Frontend\WxxcxController@getSentenceData');
+        // poet
         Route::get('/getPoetData', 'Frontend\WxxcxController@getPoetData');
         Route::get('/getPoetDetailData/{id}', 'Frontend\WxxcxController@getPoetDetailData')->where('id', '[0-9]+');
+        // poem
         Route::get('/getPoemContent/{id}', 'Frontend\WxxcxController@getPoemContent')->where('id', '[0-9]+');
         Route::get('/poem/{id}', 'Frontend\WxxcxController@getPoemDetail')->where('id', '[0-9]+');
-        Route::get('/{id}/collect/{type}', 'Frontend\WxxcxController@updateCollect')->where('id', '[0-9]+');
-        Route::get('/getCollect/{user_id}/{type}', 'Frontend\WxxcxController@getUserCollect')->where('user_id', '[0-9]+');
-
-
-        Route::get('/search/{_key}','Frontend\WxxcxController@getSearchResult');
-        Route::get('/search_list','Frontend\WxxcxController@getSearchList');
-        Route::get('/search/{id}/update','Frontend\WxxcxController@searchUpdate')->where('id','[0-9]+');
-        Route::get('/getsHotSearch','Frontend\WxxcxController@getHotSearchWord');
-
         Route::get('/getPoemAudio/{id}','Frontend\WxxcxController@getVoiceCombine');
-        Route::get('/getUserList','Frontend\WxxcxController@getUserList');
+        // collect
+        Route::get('/{id}/collect/{type}', 'Frontend\WxxcxController@updateCollect')->where('id', '[0-9]+');
+        // 小程序码
+        Route::any('/getWXACode','Frontend\WxxcxController@getWXACode');
+        // search
+//        Route::get('/search/{_key}','Frontend\WxxcxController@getSearchResult');
+//        Route::get('/search_list','Frontend\WxxcxController@getSearchList');
+//        Route::get('/search/{id}/update','Frontend\WxxcxController@searchUpdate')->where('id','[0-9]+');
+//        Route::get('/getsHotSearch','Frontend\WxxcxController@getHotSearchWord');
+        // new search
+        Route::get('/search/{_key}','Wxapp\SearchController@getSearchResult');
+        Route::get('/search_list','Wxapp\SearchController@getSearchList');
+        Route::get('/search/{id}/update','Wxapp\SearchController@searchUpdate')->where('id','[0-9]+');
+        Route::get('/getsHotSearch','Wxapp\SearchController@getHotSearchWord');
+
         Route::get('/getSliderImages','Frontend\WxxcxController@getSliderImages');
-        Route::get('/createPinReview/','Frontend\WxxcxController@createPinReview');
-        Route::get('/deletePinReview/','Frontend\WxxcxController@deletePinReview');
-        Route::get('/createPin/{user_id}','Frontend\WxxcxController@createPin');
+        // pins
         Route::get('/getPins','Frontend\WxxcxController@getpins');
+        Route::get('/createPin/{user_id}','Frontend\WxxcxController@createPin');
+        Route::get('/createPinReview/','Frontend\WxxcxController@createPinReview');
         Route::get('/getPinReviews/{id}','Frontend\WxxcxController@getpinReviews')->where('id','[0-9]+');
+        Route::get('/deletePinReview/','Frontend\WxxcxController@deletePinReview');
         Route::get('/getPinLikeUsers/{id}','Frontend\WxxcxController@getPinLikeUsers')->where('id','[0-9]+');
         Route::get('/getPinDetail/{id}','Frontend\WxxcxController@getPinDetail')->where('id','[0-9]+');
         Route::get('/pin/{id}/{type}','Frontend\WxxcxController@updatePin')->where('id','[0-9]+');
+        // topic
         Route::get('/createTopic','Frontend\WxxcxController@createTopic');
         Route::get('/getRecentTopic','Frontend\WxxcxController@getRecentTopic');
         Route::get('/getTopics','Frontend\WxxcxController@getTopics');
         Route::get('/topic/{id}/delete','Frontend\WxxcxController@deleteTopic')->where('id','[0-9]+');
-        Route::any('/getWXACode','Frontend\WxxcxController@getWXACode');
+
     });
     /* =============== 公众号开发 =================== */
     Route::any('/wechat', 'WeChatController@serve');
