@@ -12,6 +12,7 @@ use Log;
 use Hash;
 use Auth;
 use Config;
+use App\Helpers\DateUtil;
 use \stdClass;
 //use phpDocumentor\Reflection\Types\Array_;
 
@@ -39,6 +40,21 @@ class AppController extends Controller {
         $this->templateMessage_url = config('wxxcx.templateMessage_url');
     }
 
+    /**
+     * 验证微信token的有效性
+     * @param $token
+     * @param $u_id
+     * @return boolean
+     */
+    public function validateWxToken($u_id,$token){
+        $user = DB::table('users')->where('id',$u_id)->first();
+        if(isset($user) && $user->wx_token == $token){
+            // 验证通过
+            return true;
+        }else{
+            return false;
+        }
+    }
     /**
      * 获取用户地理信息
      * @return \Illuminate\Http\JsonResponse
@@ -214,6 +230,114 @@ class AppController extends Controller {
             $data['message'] = '小程序登陆失败!';
         }
         return response()->json($data);
+    }
+
+    /**
+     * 用户收藏列表
+     * @param $user_id
+     * @param $type
+     * @param $request
+     * @return mixed
+     */
+    public function getUserCollect(Request $request,$user_id,$type){
+        $data = null;
+        if($type== 'poem'){
+            $data = DB::table('dev_collect')
+                ->where('dev_collect.type','poem')
+                ->where('dev_collect.status','active')
+                ->where('dev_collect.user_id',$user_id)
+                ->leftJoin('dev_poem','dev_poem.id','=','dev_collect.like_id')
+                ->select('dev_collect.*','dev_poem.title','dev_poem.author','dev_poem.dynasty','dev_poem.id as poem_id','dev_poem.like_count','dev_poem.collect_count','dev_poem.content')
+                ->orderBy('dev_collect.id','desc')
+                ->paginate(10);
+            foreach ($data as $key=>$poem){
+                $_content = null;
+                if(isset(json_decode($poem->content)->content) && json_decode($poem->content)->content){
+                    foreach(json_decode($poem->content)->content as $item){
+                        $_content = $_content.$item;
+                    }
+                }
+                $data[$key]->content = mb_substr($_content,0,35,'utf-8');
+            }
+        }elseif ($type='sentence'){
+            $data = DB::table('dev_collect')
+                ->where('dev_collect.type','sentence')
+                ->where('dev_collect.status','active')
+                ->where('dev_collect.user_id',$user_id)
+                ->leftJoin('dev_sentence','dev_sentence.id','=','dev_collect.like_id')
+                ->select('dev_collect.*','dev_sentence.title','dev_sentence.origin','dev_sentence.like_count','dev_sentence.collect_count','dev_sentence.content')
+                ->orderBy('dev_collect.id','desc')
+                ->paginate(10);
+        } else{
+            $data =  DB::table('dev_collect')
+                ->where('dev_collect.type','author')
+                ->where('dev_collect.status','active')
+                ->where('dev_collect.user_id',$user_id)
+                ->leftJoin('dev_author','dev_author.id','=','dev_collect.like_id')
+                ->select('dev_collect.*','dev_author.author_name','dev_author.dynasty','dev_author.id as author_id','dev_author.like_count','dev_author.collect_count')
+                ->orderBy('dev_collect.id','desc')
+                ->paginate(10);
+        }
+        foreach ($data as $key=>$item){
+            $data[$key]->updated_at = DateUtil::formatDate(strtotime($item->created_at));
+        }
+        $res = [];
+        $res['data'] = $data;
+        $res['user_id'] = $user_id;
+        $res['type'] = $type;
+        return response()->json($res);
+    }
+
+    /**
+     * 获取用户的基本信息
+     * @param $user_id
+     * @return mixed
+     */
+    public function getUserInfo($user_id){
+
+        $poem_count = DB::table('dev_collect')
+            ->where('dev_collect.type','poem')
+            ->where('dev_collect.status','active')
+            ->where('dev_collect.user_id',$user_id)
+            ->count();
+        $poet_count = DB::table('dev_collect')
+            ->where('dev_collect.type','author')
+            ->where('dev_collect.status','active')
+            ->where('dev_collect.user_id',$user_id)
+            ->count();
+        $sentence_count = DB::table('dev_collect')
+            ->where('dev_collect.type','sentence')
+            ->where('dev_collect.status','active')
+            ->where('dev_collect.user_id',$user_id)
+            ->count();
+        $today = date('Y-m-d',time()).' 00:00:00';
+        $_t_users = DB::table('dev_wx_users')
+            ->where('created_at','>',$today)
+            ->count();
+        $today = date('Y-m-d',time()).' 00:00:00';
+        $s_total= DB::table('dev_search')
+            ->where('status','active')
+            ->where('created_at','>',$today)
+            ->count();
+        $_user_count = DB::table('dev_wx_users')->count();
+        return response()->json([
+            'poem_count' => $poem_count,
+            'poet_count' => $poet_count,
+            'sentence_count' => $sentence_count,
+            's_count' => $s_total,
+            'u_t_count' => $_t_users,
+            'u_count' => $_user_count
+        ]);
+    }
+
+    /**
+     * 获取微信用户列表
+     */
+    public function getUserList(){
+        $users = DB::table('dev_wx_users')
+            ->orderBy('id','desc')
+            ->paginate(10);
+        return response()->json($users);
     }
 
     /**

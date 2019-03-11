@@ -408,7 +408,7 @@ class WxxcxController extends Controller
             $authors->where('author_name','like','%'.$_keyWord.'%');
         }
         $authors->select('id','author_name','dynasty','profile')->orderBy('like_count','desc');
-        $authors = $authors->paginate(8);
+        $authors = $authors->paginate(6);
         foreach ($authors as $index=>$author){
             if(file_exists('static/author/'.@$author->author_name.'.jpg')){
                 $authors[$index]->avatar = asset('static/author/'.@$author->author_name.'.jpg');
@@ -574,87 +574,6 @@ class WxxcxController extends Controller
         }
     }
 
-    /**
-     * 用户收藏列表
-     * @param $user_id
-     * @param $type
-     * @param $request
-     * @return mixed
-     */
-    public function getUserCollect(Request $request,$user_id,$type){
-        $data = null;
-        if($type== 'poem'){
-            $data = DB::table('dev_collect')
-                ->where('dev_collect.type','poem')
-                ->where('dev_collect.status','active')
-                ->where('dev_collect.user_id',$user_id)
-                ->leftJoin('dev_poem','dev_poem.id','=','dev_collect.like_id')
-                ->select('dev_collect.*','dev_poem.title','dev_poem.author','dev_poem.dynasty','dev_poem.id as poem_id','dev_poem.like_count','dev_poem.collect_count','dev_poem.content')
-                ->orderBy('dev_collect.id','desc')
-                ->paginate(10);
-            foreach ($data as $key=>$poem){
-                $_content = null;
-                if(isset(json_decode($poem->content)->content) && json_decode($poem->content)->content){
-                    foreach(json_decode($poem->content)->content as $item){
-                        $_content = $_content.$item;
-                    }
-                }
-                $data[$key]->content = mb_substr($_content,0,35,'utf-8');
-            }
-        }else{
-            $data =  DB::table('dev_collect')
-                ->where('dev_collect.type','author')
-                ->where('dev_collect.status','active')
-                ->where('dev_collect.user_id',$user_id)
-                ->leftJoin('dev_author','dev_author.id','=','dev_collect.like_id')
-                ->select('dev_collect.*','dev_author.author_name','dev_author.dynasty','dev_author.id as author_id','dev_author.like_count','dev_author.collect_count')
-                ->orderBy('dev_collect.id','desc')
-                ->paginate(10);
-        }
-        foreach ($data as $key=>$item){
-            $data[$key]->updated_at = DateUtil::formatDate(strtotime($item->created_at));
-        }
-        $res = [];
-        $res['data'] = $data;
-        $res['user_id'] = $user_id;
-        $res['type'] = $type;
-        return response()->json($res);
-    }
-
-    /**
-     * 获取用户的基本信息
-     * @param $user_id
-     * @return mixed
-     */
-    public function getUserInfo($user_id){
-        $p_count = DB::table('dev_collect')
-            ->where('dev_collect.type','poem')
-            ->where('dev_collect.status','active')
-            ->where('dev_collect.user_id',$user_id)
-            ->count();
-        $a_count = DB::table('dev_collect')
-            ->where('dev_collect.type','author')
-            ->where('dev_collect.status','active')
-            ->where('dev_collect.user_id',$user_id)
-            ->count();
-        $today = date('Y-m-d',time()).' 00:00:00';
-        $_t_users = DB::table('dev_wx_users')
-            ->where('created_at','>',$today)
-            ->count();
-        $today = date('Y-m-d',time()).' 00:00:00';
-        $s_total= DB::table('dev_search')
-            ->where('status','active')
-            ->where('created_at','>',$today)
-            ->count();
-        $_user_count = DB::table('dev_wx_users')->count();
-        return response()->json([
-            'p_count' => $p_count,
-            'a_count' => $a_count,
-            's_count' => $s_total,
-            'u_t_count' => $_t_users,
-            'u_count' => $_user_count
-        ]);
-    }
 
     /**
      * 获取专栏文章
@@ -687,16 +606,6 @@ class WxxcxController extends Controller
         $data->updated_at = DateUtil::formatDate(strtotime($data->updated_at));
         DB::table('dev_post')->where('id',$data->id)->increment("pv_count");
         return response()->json($data);
-    }
-
-    /**
-     * 获取微信用户列表
-     */
-    public function getUserList(){
-        $users = DB::table('dev_wx_users')
-            ->orderBy('id','desc')
-            ->paginate(10);
-        return response()->json($users);
     }
 
     /**
