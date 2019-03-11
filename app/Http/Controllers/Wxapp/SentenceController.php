@@ -87,7 +87,11 @@ class SentenceController extends Controller {
         $user_id = $request->input('user_id');
         $author = null;
         // sentence 相关
-        $sentence = DB::table('dev_sentence')->where('id',$id)->first();
+        $sentence = DB::table('dev_sentence')
+            ->where('id',$id)
+            ->select('id','source_id','target_source_id','title','theme','type','origin')
+            ->first();
+        DB::table('dev_sentence')->where('id',$id)->increment("pv_count");
         if(!isset($sentence) || !$sentence){
             return response()->json([
                 'status' => 404,

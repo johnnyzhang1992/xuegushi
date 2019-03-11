@@ -106,7 +106,7 @@ class WxxcxController extends Controller
         }
         $_poems->select('id','source_id','title','author','dynasty','content','type','like_count','author_id','author_source_id');
         $_poems->orderBy('like_count','desc');
-        $_poems = $_poems->paginate(6);
+        $_poems = $_poems->paginate(8);
         foreach ($_poems as $key=>$poem){
             if($poem->author_source_id != -1){
                 $author = DB::table('dev_author')->where('source_id',$poem->author_source_id)->first();
@@ -330,7 +330,7 @@ class WxxcxController extends Controller
         $_sentences->orderBy('dev_sentence.like_count','desc');
         $_sentences->leftJoin('dev_poem','dev_poem.source_id','=','dev_sentence.target_source_id');
         $_sentences->select('dev_sentence.*','dev_poem.id as poem_id','dev_poem.author','dev_poem.dynasty','dev_poem.title as poem_title','dev_poem.tags');
-        $_sentences = $_sentences->paginate(6)->setPath($_url);
+        $_sentences = $_sentences->paginate(8)->setPath($_url);
 
         $res = [];
         $res['poems'] = $_sentences;
@@ -353,7 +353,7 @@ class WxxcxController extends Controller
             ->leftJoin('dev_author','dev_author.source_id','=','dev_poem.author_source_id')
             ->select('dev_poem.id','dev_poem.author','dev_poem.content','dev_poem.dynasty','dev_poem.like_count','dev_poem.title','dev_author.id as authorId')
             ->orderBy('dev_poem.like_count','desc')
-            ->paginate(6);
+            ->paginate(8);
         foreach ($data as $key=>$poem){
             $_content = null;
             if(isset(json_decode($poem->content)->content) && json_decode($poem->content)->content){
@@ -378,7 +378,7 @@ class WxxcxController extends Controller
             ->leftJoin('dev_author','dev_author.source_id','=','dev_poem.author_source_id')
             ->select('dev_poem.id','dev_poem.author','dev_poem.title','dev_poem.dynasty','dev_poem.like_count','dev_poem.content','dev_author.id as authorId')
             ->orderBy('dev_poem.like_count','desc')
-            ->paginate(6);
+            ->paginate(8);
         foreach ($data as $key=>$poem){
             $_content = null;
             if(isset(json_decode($poem->content)->content) && json_decode($poem->content)->content){
@@ -408,7 +408,7 @@ class WxxcxController extends Controller
             $authors->where('author_name','like','%'.$_keyWord.'%');
         }
         $authors->select('id','author_name','dynasty','profile')->orderBy('like_count','desc');
-        $authors = $authors->paginate(6);
+        $authors = $authors->paginate(8);
         foreach ($authors as $index=>$author){
             if(file_exists('static/author/'.@$author->author_name.'.jpg')){
                 $authors[$index]->avatar = asset('static/author/'.@$author->author_name.'.jpg');
