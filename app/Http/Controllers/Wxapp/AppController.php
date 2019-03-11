@@ -235,12 +235,12 @@ class AppController extends Controller {
     /**
      * 用户收藏列表
      * @param $user_id
-     * @param $type
      * @param $request
      * @return mixed
      */
-    public function getUserCollect(Request $request,$user_id,$type){
+    public function getUserCollect(Request $request,$user_id){
         $data = null;
+        $type = $request->input('type');
         if($type== 'poem'){
             $data = DB::table('dev_collect')
                 ->where('dev_collect.type','poem')
@@ -259,7 +259,7 @@ class AppController extends Controller {
                 }
                 $data[$key]->content = mb_substr($_content,0,35,'utf-8');
             }
-        }elseif ($type='sentence'){
+        }elseif ($type=='sentence'){
             $data = DB::table('dev_collect')
                 ->where('dev_collect.type','sentence')
                 ->where('dev_collect.status','active')
@@ -268,7 +268,7 @@ class AppController extends Controller {
                 ->select('dev_collect.*','dev_sentence.title','dev_sentence.origin','dev_sentence.like_count','dev_sentence.collect_count','dev_sentence.content')
                 ->orderBy('dev_collect.id','desc')
                 ->paginate(10);
-        } else{
+        }elseif($type=='author'){
             $data =  DB::table('dev_collect')
                 ->where('dev_collect.type','author')
                 ->where('dev_collect.status','active')

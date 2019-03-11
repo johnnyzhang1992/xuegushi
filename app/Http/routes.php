@@ -107,7 +107,7 @@ Route::group([
         Route::get('/userCrate', 'Wxapp\AppController@wxUserCreate');
         Route::get('/getUserInfo/{user_id}', 'Wxapp\AppController@getUserInfo')->where('user_id', '[0-9]+');
         Route::get('/getUserList','Wxapp\AppController@getUserList');
-        Route::get('/getCollect/{user_id}/{type}', 'Wxapp\AppController@getUserCollect')->where('user_id', '[0-9]+');
+        Route::get('/getCollect/{user_id}', 'Wxapp\AppController@getUserCollect')->where('user_id', '[0-9]+');
         // homepage
         Route::get('/getRandomPoem', 'Frontend\WxxcxController@getRandomPoem');
         Route::get('/getHomeData', 'Frontend\WxxcxController@getHomeData');
