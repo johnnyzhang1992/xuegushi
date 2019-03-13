@@ -25,8 +25,11 @@ class PoemController extends Controller {
      * @return boolean
      */
     public function validateWxToken($u_id,$token){
-        $user = DB::table('users')->where('id',$u_id)->first();
-        if(isset($user) && $user->wx_token == $token){
+        $user = DB::table('users')
+            ->where('id',$u_id)
+            ->where('wx_token',trim($token))
+            ->first();
+        if(isset($user) && $user){
             // 验证通过
             return true;
         }else{

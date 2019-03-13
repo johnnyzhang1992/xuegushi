@@ -140,21 +140,22 @@ Route::group([
         Route::get('/search/{id}/update','Wxapp\SearchController@searchUpdate')->where('id','[0-9]+');
         Route::get('/getsHotSearch','Wxapp\SearchController@getHotSearchWord');
 
-        Route::get('/getSliderImages','Frontend\WxxcxController@getSliderImages');
+        Route::get('/getSliderImages','Wxapp\PinController@getSliderImages');
         // pins
-        Route::get('/getPins','Frontend\WxxcxController@getpins');
-        Route::get('/createPin/{user_id}','Frontend\WxxcxController@createPin');
-        Route::get('/createPinReview/','Frontend\WxxcxController@createPinReview');
-        Route::get('/getPinReviews/{id}','Frontend\WxxcxController@getpinReviews')->where('id','[0-9]+');
-        Route::get('/deletePinReview/','Frontend\WxxcxController@deletePinReview');
-        Route::get('/getPinLikeUsers/{id}','Frontend\WxxcxController@getPinLikeUsers')->where('id','[0-9]+');
-        Route::get('/getPinDetail/{id}','Frontend\WxxcxController@getPinDetail')->where('id','[0-9]+');
-        Route::get('/pin/{id}/{type}','Frontend\WxxcxController@updatePin')->where('id','[0-9]+');
+        Route::get('/getPins','Wxapp\PinController@getpins');
+        Route::get('/createPin/{user_id}','Wxapp\PinController@createPin');
+        Route::get('/createPinReview/','Wxapp\PinController@createPinReview');
+        Route::get('/getPinReviews/{id}','Wxapp\PinController@getpinReviews')->where('id','[0-9]+');
+        Route::get('/deletePinReview/','Wxapp\PinController@deletePinReview');
+        Route::get('/getPinLikeUsers/{id}','Wxapp\PinController@getPinLikeUsers')->where('id','[0-9]+');
+        Route::get('/getPinDetail/{id}','Wxapp\PinController@getPinDetail')->where('id','[0-9]+');
+        Route::get('/pin/{id}/{type}','Wxapp\PinController@updatePin')->where('id','[0-9]+');
         // topic
-        Route::get('/createTopic','Frontend\WxxcxController@createTopic');
-        Route::get('/getRecentTopic','Frontend\WxxcxController@getRecentTopic');
-        Route::get('/getTopics','Frontend\WxxcxController@getTopics');
-        Route::get('/topic/{id}/delete','Frontend\WxxcxController@deleteTopic')->where('id','[0-9]+');
+        Route::get('/createTopic','Wxapp\TopicController@createTopic');
+        Route::get('/getRecentTopic','Wxapp\TopicController@getRecentTopic');
+        Route::get('/getTopicDetail/{id}','Wxapp\TopicController@getTopicDetail')->where('id','[0-9]+');
+        Route::get('/getTopics','Wxapp\TopicController@getTopics');
+        Route::get('/topic/{id}/delete','Wxapp\TopicController@deleteTopic')->where('id','[0-9]+');
 
     });
     /* =============== 公众号开发 =================== */

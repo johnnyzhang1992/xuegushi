@@ -24,8 +24,11 @@ class SentenceController extends Controller {
      * @return boolean
      */
     public function validateWxToken($u_id,$token){
-        $user = DB::table('users')->where('id',$u_id)->first();
-        if(isset($user) && $user->wx_token == $token){
+        $user = DB::table('users')
+            ->where('id',$u_id)
+            ->where('wx_token',trim($token))
+            ->first();
+        if(isset($user) && $user){
             // 验证通过
             return true;
         }else{
@@ -66,7 +69,7 @@ class SentenceController extends Controller {
         $_sentences->orderBy('dev_sentence.like_count','desc');
         $_sentences->leftJoin('dev_poem','dev_poem.source_id','=','dev_sentence.target_source_id');
         $_sentences->select('dev_sentence.*','dev_poem.id as poem_id','dev_poem.author','dev_poem.dynasty','dev_poem.title as poem_title','dev_poem.tags');
-        $_sentences = $_sentences->paginate(6)->setPath($_url);
+        $_sentences = $_sentences->paginate(8)->setPath($_url);
 
         $res = [];
         $res['poems'] = $_sentences;
