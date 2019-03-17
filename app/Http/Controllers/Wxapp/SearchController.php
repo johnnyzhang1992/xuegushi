@@ -47,7 +47,7 @@ class SearchController extends Controller {
         $sentences = DB::table('dev_sentence')
             ->where('dev_sentence.title','like','%'.$_key.'%')
             ->leftJoin('dev_poem','dev_poem.source_id','=','dev_sentence.target_source_id')
-            ->select('dev_sentence.title','dev_poem.id','dev_poem.author','dev_poem.dynasty','dev_poem.title as poem_title')
+            ->select('dev_sentence.title','dev_sentence.id','dev_poem.id as poem_id','dev_poem.author','dev_poem.dynasty','dev_poem.title as poem_title')
             ->paginate(3);
         $poems = DB::table('dev_poem')
             ->where('title','like','%'.$_key.'%')
