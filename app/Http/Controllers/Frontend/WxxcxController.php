@@ -203,7 +203,7 @@ class WxxcxController extends Controller
             $res['detail'] = $poem_detail;
             $res['poems_count'] = $poems_count;
             $res['poem'] = $poem;
-            $res['bg_image'] = 'https://xuegushi.cn/static/xcx/gugong2.jpg';
+            $res['bg_image'] = 'https://xuegushi.cn/static/xcx/chunfen.jpg';
             return response()->json($res);
         }else{
             return null;

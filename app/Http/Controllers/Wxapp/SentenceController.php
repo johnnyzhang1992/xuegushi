@@ -153,7 +153,7 @@ class SentenceController extends Controller {
         $res['sentence'] = $sentence;
         $res['author'] = $author;
         $res['poem'] = $poem;
-        $res['bg_image'] = 'https://xuegushi.cn/static/xcx/gugong2.jpg';
+        $res['bg_image'] = 'https://xuegushi.cn/static/xcx/chunfen.jpg';
         return response()->json($res);
     }
 
