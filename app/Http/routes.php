@@ -116,6 +116,7 @@ Route::group([
         Route::get('/getPostData', 'Frontend\WxxcxController@getPostData');
         Route::get('/getPostDetailData/{id}', 'Frontend\WxxcxController@getPostDetailData')->where('id', '[0-9]+');
         // sentence
+        Route::get('/getSentenceTypes', 'Wxapp\SentenceController@getSentenceTypes');
         Route::get('/getSentenceData', 'Wxapp\SentenceController@getSentenceData');
         Route::get('/getSentenceDetail/{id}', 'Wxapp\SentenceController@getSentenceDetail')->where('id', '[0-9]+');
         // poet
@@ -129,11 +130,6 @@ Route::group([
         Route::get('/{id}/collect/{type}', 'Frontend\WxxcxController@updateCollect')->where('id', '[0-9]+');
         // 小程序码
         Route::any('/getWXACode','Frontend\WxxcxController@getWXACode');
-        // search
-//        Route::get('/search/{_key}','Frontend\WxxcxController@getSearchResult');
-//        Route::get('/search_list','Frontend\WxxcxController@getSearchList');
-//        Route::get('/search/{id}/update','Frontend\WxxcxController@searchUpdate')->where('id','[0-9]+');
-//        Route::get('/getsHotSearch','Frontend\WxxcxController@getHotSearchWord');
         // new search
         Route::get('/search/{_key}','Wxapp\SearchController@getSearchResult');
         Route::get('/search_list','Wxapp\SearchController@getSearchList');

@@ -37,6 +37,18 @@ class SentenceController extends Controller {
     }
 
     /**
+     * 返回名句的主题和类型
+     * @return mixed
+     */
+
+    public function getSentenceTypes(){
+        $themes = config('sentence.themes');
+        $types = config('sentence.types');;
+        $res['themes'] = $themes;
+        $res['types'] = $types;
+        return response()->json($res);
+    }
+    /**
      * 获取名句
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
@@ -69,7 +81,7 @@ class SentenceController extends Controller {
         $_sentences->orderBy('dev_sentence.like_count','desc');
         $_sentences->leftJoin('dev_poem','dev_poem.source_id','=','dev_sentence.target_source_id');
         $_sentences->select('dev_sentence.*','dev_poem.id as poem_id','dev_poem.author','dev_poem.dynasty','dev_poem.title as poem_title','dev_poem.tags');
-        $_sentences = $_sentences->paginate(8)->setPath($_url);
+        $_sentences = $_sentences->paginate(9)->setPath($_url);
 
         $res = [];
         $res['poems'] = $_sentences;

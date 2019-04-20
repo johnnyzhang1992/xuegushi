@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Wxapp;
 
 use App\Http\Controllers\Controller;
+use http\Env\Response;
 use Illuminate\Http\Request;
 
 use Cache;
@@ -54,7 +55,7 @@ class TopicController extends Controller
     /**
      * 获取话题详情
      * @param $id
-     * @return \Illuminate\Http\JsonResponse
+     * @return mixed
      */
     public function getTopicDetail($id){
         $topic = DB::table('dev_wx_topic')
@@ -62,7 +63,7 @@ class TopicController extends Controller
             ->where('id',$id)
             ->orderBy('id','desc')
             ->first();
-        return \response()->json($topic);
+        return response()->json($topic);
     }
     /**
      * 获取话题列表，方便管理员管理
@@ -81,8 +82,8 @@ class TopicController extends Controller
         $topics = DB::table('dev_wx_topic')
             ->where('status','active')
             ->orderBy('id','desc')
-            ->paginate(5);
-        return \response()->json($topics);
+            ->paginate(4);
+        return response()->json($topics);
     }
     /**
      * 创建话题
@@ -115,7 +116,7 @@ class TopicController extends Controller
             $data['msg'] = '创建失败';
             $data['status'] = 500;
         }
-        return \response()->json($data);
+        return response()->json($data);
     }
 
     /**
@@ -155,6 +156,6 @@ class TopicController extends Controller
             $data['msg'] = '删除失败';
             $data['status'] = 500;
         }
-        return \response()->json($data);
+        return response()->json($data);
     }
 }

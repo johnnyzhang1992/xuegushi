@@ -109,7 +109,7 @@ class WxxcxController extends Controller
         }
         $_poems->select('id','source_id','title','author','dynasty','content','type','like_count','author_id','author_source_id');
         $_poems->orderBy('like_count','desc');
-        $_poems = $_poems->paginate(8);
+        $_poems = $_poems->paginate(9);
         foreach ($_poems as $key=>$poem){
             if($poem->author_source_id != -1){
                 $author = DB::table('dev_author')->where('source_id',$poem->author_source_id)->first();
@@ -312,7 +312,7 @@ class WxxcxController extends Controller
             ->leftJoin('dev_author','dev_author.source_id','=','dev_poem.author_source_id')
             ->select('dev_poem.id','dev_poem.author','dev_poem.content','dev_poem.dynasty','dev_poem.like_count','dev_poem.title','dev_author.id as authorId')
             ->orderBy('dev_poem.like_count','desc')
-            ->paginate(8);
+            ->paginate(6);
         foreach ($data as $key=>$poem){
             $_content = null;
             if(isset(json_decode($poem->content)->content) && json_decode($poem->content)->content){
@@ -337,7 +337,7 @@ class WxxcxController extends Controller
             ->leftJoin('dev_author','dev_author.source_id','=','dev_poem.author_source_id')
             ->select('dev_poem.id','dev_poem.author','dev_poem.title','dev_poem.dynasty','dev_poem.like_count','dev_poem.content','dev_author.id as authorId')
             ->orderBy('dev_poem.like_count','desc')
-            ->paginate(8);
+            ->paginate(6);
         foreach ($data as $key=>$poem){
             $_content = null;
             if(isset(json_decode($poem->content)->content) && json_decode($poem->content)->content){
