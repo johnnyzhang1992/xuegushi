@@ -221,7 +221,7 @@ class AppController extends Controller {
                 }
             }else{
                 \Log::info('用户当前未注册');
-                $data['status'] = 200;
+                $data['status'] = 500;
                 $data['message'] = '当前用户还未注册';
             }
         }else{

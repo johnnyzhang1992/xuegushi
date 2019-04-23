@@ -28,16 +28,17 @@ class TopicController extends Controller
      */
     public function validateWxToken($u_id, $token)
     {
-        $user = DB::table('users')
-            ->where('id', $u_id)
-            ->where('wx_token', trim($token))
-            ->first();
-        if (isset($user) && $user) {
-            // 验证通过
-            return true;
-        } else {
-            return false;
+        if(isset($u_id)){
+            $user = DB::table('users')
+                ->where('id', $u_id)
+                ->where('wx_token', trim($token))
+                ->first();
+            if (isset($user) && $user) {
+                // 验证通过
+                return true;
+            }
         }
+        return false;
     }
 
     /**
@@ -74,11 +75,11 @@ class TopicController extends Controller
         $user_id = $request->input('user_id');
         $wx_token = $request->input('wx_token');
         $data = [];
-        if (!$this->validateWxToken($user_id, $wx_token)) {
-            $data['msg'] = '操作不合法';
-            $data['status'] = 500;
-            return response()->json($data);
-        }
+//        if (!$this->validateWxToken($user_id, $wx_token)) {
+//            $data['msg'] = '操作不合法';
+//            $data['status'] = 500;
+//            return response()->json($data);
+//        }
         $topics = DB::table('dev_wx_topic')
             ->where('status','active')
             ->orderBy('id','desc')
