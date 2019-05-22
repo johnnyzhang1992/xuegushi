@@ -412,9 +412,12 @@ use App\Helpers\DateUtil;
                     <li><a href="{{url('/post')}}">文章</a></li>
                     <li class="active">{{@$post->title}}</li>
                 </ol>
-                <div class="xzl-aspect-ratio-placeholder-fill">
-                    <img class="topic-show" src="{{asset(@$post->cover_url)}}" alt="{{@$post->title}}">
-                </div>
+                @if(isset($data->cover_url) && $data->cover_url != '')
+                    <div class="xzl-aspect-ratio-placeholder-fill">
+                        <img class="topic-show" src="{{asset(@$post->cover_url)}}" alt="{{@$post->title}}">
+                    </div>
+                @endif
+
                 <div class="topic-title">{{@$post->title}}</div>
                 <div class="topic-header">
                     <div class="postMetaInline">

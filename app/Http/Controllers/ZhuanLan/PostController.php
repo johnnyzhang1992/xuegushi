@@ -31,6 +31,11 @@ class PostController extends Controller
             ->orderBy('dev_post.created_at','desc')
             ->orderBy('dev_post.pv_count','desc')
             ->paginate(9);
+        foreach ($posts as $key=>$post){
+            if(!isset($post->cover_url) || $post->cover_url ==''){
+                $posts[$key]->cover_url = '/static/images/zh_background.jpeg';
+            }
+        }
         return view('zhuan.post.index')
             ->with('query','home')
             ->with('posts',$posts)
@@ -160,6 +165,7 @@ class PostController extends Controller
             ->select('dev_post.*','users.name as user_name','users.avatar','dev_zhuanlan.alia_name as zhuan_alia_name',
                 'dev_zhuanlan.about','dev_zhuanlan.avatar as zhuan_avatar','dev_zhuanlan.name as zhuan_name')
             ->first();
+
         if (!Auth::guest()){
           $user_id = Auth::user()->id;
         }
@@ -188,6 +194,7 @@ class PostController extends Controller
                 $comments[$key]->is_like = $this->is_like($comment->id);
                 $comments[$key]->like_count = $this->getLikeCount($comment->id);
             }
+
             DB::table('dev_post')->where('id',$data->id)->increment("pv_count");
             return view('zhuan.post.show')
                 ->with('post',$data)

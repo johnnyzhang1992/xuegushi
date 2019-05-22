@@ -44,6 +44,11 @@ class ZhuanLanController extends Controller
             ->orderBy('dev_post.created_at','desc')
             ->orderBy('dev_post.pv_count','desc')
             ->paginate(6);
+        foreach ($posts as $key=>$post){
+            if(!isset($post->cover_url) || $post->cover_url ==''){
+                $posts[$key]->cover_url = '/static/images/zh_background.jpeg';
+            }
+        }
         return view('zhuan.index')
             ->with('query','home')
             ->with('zhuans',$zhuanlans)
