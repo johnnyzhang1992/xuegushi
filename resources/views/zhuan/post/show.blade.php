@@ -474,6 +474,7 @@ use App\Helpers\DateUtil;
                         </div>
                     </div>
                 </div>
+                @if(isset($post->zhuan_name))
                 <div class="topic-footer">
                     <div class="topic-contributes">
                         <div class="BlockTitle av-marginLeft av-borderColor">
@@ -496,6 +497,7 @@ use App\Helpers\DateUtil;
                         </ul>
                     </div>
                 </div>
+                @endif
                 @yield('review')
             </div>
         </div>
