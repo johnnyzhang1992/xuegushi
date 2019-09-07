@@ -1,10 +1,15 @@
 /vendor
 /node_modules
-/public/storage
+/public/storage/*
 /public/la-assets
 /public/lib
+/public/libweibo
 /public/vendor
+/storage/thumbnails/*
+/storage/uploads/*
+/resources/views/vendor
 Homestead.yaml
 Homestead.json
 .env
 /.idea
+.Ds_Store
