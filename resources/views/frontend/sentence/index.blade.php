@@ -242,6 +242,17 @@
                         @endforeach
                     </div>
                 </div>
+                {{--小程序部分--}}
+                <div class="xcx-image clearfix" style="margin-bottom: 15px;display: flex;background: #fff;padding: 5px 10px;">
+                    <div class="col-md-5 col-xs-5" style="padding-left: 0">
+                        <img src="https://xuegushi.cn/static/common/xcx.jpg" class="img-responsive" />
+                    </div>
+                    <div class="col-md-7 col-xs-7" style="padding-right: 0;align-self: center;">
+                        {{--            <img src="https://xuegushi.cn/static/common/wechat.jpg" class="img-responsive" />--}}
+                        <p>扫描二维码</p>
+                        <p>打开 小助手 小程序</p>
+                    </div>
+                </div>
                 @include('frontend.partials.footer')
             </div>
         </div>

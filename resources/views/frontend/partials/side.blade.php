@@ -16,6 +16,7 @@
         </li>
     </ul>
 </div>
+{{--故事专栏--}}
 <div class="side-card zhuanlan">
     <div class="side-title">
         <h2><span class="author">古诗专栏</span></h2>
@@ -24,6 +25,18 @@
         <a href="https://zhuanlan.xuegushi.cn"><i class="fa fa-th"></i><span class="name">专栏・发现</span></a>
     </div>
 </div>
+{{--小程序部分--}}
+<div class="xcx-image clearfix" style="margin-bottom: 15px;display: flex;background: #fff;padding: 5px 10px;">
+    <div class="col-md-5 col-xs-5" style="padding-left: 0">
+        <img src="https://xuegushi.cn/static/common/xcx.jpg" class="img-responsive" />
+    </div>
+    <div class="col-md-7 col-xs-7" style="padding-right: 0;align-self: center;">
+        {{--            <img src="https://xuegushi.cn/static/common/wechat.jpg" class="img-responsive" />--}}
+        <p>扫描二维码</p>
+        <p>打开 小助手 小程序</p>
+    </div>
+</div>
+{{--古诗类型--}}
 <div class="side-card">
     <div class="side-title">
         <h2><span class="dynasty">类型</span></h2>
@@ -57,11 +70,11 @@
         </div>
     </div>
 @endif
-<div class="side-card">
-    <div class="side-title">
-        <h2><span class="author">微博 <small>古诗文小助手</small></span></h2>
-    </div>
-    <div class="side-content">
-        <wb:follow-button uid="3546279424" type="red_2" width="136" height="24" ></wb:follow-button>
-    </div>
-</div>
+{{--<div class="side-card">--}}
+{{--    <div class="side-title">--}}
+{{--        <h2><span class="author">微博 <small>古诗文小助手</small></span></h2>--}}
+{{--    </div>--}}
+{{--    <div class="side-content">--}}
+{{--        <wb:follow-button uid="3546279424" type="red_2" width="136" height="24" ></wb:follow-button>--}}
+{{--    </div>--}}
+{{--</div>--}}

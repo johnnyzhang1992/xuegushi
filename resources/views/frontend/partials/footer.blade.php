@@ -1,12 +1,4 @@
 <footer class="footer">
-    <div class="xcx-image clearfix" style="margin-bottom: 15px">
-        <div class="col-md-6 col-xs-6" style="padding-left: 0">
-            <img src="https://xuegushi.cn/static/common/xcx.jpg" class="img-responsive" />
-        </div>
-        <div class="col-md-6 col-xs-6" style="padding-right: 0">
-            <img src="https://xuegushi.cn/static/common/wechat.jpg" class="img-responsive" />
-        </div>
-    </div>
     {{--<a href="#" class="footer-item" target="_blank">关于</a>--}}
     {{--<span class="footer-dot">&sdot;</span>--}}
     <a href="{{ url('join') }}" class="footer-item" target="_blank">加入</a>
