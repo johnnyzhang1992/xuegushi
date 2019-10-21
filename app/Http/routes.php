@@ -110,6 +110,7 @@ Route::group([
         Route::get('/getCollect/{user_id}', 'Wxapp\AppController@getUserCollect')->where('user_id', '[0-9]+');
         // homepage
         Route::get('/getRandomPoem', 'Frontend\WxxcxController@getRandomPoem');
+        Route::get('/getRandomSentence', 'Frontend\WxxcxController@getRandomSentence');
         Route::get('/getHomeData', 'Frontend\WxxcxController@getHomeData');
         Route::get('/getPoemData', 'Frontend\WxxcxController@getPoemData');
         // post

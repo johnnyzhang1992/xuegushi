@@ -296,7 +296,7 @@ class WxxcxController extends Controller
         }
         $res = [];
         $res['poems'] = $data;
-        $res['hot'] = $this->getRandomSentence();
+//        $res['hot'] = $this->getRandomSentence();
         return response()->json($res);
     }
 
@@ -312,7 +312,7 @@ class WxxcxController extends Controller
             ->leftJoin('dev_author','dev_author.source_id','=','dev_poem.author_source_id')
             ->select('dev_poem.id','dev_poem.author','dev_poem.content','dev_poem.dynasty','dev_poem.like_count','dev_poem.title','dev_author.id as authorId')
             ->orderBy('dev_poem.like_count','desc')
-            ->paginate(6);
+            ->paginate(10);
         foreach ($data as $key=>$poem){
             $_content = null;
             if(isset(json_decode($poem->content)->content) && json_decode($poem->content)->content){
@@ -337,7 +337,7 @@ class WxxcxController extends Controller
             ->leftJoin('dev_author','dev_author.source_id','=','dev_poem.author_source_id')
             ->select('dev_poem.id','dev_poem.author','dev_poem.title','dev_poem.dynasty','dev_poem.like_count','dev_poem.content','dev_author.id as authorId')
             ->orderBy('dev_poem.like_count','desc')
-            ->paginate(6);
+            ->paginate(10);
         foreach ($data as $key=>$poem){
             $_content = null;
             if(isset(json_decode($poem->content)->content) && json_decode($poem->content)->content){
@@ -450,7 +450,7 @@ class WxxcxController extends Controller
             ->select('dev_sentence.title','dev_poem.id as poem_id','dev_sentence.id')
             ->whereIn('dev_sentence.id',$this->getRandomArray(1))
             ->get();
-        return $post;
+        return response()->json($post);
     }
 
     /**
