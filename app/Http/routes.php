@@ -129,6 +129,7 @@ Route::group([
         Route::get('/getPoemAudio/{id}','Frontend\WxxcxController@getVoiceCombine');
         // collect
         Route::get('/{id}/collect/{type}', 'Frontend\WxxcxController@updateCollect')->where('id', '[0-9]+');
+        Route::get('/updateCollect/{type}', 'Frontend\WxxcxController@updateCollectNew');
         // 小程序码
         Route::any('/getWXACode','Frontend\WxxcxController@getWXACode');
         // new search

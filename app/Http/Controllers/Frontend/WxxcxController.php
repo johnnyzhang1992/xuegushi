@@ -533,6 +533,79 @@ class WxxcxController extends Controller
         }
     }
 
+   public function updateCollectNew(Request $request,$type){
+       $user_id = $request->input('user_id');
+       $wx_token = $request->input('wx_token');
+       $id = $request->input('id');
+       $data = array();
+       $msg = null;
+       $_data = null;
+       $table_name = 'dev_'.$type;
+       if(!$this->validateWxToken($user_id,$wx_token)){
+           $data['msg'] = '操作不合法';
+           $data['status'] = false;
+           return response()->json($data);
+       }
+       $_res = DB::table('dev_collect')
+           ->where('user_id',$user_id)
+           ->where('like_id',$id)
+           ->where('type',trim($type))
+           ->first();
+       if(!$_res){
+           // 新的like
+           $res = DB::table($table_name)->where('id',$id)->increment("collect_count");
+           $res1 = DB::table('users')->where('id',$user_id)->increment("collect_count");
+//                $_data = DB::table($table_name)->where('id',$id)->first();
+           DB::table('dev_collect')->insertGetId(
+               [
+                   'like_id' => $id,
+                   'type' => trim($type),
+                   'created_at' => date('Y-m-d H:i:s',time()),
+                   'updated_at' => date('Y-m-d H:i:s',time()),
+                   'user_id'=> $user_id,
+                   'status' => 'active'
+               ]
+           );
+           $msg = '收藏成功';
+           $data['status'] = true;
+       }else{
+           // 更新like状态
+           if($_res->status == 'active'){
+               $res = DB::table($table_name)->where('id',$id)->decrement("collect_count");
+               $res1 = DB::table('users')->where('id',$user_id)->decrement("collect_count");
+//                    $_data = DB::table($table_name)->where('id',$id)->first();
+               DB::table('dev_collect')
+                   ->where('user_id',$user_id)
+                   ->where('id',$_res->id)
+                   ->update([
+                       'status' => 'delete',
+                       'updated_at' => date('Y-m-d H:i:s',time())
+                   ]);
+               $msg = '取消收藏成功';
+               $data['status'] = false;
+           }else{
+               $res = DB::table($table_name)->where('id',$id)->increment("collect_count");
+               $res1 = DB::table('users')->where('id',$user_id)->increment("collect_count");
+               DB::table('dev_collect')
+                   ->where('user_id',$user_id)
+                   ->where('id',$_res->id)
+                   ->update([
+                       'status' => 'active',
+                       'updated_at' => date('Y-m-d H:i:s',time()),
+                   ]);
+               $msg = '收藏成功';
+               $data['status'] = true;
+           }
+       }
+       if($res){
+           $data['msg'] = $msg;
+           return response()->json($data);
+       }else{
+           $data['msg'] = $msg;
+           $data['status'] = false;
+           return response()->json($data);
+       }
+   }
 
     /**
      * 获取专栏文章
