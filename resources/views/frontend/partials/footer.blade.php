@@ -15,5 +15,5 @@
     {{--<span class="footer-dot">&sdot;</span>--}}
     {{--<a type="button" title="小程序(古诗文小助手)" class="footer-item wxxcx-qrcode" style="cursor: pointer">小程序</a>--}}
     {{--<br>--}}
-    <span class="footer-item">&copy; 2017 学古诗网</span>
+    <span class="footer-item">&copy; 2017 学古诗网 <a href="">ICP备15006514号-6</a></span>
 </footer>

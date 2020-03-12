@@ -78,3 +78,15 @@
 {{--        <wb:follow-button uid="3546279424" type="red_2" width="136" height="24" ></wb:follow-button>--}}
 {{--    </div>--}}
 {{--</div>--}}
+<div class="side-card">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-format="fluid"
+     data-ad-layout-key="-fb+5w+4e-db+86"
+     data-ad-client="ca-pub-5735352629335736"
+     data-ad-slot="8964065462"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</div>
