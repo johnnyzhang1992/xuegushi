@@ -197,12 +197,17 @@ class WxxcxController extends Controller
 //                    $poem_detail->zhu = json_decode($poem_detail->zhu);
 //                }
 //            }
+            $sentences = DB::table('dev_sentence')
+                    ->where('target_source_id',$poem->source_id)
+                    ->select('id','source_id','target_source_id','title','theme','type','origin')
+                     ->get();
 
             $res = [];
 //            $res['author'] = $author;
             $res['detail'] = $poem_detail;
             $res['poems_count'] = $poems_count;
             $res['poem'] = $poem;
+            $res['sentences'] = $sentences;
             $res['bg_image'] = 'https://xuegushi.cn/static/xcx/chunfen.jpg';
             return response()->json($res);
         }else{

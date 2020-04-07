@@ -142,9 +142,9 @@ Route::group([
         // pins
         Route::get('/getPins','Wxapp\PinController@getpins');
         Route::get('/createPin/{user_id}','Wxapp\PinController@createPin');
-        Route::get('/createPinReview/','Wxapp\PinController@createPinReview');
+        Route::get('/createPinReview','Wxapp\PinController@createPinReview');
         Route::get('/getPinReviews/{id}','Wxapp\PinController@getpinReviews')->where('id','[0-9]+');
-        Route::get('/deletePinReview/','Wxapp\PinController@deletePinReview');
+        Route::get('/deletePinReview','Wxapp\PinController@deletePinReview');
         Route::get('/getPinLikeUsers/{id}','Wxapp\PinController@getPinLikeUsers')->where('id','[0-9]+');
         Route::get('/getPinDetail/{id}','Wxapp\PinController@getPinDetail')->where('id','[0-9]+');
         Route::get('/pin/{id}/{type}','Wxapp\PinController@updatePin')->where('id','[0-9]+');
