@@ -33,7 +33,7 @@
     <div class="col-md-7 col-xs-7" style="padding-right: 0;align-self: center;">
         {{--            <img src="https://xuegushi.cn/static/common/wechat.jpg" class="img-responsive" />--}}
         <p>扫描二维码</p>
-        <p>打开 小助手 小程序</p>
+        <p>打开小程序</p>
     </div>
 </div>
 {{--古诗类型--}}
