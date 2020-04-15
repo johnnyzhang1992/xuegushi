@@ -1,13 +1,17 @@
 @extends('frontend.layout.author')
 
 @section('content-css')
-    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-    <script>
-        (adsbygoogle = window.adsbygoogle || []).push({
-            google_ad_client: "ca-pub-5735352629335736",
-            enable_page_level_ads: true
-        });
-    </script>
+<style>
+    .google_ads_mobile{
+        background-color: #fff;
+        margin-bottom: 10px;
+    }
+    @media(min-width:768px){
+        .google_ads_mobile{
+            display: none
+        }
+    }
+</style>
 @endsection
 
 @section('header')
@@ -73,7 +77,19 @@
                         </div>
                     </div>
                 @endif
-                <div class="side-card hidden-lg hidden-md hidden-sm">
+                <div class="google_ads_mobile">
+                    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                    <ins class="adsbygoogle"
+                         style="display:block"
+                         data-ad-format="fluid"
+                         data-ad-layout-key="-fb+5w+4e-db+86"
+                         data-ad-client="ca-pub-5735352629335736"
+                         data-ad-slot="8964065462"></ins>
+                    <script>
+                         (adsbygoogle = window.adsbygoogle || []).push({});
+                    </script>
+                </div>
+                <div class="side-card hidden-lg hidden-md hidden-sm hidden-xs">
                     <div class="side-title">
                         <h2>
                             <span class="author">代表作品 <small>(总数:{{ @$poems_count }})</small></span> <a href="{{url('author/'.@$author->id.'/poems')}}" class="pull-right" style="font-size: 15px;line-height: 22px;">查看全部</a>

@@ -173,6 +173,8 @@ Route::group([
         Route::match(['GET', 'POST'],'/image_list', 'Frontend\TestController@getList');
     });
 });
+
+/* =========== 专栏 =======================*/
 Route::group(['domain' => 'zhuanlan.xuegushi.cn'], function() {
     Route::get('/', 'ZhuanLan\ZhuanLanController@index');
     Route::get('/apply', 'ZhuanLan\ZhuanLanController@apply');

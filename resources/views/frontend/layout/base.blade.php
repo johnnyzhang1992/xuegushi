@@ -7,6 +7,7 @@
     <meta name="keywords" content="{{ config('seo.default_keywords') }}">
     <meta name="description" itemprop="description"  content="{{ isset($site_description) ? $site_description: config('seo.default_description') }}">
     <meta name="author" content="小小梦工场">
+    <meta name="baidu_union_verify" content="0d05ce1487b3848a67cceabe1bb1ef07">
     {{--og meta--}}
     <meta property="og:title" content="{{ isset($site_title)?$site_title:config('seo.default_site_name') }}{{ isset($site_title_addon) ? '  -  '.$site_title_addon: '-'.config('seo.default_sub_title') }}" />
     <meta property="og:type" content="website" />

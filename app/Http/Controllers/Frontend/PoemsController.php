@@ -190,52 +190,6 @@ class PoemsController extends Controller
             return view('errors.404');
         }
     }
-//    /**
-//     * update poem database
-//     */
-//    public function updatePoemLikeCount(){
-//        $start = 70000;
-//        $end = 73001;
-//        $poems = DB::table('poem_author')
-//            ->where('id','>',$start)
-//            ->where('id','<',$end)
-//            ->get();
-//
-//        foreach ($poems as $key=>$poem){
-//            if($poem->author_source_id != -1){
-////                $author = DB::table('dev_author')->where('source_id',$poem->author_source_id)->first();
-//                $res = DB::table('dev_poem')
-//                    ->where('source_id',$poem->source_id)
-//                    ->update([
-//                        'author_id'=>-1,
-//                        'author_source_id' =>$poem->author_source_id,
-//                        'created_at' => date('Y-m-d H:i:s',time()),
-//                        'updated_at' => date('Y-m-d H:i:s',time())
-//                    ]);
-//                //            print($key.'-----'.$poem->title.'<br>');
-//                if(!$res){
-//                    break;
-//                }
-//            }else{
-//                $res = DB::table('dev_poem')
-//                    ->where('source_id',$poem->source_id)
-//                    ->update([
-//                        'author_id'=>-1,
-//                        'author_source_id' => -1,
-//                        'created_at' => date('Y-m-d H:i:s',time()),
-//                        'updated_at' => date('Y-m-d H:i:s',time())
-//                    ]);
-//                //            print($key.'-----'.$poem->title.'<br>');
-//                if(!$res){
-//                    break;
-//                }
-//            }
-//            if($key+1 == count($poems)){
-//                print $end;
-//                print('ok!');
-//            }
-//        }
-//    }
 
     /**
      * 更新 poem 的like_count
@@ -361,10 +315,8 @@ class PoemsController extends Controller
                 ->where('type',trim($type))
                 ->first();
             if(!$_res){
-                // 新的like
                 $res = DB::table($table_name)->where('id',$id)->increment("collect_count");
                 $res1 = DB::table('users')->where('id',Auth::user()->id)->increment("collect_count");
-//                $_data = DB::table($table_name)->where('id',$id)->first();
                 DB::table('dev_collect')->insertGetId(
                     [
                         'like_id' => $id,
@@ -382,7 +334,6 @@ class PoemsController extends Controller
                 if($_res->status == 'active'){
                     $res = DB::table($table_name)->where('id',$id)->decrement("collect_count");
                     $res1 = DB::table('users')->where('id',Auth::user()->id)->decrement("collect_count");
-//                    $_data = DB::table($table_name)->where('id',$id)->first();
                     DB::table('dev_collect')
                         ->where('user_id',Auth::user()->id)
                         ->where('id',$_res->id)
@@ -422,16 +373,17 @@ class PoemsController extends Controller
      * 百度语音合成
      * @param $request
      * @return mixed
+     *参数	类型	说明	可为空
+     *text	String	合成的文本	N
+     *userID	String	用户唯一标识	Y
+     *lan	String	语言，可选值 ['zh']，默认为zh	Y
+     *speed	Integer	语速，取值0-9，默认为5中语速	Y
+     *pitch	Integer	音调，取值0-9，默认为5中语调	Y
+     *volume	Integer	音量，取值0-15，默认为5中音量	Y
+     *person	Integer	发音人选择, 0为女声，1为男声，3为情感合成-度逍遥，4为情感合成-度丫丫，默认为普通女	Y
+     *fileName	String	文件存储路径名称，默认存储在public/audios/目录下
      */
-//参数	类型	说明	可为空
-//text	String	合成的文本	N
-//userID	String	用户唯一标识	Y
-//lan	String	语言，可选值 ['zh']，默认为zh	Y
-//speed	Integer	语速，取值0-9，默认为5中语速	Y
-//pitch	Integer	音调，取值0-9，默认为5中语调	Y
-//volume	Integer	音量，取值0-15，默认为5中音量	Y
-//person	Integer	发音人选择, 0为女声，1为男声，3为情感合成-度逍遥，4为情感合成-度丫丫，默认为普通女	Y
-//fileName	String	文件存储路径名称，默认存储在public/audios/目录下
+
     public function VoiceCombine(Request $request){
         $type = $request->input('type');
         $id = $request->input('id');
