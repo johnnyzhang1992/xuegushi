@@ -154,7 +154,10 @@ Route::group([
         Route::get('/getTopicDetail/{id}','Wxapp\TopicController@getTopicDetail')->where('id','[0-9]+');
         Route::get('/getTopics','Wxapp\TopicController@getTopics');
         Route::get('/topic/{id}/delete','Wxapp\TopicController@deleteTopic')->where('id','[0-9]+');
-
+        // list
+        Route::get('/getLists','Wxapp\ListController@getLists');
+        Route::post('/list/create','Wxapp\ListController@create');
+        Route::post('/list/update','Wxapp\ListController@update');
     });
     /* =============== 公众号开发 =================== */
     Route::any('/wechat', 'WeChatController@serve');

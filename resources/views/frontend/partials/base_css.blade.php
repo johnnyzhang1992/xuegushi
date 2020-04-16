@@ -6,3 +6,8 @@
 <!-- Custom styles for this template -->
 {{--<link href="{{ asset('/la-assets/css/main.css') }}" rel="stylesheet">--}}
 <link rel="stylesheet" href="{{ asset(elixir('css/app.css')) }}">
+<style>
+    .side-card::-webkit-scrollbar {
+        display: none;
+    }
+</style>
