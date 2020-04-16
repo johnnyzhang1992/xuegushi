@@ -16,6 +16,18 @@
         </li>
     </ul>
 </div>
+<div class="side-card count-card" style="width:100%;overflow-x:scroll">
+    <div class="_3v1myuipfea"></div>
+    <script type="text/javascript">
+        (window.slotbydup = window.slotbydup || []).push({
+            id: "u5995008",
+            container: "_3v1myuipfea",
+            async: true
+        });
+    </script>
+    <!-- 多条广告如下脚本只需引入一次 -->
+    <script type="text/javascript" src="//cpro.baidustatic.com/cpro/ui/cm.js" async="async" defer="defer" ></script>
+</div>
 {{--故事专栏--}}
 <div class="side-card zhuanlan">
     <div class="side-title">

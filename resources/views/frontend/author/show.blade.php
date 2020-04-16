@@ -3,6 +3,8 @@
 @section('content-css')
 <style>
     .google_ads_mobile{
+        overflow-x: scroll;
+        width: 100%;
         background-color: #fff;
         margin-bottom: 10px;
     }
@@ -78,16 +80,16 @@
                     </div>
                 @endif
                 <div class="google_ads_mobile">
-                    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-                    <ins class="adsbygoogle"
-                         style="display:block"
-                         data-ad-format="fluid"
-                         data-ad-layout-key="-fb+5w+4e-db+86"
-                         data-ad-client="ca-pub-5735352629335736"
-                         data-ad-slot="8964065462"></ins>
-                    <script>
-                         (adsbygoogle = window.adsbygoogle || []).push({});
+                    <div class="_3v1myuipfea"></div>
+                    <script type="text/javascript">
+                        (window.slotbydup = window.slotbydup || []).push({
+                            id: "u5995008",
+                            container: "_3v1myuipfea",
+                            async: true
+                        });
                     </script>
+                    <!-- 多条广告如下脚本只需引入一次 -->
+                    <script type="text/javascript" src="//cpro.baidustatic.com/cpro/ui/cm.js" async="async" defer="defer" ></script>
                 </div>
                 <div class="side-card hidden-lg hidden-md hidden-sm hidden-xs">
                     <div class="side-title">
@@ -145,7 +147,6 @@
                 @endif
             </div>
             {{--right--}}
-
             <div class="main_right col-md-4">
                 @if(isset($hot_poems) && $hot_poems)
                     <div class="side-card">
