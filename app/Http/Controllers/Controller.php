@@ -79,4 +79,23 @@ class Controller extends BaseController{
             ->count();
         return isset($data) && $data ? $data : 0;
     }
+
+    /**
+     * 验证微信token的有效性
+     * @param $token
+     * @param $u_id
+     * @return boolean
+     */
+    public function validateWxUser($u_id,$token){
+        $user = DB::table('users')
+            ->where('id',$u_id)
+            ->where('wx_token',trim($token))
+            ->first();
+        if(isset($user) && $user){
+            // 验证通过
+            return true;
+        }else{
+            return false;
+        }
+    }
 }

@@ -158,6 +158,7 @@ Route::group([
         Route::get('/getLists','Wxapp\ListController@getLists');
         Route::post('/list/create','Wxapp\ListController@create');
         Route::post('/list/update','Wxapp\ListController@update');
+        Route::post('/list/delete','Wxapp\ListController@delete');
     });
     /* =============== 公众号开发 =================== */
     Route::any('/wechat', 'WeChatController@serve');

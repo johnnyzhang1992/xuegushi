@@ -21,24 +21,6 @@ class ListController extends Controller {
     public function __construct () {
         parent::__construct();
     }
-    /**
-     * 验证微信token的有效性
-     * @param $token
-     * @param $u_id
-     * @return boolean
-     */
-    public function validateWxToken($u_id,$token){
-        $user = DB::table('users')
-            ->where('id',$u_id)
-            ->where('wx_token',trim($token))
-            ->first();
-        if(isset($user) && $user){
-            // 验证通过
-            return true;
-        }else{
-            return false;
-        }
-    }
 
     /**
      * 获取诗单列表
@@ -46,7 +28,8 @@ class ListController extends Controller {
     public function getLists(Request $request){
         $user_id = $request->input('user_id');
         $wx_token = $request->input('wx_token');
-        if($this->validateWxToken($user_id,$wx_token)){
+        $is_validate = $this->validateWxUser($user_id,$wx_token);
+        if($is_validate){
             $lists = DB::table('dev_list')
             ->where('user_id',$user_id)
             ->where('status','active')
@@ -72,7 +55,8 @@ class ListController extends Controller {
         $cover = $request->input('cover');
         $secret = $request->input('secret');
         $is_secret = isset($secret) && $secret > 0 ? true : false;
-        if($this->validateWxToken($user_id,$wx_token)){
+        $is_validate = $this->validateWxUser($user_id,$wx_token);
+        if($is_validate){
             if(!isset($title) || $title ===''){
                 return response()->json([
                     'status' => 500,
@@ -110,7 +94,8 @@ class ListController extends Controller {
         $secret = $request->input('secret');
         $is_secret = isset($secret) && $secret > 0 ? true : false;
         $data = [];
-        if($this->validateWxToken($user_id,$wx_token)){
+        $is_validate = $this->validateWxUser($user_id,$wx_token);
+        if($is_validate){
             if(!isset($title) || $title ===''){
                 return response()->json([
                     'status' => 500,
@@ -163,7 +148,8 @@ class ListController extends Controller {
         $wx_token = $request->input('wx_token');
         $list_id = $request->input('list_id');
         $data = [];
-        if($this->validateWxToken($user_id,$wx_token)){
+        $is_validate = $this->validateWxUser($user_id,$wx_token);
+        if($is_validate){
             $list = DB::table('dev_list')->where('id',$list_id)->first();
             $collectCount = DB::table('dev_collect')
                             ->where('type','list')
