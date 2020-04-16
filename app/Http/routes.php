@@ -156,6 +156,7 @@ Route::group([
         Route::get('/topic/{id}/delete','Wxapp\TopicController@deleteTopic')->where('id','[0-9]+');
         // list
         Route::get('/getLists','Wxapp\ListController@getLists');
+        Route::get('/list/{id}','Wxapp\ListController@detail')->where('id','[0-9]+');
         Route::post('/list/create','Wxapp\ListController@create');
         Route::post('/list/update','Wxapp\ListController@update');
         Route::post('/list/delete','Wxapp\ListController@delete');

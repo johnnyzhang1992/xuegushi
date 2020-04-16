@@ -24,6 +24,8 @@ class ListController extends Controller {
 
     /**
      * 获取诗单列表
+     * @param Request $request
+     * @return Response
      */
     public function getLists(Request $request){
         $user_id = $request->input('user_id');
@@ -46,7 +48,27 @@ class ListController extends Controller {
     }
 
     /**
+     * 获取某个诗单详情
+     * @param Request $request
+     * @return Response
+     */
+    public function detail($id){
+        $list = DB::table('dev_list')->where('id',$id)->first();
+        $data = [];
+        if(isset($list) && $list){
+            $data['list'] = $list;
+            $data['status'] = 200;
+        }else{
+            $data['status'] = 500;
+            $data['msg'] = '诗单不存在';
+        }
+        return response()->json($data);
+    }
+
+    /**
      * 创建诗单
+     * @param Request $request
+     * @return Response
      */
     public function create(Request $request){
         $user_id = $request->input('user_id');
