@@ -160,6 +160,8 @@ Route::group([
         Route::post('/list/create','Wxapp\ListController@create');
         Route::post('/list/update','Wxapp\ListController@update');
         Route::post('/list/delete','Wxapp\ListController@delete');
+        Route::post('/list/item/create','Wxapp\ListController@itemCreate');
+        Route::post('/list/item/delete','Wxapp\ListController@itemDelete');
     });
     /* =============== 公众号开发 =================== */
     Route::any('/wechat', 'WeChatController@serve');

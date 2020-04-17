@@ -56,8 +56,13 @@ class ListController extends Controller {
         $list = DB::table('dev_list')->where('id',$id)->first();
         $data = [];
         if(isset($list) && $list){
-            $data['list'] = $list;
+            $list_items = DB::table('dev_list_item')
+            ->where('list_id',$id)
+            ->whereNull('deleted_at')
+            ->paginate(10);
             $data['status'] = 200;
+            $data['list'] = $list;
+            $data['items'] = $list_items;
         }else{
             $data['status'] = 500;
             $data['msg'] = '诗单不存在';
@@ -148,6 +153,9 @@ class ListController extends Controller {
                 if(isset($is_update) && $is_update){
                     $data['msg'] = '更新成功！';
                     $data['status'] = 200;
+                }else{
+                    $data['msg'] = '更新失败！';
+                    $data['status'] = 500;
                 }
             }else{
                 $data['status'] = 500;
@@ -206,4 +214,103 @@ class ListController extends Controller {
             return response()->json($data);
         }
      }
+
+     /**
+      * 诗单子项目添加
+      * @param Request $request
+      * @return Response
+      */
+      public function itemCreate(Request $request){
+        $user_id = $request->input('user_id');
+        $wx_token = $request->input('wx_token');
+        $type = $request->input('type'); // poem,sentence.poet
+        $target_id = $request->input('target_id');
+        $list_id = $request->input('list_id');
+        $data = [];
+        // 验证用户信息
+        if($this->validateWxUser($user_id,$wx_token)){
+            // 查看诗单是否存在
+            $list = DB::table('dev_list')->where('id',$list_id)->first();
+            if(isset($list) && $list){
+                if(isset($type) && isset($target_id)){
+                    $list_item = DB::table('dev_list_item')
+                    ->where('list_id',$list_id)
+                    ->where('target_id',$target_id)
+                    ->first();
+                    // 记录已存在，直接更新
+                    if($list_item){
+                        $is_update = DB::table('dev_list_item')
+                        ->where('list_id',$list_id)
+                        ->where('target_id',$target_id)
+                        ->update([
+                            'deleted_at' => null,
+                        ]);
+                        if(isset($is_update) && $is_update){
+                            $data['item_id'] = $list_item->id;
+                            $data['status'] = 200;
+                        }else{
+                            $data['msg'] = '保存失败！';
+                            $data['status'] = 500;
+                        }
+                    }else{
+                        $list_item_id = DB::table('dev_list_item')
+                        ->insertGetId([
+                            'type' => $type,
+                            'target_id' => $target_id,
+                            'list_id' => $list_id,
+                            'created_at' => date('Y-m-d H:i:s',time()),
+                        ]);
+                        $data['item_id'] = $list_item_id;
+                    }
+                }else{
+                    $data['status'] = 500;
+                    $data['msg'] = '参数缺少，type或者target_id';
+                }
+            }else{
+                $data['status'] = 500;
+                $data['msg'] = '诗单不存在！';
+            }
+        }
+        return response()->json($data);
+      }
+
+     /**
+      * 诗单子项目更新（编辑或者删除
+      * @param Request $request
+      * @return Response
+      */
+    public function itemDelete(Request $request){
+        $user_id = $request->input('user_id');
+        $wx_token = $request->input('wx_token');
+        $item_id = $request->input('item_id');
+        $list_id = $request->input('list_id');
+        $data = [];
+        // 验证用户信息
+        if($this->validateWxUser($user_id,$wx_token)){
+            // 查看诗单是否存在
+            $list_item = DB::table('dev_list_item')
+                ->where('list_id',$list_id)
+                ->where('id',$item_id)
+                ->first();
+            if(isset($list_item) && $list_item){
+                $is_update = DB::table('dev_list_item')
+                ->where('list_id',$list_id)
+                ->where('id',$item_id)
+                ->update([
+                    'deleted_at' => date('Y-m-d H:i:s',time()),
+                ]);
+                if(isset($is_update) && $is_update){
+                    $data['msg'] = '更新成功！';
+                    $data['status'] = 200;
+                }else{
+                    $data['msg'] = '更新失败！';
+                    $data['status'] = 500;
+                }
+            }else{
+                $data['status'] = 500;
+                $data['msg'] = '记录不存在！';
+            }
+        }
+        return response()->json($data);
+    }
 }

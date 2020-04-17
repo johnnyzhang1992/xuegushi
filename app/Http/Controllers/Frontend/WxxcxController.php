@@ -192,18 +192,12 @@ class WxxcxController extends Controller
                     $poem->collect_status = false;
                 }
             }
-//            if(isset($poem_detail) && $poem_detail){
-//                if(isset($poem_detail->zhu) && $poem_detail->zhu){
-//                    $poem_detail->zhu = json_decode($poem_detail->zhu);
-//                }
-//            }
             $sentences = DB::table('dev_sentence')
                     ->where('target_source_id',$poem->source_id)
                     ->select('id','source_id','target_source_id','title','theme','type','origin')
                      ->get();
 
             $res = [];
-//            $res['author'] = $author;
             $res['detail'] = $poem_detail;
             $res['poems_count'] = $poems_count;
             $res['poem'] = $poem;
@@ -214,6 +208,10 @@ class WxxcxController extends Controller
             return null;
         }
     }
+
+    /**
+     * 诗词内容
+     */
     public function getPoemContent($id){
         $poem = DB::table('dev_poem')->where('id',$id)->first();
         DB::table('dev_poem')->where('id',$id)->increment("pv_count");
@@ -230,7 +228,6 @@ class WxxcxController extends Controller
         }
         if($poem){
             $res = [];
-//            $res['author'] = $author;
             $res['poem'] = $poem;
             return response()->json($res);
         }else{
@@ -313,7 +310,6 @@ class WxxcxController extends Controller
         $value = '%'.$name.'%';
         $data = DB::table('dev_poem')
             ->where('dev_poem.tags','like',$value)
-//            ->where('like_count','>',10)
             ->leftJoin('dev_author','dev_author.source_id','=','dev_poem.author_source_id')
             ->select('dev_poem.id','dev_poem.author','dev_poem.content','dev_poem.dynasty','dev_poem.like_count','dev_poem.title','dev_author.id as authorId')
             ->orderBy('dev_poem.like_count','desc')
@@ -459,7 +455,7 @@ class WxxcxController extends Controller
     }
 
     /**
-     * 收藏诗文
+     * 收藏诗文（已废弃
      * @param Request $request
      * @param $id
      * @param $type
@@ -486,7 +482,6 @@ class WxxcxController extends Controller
             // 新的like
             $res = DB::table($table_name)->where('id',$id)->increment("collect_count");
             $res1 = DB::table('users')->where('id',$user_id)->increment("collect_count");
-//                $_data = DB::table($table_name)->where('id',$id)->first();
             DB::table('dev_collect')->insertGetId(
                 [
                     'like_id' => $id,
@@ -504,7 +499,6 @@ class WxxcxController extends Controller
             if($_res->status == 'active'){
                 $res = DB::table($table_name)->where('id',$id)->decrement("collect_count");
                 $res1 = DB::table('users')->where('id',$user_id)->decrement("collect_count");
-//                    $_data = DB::table($table_name)->where('id',$id)->first();
                 DB::table('dev_collect')
                     ->where('user_id',$user_id)
                     ->where('id',$_res->id)
@@ -537,7 +531,13 @@ class WxxcxController extends Controller
             return response()->json($data);
         }
     }
-
+    /**
+     * 收藏诗文
+     * @param Request $request
+     * @param $id
+     * @param $type
+     * @return \Illuminate\Http\JsonResponse
+     */
    public function updateCollectNew(Request $request,$type){
        $user_id = $request->input('user_id');
        $wx_token = $request->input('wx_token');
@@ -560,7 +560,6 @@ class WxxcxController extends Controller
            // 新的like
            $res = DB::table($table_name)->where('id',$id)->increment("collect_count");
            $res1 = DB::table('users')->where('id',$user_id)->increment("collect_count");
-//                $_data = DB::table($table_name)->where('id',$id)->first();
            DB::table('dev_collect')->insertGetId(
                [
                    'like_id' => $id,
@@ -578,7 +577,6 @@ class WxxcxController extends Controller
            if($_res->status == 'active'){
                $res = DB::table($table_name)->where('id',$id)->decrement("collect_count");
                $res1 = DB::table('users')->where('id',$user_id)->decrement("collect_count");
-//                    $_data = DB::table($table_name)->where('id',$id)->first();
                DB::table('dev_collect')
                    ->where('user_id',$user_id)
                    ->where('id',$_res->id)
