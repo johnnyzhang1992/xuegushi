@@ -10,4 +10,7 @@
     .side-card::-webkit-scrollbar {
         display: none;
     }
+    .google-auto-placed{
+        display: none
+    }
 </style>

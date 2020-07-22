@@ -79,7 +79,7 @@
                         </div>
                     </div>
                 @endif
-                <div class="google_ads_mobile">
+                {{-- <div class="google_ads_mobile">
                     <div class="_3v1myuipfea"></div>
                     <script type="text/javascript">
                         (window.slotbydup = window.slotbydup || []).push({
@@ -90,7 +90,7 @@
                     </script>
                     <!-- 多条广告如下脚本只需引入一次 -->
                     <script type="text/javascript" src="//cpro.baidustatic.com/cpro/ui/cm.js" async="async" defer="defer" ></script>
-                </div>
+                </div> --}}
                 <div class="side-card hidden-lg hidden-md hidden-sm hidden-xs">
                     <div class="side-title">
                         <h2>

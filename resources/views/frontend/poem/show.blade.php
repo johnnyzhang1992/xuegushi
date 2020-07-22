@@ -98,7 +98,7 @@
                         </p>
                     </div>
                 </div>
-                <div class="google_ads_mobile">
+                {{-- <div class="google_ads_mobile">
                     <div class="_3v1myuipfea"></div>
                     <script type="text/javascript">
                         (window.slotbydup = window.slotbydup || []).push({
@@ -109,7 +109,7 @@
                     </script>
                     <!-- 多条广告如下脚本只需引入一次 -->
                     <script type="text/javascript" src="//cpro.baidustatic.com/cpro/ui/cm.js" async="async" defer="defer" ></script>
-                </div>
+                </div> --}}
                 @if(isset($author) && $author)
                     <div class="poem-card">
                         @if(file_exists('static/author/'.@$author->author_name.'.jpg'))
@@ -329,5 +329,4 @@
             $(this).parent().find('.toggle-expand').show();
         });
     </script>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 @endsection

@@ -8,7 +8,7 @@
             </a>
         </li>
         <li class="list-item">
-            <a class="Button SideBar-navLink Button--plain" href="{{ url('likes') }}" type="button" >
+            <a class="Button SideBar-navLink Button--plain" href="{{ url('likes') }}" type="button">
                 <i class="fa fa-thumbs-o-up"></i>
                 <span class="SideBar-navText">我的喜欢</span>
                 <span class="SideBar-navNumber">{{isset($like_count) ? $like_count : 0}}</span>
@@ -16,7 +16,7 @@
         </li>
     </ul>
 </div>
-<div class="side-card count-card" style="width:100%;overflow-x:scroll">
+{{-- <div class="side-card count-card" style="width:100%;overflow-x:scroll">
     <div class="_3v1myuipfea"></div>
     <script type="text/javascript">
         (window.slotbydup = window.slotbydup || []).push({
@@ -27,7 +27,7 @@
     </script>
     <!-- 多条广告如下脚本只需引入一次 -->
     <script type="text/javascript" src="//cpro.baidustatic.com/cpro/ui/cm.js" async="async" defer="defer" ></script>
-</div>
+</div> --}}
 {{--故事专栏--}}
 <div class="side-card zhuanlan">
     <div class="side-title">
@@ -54,7 +54,7 @@
         <h2><span class="dynasty">类型</span></h2>
     </div>
     <div class="side-content">
-        <a class="" href="{{ url('gushi/tangshi') }}" >唐诗三百首</a>
+        <a class="" href="{{ url('gushi/tangshi') }}">唐诗三百首</a>
         <a class="" href="{{ url('gushi/songcisanbai') }}">宋词三百首</a>
         <a class="" href="{{ url('gushi/sanbai') }}">古诗三百首</a>
         <a class="" href="{{ url('gushi/shijing') }}">诗经</a>
@@ -71,16 +71,16 @@
     </div>
 </div>
 @if(isset($h_authors) && $h_authors)
-    <div class="side-card">
-        <div class="side-title">
-            <h2><span class="author">热门作者</span></h2>
-        </div>
-        <div class="side-content">
-            @foreach($h_authors as $h_au)
-                <a class="" href="{{ url('author/'.$h_au->id) }}" target="_blank">{{ @$h_au->author_name }}</a>
-            @endforeach
-        </div>
+<div class="side-card">
+    <div class="side-title">
+        <h2><span class="author">热门作者</span></h2>
     </div>
+    <div class="side-content">
+        @foreach($h_authors as $h_au)
+        <a class="" href="{{ url('author/'.$h_au->id) }}" target="_blank">{{ @$h_au->author_name }}</a>
+        @endforeach
+    </div>
+</div>
 @endif
 {{--<div class="side-card">--}}
 {{--    <div class="side-title">--}}
@@ -91,14 +91,10 @@
 {{--    </div>--}}
 {{--</div>--}}
 <div class="side-card">
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-format="fluid"
-     data-ad-layout-key="-fb+5w+4e-db+86"
-     data-ad-client="ca-pub-5735352629335736"
-     data-ad-slot="8964065462"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <ins class="adsbygoogle" style="display:block" data-ad-format="fluid" data-ad-layout-key="-fb+5w+4e-db+86"
+        data-ad-client="ca-pub-5735352629335736" data-ad-slot="8964065462"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
 </div>
