@@ -81,7 +81,7 @@ class SentenceController extends Controller {
         $_sentences->orderBy('dev_sentence.like_count','desc');
         $_sentences->leftJoin('dev_poem','dev_poem.source_id','=','dev_sentence.target_source_id');
         $_sentences->select('dev_sentence.*','dev_poem.id as poem_id','dev_poem.author','dev_poem.dynasty','dev_poem.title as poem_title','dev_poem.tags');
-        $_sentences = $_sentences->paginate(9)->setPath($_url);
+        $_sentences = $_sentences->paginate(15)->setPath($_url);
 
         $res = [];
         $res['poems'] = $_sentences;
