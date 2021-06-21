@@ -98,18 +98,24 @@
                         </p>
                     </div>
                 </div>
-                {{-- <div class="google_ads_mobile">
-                    <div class="_3v1myuipfea"></div>
-                    <script type="text/javascript">
-                        (window.slotbydup = window.slotbydup || []).push({
-                            id: "u5995008",
-                            container: "_3v1myuipfea",
-                            async: true
-                        });
-                    </script>
-                    <!-- 多条广告如下脚本只需引入一次 -->
-                    <script type="text/javascript" src="//cpro.baidustatic.com/cpro/ui/cm.js" async="async" defer="defer" ></script>
-                </div> --}}
+                <div class="google_ads_mobile">
+                    <div class="side-card count-card" style="width:100%;overflow-x:scroll">
+                        <!-- 广告位：侧边栏 -->
+                         <script>
+                         (function() {
+                             var s = "_" + Math.random().toString(36).slice(2);
+                             document.write('<div id="' + s + '"></div>');
+                             (window.slotbydup=window.slotbydup || []).push({
+                                 id: '7568860',
+                                 container: s,
+                                 size: '300,100',
+                                 display: 'inlay-fix'
+                             });
+                         })();
+                         </script>
+                         <script src="//dup.baidustatic.com/js/os.js"></script>
+                     </div>
+                </div>
                 @if(isset($author) && $author)
                     <div class="poem-card">
                         @if(file_exists('static/author/'.@$author->author_name.'.jpg'))

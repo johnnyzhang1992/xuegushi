@@ -43,7 +43,7 @@
         <p>打开小程序</p>
     </div>
 </div>
-<div class="side-card">
+{{-- <div class="side-card">
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 <ins class="adsbygoogle"
      style="display:block"
@@ -54,4 +54,20 @@
 <script>
      (adsbygoogle = window.adsbygoogle || []).push({});
 </script>
-</div>
+</div> --}}
+<div class="side-card count-card" style="width:100%;overflow-x:scroll">
+    <!-- 广告位：侧边栏 -->
+     <script>
+     (function() {
+         var s = "_" + Math.random().toString(36).slice(2);
+         document.write('<div id="' + s + '"></div>');
+         (window.slotbydup=window.slotbydup || []).push({
+             id: '7568860',
+             container: s,
+             size: '300,100',
+             display: 'inlay-fix'
+         });
+     })();
+     </script>
+     <script src="//dup.baidustatic.com/js/os.js"></script>
+ </div>

@@ -16,18 +16,6 @@
         </li>
     </ul>
 </div>
-{{-- <div class="side-card count-card" style="width:100%;overflow-x:scroll">
-    <div class="_3v1myuipfea"></div>
-    <script type="text/javascript">
-        (window.slotbydup = window.slotbydup || []).push({
-            id: "u5995008",
-            container: "_3v1myuipfea",
-            async: true
-        });
-    </script>
-    <!-- 多条广告如下脚本只需引入一次 -->
-    <script type="text/javascript" src="//cpro.baidustatic.com/cpro/ui/cm.js" async="async" defer="defer" ></script>
-</div> --}}
 {{--故事专栏--}}
 <div class="side-card zhuanlan">
     <div class="side-title">
@@ -90,11 +78,28 @@
 {{--        <wb:follow-button uid="3546279424" type="red_2" width="136" height="24" ></wb:follow-button>--}}
 {{--    </div>--}}
 {{--</div>--}}
-<div class="side-card">
+{{-- 谷歌广告 --}}
+{{-- <div class="side-card">
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
     <ins class="adsbygoogle" style="display:block" data-ad-format="fluid" data-ad-layout-key="-fb+5w+4e-db+86"
         data-ad-client="ca-pub-5735352629335736" data-ad-slot="8964065462"></ins>
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
+</div> --}}
+<div class="side-card count-card" style="width:100%;overflow-x:scroll">
+   <!-- 广告位：侧边栏 -->
+    <script>
+    (function() {
+        var s = "_" + Math.random().toString(36).slice(2);
+        document.write('<div id="' + s + '"></div>');
+        (window.slotbydup=window.slotbydup || []).push({
+            id: '7568860',
+            container: s,
+            size: '300,100',
+            display: 'inlay-fix'
+        });
+    })();
+    </script>
+    <script src="//dup.baidustatic.com/js/os.js"></script>
 </div>
